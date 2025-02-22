@@ -4,7 +4,7 @@ on: [push, workflow_dispatch]
 env:
   GODOT_VERSION: 4.3
   EXPORT_NAME: casiland
-  PROJECT_PATH: casiland
+  PROJECT_PATH: .
 
 jobs:
   export-windows:

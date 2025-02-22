@@ -66,6 +66,11 @@ jobs:
     runs-on: ubuntu-20.04
     container:
       image: barichello/godot-ci:4.3
+    permissions:
+      contents: 
+        write
+      pages: 
+        write
     steps:
       - name: Checkout
         uses: actions/checkout@v4

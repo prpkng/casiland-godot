@@ -22,8 +22,6 @@ jobs:
       pages: 
         write
     steps:
-      - name: Create RAMFS
-        run: mount -t tmpfs -o size=6G _work/
       - name: Checkout
         uses: actions/checkout@v4
         with:
@@ -34,6 +32,23 @@ jobs:
           mkdir -v -p ~/.config/
           mv /root/.config/godot ~/.config/godot
           mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+      
+      
+      # Install MSVC - only needed on Windows.
+      - name: WINDOWS - Setup MSVC
+        uses: ilammy/msvc-dev-cmd@v1
+        if: matrix.os == 'windows'
+
+      # Install this github action.
+      - name: Setup Aseprite
+        uses: neomura/setup-aseprite-cli-action@v1.0.1
+
+      # Aseprite is now available on the path.
+      - name: Show installed aseprite
+        run: aseprite --help
+        shell: bash
+
+      
       - name: Perform ${{matrix.os}} build
         run: |
           mkdir -v -p build/${{matrix.os}}

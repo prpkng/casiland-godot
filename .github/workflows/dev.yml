@@ -31,14 +31,14 @@ jobs:
           mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
       - name: Perform ${{matrix.os}} build
         run: |
-          mkdir -v -p build/windows
+          mkdir -v -p build/${{matrix.os}}
           EXPORT_DIR="$(readlink -f build)"
           cd $PROJECT_PATH
           godot --headless --verbose --export-release "${{matrix.os}}" "$EXPORT_DIR/${{matrix.os}}/$EXPORT_NAME.exe"
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: windows
+          name: ${{matrix.os}}
           path: build/${{matrix.os}}
       
       - name: Install rsync 📚

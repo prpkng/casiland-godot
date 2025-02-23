@@ -23,7 +23,7 @@ jobs:
         write
     steps:
       - name: Create RAMFS
-        run: sudo mount -t tmpfs -o size=6G _work/
+        run: mount -t tmpfs -o size=6G _work/
       - name: Checkout
         uses: actions/checkout@v4
         with:

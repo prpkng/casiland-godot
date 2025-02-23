@@ -1,3 +1,12 @@
-[gd_scene format=3 uid="uid://j7y8fy4xtwfq"]
+[gd_scene load_steps=2 format=3 uid="uid://j7y8fy4xtwfq"]
+
+[ext_resource type="SpriteFrames" uid="uid://ci8egndn73w5" path="res://graphics/spr/Player.aseprite" id="1_sau46"]
 
 [node name="Node2D" type="Node2D"]
+position = Vector2(1, 0)
+
+[node name="Player" type="AnimatedSprite2D" parent="."]
+position = Vector2(219, 162)
+sprite_frames = ExtResource("1_sau46")
+animation = &"Idle"
+autoplay = "Idle"

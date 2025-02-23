@@ -18,7 +18,12 @@ jobs:
         os: [windows, linux, web, mac]
     container:
       image: barichello/godot-ci:4.3
+    permissions: 
+      pages: 
+        write
     steps:
+      - name: Create RAMFS
+        run: sudo mount -t tmpfs -o size=6G _work/
       - name: Checkout
         uses: actions/checkout@v4
         with:
@@ -41,11 +46,11 @@ jobs:
           name: ${{matrix.os}}
           path: build/${{matrix.os}}
       
-      - name: Install rsync 📚
+      - name: WEB - Install rsync 📚
         if: matrix.os == 'web'
         run: |
           apt-get update && apt-get install -y rsync
-      - name: Deploy to GitHub Pages 🚀
+      - name: WEB - Deploy to GitHub Pages 🚀
         uses: JamesIves/github-pages-deploy-action@releases/v4
         if: matrix.os == 'web'
         with:

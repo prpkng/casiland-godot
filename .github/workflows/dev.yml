@@ -7,6 +7,7 @@ on:
 
 env:
   GODOT_VERSION: 4.3
+  GODOT_RELEASE: limboai+v1.3.1
   EXPORT_NAME: casiland
   PROJECT_PATH: .
 
@@ -29,7 +30,7 @@ jobs:
           mkdir -v -p ~/.local/share/godot/export_templates/
           mkdir -v -p ~/.config/
           mv /root/.config/godot ~/.config/godot
-          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE} ~/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE}
       - name: Windows Build
         run: |
           mkdir -v -p build/windows
@@ -55,7 +56,7 @@ jobs:
       - name: Setup
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
-          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE} ~/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE}
       - name: Linux Build
         run: |
           mkdir -v -p build/linux
@@ -86,7 +87,7 @@ jobs:
       - name: Setup
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
-          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE} ~/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE}
       - name: Web Build
         run: |
           mkdir -v -p build/web
@@ -121,7 +122,7 @@ jobs:
       - name: Setup
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
-          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE} ~/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE}
       - name: Mac Build
         run: |
           mkdir -v -p build/mac

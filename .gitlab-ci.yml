@@ -1,4 +1,5 @@
-image: barichello/godot-ci:4.3
+default:
+  image: barichello/godot-ci:4.3
 
 # NOTE: If your `project.godot` is at the repository root, set `PROJECT_PATH` below to ".".
 
@@ -113,6 +114,7 @@ android:
 
 # GitHub Pages Deploy
 deploy-github-pages:
+  image: ubuntu:latest
   stage: deploy
   dependencies:
     - web
@@ -131,6 +133,7 @@ deploy-github-pages:
 
 # GitLab Pages Deploy
 pages:
+  image: ubuntu:latest
   stage: deploy
   dependencies:
     - web
@@ -139,6 +142,7 @@ pages:
     - git fetch
     - git checkout pages
     - rm -f *.md
+    - mkdir ./public
     - mv build/web/** ./public
   artifacts:
     paths:

@@ -118,6 +118,8 @@ deploy-github-pages:
   stage: deploy
   dependencies:
     - web
+  before_script:
+    - apt install git
   script:
     # This ensures the `gh-pages` branch is available.
     - git fetch
@@ -137,6 +139,8 @@ pages:
   stage: deploy
   dependencies:
     - web
+  before_script:
+    - apt install git
   script:
     # This ensures the `pages` branch is available.
     - git fetch

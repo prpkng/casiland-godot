@@ -13,7 +13,7 @@ jobs:
     name: Windows Export
     runs-on: ubuntu-latest
     container:
-      image: barichello/godot-ci:4.3
+      image: guisolv/custom-godot-build:latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -41,7 +41,7 @@ jobs:
     name: Linux Export
     runs-on: ubuntu-latest
     container:
-      image: barichello/godot-ci:4.3
+      image: guisolv/custom-godot-build:latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -67,7 +67,7 @@ jobs:
     name: Web Export
     runs-on: ubuntu-latest
     container:
-      image: barichello/godot-ci:4.3
+      image: guisolv/custom-godot-build:latest
     permissions:
       contents: 
         write
@@ -107,7 +107,7 @@ jobs:
     name: Mac Export
     runs-on: ubuntu-latest
     container:
-      image: barichello/godot-ci:4.3
+      image: guisolv/custom-godot-build:latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4

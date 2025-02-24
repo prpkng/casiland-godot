@@ -27,6 +27,10 @@ window/stretch/mode="viewport"
 
 enabled=PackedStringArray()
 
+[global_group]
+
+player="Player group"
+
 [importality]
 
 aseprite_or_libre_sprite_command="/home/guisolv/bin/aseprite"

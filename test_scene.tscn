@@ -1,8 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://j7y8fy4xtwfq"]
+[gd_scene load_steps=3 format=3 uid="uid://j7y8fy4xtwfq"]
 
 [ext_resource type="PackedScene" uid="uid://bhogxlfujshgh" path="res://nodes/player.tscn" id="1_2gq6p"]
+[ext_resource type="Script" path="res://scripts/camera_follow.gd" id="2_byfrc"]
 
 [node name="Node2D" type="Node2D"]
 position = Vector2(1, 0)
 
-[node name="Player" parent="." instance=ExtResource("1_2gq6p")]
+[node name="Player" parent="." groups=["player"] instance=ExtResource("1_2gq6p")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+script = ExtResource("2_byfrc")

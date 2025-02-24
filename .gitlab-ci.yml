@@ -119,7 +119,7 @@ deploy-github-pages:
   dependencies:
     - web
   before_script:
-    - apt-get update && apt-get install git
+    - apt-get update && apt-get install git -y
   script:
     # This ensures the `gh-pages` branch is available.
     - git fetch
@@ -140,7 +140,7 @@ pages:
   dependencies:
     - web
   before_script:
-    - apt-get update && apt-get install git
+    - apt-get update && apt-get install git -y
   script:
     # This ensures the `pages` branch is available.
     - git fetch

@@ -14,8 +14,8 @@ stages:
   - deploy
 
 variables:
-  EXPORT_NAME: test-project
-  PROJECT_PATH: test-project
+  EXPORT_NAME: casiland-godot
+  PROJECT_PATH: .
 
 # Open the editor to import assets in case the cache was empty or outdated
 import-assets:

@@ -1,7 +1,8 @@
-name: Build Game for Multiple Platforms (Every Night)
+name: Build Release version on tags
 on: 
-  schedule:
-    - cron: '0 3 * * *'
+  push: 
+    tags: 'v*.*.*'
+    branches-ignore: '*'
 
 env:
   GODOT_VERSION: 4.3
@@ -101,7 +102,6 @@ jobs:
         with:
           branch: gh-pages # The branch the action should deploy to.
           folder: build/web # The folder the action should deploy.
-          target-folder: nightly
 
   export-mac:
     name: Mac Export
@@ -144,9 +144,9 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          name: Nightly Build
-          tag_name: nightly
-          prerelease: true
+          name: Version ${{github.ref_name}} 🚀
+          tag_name: ${{github.ref_name}}
+          latest: true
           files: |
             windows.zip
             linux.zip

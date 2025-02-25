@@ -9,6 +9,9 @@ env:
   EXPORT_NAME: casiland
   PROJECT_PATH: .
 
+concurrency: 
+  cancel-in-progress: true
+  group: build-dev
 jobs:
   export-windows:
     name: Windows Export
@@ -26,6 +29,7 @@ jobs:
           mkdir -v -p ~/.config/
           mv /root/.config/godot ~/.config/godot
           mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE} ~/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE}
+
       - name: Windows Build
         run: |
           mkdir -v -p build/windows
@@ -51,6 +55,8 @@ jobs:
       - name: Setup
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
+          mkdir -v -p ~/.config/
+          mv /root/.config/godot ~/.config/godot
           mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE} ~/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE}
       - name: Linux Build
         run: |
@@ -82,6 +88,8 @@ jobs:
       - name: Setup
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
+          mkdir -v -p ~/.config/
+          mv /root/.config/godot ~/.config/godot
           mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE} ~/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE}
       - name: Web Build
         run: |
@@ -102,7 +110,7 @@ jobs:
         with:
           branch: gh-pages # The branch the action should deploy to.
           folder: build/web # The folder the action should deploy.
-          target-folder: nightly
+          target-folder: dev
 
   export-mac:
     name: Mac Export
@@ -117,6 +125,8 @@ jobs:
       - name: Setup
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
+          mkdir -v -p ~/.config/
+          mv /root/.config/godot ~/.config/godot
           mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE} ~/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE}
       - name: Mac Build
         run: |
@@ -142,12 +152,27 @@ jobs:
         uses: actions/download-artifact@v4
       - name: Display structure of downloaded files
         run: ls -R        
+      - name: Compress Windows Release
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r windows.zip windows
+      - name: Compress Linux Release
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r linux.zip linux
+      - name: Compress Mac Release
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r mac.zip mac
+      - name: Compress Web Release
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r web.zip web
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          name: Nightly Build
-          tag_name: nightly
-          prerelease: true
+          name: Dev Build
+          tag_name: dev
           files: |
             windows.zip
             linux.zip

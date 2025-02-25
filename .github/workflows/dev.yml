@@ -2,7 +2,7 @@ name: Build Game for Multiple Platforms
 on:
   push: 
     tags-ignore: '*'
-    branches: '*'
+    branches: 'main'
 
 
 env:

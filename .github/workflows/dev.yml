@@ -31,7 +31,6 @@ jobs:
           mkdir -v -p ~/.config/
           mv /root/.config/godot ~/.config/godot
           mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE} ~/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE}
-          echo 'importality/aseprite_or_libre_sprite_command = "/usr/local/bin/aseprite-cli"' >> ~/.config/godot/editor_settings-${GODOT_VERSION:0:3}.tres
 
       - name: Windows Build
         run: |
@@ -155,6 +154,22 @@ jobs:
         uses: actions/download-artifact@v4
       - name: Display structure of downloaded files
         run: ls -R        
+      - name: Compress Windows Release
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r windows.zip windows
+      - name: Compress Linux Release
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r linux.zip linux
+      - name: Compress Mac Release
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r mac.zip mac
+      - name: Compress Web Release
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r web.zip web
       - name: Release
         uses: softprops/action-gh-release@v2
         with:

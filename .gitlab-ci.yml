@@ -24,6 +24,7 @@ import-assets:
   script:
     - ls ~/.local/share/godot/export_templates
     - godot --headless --verbose --editor --quit
+    - aseprite-cli --version
 
 linux:
   stage: export

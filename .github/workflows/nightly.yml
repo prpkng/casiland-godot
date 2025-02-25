@@ -9,9 +9,6 @@ env:
   EXPORT_NAME: casiland
   PROJECT_PATH: .
 
-concurrency: 
-  cancel-in-progress: true
-  group: build-dev
 jobs:
   export-windows:
     name: Windows Export

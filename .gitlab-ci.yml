@@ -26,6 +26,7 @@ import-assets:
     - godot --headless --verbose --editor --quit
     - aseprite-cli --version
 
+
 linux:
   stage: export
   script:

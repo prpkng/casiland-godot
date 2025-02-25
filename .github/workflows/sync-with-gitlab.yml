@@ -14,5 +14,5 @@ jobs:
           echo Starting to push repo to gitlab
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git remote set-url origin "https://oauth2:${{secrets.GITLAB_TOKEN}}@gitlab.com/chuang_/jskara-web.git"
+          git remote set-url origin "https://oauth2:${{secrets.GITLAB_TOKEN}}@gitlab.com/prpkng/casiland-godot.git"
           git push --all origin

@@ -1,0 +1,16 @@
+name: Sync with gitlab
+on: push
+concurrency: 
+  cancel-in-progress: true
+  group: sync-with-gitlab
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Push To Gitlab
+        run: |
+          echo Starting to push repo to gitlab
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin "https://oauth2:$GITLAB_TOKEN@gitlab.com/chuang_/jskara-web.git"
+          git push origin master

@@ -9,5 +9,6 @@ position = Vector2(1, 0)
 [node name="Player" parent="." groups=["player"] instance=ExtResource("1_2gq6p")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(199, 114)
 position_smoothing_enabled = true
 script = ExtResource("2_byfrc")

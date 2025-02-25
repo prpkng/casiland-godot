@@ -31,6 +31,8 @@ jobs:
           mkdir -v -p ~/.config/
           mv /root/.config/godot ~/.config/godot
           mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE} ~/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE}
+          echo 'importality/aseprite_or_libre_sprite_command = "/usr/local/bin/aseprite-cli"' >> ~/.config/godot/editor_settings-${GODOT_VERSION:0:3}.tres
+
       - name: Windows Build
         run: |
           mkdir -v -p build/windows
@@ -56,6 +58,8 @@ jobs:
       - name: Setup
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
+          mkdir -v -p ~/.config/
+          mv /root/.config/godot ~/.config/godot
           mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE} ~/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE}
       - name: Linux Build
         run: |
@@ -87,6 +91,8 @@ jobs:
       - name: Setup
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
+          mkdir -v -p ~/.config/
+          mv /root/.config/godot ~/.config/godot
           mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE} ~/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE}
       - name: Web Build
         run: |
@@ -122,6 +128,8 @@ jobs:
       - name: Setup
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
+          mkdir -v -p ~/.config/
+          mv /root/.config/godot ~/.config/godot
           mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE} ~/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE}
       - name: Mac Build
         run: |

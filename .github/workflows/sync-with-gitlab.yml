@@ -16,4 +16,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git remote set-url origin "https://oauth2:${{secrets.GITLAB_TOKEN}}@gitlab.com/prpkng/casiland-godot.git"
           git fetch
-          git push --all --force origin
+          git stash
+          git pull --rebase
+          git stash pop
+          git push --all origin

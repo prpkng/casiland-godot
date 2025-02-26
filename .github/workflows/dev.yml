@@ -173,7 +173,7 @@ jobs:
   deploy_releases:
     name: Deploy Releases
     runs-on: ubuntu-latest
-    needs: [export-linux, export-mac, export-web, export-windows]
+    needs: [export-linux, export-mac, export-web, export-windows, export-android-debug]
     permissions: 
       contents: 
         write
@@ -186,6 +186,10 @@ jobs:
         uses: montudor/action-zip@v1
         with:
           args: zip -qq -r windows.zip windows
+      - name: Compress Windows Release
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r android-debug.zip android-debug
       - name: Compress Linux Release
         uses: montudor/action-zip@v1
         with:
@@ -208,5 +212,6 @@ jobs:
             linux.zip
             mac.zip
             web.zip
+            android-debug.zip
 
       

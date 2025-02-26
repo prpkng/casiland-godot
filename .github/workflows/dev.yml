@@ -186,7 +186,7 @@ jobs:
         uses: montudor/action-zip@v1
         with:
           args: zip -qq -r windows.zip windows
-      - name: Compress Windows Release
+      - name: Compress Android Debug Release
         uses: montudor/action-zip@v1
         with:
           args: zip -qq -r android-debug.zip android-debug
@@ -207,6 +207,7 @@ jobs:
         with:
           name: Dev Build
           tag_name: dev
+          prerelease: true
           files: |
             windows.zip
             linux.zip

@@ -1,19 +1,22 @@
-[gd_scene load_steps=4 format=3 uid="uid://bhogxlfujshgh"]
+[gd_scene load_steps=5 format=3 uid="uid://bhogxlfujshgh"]
 
 [ext_resource type="Script" path="res://scripts/player/player_movement.gd" id="1_jqal3"]
 [ext_resource type="SpriteFrames" uid="uid://7xaej5ucwf5m" path="res://graphics/spr/player.aseprite" id="2_iud70"]
+[ext_resource type="Script" path="res://scripts/player/player_animations.gd" id="3_ef03b"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rvfhd"]
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_sprite")]
 position = Vector2(183, 133)
 script = ExtResource("1_jqal3")
 movement_speed = 128
+player_sprite = NodePath("Player")
 
 [node name="Player" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("2_iud70")
 animation = &"Idle"
 autoplay = "Idle"
+script = ExtResource("3_ef03b")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_rvfhd")

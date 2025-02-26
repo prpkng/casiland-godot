@@ -1,5 +1,7 @@
 name: Sync with gitlab
-on: push
+on: 
+  push:
+    branches: 'main'
 concurrency: 
   cancel-in-progress: true
   group: sync-with-gitlab
@@ -16,5 +18,4 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git remote set-url origin "https://oauth2:${{secrets.GITLAB_TOKEN}}@gitlab.com/prpkng/casiland-godot.git"
           git fetch
-          git pull --rebase
-          git push --all origin
+          git push --force origin main

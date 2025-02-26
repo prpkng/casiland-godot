@@ -72,6 +72,34 @@ jobs:
           name: linux
           path: build/linux
 
+  export-android-debug:
+    name: Android Debug Export
+    runs-on: ubuntu-latest
+    container:
+      image: guisolv/custom-godot-build:latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates/
+          mkdir -v -p ~/.config/
+          mv /root/.config/godot ~/.config/godot
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE} ~/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE}
+      - name: Android Build
+        run: |
+          mkdir -v -p build/android
+          EXPORT_DIR="$(readlink -f build)"
+          cd $PROJECT_PATH
+          godot --headless --verbose --export-debug "Android Debug" "$EXPORT_DIR/android/$EXPORT_NAME-debug.apk"
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-debug
+          path: build/android
+  
   export-web:
     name: Web Export
     runs-on: ubuntu-latest

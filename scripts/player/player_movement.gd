@@ -20,6 +20,6 @@ func _physics_process(_delta):
     move_and_slide()
     
 
-func _input(_event):
+func _process(_delta):
     move_input.x = Input.get_axis('move_left', 'move_right')
     move_input.y = Input.get_axis('move_up', 'move_down');

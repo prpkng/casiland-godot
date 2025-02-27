@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://bhogxlfujshgh"]
+[gd_scene load_steps=6 format=3 uid="uid://bhogxlfujshgh"]
 
 [ext_resource type="Script" path="res://scripts/player/player_movement.gd" id="1_jqal3"]
 [ext_resource type="SpriteFrames" uid="uid://7xaej5ucwf5m" path="res://graphics/spr/player.aseprite" id="2_iud70"]
 [ext_resource type="Script" path="res://scripts/player/player_animations.gd" id="3_ef03b"]
+[ext_resource type="PackedScene" uid="uid://cs88cm3j8i48y" path="res://nodes/player_gun.tscn" id="4_ynuc3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rvfhd"]
 
@@ -19,4 +20,13 @@ autoplay = "Idle"
 script = ExtResource("3_ef03b")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("CircleShape2D_rvfhd")
+
+[node name="PlayerGun" parent="." instance=ExtResource("4_ynuc3")]
+position = Vector2(-2, 3)
+
+[node name="GunSprite" parent="PlayerGun" index="0"]
+position = Vector2(4, 0)
+
+[editable path="PlayerGun"]

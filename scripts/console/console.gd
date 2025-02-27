@@ -242,10 +242,10 @@ func reset_autocomplete() -> void:
 
 
 func toggle_size() -> void:
-	if (control.anchor_bottom == 1.0):
-		control.anchor_bottom = 1.9
+	if (control.anchor_bottom == SCALE):
+		control.anchor_bottom = SCALE*1.75
 	else:
-		control.anchor_bottom = 1.0
+		control.anchor_bottom = SCALE
 
 
 func disable():
@@ -262,7 +262,7 @@ func toggle_console() -> void:
 	else:
 		control.visible = false
 	
-	GameManager.ignoring_input = control.visible
+	GM.ignoring_input = control.visible
 
 	if (control.visible):
 		was_paused_already = get_tree().paused
@@ -270,7 +270,7 @@ func toggle_console() -> void:
 		line_edit.grab_focus()
 		console_opened.emit()
 	else:
-		control.anchor_bottom = 1.0
+		control.anchor_bottom = SCALE
 		scroll_to_bottom()
 		reset_autocomplete()
 		if (pause_enabled && !was_paused_already):

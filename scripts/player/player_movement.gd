@@ -21,7 +21,7 @@ func _physics_process(_delta):
 	
 
 func _process(_delta):
-	if GameManager.ignoring_input:
+	if GM.ignoring_input:
 		move_input = Vector2.ZERO
 		return
 	move_input.x = Input.get_axis('move_left', 'move_right')

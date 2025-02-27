@@ -8,6 +8,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_rvfhd"]
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_sprite")]
+physics_interpolation_mode = 1
 position = Vector2(183, 133)
 script = ExtResource("1_jqal3")
 movement_speed = 128
@@ -28,5 +29,8 @@ position = Vector2(-2, 3)
 
 [node name="GunSprite" parent="PlayerGun" index="0"]
 position = Vector2(4, 0)
+
+[node name="Muzzle" parent="PlayerGun" index="1"]
+position = Vector2(11, 0)
 
 [editable path="PlayerGun"]

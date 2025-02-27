@@ -7,3 +7,5 @@ func _ready() -> void:
 		not OS.has_feature('web_android') and \
 		not OS.has_feature('web_ios'):
 		queue_free()
+	else:
+		visible = true

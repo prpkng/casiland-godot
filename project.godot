@@ -17,22 +17,24 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-PostProcessing="*res://scenes/post_processing.tscn"
+PostProcessing="*res://nodes/autoloads/post_processing.tscn"
+D="*res://nodes/autoloads/debug_hud.tscn"
+C="*res://scripts/console/console.gd"
+GameManager="*res://scripts/game_manager.gd"
 
 [display]
 
-window/size/viewport_width=480
-window/size/viewport_height=270
-window/size/window_width_override=1440
-window/size/window_height_override=810
-window/stretch/mode="viewport"
+window/size/viewport_width=640
+window/size/viewport_height=360
+window/size/window_width_override=1280
+window/size/window_height_override=720
+window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
-window/stretch/scale_mode="integer"
 window/vsync/vsync_mode=0
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/nklbdev.importality/plugin.cfg", "res://addons/virtual_joystick/plugin.cfg")
+enabled=PackedStringArray("res://addons/console/plugin.cfg", "res://addons/nklbdev.importality/plugin.cfg", "res://addons/virtual_joystick/plugin.cfg")
 
 [global_group]
 
@@ -67,6 +69,7 @@ pointing/emulate_mouse_from_touch=false
 
 [physics]
 
+common/physics_jitter_fix=0.0
 common/physics_interpolation=true
 
 [rendering]

@@ -9,17 +9,20 @@ extends CharacterBody2D
 var move_input: Vector2
 
 func _physics_process(_delta):
-    var target_spd = move_input.normalized() * movement_speed
-    var factor = deceleration if is_zero_approx(target_spd.length_squared()) else acceleration
-    velocity = lerp(velocity, target_spd, factor);
-    if target_spd.length_squared() > 0:
-        player_sprite.play_anim('Run')
-    else:
-        player_sprite.play_anim('Idle')
+	var target_spd = move_input.normalized() * movement_speed
+	var factor = deceleration if is_zero_approx(target_spd.length_squared()) else acceleration
+	velocity = lerp(velocity, target_spd, factor);
+	if target_spd.length_squared() > 0:
+		player_sprite.play_anim('Run')
+	else:
+		player_sprite.play_anim('Idle')
 
-    move_and_slide()
-    
+	move_and_slide()
+	
 
 func _process(_delta):
-    move_input.x = Input.get_axis('move_left', 'move_right')
-    move_input.y = Input.get_axis('move_up', 'move_down');
+	if GameManager.ignoring_input:
+		move_input = Vector2.ZERO
+		return
+	move_input.x = Input.get_axis('move_left', 'move_right')
+	move_input.y = Input.get_axis('move_up', 'move_down');

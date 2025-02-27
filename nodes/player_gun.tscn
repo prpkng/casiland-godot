@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://cs88cm3j8i48y"]
+
+[ext_resource type="Script" path="res://scripts/player/player_gun.gd" id="1_bxqgk"]
+[ext_resource type="PackedScene" uid="uid://c5h414lxrf4ss" path="res://graphics/spr/player_gun.aseprite" id="2_epuq6"]
+
+[node name="PlayerGun" type="Node2D" node_paths=PackedStringArray("gun_sprite", "muzzle_point")]
+position = Vector2(-3, 3)
+script = ExtResource("1_bxqgk")
+gun_sprite = NodePath("GunSprite")
+muzzle_point = NodePath("Muzzle")
+
+[node name="GunSprite" parent="." instance=ExtResource("2_epuq6")]
+position = Vector2(5, 0)
+
+[node name="Muzzle" type="Node2D" parent="."]
+position = Vector2(13, 0)

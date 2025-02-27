@@ -70,10 +70,10 @@ offset_bottom = 0.0
 grow_horizontal = 2
 grow_vertical = 2
 joystick_mode = 1
-action_left = "move_left"
-action_right = "move_right"
-action_up = "move_up"
-action_down = "move_down"
+action_left = "aim_left"
+action_right = "aim_right"
+action_up = "aim_up"
+action_down = "aim_down"
 
 [node name="Base" parent="UI/HUD Controls/Right Joystick" index="0"]
 offset_left = 10.0

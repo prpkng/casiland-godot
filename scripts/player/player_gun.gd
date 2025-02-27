@@ -14,17 +14,26 @@ var fire_counter := 1.0
 func _ready() -> void:
 	start_x = position.x
 
+
 func _process(delta):
-	var dir = (get_global_mouse_position() - global_position).normalized()
-	position.x = -start_x if dir.x < 0 else start_x
-	gun_sprite.flip_v = dir.x < 0
-	var angle = atan2(dir.y, dir.x)
-	rotation = angle
+	calculate_aim()
 	
 	fire_counter += delta * fire_rate
 	if not is_firing: return
 	if fire_counter > 1:
 		fire()
+
+func calculate_aim():
+	var dir: Vector2
+	if GM.is_using_gamepad:
+		var vec = Input.get_vector('aim_left', 'aim_right', 'aim_up', 'aim_down')
+		if vec.length_squared() <= 0: return
+		dir = vec
+	else:
+		dir = (get_global_mouse_position() - get_parent().global_position).normalized()
+	GM.player_aim_input = dir
+	var angle = atan2(dir.y, dir.x)
+	global_rotation = angle
 
 func start_firing():
 	if fire_counter < 1: return
@@ -43,7 +52,7 @@ func fire():
 	bullet.set_process(true)
 	bullet.visible = true
 	get_tree().create_timer(1).timeout.connect(bullet.queue_free)
-	bullet.rotation = rotation
+	bullet.rotation = global_rotation
 	
 
 func _input(event: InputEvent) -> void:

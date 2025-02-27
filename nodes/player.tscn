@@ -20,17 +20,17 @@ animation = &"Idle"
 autoplay = "Idle"
 script = ExtResource("3_ef03b")
 
+[node name="PlayerGun" parent="Player" instance=ExtResource("4_ynuc3")]
+position = Vector2(-2, 3)
+
+[node name="GunSprite" parent="Player/PlayerGun" index="0"]
+position = Vector2(4, 0)
+
+[node name="Muzzle" parent="Player/PlayerGun" index="1"]
+position = Vector2(11, 0)
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
 shape = SubResource("CircleShape2D_rvfhd")
 
-[node name="PlayerGun" parent="." instance=ExtResource("4_ynuc3")]
-position = Vector2(-2, 3)
-
-[node name="GunSprite" parent="PlayerGun" index="0"]
-position = Vector2(4, 0)
-
-[node name="Muzzle" parent="PlayerGun" index="1"]
-position = Vector2(11, 0)
-
-[editable path="PlayerGun"]
+[editable path="Player/PlayerGun"]

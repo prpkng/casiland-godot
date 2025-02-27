@@ -7,4 +7,4 @@ func play_anim(name: StringName):
 	play(name)
 	
 func _process(delta: float) -> void:
-	flip_h = get_local_mouse_position().x < 0
+	scale.x = -1 if GM.player_aim_input.x < 0 else 1

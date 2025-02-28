@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://j7y8fy4xtwfq"]
+[gd_scene load_steps=6 format=3 uid="uid://j7y8fy4xtwfq"]
 
 [ext_resource type="PackedScene" uid="uid://bhogxlfujshgh" path="res://nodes/player.tscn" id="1_2gq6p"]
 [ext_resource type="Script" path="res://scripts/scale_on_play.gd" id="2_6jl5l"]
 [ext_resource type="PackedScene" uid="uid://cdl3r8uf84ux7" path="res://nodes/camera_2d.tscn" id="2_ikdut"]
 [ext_resource type="PackedScene" uid="uid://c3ynw2bqynnil" path="res://nodes/autoloads/game_hud.tscn" id="3_wv0ge"]
+[ext_resource type="PackedScene" uid="uid://ctx77y216smqf" path="res://nodes/snooker/pool_table.tscn" id="5_fqfpb"]
 
 [node name="Node2D" type="Node2D"]
 position = Vector2(1, 0)
@@ -17,3 +18,5 @@ script = ExtResource("2_6jl5l")
 
 [node name="Camera2D" parent="ScaledNodes" instance=ExtResource("2_ikdut")]
 position = Vector2(240, 135)
+
+[node name="PoolTable" parent="ScaledNodes" instance=ExtResource("5_fqfpb")]

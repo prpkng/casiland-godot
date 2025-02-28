@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cs88cm3j8i48y"]
 
 [ext_resource type="Script" path="res://scripts/player/player_gun.gd" id="1_bxqgk"]
-[ext_resource type="PackedScene" uid="uid://c5h414lxrf4ss" path="res://graphics/spr/player_gun.aseprite" id="2_epuq6"]
+[ext_resource type="PackedScene" uid="uid://c5h414lxrf4ss" path="res://graphics/spr/player/player_gun.aseprite" id="2_epuq6"]
 
 [node name="PlayerGun" type="Node2D" node_paths=PackedStringArray("gun_sprite", "muzzle_point")]
 position = Vector2(-3, 3)

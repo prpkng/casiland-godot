@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://nd0cwpm1mdht"]
 
 [ext_resource type="Script" path="res://scripts/entities/bullet_movement.gd" id="1_unkfs"]
-[ext_resource type="Texture2D" uid="uid://0pkhulx4nsr0" path="res://graphics/spr/bullet.png" id="2_t66nd"]
+[ext_resource type="Texture2D" uid="uid://0pkhulx4nsr0" path="res://graphics/spr/player/bullet.png" id="2_t66nd"]
 [ext_resource type="Script" path="res://scripts/vfx/line_trail.gd" id="3_iiogs"]
 
 [sub_resource type="Curve" id="Curve_1qkiu"]

@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=3 uid="uid://ctx77y216smqf"]
+
+[ext_resource type="Texture2D" uid="uid://clow4bowl74l7" path="res://graphics/spr/maps/table.png" id="1_rkb82"]
+
+[node name="PoolTable" type="Node2D"]
+
+[node name="Table" type="Sprite2D" parent="."]
+position = Vector2(320, 180)
+texture = ExtResource("1_rkb82")
+region_enabled = true
+region_rect = Rect2(0, 0, 640, 360)
+
+[node name="Table2" type="Sprite2D" parent="."]
+z_index = -10
+position = Vector2(320, 180)
+texture = ExtResource("1_rkb82")
+region_enabled = true
+region_rect = Rect2(0, 360, 640, 360)
+
+[node name="Table3" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(320, 180)
+texture = ExtResource("1_rkb82")
+region_enabled = true
+region_rect = Rect2(0, 720, 640, 360)

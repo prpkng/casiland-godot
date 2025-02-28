@@ -3,12 +3,12 @@
 importer="Aseprite AnimatedSprite2D"
 type="PackedScene"
 uid="uid://c5h414lxrf4ss"
-path="res://.godot/imported/player_gun.aseprite-db544aa0db5df9d29353799bf785c4f2.scn"
+path="res://.godot/imported/player_gun.aseprite-6a17873eb48d77f9ec1b1c5d8f694c77.scn"
 
 [deps]
 
-source_file="res://graphics/spr/player_gun.aseprite"
-dest_files=["res://.godot/imported/player_gun.aseprite-db544aa0db5df9d29353799bf785c4f2.scn"]
+source_file="res://graphics/spr/player/player_gun.aseprite"
+dest_files=["res://.godot/imported/player_gun.aseprite-6a17873eb48d77f9ec1b1c5d8f694c77.scn"]
 
 [params]
 

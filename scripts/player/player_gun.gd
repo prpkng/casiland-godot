@@ -55,7 +55,7 @@ func fire():
 	bullet.rotation = global_rotation
 	
 
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	if GM.ignoring_input: return
 	
 	if event.is_action_pressed('fire'):

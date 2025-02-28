@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://buatpvadejxgf"]
+
+[ext_resource type="Script" path="res://scripts/entities/snooker/snooker_ball.gd" id="1_wpxnu"]
+[ext_resource type="PackedScene" uid="uid://df05oco0cb7du" path="res://graphics/spr/snooker/line_ball.aseprite" id="2_tb4xp"]
+[ext_resource type="Script" path="res://scripts/entities/snooker/ball_sprite.gd" id="3_45y63"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5ighl"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_q74lu"]
+radius = 22.0
+
+[node name="Ball" type="RigidBody2D"]
+position = Vector2(285, 173)
+collision_layer = 4
+collision_mask = 4
+physics_material_override = SubResource("PhysicsMaterial_5ighl")
+gravity_scale = 0.0
+angular_damp_mode = 1
+angular_damp = 100.0
+script = ExtResource("1_wpxnu")
+
+[node name="line_ball" parent="." node_paths=PackedStringArray("ball_rb") instance=ExtResource("2_tb4xp")]
+script = ExtResource("3_45y63")
+ball_rb = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_q74lu")

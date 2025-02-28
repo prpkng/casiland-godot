@@ -1,6 +1,6 @@
 extends Control
 
-const OVERRIDE_MOBILE := true
+const OVERRIDE_MOBILE := false
 
 @export var left_stick: VirtualJoystick
 @export var right_stick: VirtualJoystick

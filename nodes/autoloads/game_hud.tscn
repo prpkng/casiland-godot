@@ -24,6 +24,7 @@ mouse_filter = 2
 layer = 100
 
 [node name="HUD Controls" type="Control" parent="UI" node_paths=PackedStringArray("left_stick", "right_stick")]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

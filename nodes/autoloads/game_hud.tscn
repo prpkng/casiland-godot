@@ -1,9 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://c3ynw2bqynnil"]
+[gd_scene load_steps=9 format=3 uid="uid://c3ynw2bqynnil"]
 
 [ext_resource type="Script" path="res://scripts/hud_controls.gd" id="1_rdeul"]
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="1_s03pb"]
 [ext_resource type="Texture2D" uid="uid://d0koyif5agh0m" path="res://graphics/ui/joystick_base.png" id="2_ab61y"]
 [ext_resource type="Texture2D" uid="uid://chokc1vjoqcyo" path="res://graphics/ui/joystick_tip.png" id="3_rl2dc"]
+[ext_resource type="Script" path="res://scripts/custom_stick.gd" id="5_hleng"]
+[ext_resource type="Texture2D" uid="uid://bft334vhwagkh" path="res://graphics/ui/roll_btn.png" id="5_u364y"]
+[ext_resource type="Texture2D" uid="uid://dku6de7buqyms" path="res://graphics/ui/roll_btn_pressed.png" id="7_ejgau"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_myjx3"]
+radius = 40.0
 
 [node name="GameHud" type="Control"]
 layout_mode = 3
@@ -12,18 +18,22 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="UI" type="CanvasLayer" parent="."]
+layer = 100
 
-[node name="HUD Controls" type="Control" parent="UI"]
-visible = false
+[node name="HUD Controls" type="Control" parent="UI" node_paths=PackedStringArray("left_stick", "right_stick")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_rdeul")
+left_stick = NodePath("Left Joystick")
+right_stick = NodePath("Right Joystick")
 
 [node name="Left Joystick" parent="UI/HUD Controls" instance=ExtResource("1_s03pb")]
 layout_mode = 1
@@ -42,10 +52,17 @@ action_up = "move_up"
 action_down = "move_down"
 
 [node name="Base" parent="UI/HUD Controls/Left Joystick" index="0"]
-offset_left = -106.0
-offset_top = 29.0
-offset_right = -10.0
-offset_bottom = 125.0
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.9
+anchor_right = 0.1
+anchor_bottom = 0.9
+offset_left = 0.0
+offset_top = -96.0
+offset_right = 96.0
+offset_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 0
 pivot_offset = Vector2(48, 48)
 texture = ExtResource("2_ab61y")
 
@@ -58,7 +75,7 @@ pivot_offset = Vector2(48, 48)
 texture = ExtResource("3_rl2dc")
 expand_mode = 2
 
-[node name="Right Joystick" parent="UI/HUD Controls" instance=ExtResource("1_s03pb")]
+[node name="Right Joystick" parent="UI/HUD Controls" node_paths=PackedStringArray("roll_button") instance=ExtResource("1_s03pb")]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -67,8 +84,9 @@ anchor_right = 1.0
 offset_top = 0.0
 offset_right = 0.0
 offset_bottom = 0.0
-grow_horizontal = 2
-grow_vertical = 2
+grow_horizontal = 0
+script = ExtResource("5_hleng")
+roll_button = NodePath("../Control/Button")
 joystick_mode = 1
 action_left = "aim_left"
 action_right = "aim_right"
@@ -76,10 +94,17 @@ action_up = "aim_up"
 action_down = "aim_down"
 
 [node name="Base" parent="UI/HUD Controls/Right Joystick" index="0"]
-offset_left = 10.0
-offset_top = 29.0
-offset_right = 106.0
-offset_bottom = 125.0
+anchors_preset = -1
+anchor_left = 0.9
+anchor_top = 0.9
+anchor_right = 0.9
+anchor_bottom = 0.9
+offset_left = -96.0
+offset_top = -96.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 0
+grow_vertical = 0
 pivot_offset = Vector2(48, 48)
 texture = ExtResource("2_ab61y")
 
@@ -91,6 +116,25 @@ offset_bottom = 48.0
 pivot_offset = Vector2(48, 48)
 texture = ExtResource("3_rl2dc")
 expand_mode = 2
+
+[node name="Control" type="Control" parent="UI/HUD Controls"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="Button" type="TouchScreenButton" parent="UI/HUD Controls/Control"]
+position = Vector2(-235, -95)
+texture_normal = ExtResource("5_u364y")
+texture_pressed = ExtResource("7_ejgau")
+shape = SubResource("CircleShape2D_myjx3")
+action = "roll"
+
+[connection signal="pressed" from="UI/HUD Controls/Control/Button" to="UI/HUD Controls" method="_roll_pressed"]
 
 [editable path="UI/HUD Controls/Left Joystick"]
 [editable path="UI/HUD Controls/Right Joystick"]

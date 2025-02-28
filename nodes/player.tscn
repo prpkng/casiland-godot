@@ -7,12 +7,14 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rvfhd"]
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_sprite")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_sprite", "player_gun")]
 physics_interpolation_mode = 1
 position = Vector2(183, 133)
 script = ExtResource("1_jqal3")
 movement_speed = 128
+roll_speed = 450
 player_sprite = NodePath("Player")
+player_gun = NodePath("Player/PlayerGun")
 
 [node name="Player" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("2_iud70")

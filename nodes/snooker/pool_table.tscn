@@ -5,21 +5,38 @@
 [node name="PoolTable" type="Node2D"]
 
 [node name="Table" type="Sprite2D" parent="."]
+z_index = -1
 position = Vector2(320, 180)
 texture = ExtResource("1_rkb82")
 region_enabled = true
 region_rect = Rect2(0, 0, 640, 360)
 
 [node name="Table2" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(320, 180)
+texture = ExtResource("1_rkb82")
+region_enabled = true
+region_rect = Rect2(0, 720, 640, 360)
+
+[node name="Table3" type="Sprite2D" parent="."]
 z_index = -10
 position = Vector2(320, 180)
 texture = ExtResource("1_rkb82")
 region_enabled = true
 region_rect = Rect2(0, 360, 640, 360)
 
-[node name="Table3" type="Sprite2D" parent="."]
-z_index = -5
-position = Vector2(320, 180)
-texture = ExtResource("1_rkb82")
-region_enabled = true
-region_rect = Rect2(0, 720, 640, 360)
+[node name="PlayerCollisions" type="StaticBody2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PlayerCollisions"]
+build_mode = 1
+polygon = PackedVector2Array(544, 80, 544, 288, 96, 288, 96, 80)
+
+[node name="BallCollisions" type="StaticBody2D" parent="."]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BallCollisions"]
+build_mode = 1
+polygon = PackedVector2Array(576, 48, 576, 88, 544, 128, 544, 241.781, 576, 280, 576, 320, 536, 320, 496.391, 288, 141.953, 288, 104, 320, 64, 320, 64, 280, 96, 242.436, 96, 127.76, 64, 88, 64, 48, 104, 48, 144, 80, 495.007, 80, 536, 48)

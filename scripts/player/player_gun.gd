@@ -36,9 +36,9 @@ func calculate_aim():
 	global_rotation = angle
 
 func start_firing():
+	is_firing = true
 	if fire_counter < 1: return
 	fire_counter = 0
-	is_firing = true
 	fire()
 
 func stop_firing():

@@ -1,10 +1,19 @@
-[gd_scene load_steps=6 format=3 uid="uid://j7y8fy4xtwfq"]
+[gd_scene load_steps=10 format=3 uid="uid://j7y8fy4xtwfq"]
 
 [ext_resource type="PackedScene" uid="uid://bhogxlfujshgh" path="res://nodes/player.tscn" id="1_2gq6p"]
 [ext_resource type="Script" path="res://scripts/scale_on_play.gd" id="2_6jl5l"]
 [ext_resource type="PackedScene" uid="uid://cdl3r8uf84ux7" path="res://nodes/camera_2d.tscn" id="2_ikdut"]
 [ext_resource type="PackedScene" uid="uid://c3ynw2bqynnil" path="res://nodes/autoloads/game_hud.tscn" id="3_wv0ge"]
 [ext_resource type="PackedScene" uid="uid://ctx77y216smqf" path="res://nodes/snooker/pool_table.tscn" id="5_fqfpb"]
+[ext_resource type="Script" path="res://scripts/entities/snooker/snooker_ball.gd" id="6_frxbx"]
+[ext_resource type="PackedScene" uid="uid://df05oco0cb7du" path="res://graphics/spr/snooker/line_ball.aseprite" id="6_yo06h"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5ighl"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_q74lu"]
+radius = 22.0
 
 [node name="Node2D" type="Node2D"]
 position = Vector2(1, 0)
@@ -22,3 +31,18 @@ collision_mask = 3
 position = Vector2(240, 135)
 
 [node name="PoolTable" parent="ScaledNodes" instance=ExtResource("5_fqfpb")]
+
+[node name="Ball" type="RigidBody2D" parent="ScaledNodes"]
+position = Vector2(285, 173)
+collision_layer = 4
+collision_mask = 4
+physics_material_override = SubResource("PhysicsMaterial_5ighl")
+gravity_scale = 0.0
+angular_damp_mode = 1
+angular_damp = 100.0
+script = ExtResource("6_frxbx")
+
+[node name="line_ball" parent="ScaledNodes/Ball" instance=ExtResource("6_yo06h")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScaledNodes/Ball"]
+shape = SubResource("CircleShape2D_q74lu")

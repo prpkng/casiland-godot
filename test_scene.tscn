@@ -29,3 +29,9 @@ position = Vector2(320, 180)
 [node name="The Hand" parent="ScaledNodes" node_paths=PackedStringArray("pool_table") instance=ExtResource("7_vbdk1")]
 position = Vector2(320, -12)
 pool_table = NodePath("../PoolTable")
+
+[node name="PoolStick" parent="ScaledNodes/The Hand" index="1"]
+position = Vector2(151, 40)
+rotation = 0.0
+
+[editable path="ScaledNodes/The Hand"]

@@ -14,6 +14,9 @@ var roll_dir: Vector2
 var move_input: Vector2
 var is_rolling: bool
 
+func _ready() -> void:
+	GM.player = self
+
 func _physics_process(_delta):
 	if is_rolling:
 		velocity = roll_dir * roll_speed

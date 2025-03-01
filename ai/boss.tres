@@ -1,0 +1,205 @@
+[gd_resource type="BehaviorTree" load_steps=49 format=3 uid="uid://cvfm482gt5v7d"]
+
+[ext_resource type="Script" path="res://ai/tasks/carry_ball_with_hand.gd" id="1_mdgbl"]
+[ext_resource type="Script" path="res://ai/tasks/print_var.gd" id="1_nu1ci"]
+[ext_resource type="Script" path="res://ai/tasks/drop_ball.gd" id="2_ymiuf"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_2gc0k"]
+var/desired_ball_count/name = &"desired_ball_count"
+var/desired_ball_count/type = 2
+var/desired_ball_count/value = 0
+var/desired_ball_count/hint = 0
+var/desired_ball_count/hint_string = ""
+var/ball_count/name = &"ball_count"
+var/ball_count/type = 2
+var/ball_count/value = 0
+var/ball_count/hint = 0
+var/ball_count/hint_string = ""
+var/needs_populate/name = &"needs_populate"
+var/needs_populate/type = 1
+var/needs_populate/value = false
+var/needs_populate/hint = 0
+var/needs_populate/hint_string = ""
+
+[sub_resource type="BBVariant" id="BBVariant_ult5j"]
+resource_name = "true"
+saved_value = true
+type = 1
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_2du6c"]
+variable = &"needs_populate"
+value = SubResource("BBVariant_ult5j")
+
+[sub_resource type="BBVariant" id="BBVariant_wc4lg"]
+resource_name = "$desired_ball_count"
+value_source = 1
+variable = &"desired_ball_count"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_jpdna"]
+variable = &"ball_count"
+check_type = 1
+value = SubResource("BBVariant_wc4lg")
+
+[sub_resource type="BBVariant" id="BBVariant_82xjh"]
+resource_name = "1"
+saved_value = 1
+type = 2
+
+[sub_resource type="BTSetVar" id="BTSetVar_xlckc"]
+variable = &"ball_count"
+value = SubResource("BBVariant_82xjh")
+operation = 1
+
+[sub_resource type="BTConsolePrint" id="BTConsolePrint_7mrbi"]
+text = "a"
+
+[sub_resource type="BTWait" id="BTWait_c2i2o"]
+duration = 0.25
+
+[sub_resource type="BBVariant" id="BBVariant_e3u8m"]
+resource_name = "<null>"
+saved_value = false
+type = 1
+
+[sub_resource type="BBNode" id="BBNode_grieb"]
+resource_name = "."
+saved_value = NodePath(".")
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_531x6"]
+custom_name = "Spawn ball at hand"
+node = SubResource("BBNode_grieb")
+method = &"spawn_ball"
+args = Array[BBVariant]([SubResource("BBVariant_e3u8m")])
+
+[sub_resource type="BBNode" id="BBNode_dh6d7"]
+resource_name = "."
+saved_value = NodePath(".")
+
+[sub_resource type="BTAction" id="BTAction_cxyhj"]
+script = ExtResource("1_mdgbl")
+boss_node = SubResource("BBNode_dh6d7")
+is_left = null
+
+[sub_resource type="BBNode" id="BBNode_sewt0"]
+resource_name = "."
+saved_value = NodePath(".")
+
+[sub_resource type="BTAction" id="BTAction_qgprf"]
+script = ExtResource("2_ymiuf")
+boss_node = SubResource("BBNode_sewt0")
+is_left = null
+
+[sub_resource type="BTAction" id="BTAction_m0tqr"]
+script = ExtResource("1_nu1ci")
+target = &"ball_count"
+
+[sub_resource type="BTSequence" id="BTSequence_mongn"]
+children = [SubResource("BTCheckVar_jpdna"), SubResource("BTSetVar_xlckc"), SubResource("BTConsolePrint_7mrbi"), SubResource("BTWait_c2i2o"), SubResource("BTCallMethod_531x6"), SubResource("BTAction_cxyhj"), SubResource("BTAction_qgprf"), SubResource("BTAction_m0tqr")]
+
+[sub_resource type="BTRepeatUntilFailure" id="BTRepeatUntilFailure_ate72"]
+children = [SubResource("BTSequence_mongn")]
+
+[sub_resource type="BBVariant" id="BBVariant_3qa86"]
+resource_name = "$desired_ball_count"
+value_source = 1
+variable = &"desired_ball_count"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_3bviy"]
+variable = &"ball_count"
+check_type = 1
+value = SubResource("BBVariant_3qa86")
+
+[sub_resource type="BBVariant" id="BBVariant_ilq6l"]
+resource_name = "1"
+saved_value = 1
+type = 2
+
+[sub_resource type="BTSetVar" id="BTSetVar_yxhj7"]
+variable = &"ball_count"
+value = SubResource("BBVariant_ilq6l")
+operation = 1
+
+[sub_resource type="BTConsolePrint" id="BTConsolePrint_o24pp"]
+text = "a"
+
+[sub_resource type="BTWait" id="BTWait_ypthf"]
+duration = 0.25
+
+[sub_resource type="BBVariant" id="BBVariant_swjfl"]
+resource_name = "true"
+saved_value = true
+type = 1
+
+[sub_resource type="BBNode" id="BBNode_brh6o"]
+resource_name = "."
+saved_value = NodePath(".")
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_t7fpl"]
+custom_name = "Spawn ball at hand"
+node = SubResource("BBNode_brh6o")
+method = &"spawn_ball"
+args = Array[BBVariant]([SubResource("BBVariant_swjfl")])
+
+[sub_resource type="BBNode" id="BBNode_3fmqk"]
+resource_name = "."
+saved_value = NodePath(".")
+
+[sub_resource type="BTAction" id="BTAction_0wof4"]
+script = ExtResource("1_mdgbl")
+boss_node = SubResource("BBNode_3fmqk")
+is_left = true
+
+[sub_resource type="BBNode" id="BBNode_pxaq6"]
+resource_name = "."
+saved_value = NodePath(".")
+
+[sub_resource type="BTAction" id="BTAction_uoqy7"]
+script = ExtResource("2_ymiuf")
+boss_node = SubResource("BBNode_pxaq6")
+is_left = true
+
+[sub_resource type="BTAction" id="BTAction_bflh7"]
+script = ExtResource("1_nu1ci")
+target = &"ball_count"
+
+[sub_resource type="BTSequence" id="BTSequence_kgqxu"]
+children = [SubResource("BTCheckVar_3bviy"), SubResource("BTSetVar_yxhj7"), SubResource("BTConsolePrint_o24pp"), SubResource("BTWait_ypthf"), SubResource("BTCallMethod_t7fpl"), SubResource("BTAction_0wof4"), SubResource("BTAction_uoqy7"), SubResource("BTAction_bflh7")]
+
+[sub_resource type="BTRepeatUntilFailure" id="BTRepeatUntilFailure_8md3q"]
+children = [SubResource("BTSequence_kgqxu")]
+
+[sub_resource type="BTParallel" id="BTParallel_xm8x3"]
+children = [SubResource("BTRepeatUntilFailure_ate72"), SubResource("BTRepeatUntilFailure_8md3q")]
+
+[sub_resource type="BBNode" id="BBNode_ua0bt"]
+resource_name = "."
+saved_value = NodePath(".")
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_lvtpd"]
+node = SubResource("BBNode_ua0bt")
+method = &"start_hands_sine"
+
+[sub_resource type="BTWait" id="BTWait_ml1wo"]
+
+[sub_resource type="BTSequence" id="BTSequence_gmo24"]
+custom_name = "Populate balls"
+children = [SubResource("BTCheckVar_2du6c"), SubResource("BTParallel_xm8x3"), SubResource("BTCallMethod_lvtpd"), SubResource("BTWait_ml1wo")]
+
+[sub_resource type="BTFail" id="BTFail_5vtkb"]
+
+[sub_resource type="BTSequence" id="BTSequence_acrei"]
+custom_name = "Shot balls"
+children = [SubResource("BTFail_5vtkb")]
+
+[sub_resource type="BTFail" id="BTFail_1m0jk"]
+
+[sub_resource type="BTSequence" id="BTSequence_ahi02"]
+custom_name = "Stomp Player"
+children = [SubResource("BTFail_1m0jk")]
+
+[sub_resource type="BTSelector" id="BTSelector_iq5h4"]
+children = [SubResource("BTSequence_gmo24"), SubResource("BTSequence_acrei"), SubResource("BTSequence_ahi02")]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_2gc0k")
+root_task = SubResource("BTSelector_iq5h4")

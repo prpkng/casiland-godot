@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://dot8tsn0euulb"]
+
+[ext_resource type="Script" path="res://scripts/entities/snooker/the_hand_boss.gd" id="1_a3k82"]
+[ext_resource type="BehaviorTree" uid="uid://cvfm482gt5v7d" path="res://ai/boss.tres" id="2_5hymv"]
+[ext_resource type="PackedScene" uid="uid://c3ht1rv36du1l" path="res://graphics/spr/snooker/hands.aseprite" id="3_27s64"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_v3lj3"]
+var/desired_ball_count/name = &"desired_ball_count"
+var/desired_ball_count/type = 2
+var/desired_ball_count/value = 4
+var/desired_ball_count/hint = 0
+var/desired_ball_count/hint_string = ""
+var/needs_populate/name = &"needs_populate"
+var/needs_populate/type = 1
+var/needs_populate/value = true
+var/needs_populate/hint = 0
+var/needs_populate/hint_string = ""
+
+[node name="The Hand" type="Node2D" node_paths=PackedStringArray("left_hand", "right_hand")]
+position = Vector2(302, 75)
+script = ExtResource("1_a3k82")
+left_hand = NodePath("LeftHand")
+right_hand = NodePath("RightHand")
+
+[node name="BTPlayer" type="BTPlayer" parent="."]
+behavior_tree = ExtResource("2_5hymv")
+blackboard_plan = SubResource("BlackboardPlan_v3lj3")
+
+[node name="LeftHand" parent="." instance=ExtResource("3_27s64")]
+z_index = 5
+position = Vector2(48, 32)
+speed_scale = 0.0
+
+[node name="RightHand" parent="." instance=ExtResource("3_27s64")]
+z_index = 5
+position = Vector2(-48, 32)
+speed_scale = 0.0
+flip_h = true

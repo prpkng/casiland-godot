@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://bhogxlfujshgh"]
+[gd_scene load_steps=7 format=3 uid="uid://bhogxlfujshgh"]
 
 [ext_resource type="Script" path="res://scripts/player/player_movement.gd" id="1_jqal3"]
 [ext_resource type="SpriteFrames" uid="uid://7xaej5ucwf5m" path="res://graphics/spr/player/player.aseprite" id="2_iud70"]
 [ext_resource type="Script" path="res://scripts/player/player_animations.gd" id="3_ef03b"]
 [ext_resource type="PackedScene" uid="uid://cs88cm3j8i48y" path="res://nodes/player_gun.tscn" id="4_ynuc3"]
+[ext_resource type="Texture2D" uid="uid://cissejqy2qaq3" path="res://graphics/spr/player/player_shadow.png" id="5_vm0m3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rvfhd"]
 
@@ -22,6 +23,10 @@ sprite_frames = ExtResource("2_iud70")
 animation = &"Idle"
 autoplay = "Idle"
 script = ExtResource("3_ef03b")
+
+[node name="PlayerShadow" type="Sprite2D" parent="Player"]
+z_index = -3
+texture = ExtResource("5_vm0m3")
 
 [node name="PlayerGun" parent="Player" instance=ExtResource("4_ynuc3")]
 position = Vector2(-2, 3)

@@ -1,15 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://buatpvadejxgf"]
+[gd_scene load_steps=7 format=3 uid="uid://buatpvadejxgf"]
 
 [ext_resource type="Script" path="res://scripts/entities/snooker/snooker_ball.gd" id="1_wpxnu"]
 [ext_resource type="PackedScene" uid="uid://df05oco0cb7du" path="res://graphics/spr/snooker/line_ball.aseprite" id="2_tb4xp"]
 [ext_resource type="Script" path="res://scripts/entities/snooker/ball_sprite.gd" id="3_45y63"]
+[ext_resource type="Texture2D" uid="uid://ghec8fensetx" path="res://graphics/spr/snooker/ball_shadow.png" id="4_oejy8"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5ighl"]
 friction = 0.0
 bounce = 1.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_q74lu"]
-radius = 22.0
+radius = 24.0
 
 [node name="Ball" type="RigidBody2D"]
 physics_interpolation_mode = 1
@@ -30,3 +31,7 @@ ball_rb = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_q74lu")
+
+[node name="Shadow" type="Sprite2D" parent="."]
+z_index = -3
+texture = ExtResource("4_oejy8")

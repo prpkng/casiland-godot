@@ -13,6 +13,7 @@ position = Vector2(183, 133)
 script = ExtResource("1_jqal3")
 movement_speed = 128
 roll_speed = 450
+roll_duration = 0.2
 player_sprite = NodePath("Player")
 player_gun = NodePath("Player/PlayerGun")
 

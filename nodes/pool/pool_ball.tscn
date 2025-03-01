@@ -12,6 +12,7 @@ bounce = 1.0
 radius = 22.0
 
 [node name="Ball" type="RigidBody2D"]
+physics_interpolation_mode = 1
 position = Vector2(285, 173)
 collision_layer = 4
 collision_mask = 4
@@ -22,6 +23,8 @@ angular_damp = 100.0
 script = ExtResource("1_wpxnu")
 
 [node name="line_ball" parent="." node_paths=PackedStringArray("ball_rb") instance=ExtResource("2_tb4xp")]
+show_behind_parent = true
+z_as_relative = false
 script = ExtResource("3_45y63")
 ball_rb = NodePath("..")
 

@@ -17,5 +17,3 @@ func _physics_process(delta: float) -> void:
 	#rotation_degrees = deg
 	
 	speed_scale = (ball_rb.linear_velocity.length() * SPEED_MULTI) ** SPEED_POW
-	print(speed_scale)
-	

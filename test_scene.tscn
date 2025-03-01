@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://j7y8fy4xtwfq"]
+[gd_scene load_steps=8 format=3 uid="uid://j7y8fy4xtwfq"]
 
 [ext_resource type="PackedScene" uid="uid://bhogxlfujshgh" path="res://nodes/player.tscn" id="1_2gq6p"]
 [ext_resource type="Script" path="res://scripts/scale_on_play.gd" id="2_6jl5l"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://c3ynw2bqynnil" path="res://nodes/autoloads/game_hud.tscn" id="3_wv0ge"]
 [ext_resource type="PackedScene" uid="uid://ctx77y216smqf" path="res://nodes/pool/pool_table.tscn" id="5_fqfpb"]
 [ext_resource type="PackedScene" uid="uid://buatpvadejxgf" path="res://nodes/pool/pool_ball.tscn" id="6_btws5"]
+[ext_resource type="PackedScene" uid="uid://dot8tsn0euulb" path="res://nodes/pool/the_hand.tscn" id="7_vbdk1"]
 
 [node name="Node2D" type="Node2D"]
 position = Vector2(1, 0)
@@ -23,5 +24,10 @@ collision_mask = 3
 position = Vector2(240, 135)
 
 [node name="PoolTable" parent="ScaledNodes" instance=ExtResource("5_fqfpb")]
+position = Vector2(320, 180)
 
 [node name="PoolBall" parent="ScaledNodes" instance=ExtResource("6_btws5")]
+
+[node name="The Hand" parent="ScaledNodes" node_paths=PackedStringArray("pool_table") instance=ExtResource("7_vbdk1")]
+position = Vector2(320, -12)
+pool_table = NodePath("../PoolTable")

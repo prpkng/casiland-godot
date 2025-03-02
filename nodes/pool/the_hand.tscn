@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dot8tsn0euulb"]
+[gd_scene load_steps=6 format=3 uid="uid://dot8tsn0euulb"]
 
 [ext_resource type="Script" path="res://scripts/entities/snooker/the_hand_boss.gd" id="1_a3k82"]
 [ext_resource type="BehaviorTree" uid="uid://cvfm482gt5v7d" path="res://ai/boss.tres" id="2_5hymv"]
 [ext_resource type="PackedScene" uid="uid://c3ht1rv36du1l" path="res://graphics/spr/snooker/hands.aseprite" id="3_27s64"]
+[ext_resource type="Texture2D" uid="uid://bxpl8yy4oin6h" path="res://graphics/spr/snooker/pool_stick.aseprite" id="4_l5ey3"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_v3lj3"]
 var/desired_ball_count/name = &"desired_ball_count"
@@ -15,24 +16,42 @@ var/needs_populate/type = 1
 var/needs_populate/value = true
 var/needs_populate/hint = 0
 var/needs_populate/hint_string = ""
+var/boss/name = &"boss"
+var/boss/type = 22
+var/boss/value = NodePath("..")
+var/boss/hint = 0
+var/boss/hint_string = ""
 
-[node name="The Hand" type="Node2D" node_paths=PackedStringArray("left_hand", "right_hand")]
+[node name="The Hand" type="Node2D" node_paths=PackedStringArray("left_hand", "right_hand", "pool_stick")]
 position = Vector2(302, 75)
 script = ExtResource("1_a3k82")
 left_hand = NodePath("LeftHand")
 right_hand = NodePath("RightHand")
+pool_stick = NodePath("PoolStick")
 
 [node name="BTPlayer" type="BTPlayer" parent="."]
 behavior_tree = ExtResource("2_5hymv")
 blackboard_plan = SubResource("BlackboardPlan_v3lj3")
 
+[node name="PoolStick" type="Sprite2D" parent="."]
+show_behind_parent = true
+z_index = 4
+z_as_relative = false
+position = Vector2(64, 63)
+rotation = 0.959931
+texture = ExtResource("4_l5ey3")
+offset = Vector2(-160, 2.5)
+
 [node name="LeftHand" parent="." instance=ExtResource("3_27s64")]
 z_index = 5
+z_as_relative = false
 position = Vector2(48, 32)
+animation = &"Point"
 speed_scale = 0.0
 
 [node name="RightHand" parent="." instance=ExtResource("3_27s64")]
 z_index = 5
+z_as_relative = false
 position = Vector2(-48, 32)
 speed_scale = 0.0
 flip_h = true

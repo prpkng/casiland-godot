@@ -22,6 +22,7 @@ D="*res://nodes/autoloads/debug_hud.tscn"
 C="*res://scripts/console/console.gd"
 GM="*res://scripts/game_manager.gd"
 InputHelper="*res://addons/input_helper/input_helper.gd"
+Shaker="*res://addons/shaker/src/Shaker.gd"
 
 [display]
 
@@ -35,7 +36,7 @@ window/vsync/vsync_mode=0
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/input_helper/plugin.cfg", "res://addons/nklbdev.importality/plugin.cfg", "res://addons/virtual_joystick/plugin.cfg")
+enabled=PackedStringArray("res://addons/health_hitbox_hurtbox/plugin.cfg", "res://addons/input_helper/plugin.cfg", "res://addons/nklbdev.importality/plugin.cfg", "res://addons/shaker/plugin.cfg", "res://addons/virtual_joystick/plugin.cfg")
 
 [global_group]
 

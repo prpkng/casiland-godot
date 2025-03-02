@@ -6,5 +6,5 @@ func play_anim(name: StringName):
 		return
 	play(name)
 	
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	scale.x = -1 if GM.player_aim_input.x < 0 else 1

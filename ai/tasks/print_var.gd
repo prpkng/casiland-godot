@@ -1,7 +1,7 @@
 extends BTAction
 
-@export var target: StringName
+@export var target_var: StringName
 
-func _tick(delta: float) -> Status:
-	print(blackboard.get_var(target))
+func _tick(_delta: float) -> Status:
+	print(blackboard.get_var(target_var))
 	return SUCCESS

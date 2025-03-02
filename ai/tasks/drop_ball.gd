@@ -45,7 +45,7 @@ func _exit() -> void:
 
 
 # Called each time this task is ticked (aka executed).
-func _tick(delta: float) -> Status:
+func _tick(_delta: float) -> Status:
 	if tween.is_running():
 		return RUNNING
 	return SUCCESS

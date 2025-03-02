@@ -2,20 +2,20 @@
 
 importer="Aseprite AnimatedSprite2D"
 type="PackedScene"
-uid="uid://c3ht1rv36du1l"
-path="res://.godot/imported/hands.aseprite-c0450fc2030654ecfb0ef0c31fdcbb27.scn"
+uid="uid://dq5qlq8m0ial0"
+path="res://.godot/imported/ball_stages.aseprite-ea4e5dd8b4920789903533cd35083cd7.scn"
 
 [deps]
 
-source_file="res://graphics/spr/snooker/hands.aseprite"
-dest_files=["res://.godot/imported/hands.aseprite-c0450fc2030654ecfb0ef0c31fdcbb27.scn"]
+source_file="res://graphics/spr/the_hand/ball_stages.aseprite"
+dest_files=["res://.godot/imported/ball_stages.aseprite-ea4e5dd8b4920789903533cd35083cd7.scn"]
 
 [params]
 
 animation/default/name="default"
 animation/default/direction=0
 animation/default/repeat_count=0
-animation/autoplay_name=""
+animation/autoplay_name="default"
 atlas_textures/region_filter_clip_enabled=false
 root_node_name=""
 middle_import_script=""

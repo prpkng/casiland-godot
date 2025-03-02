@@ -37,6 +37,7 @@ max_points_count = 10
 collision_layer = 32
 collision_mask = 32
 script = ExtResource("4_y8m6p")
+amount = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox2D"]
 position = Vector2(3, 0)

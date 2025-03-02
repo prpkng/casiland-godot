@@ -40,24 +40,12 @@ const DEFAULT_MAX = 100
 
 ## The current amount of health.[br]
 ## Value is clamped [0, max].
-@export var current: int = DEFAULT_MAX:
-	set(curr):
-		current = clampi(curr, 0, max)
+@export var current: int = DEFAULT_MAX
 
 ## The maximum amount of health.[br]
 ## Will not allow values < 1.
 ## Will reduce current if greater than updated max.[br]
-@export var max: int = DEFAULT_MAX:
-	set(new_max):
-		var old_max = max
-		max = maxi(new_max, 1)
-		# after max is set or current will clamp wrong
-		if Engine.is_editor_hint() and current == old_max:
-			# keep full health in editor if it was before
-			current = max
-		else:
-			# reduce current in game so it is not greater than max
-			current = mini(current, max)
+@export var max: int = DEFAULT_MAX
 
 @export_group("Conditions")
 ## Enable if entity is capable of taking damage.

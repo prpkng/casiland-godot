@@ -86,7 +86,7 @@ func spawn_ball(left: bool) -> void:
 	active_balls.append(ball)
 
 func push_ball(dir: Vector2):
-	selected_ball.linear_velocity = dir.normalized() * 300
+	selected_ball.linear_velocity = dir.normalized() * 350
 
 func pick_random_ball() -> void:
 	selected_ball =  active_balls.pick_random()

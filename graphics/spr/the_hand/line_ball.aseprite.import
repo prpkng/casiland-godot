@@ -3,12 +3,12 @@
 importer="Aseprite AnimatedSprite2D"
 type="PackedScene"
 uid="uid://df05oco0cb7du"
-path="res://.godot/imported/line_ball.aseprite-39e48077cdb4ae17f20c52c533fcf4df.scn"
+path="res://.godot/imported/line_ball.aseprite-834b43de6447352d0087b041473bb738.scn"
 
 [deps]
 
-source_file="res://graphics/spr/snooker/line_ball.aseprite"
-dest_files=["res://.godot/imported/line_ball.aseprite-39e48077cdb4ae17f20c52c533fcf4df.scn"]
+source_file="res://graphics/spr/the_hand/line_ball.aseprite"
+dest_files=["res://.godot/imported/line_ball.aseprite-834b43de6447352d0087b041473bb738.scn"]
 
 [params]
 

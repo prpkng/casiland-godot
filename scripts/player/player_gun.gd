@@ -2,7 +2,7 @@
 extends Node2D
 class_name PlayerGun
 
-const player_bullet: PackedScene = preload('res://nodes/bullet.tscn')
+const player_bullet: PackedScene = preload('res://nodes/player_bullet.tscn')
 
 @export var gun_sprite: AnimatedSprite2D
 @export var muzzle_point: Node2D

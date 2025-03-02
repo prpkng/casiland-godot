@@ -8,5 +8,5 @@ func _ready() -> void:
 	reparent(viewport.get_node('SubViewport'))
 	GM.current_root = viewport.get_node('SubViewport')
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass

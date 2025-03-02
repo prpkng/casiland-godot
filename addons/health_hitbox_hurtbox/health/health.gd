@@ -129,11 +129,11 @@ func damage(amount: int, multiplier: float = 1.0) -> void:
 
 	var is_first_hit := is_full() and applied > 0
 	current -= applied
-	print_debug("%s damaged amount=%d multiplier=%0.4f applied=%d current=%d" % [entity, amount, multiplier, applied, current])
+	#print_debug("%s damaged amount=%d multiplier=%0.4f applied=%d current=%d" % [entity, amount, multiplier, applied, current])
 	damaged.emit(entity, amount, applied, multiplier)
 	
 	if is_first_hit:
-		print_debug("%s first hit" % entity)
+		#print_debug("%s first hit" % entity)
 		first_hit.emit(entity)
 	
 	if is_dead():

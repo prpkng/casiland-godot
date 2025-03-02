@@ -9,7 +9,7 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	var dir = ball_rb.linear_velocity.normalized()
 	var angle = atan2(dir.y, dir.x)
 	#rotation = lerp_angle(rotation, angle, 0.5)

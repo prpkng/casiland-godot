@@ -17,7 +17,6 @@ func _generate_name() -> String:
 # Called to initialize the task.
 func _setup() -> void:
 	boss = blackboard.get_var(boss_node_var) as TheHandBoss
-	print(boss)
 
 func _enter() -> void:
 	var duration = delay.get_value(scene_root, blackboard)

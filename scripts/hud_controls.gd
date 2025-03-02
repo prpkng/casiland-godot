@@ -17,7 +17,7 @@ func _ready() -> void:
 		GM.is_mobile = true
 		visible = true
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if right_stick.is_pressed and not was_holding_right_stick:
 		was_holding_right_stick = true
 		var event = InputEventAction.new()

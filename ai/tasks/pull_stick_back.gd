@@ -17,8 +17,11 @@ func _setup() -> void:
 
 func _enter() -> void:
 	boss.pool_stick.reparent(boss.selected_ball)
+	boss.pool_stick.reset_physics_interpolation()
 	boss.left_hand.reparent(boss.selected_ball)
+	boss.left_hand.reset_physics_interpolation()
 	boss.right_hand.reparent(boss.selected_ball)
+	boss.right_hand.reset_physics_interpolation()
 	tween = scene_root.get_tree().create_tween()
 	tween.set_ease(Tween.EASE_OUT)
 	tween.set_trans(Tween.TRANS_CUBIC)

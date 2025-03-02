@@ -116,9 +116,11 @@ pointing/emulate_mouse_from_touch=false
 [layer_names]
 
 2d_physics/layer_2="Player"
+2d_physics/layer_6="Enemy Hitbox"
 
 [physics]
 
+common/physics_ticks_per_second=30
 common/physics_jitter_fix=0.0
 common/physics_interpolation=true
 

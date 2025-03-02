@@ -27,5 +27,9 @@ func _enter() -> void:
 func _exit() -> void:
 	boss.push_ball((boss.selected_ball.global_position - boss.pool_stick.global_position).normalized())
 	boss.pool_stick.reparent(boss)
+	boss.pool_stick.reset_physics_interpolation()
 	boss.left_hand.reparent(boss)
+	boss.left_hand.reset_physics_interpolation()
 	boss.right_hand.reparent(boss)
+	boss.right_hand.reset_physics_interpolation()
+	

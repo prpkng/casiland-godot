@@ -5,7 +5,7 @@ extends Line2D
 
 var counter = 1
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	global_position = Vector2.ZERO
 	global_rotation = 0
 	

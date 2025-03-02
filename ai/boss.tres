@@ -216,7 +216,7 @@ node = SubResource("BBNode_d0veh")
 method = &"stop_hands_sine"
 
 [sub_resource type="BBVariant" id="BBVariant_rhdux"]
-resource_name = "<null>"
+resource_name = "false"
 saved_value = false
 type = 1
 
@@ -232,7 +232,7 @@ children = [SubResource("BTCheckVar_2du6c"), SubResource("BTParallel_xm8x3"), Su
 text = "Shot balls"
 
 [sub_resource type="BBVariant" id="BBVariant_hmjem"]
-resource_name = "<null>"
+resource_name = "0"
 saved_value = 0
 type = 2
 

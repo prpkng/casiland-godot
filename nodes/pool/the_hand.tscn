@@ -35,6 +35,7 @@ blackboard_plan = SubResource("BlackboardPlan_v3lj3")
 
 [node name="PoolStick" type="Sprite2D" parent="."]
 show_behind_parent = true
+z_index = 4
 z_as_relative = false
 position = Vector2(64, 63)
 rotation = 0.959931

@@ -1,3 +1,4 @@
+@icon('res://editor/icons/node_2D/icon_skull.png')
 extends Node2D
 class_name TheHandBoss
 

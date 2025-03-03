@@ -117,6 +117,7 @@ pointing/emulate_mouse_from_touch=false
 
 2d_physics/layer_2="Player"
 2d_physics/layer_3="Level and Props"
+2d_physics/layer_5="Player Hitbox"
 2d_physics/layer_6="Enemy Hitbox"
 
 [physics]

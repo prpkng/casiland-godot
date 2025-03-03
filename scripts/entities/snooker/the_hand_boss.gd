@@ -87,6 +87,8 @@ func spawn_ball(left: bool) -> void:
 
 func push_ball(dir: Vector2):
 	selected_ball.linear_velocity = dir.normalized() * 350
+	Camera.shake_strong()
+	
 
 func pick_random_ball() -> void:
 	selected_ball =  active_balls.pick_random()

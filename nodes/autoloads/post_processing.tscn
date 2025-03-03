@@ -1,7 +1,28 @@
-[gd_scene format=3 uid="uid://cyyxqww2i4wfy"]
+[gd_scene load_steps=4 format=3 uid="uid://cyyxqww2i4wfy"]
+
+[ext_resource type="Script" path="res://scripts/vfx/post_processing.gd" id="1_3fur1"]
+[ext_resource type="Shader" path="res://shaders/flash_screen.gdshader" id="1_bsov4"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hpra8"]
+shader = ExtResource("1_bsov4")
+shader_parameter/color = Color(0.877616, 0.877616, 0.877616, 1)
+shader_parameter/fac = 0.0
+shader_parameter/outerRadius = 1.0
 
 [node name="PostProcessing" type="Control"]
 layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_3fur1")
+
+[node name="Pass1" type="CanvasLayer" parent="."]
+
+[node name="Flash" type="ColorRect" parent="Pass1"]
+material = SubResource("ShaderMaterial_hpra8")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

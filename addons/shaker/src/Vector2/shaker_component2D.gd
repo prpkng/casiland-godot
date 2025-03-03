@@ -161,6 +161,8 @@ func _progress_shake() -> void:
 				shake_finished.emit()
 				break
 		var _i:int = fmod(index, _shake_position.size())
+		if target is Camera2D:
+			target.offset += -_last_position_shake[_i] + _shake_position[_i]
 		target.position += -_last_position_shake[_i] + _shake_position[_i]
 		target.rotation += -_last_rotation_shake[_i] + _shake_rotation[_i]
 		target.scale += -_last_scale_shake[_i] + _shake_scale[_i]

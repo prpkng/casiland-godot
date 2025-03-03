@@ -1,8 +1,9 @@
 [gd_scene load_steps=2 format=3 uid="uid://cdl3r8uf84ux7"]
 
-[ext_resource type="Script" path="res://scripts/camera_follow.gd" id="1_q07q2"]
+[ext_resource type="Script" path="res://scripts/camera_manager.gd" id="1_q07q2"]
 
 [node name="Camera2D" type="Camera2D"]
-position = Vector2(199, 114)
+position = Vector2(271.001, 152)
+ignore_rotation = false
 position_smoothing_enabled = true
 script = ExtResource("1_q07q2")

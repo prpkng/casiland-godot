@@ -1,12 +1,18 @@
-[gd_scene load_steps=7 format=3 uid="uid://bhogxlfujshgh"]
+[gd_scene load_steps=11 format=3 uid="uid://bhogxlfujshgh"]
 
 [ext_resource type="Script" path="res://scripts/player/player_movement.gd" id="1_jqal3"]
 [ext_resource type="SpriteFrames" uid="uid://7xaej5ucwf5m" path="res://graphics/spr/player/player.aseprite" id="2_iud70"]
 [ext_resource type="Script" path="res://scripts/player/player_animations.gd" id="3_ef03b"]
 [ext_resource type="PackedScene" uid="uid://cs88cm3j8i48y" path="res://nodes/player_gun.tscn" id="4_ynuc3"]
 [ext_resource type="Texture2D" uid="uid://cissejqy2qaq3" path="res://graphics/spr/player/player_shadow.png" id="5_vm0m3"]
+[ext_resource type="Script" path="res://addons/health_hitbox_hurtbox/2d/hurt_box_2d/hurt_box_2d.gd" id="6_1pccs"]
+[ext_resource type="Script" path="res://addons/health_hitbox_hurtbox/health/health.gd" id="7_iss4e"]
+[ext_resource type="Script" path="res://scripts/vfx/player_death_effect.gd" id="8_58t5b"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rvfhd"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ytd2x"]
+radius = 7.0
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_sprite", "player_gun")]
 physics_interpolation_mode = 1
@@ -40,5 +46,23 @@ position = Vector2(11, 0)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
 shape = SubResource("CircleShape2D_rvfhd")
+
+[node name="HurtBox2D" type="Area2D" parent="." node_paths=PackedStringArray("health")]
+collision_layer = 16
+collision_mask = 16
+script = ExtResource("6_1pccs")
+health = NodePath("../Health")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox2D"]
+position = Vector2(0, 1)
+shape = SubResource("CircleShape2D_ytd2x")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("7_iss4e")
+current = 6
+max = 6
+
+[node name="PlayerDeathEffect" type="Node" parent="Health"]
+script = ExtResource("8_58t5b")
 
 [editable path="Player/PlayerGun"]

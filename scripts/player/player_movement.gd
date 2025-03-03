@@ -9,6 +9,7 @@ extends CharacterBody2D
 @export var player_sprite: PlayerAnimations
 @export var player_gun: PlayerGun
 
+@onready var hurt_box: HurtBox2D = $HurtBox2D
 
 var roll_dir: Vector2
 var move_input: Vector2
@@ -42,8 +43,14 @@ func roll():
 	player_gun.visible = false
 	GM.player_aim_input.x = roll_dir.x
 	
+	hurt_box.monitoring = false
+	hurt_box.monitorable = false
+	
 	await get_tree().create_timer(roll_duration).timeout
 	if !self: return
+	
+	hurt_box.monitoring = true
+	hurt_box.monitorable = true
 	
 	is_rolling = false
 	player_gun.visible = true

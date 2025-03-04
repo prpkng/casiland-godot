@@ -7,6 +7,7 @@ const player_bullet: PackedScene = preload('res://nodes/player_bullet.tscn')
 @export var gun_sprite: AnimatedSprite2D
 @export var muzzle_point: Node2D
 @export var fire_rate: float = 6
+@export var bullet_damage: float = 10
 
 var start_x = 0
 var is_firing := false
@@ -52,6 +53,7 @@ func fire():
 	bullet.global_position = muzzle_point.global_position
 	bullet.set_process(true)
 	bullet.visible = true
+	(bullet.get_node('HitBox2D') as HitBox2D).amount = bullet_damage
 	get_tree().create_timer(1).timeout.connect(bullet.queue_free)
 	bullet.rotation = global_rotation
 	

@@ -25,6 +25,8 @@ func _enter() -> void:
 	tween.tween_property(boss.left_hand, 'position', boss.left_hand.position + dir * 25, .075)
 
 func _exit() -> void:
+	if boss.selected_ball == null:
+		return
 	boss.push_ball((boss.selected_ball.global_position - boss.pool_stick.global_position).normalized())
 	boss.pool_stick.reparent(boss)
 	boss.pool_stick.reset_physics_interpolation()

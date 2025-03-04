@@ -21,6 +21,7 @@ var/boss/type = 22
 var/boss/value = NodePath("..")
 var/boss/hint = 0
 var/boss/hint_string = ""
+binding/current_selected_ball = NodePath("..:selected_ball")
 
 [node name="The Hand" type="Node2D" node_paths=PackedStringArray("left_hand", "right_hand", "pool_stick")]
 physics_interpolation_mode = 1

@@ -9,7 +9,7 @@
 [sub_resource type="Resource" id="Resource_cd5f5"]
 script = ExtResource("2_fptgd")
 seed = 0
-amplitude = Vector2(6, 6)
+amplitude = Vector2(28, 28)
 offset = Vector2(0, 0)
 BlendingMode = 0
 fade_in = 0.0
@@ -22,7 +22,7 @@ bake_internal = 64
 [sub_resource type="Resource" id="Resource_q4dqo"]
 script = ExtResource("4_y8a8m")
 seed = 0
-amplitude = 0.04
+amplitude = 0.13
 offset = 0.0
 BlendingMode = 0
 fade_in = 0.0

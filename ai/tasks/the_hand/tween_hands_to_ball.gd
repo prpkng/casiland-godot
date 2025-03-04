@@ -45,6 +45,9 @@ func _enter() -> void:
 	tween.tween_method(callback, -0.1, 1.0, 1.0)
 
 func callback(t: float):
+	if boss.selected_ball == null:
+		tween.stop()
+		return
 	var dir = (GM.player.position - boss.selected_ball.position).normalized()
 	var angle = dir.angle()
 	

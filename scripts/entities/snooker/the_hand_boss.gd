@@ -21,6 +21,8 @@ const POOL_STICK_IDLE_ROT = 0
 
 @export var pool_table: Node2D
 
+@onready var ai: BTPlayer = $BTPlayer
+
 var hands_sine_active = false
 
 var selected_ball: RigidBody2D
@@ -67,18 +69,34 @@ func _process(delta: float) -> void:
 	if hands_sine_active:
 		perform_hands_sine(delta)
 
+func destroy_ball(ball: SnookerBall) -> void:
+	if ball == selected_ball:
+		left_hand.reparent(self)
+		left_hand.reset_physics_interpolation()
+		right_hand.reparent(self)
+		right_hand.reset_physics_interpolation()
+		pool_stick.reparent(self)
+		pool_stick.reset_physics_interpolation()
+		selected_ball = null
+		ai.blackboard.set_var('main_ball_destroyed', true)
+	active_balls.erase(ball)
+	ball.queue_free()
 
 func spawn_ball(left: bool) -> void:
 	var ball = pool_ball.instantiate()
 	ball.get_node('Shadow').position.y += 32
 	GM.current_root.add_child(ball)
+	
 	var hand = left_hand if left else right_hand
 	hand.play('Carry')
+	
 	var tween = get_tree().create_tween()
 	tween.set_ease(Tween.EASE_OUT)
 	tween.set_trans(Tween.TRANS_CUBIC)
 	ball.scale = Vector2.ZERO
 	tween.tween_property(ball, 'scale', Vector2.ONE, .15)
+	
+	ball.boss = self
 	ball.physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_OFF
 	ball.global_position = hand.global_position + Vector2(0, 24)
 	ball.process_mode = Node.PROCESS_MODE_DISABLED
@@ -87,8 +105,10 @@ func spawn_ball(left: bool) -> void:
 
 func push_ball(dir: Vector2):
 	selected_ball.linear_velocity = dir.normalized() * 350
-	Camera.shake_strong()
+	Camera.shake_mid()
 	
 
 func pick_random_ball() -> void:
-	selected_ball =  active_balls.pick_random()
+	active_balls = active_balls.filter(func(ball): return ball != null)
+	selected_ball = active_balls.pick_random()
+	ai.blackboard.set_var('main_ball_destroyed', false)

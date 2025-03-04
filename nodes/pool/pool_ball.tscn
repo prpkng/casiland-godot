@@ -67,8 +67,8 @@ texture = ExtResource("4_oejy8")
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("5_s3ghp")
-current = 300
-max = 300
+current = 250
+max = 250
 
 [node name="HurtBox2D" type="Area2D" parent="." node_paths=PackedStringArray("health")]
 visible = false

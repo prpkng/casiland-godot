@@ -30,6 +30,8 @@ func _tick(delta: float) -> Status:
 		return SUCCESS
 	if not boss:
 		return RUNNING
+	if boss.selected_ball == null:
+		return FAILURE
 	
 	var dir = (GM.player.position - boss.selected_ball.position).normalized()
 	var angle = dir.angle()

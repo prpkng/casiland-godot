@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=84 format=3 uid="uid://cvfm482gt5v7d"]
+[gd_resource type="BehaviorTree" load_steps=86 format=3 uid="uid://cvfm482gt5v7d"]
 
 [ext_resource type="Script" path="res://ai/tasks/the_hand/carry_ball_with_hand.gd" id="1_q73dm"]
 [ext_resource type="Script" path="res://ai/tasks/the_hand/drop_ball.gd" id="2_lje28"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://ai/tasks/the_hand/pull_stick_back.gd" id="6_udmr7"]
 [ext_resource type="Script" path="res://ai/tasks/the_hand/push_stick.gd" id="7_ewnl4"]
 [ext_resource type="Script" path="res://ai/tasks/the_hand/stomp_follow_player.gd" id="8_yeag3"]
+[ext_resource type="Script" path="res://ai/tasks/the_hand/perform_stomp.gd" id="10_2qnbh"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_2gc0k"]
 var/desired_ball_count/name = &"desired_ball_count"
@@ -324,8 +325,12 @@ script = ExtResource("8_yeag3")
 boss_var = &"boss"
 duration = SubResource("BBFloat_c5ec2")
 
+[sub_resource type="BTAction" id="BTAction_vo78b"]
+script = ExtResource("10_2qnbh")
+boss_var = &"boss"
+
 [sub_resource type="BTSequence" id="BTSequence_756ou"]
-children = [SubResource("BTAction_8tvlx")]
+children = [SubResource("BTAction_8tvlx"), SubResource("BTAction_vo78b")]
 
 [sub_resource type="BTRepeat" id="BTRepeat_nb1at"]
 children = [SubResource("BTSequence_756ou")]

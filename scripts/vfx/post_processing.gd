@@ -1,6 +1,6 @@
 class_name FX extends Control
 
-@onready var flash_color_rect = $Pass1/Flash
+@onready var flash_color_rect: ColorRect = $Pass1/Flash
 
 static var INST: FX
 
@@ -16,7 +16,8 @@ static func flash_color(color: Color, duration: float, factor: float = 0.75):
 	flash_color_tween.set_ease(Tween.EASE_OUT)
 	flash_color_tween.set_trans(Tween.TRANS_SINE)
 	flash_color_tween.tween_method(_set_color, factor, 0, duration)
-	INST.flash_color_rect.material.set_shader_parameter('color', color)
+	INST.flash_color_rect.color = color
+	INST.flash_color_rect.color.a = factor
 
 static func _set_color(fac: float):
-	INST.flash_color_rect.material.set_shader_parameter('fac', fac)
+	INST.flash_color_rect.color.a = fac

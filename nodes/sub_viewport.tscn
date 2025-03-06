@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b718ekyhj8jl6"]
 
-[ext_resource type="Script" path="res://scripts/sub_viewport_size.gd" id="1_yw81u"]
+[ext_resource type="Script" uid="uid://cjne81eneb6qp" path="res://scripts/sub_viewport_size.gd" id="1_yw81u"]
 
 [node name="SubViewportContainer" type="SubViewportContainer"]
 texture_filter = 1

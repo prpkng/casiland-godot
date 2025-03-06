@@ -1,10 +1,10 @@
 [gd_scene load_steps=9 format=3 uid="uid://c3ynw2bqynnil"]
 
-[ext_resource type="Script" path="res://scripts/hud_controls.gd" id="1_rdeul"]
+[ext_resource type="Script" uid="uid://blehbvefkubvn" path="res://scripts/hud_controls.gd" id="1_rdeul"]
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="1_s03pb"]
 [ext_resource type="Texture2D" uid="uid://d0koyif5agh0m" path="res://graphics/ui/joystick_base.png" id="2_ab61y"]
 [ext_resource type="Texture2D" uid="uid://chokc1vjoqcyo" path="res://graphics/ui/joystick_tip.png" id="3_rl2dc"]
-[ext_resource type="Script" path="res://scripts/custom_stick.gd" id="5_hleng"]
+[ext_resource type="Script" uid="uid://b7jv72bnx7npo" path="res://scripts/custom_stick.gd" id="5_hleng"]
 [ext_resource type="Texture2D" uid="uid://bft334vhwagkh" path="res://graphics/ui/roll_btn.png" id="5_u364y"]
 [ext_resource type="Texture2D" uid="uid://dku6de7buqyms" path="res://graphics/ui/roll_btn_pressed.png" id="7_ejgau"]
 

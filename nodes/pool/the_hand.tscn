@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://dot8tsn0euulb"]
 
-[ext_resource type="Script" path="res://scripts/entities/snooker/the_hand_boss.gd" id="1_a3k82"]
+[ext_resource type="Script" uid="uid://4vf2osak7pid" path="res://scripts/entities/snooker/the_hand_boss.gd" id="1_a3k82"]
 [ext_resource type="BehaviorTree" uid="uid://cvfm482gt5v7d" path="res://ai/boss.tres" id="2_5hymv"]
 [ext_resource type="PackedScene" uid="uid://c3ht1rv36du1l" path="res://graphics/spr/the_hand/hands.aseprite" id="3_27s64"]
 [ext_resource type="Texture2D" uid="uid://bxpl8yy4oin6h" path="res://graphics/spr/the_hand/pool_stick.aseprite" id="4_l5ey3"]
@@ -21,7 +21,6 @@ var/boss/type = 22
 var/boss/value = NodePath("..")
 var/boss/hint = 0
 var/boss/hint_string = ""
-binding/current_selected_ball = NodePath("..:selected_ball")
 
 [node name="The Hand" type="Node2D" node_paths=PackedStringArray("left_hand", "right_hand", "pool_stick")]
 physics_interpolation_mode = 1

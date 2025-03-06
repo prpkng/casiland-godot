@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cyyxqww2i4wfy"]
 
-[ext_resource type="Script" path="res://scripts/vfx/post_processing.gd" id="1_3fur1"]
+[ext_resource type="Script" uid="uid://d3kbsog4hkpuf" path="res://scripts/vfx/post_processing.gd" id="1_3fur1"]
 
 [node name="PostProcessing" type="Control"]
 layout_mode = 3
@@ -15,6 +15,17 @@ script = ExtResource("1_3fur1")
 [node name="Pass1" type="CanvasLayer" parent="."]
 
 [node name="Flash" type="ColorRect" parent="Pass1"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
+
+[node name="Pass2" type="CanvasLayer" parent="."]
+
+[node name="Distortion" type="ColorRect" parent="Pass2"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

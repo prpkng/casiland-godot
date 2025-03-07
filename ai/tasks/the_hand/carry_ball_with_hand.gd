@@ -17,11 +17,11 @@ func _generate_name() -> String:
 # Called to initialize the task.
 func _setup() -> void:
 	boss = boss_node.get_value(scene_root, blackboard) as TheHandBoss
-	hand = boss.left_hand if is_left else boss.right_hand
 
 
 # Called when the task is entered.
 func _enter() -> void:
+	hand = boss.left_hand if is_left else boss.right_hand
 	var dest_pos = boss.pool_table.global_position
 	dest_pos.x += randf_range(-180, 180)
 	dest_pos.y += randf_range(-80, 80)

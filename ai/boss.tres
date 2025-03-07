@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=86 format=3 uid="uid://cvfm482gt5v7d"]
+[gd_resource type="BehaviorTree" load_steps=94 format=3 uid="uid://cvfm482gt5v7d"]
 
 [ext_resource type="Script" uid="uid://b3a8w52mltx6e" path="res://ai/tasks/the_hand/carry_ball_with_hand.gd" id="1_q73dm"]
 [ext_resource type="Script" uid="uid://csjxdlhot0kny" path="res://ai/tasks/the_hand/drop_ball.gd" id="2_lje28"]
@@ -9,7 +9,10 @@
 [ext_resource type="Script" uid="uid://ckvvi53kcaho1" path="res://ai/tasks/the_hand/pull_stick_back.gd" id="6_udmr7"]
 [ext_resource type="Script" uid="uid://cier51u8xu1le" path="res://ai/tasks/the_hand/push_stick.gd" id="7_ewnl4"]
 [ext_resource type="Script" uid="uid://bx7olxa5jinhk" path="res://ai/tasks/the_hand/stomp_follow_player.gd" id="8_yeag3"]
+[ext_resource type="Script" uid="uid://dy87m42ucyr5g" path="res://ai/tasks/the_hand/toogle_stick_shadow.gd" id="9_njekd"]
 [ext_resource type="Script" uid="uid://c2lu4vyl3dh7a" path="res://ai/tasks/the_hand/perform_stomp.gd" id="10_2qnbh"]
+[ext_resource type="Script" uid="uid://o71mcfukpr1c" path="res://ai/tasks/shake_camera.gd" id="10_ivom6"]
+[ext_resource type="Script" uid="uid://bws5wnseuo1qp" path="res://ai/tasks/the_hand/warn_stomp.gd" id="10_p3ini"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_2gc0k"]
 var/desired_ball_count/name = &"desired_ball_count"
@@ -316,21 +319,38 @@ resource_name = "0"
 variable = &"ball_count"
 value = SubResource("BBVariant_uxv54")
 
+[sub_resource type="BTAction" id="BTAction_w3mmd"]
+script = ExtResource("9_njekd")
+boss_var = &"boss"
+value = true
+
 [sub_resource type="BBFloat" id="BBFloat_c5ec2"]
-saved_value = 3.0
-resource_name = "3.0"
+saved_value = 1.5
+resource_name = "1.5"
 
 [sub_resource type="BTAction" id="BTAction_8tvlx"]
 script = ExtResource("8_yeag3")
 boss_var = &"boss"
 duration = SubResource("BBFloat_c5ec2")
 
+[sub_resource type="BTAction" id="BTAction_njekd"]
+script = ExtResource("10_ivom6")
+intensity = 0
+
+[sub_resource type="BTAction" id="BTAction_ivom6"]
+script = ExtResource("10_p3ini")
+boss_var = &"boss"
+
 [sub_resource type="BTAction" id="BTAction_vo78b"]
 script = ExtResource("10_2qnbh")
 boss_var = &"boss"
 
+[sub_resource type="BTAction" id="BTAction_axrxi"]
+script = ExtResource("10_ivom6")
+intensity = 2
+
 [sub_resource type="BTSequence" id="BTSequence_756ou"]
-children = [SubResource("BTAction_8tvlx"), SubResource("BTAction_vo78b")]
+children = [SubResource("BTAction_8tvlx"), SubResource("BTAction_njekd"), SubResource("BTAction_ivom6"), SubResource("BTAction_vo78b"), SubResource("BTAction_axrxi")]
 
 [sub_resource type="BTRepeat" id="BTRepeat_nb1at"]
 times = 4
@@ -340,9 +360,14 @@ children = [SubResource("BTSequence_756ou")]
 times = 3
 children = [SubResource("BTRepeat_nb1at")]
 
+[sub_resource type="BTAction" id="BTAction_548dc"]
+script = ExtResource("9_njekd")
+boss_var = &"boss"
+value = false
+
 [sub_resource type="BTSequence" id="BTSequence_ahi02"]
 custom_name = "Stomp Player"
-children = [SubResource("BTCheckVar_f1jl3"), SubResource("BTRepeat_nwtvj")]
+children = [SubResource("BTCheckVar_f1jl3"), SubResource("BTAction_w3mmd"), SubResource("BTRepeat_nwtvj"), SubResource("BTAction_548dc")]
 
 [sub_resource type="BTSelector" id="BTSelector_iq5h4"]
 children = [SubResource("BTRunLimit_0ywxg"), SubResource("BTSequence_gmo24"), SubResource("BTSequence_acrei"), SubResource("BTSequence_ahi02")]

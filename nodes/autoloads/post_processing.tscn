@@ -19,6 +19,7 @@ mouse_filter = 2
 script = ExtResource("1_3fur1")
 
 [node name="Pass1" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="Flash" type="ColorRect" parent="Pass1"]
 anchors_preset = 15
@@ -30,6 +31,7 @@ mouse_filter = 2
 color = Color(0, 0, 0, 0)
 
 [node name="Pass2" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="Distortion" type="ColorRect" parent="Pass2"]
 material = SubResource("ShaderMaterial_puu0l")

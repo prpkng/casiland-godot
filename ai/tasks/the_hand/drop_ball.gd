@@ -17,11 +17,11 @@ func _generate_name() -> String:
 # Called to initialize the task.
 func _setup() -> void:
 	boss = boss_node.get_value(scene_root, blackboard) as TheHandBoss
-	hand = boss.left_hand if is_left else boss.right_hand
 
 
 # Called when the task is entered.
 func _enter() -> void:
+	hand = boss.left_hand if is_left else boss.right_hand
 	var ball = hand.get_child(0) as Node2D
 	var shadow = ball.get_node('Shadow')
 	shadow.reparent(GM.current_root)

@@ -1,0 +1,44 @@
+[gd_resource type="Resource" script_class="ShakerPreset2D" load_steps=8 format=3 uid="uid://c3dnakwnbli7l"]
+
+[ext_resource type="Script" uid="uid://b1gsitkrvs6tt" path="res://addons/shaker/data/Vector2/BaseShakerType2D.gd" id="1_588sp"]
+[ext_resource type="Script" uid="uid://bu0n108omwb3p" path="res://addons/shaker/data/Vector2/ShakerTypeRandom2D.gd" id="2_jvy4m"]
+[ext_resource type="Script" uid="uid://b5yeqkxue2wi6" path="res://addons/shaker/data/Single/BaseShakerType1D.gd" id="2_xn4e8"]
+[ext_resource type="Script" uid="uid://cv21ikyailwqd" path="res://addons/shaker/data/Vector2/ShakerPreset2D.gd" id="3_jvy4m"]
+[ext_resource type="Script" uid="uid://cm45nx54feqkq" path="res://addons/shaker/data/Single/ShakerTypeRandom1D.gd" id="4_f46sn"]
+
+[sub_resource type="Resource" id="Resource_lom0l"]
+script = ExtResource("2_jvy4m")
+seed = 0
+amplitude = Vector2(5, 0)
+offset = Vector2(0, 0)
+BlendingMode = 0
+fade_in = 0.0
+fade_out = 0.316518
+start_percent = 0.0
+end_percent = 1.0
+_temp_graph = false
+bake_internal = 64
+metadata/_custom_type_script = "uid://bu0n108omwb3p"
+
+[sub_resource type="Resource" id="Resource_0053b"]
+script = ExtResource("4_f46sn")
+seed = 0
+amplitude = 0.2
+offset = 0.0
+BlendingMode = 0
+fade_in = 0.0
+fade_out = 0.752809
+start_percent = 0.0
+end_percent = 1.0
+_temp_graph = false
+bake_internal = 64
+metadata/_custom_type_script = "uid://cm45nx54feqkq"
+
+[resource]
+script = ExtResource("3_jvy4m")
+PositionShake = Array[ExtResource("1_588sp")]([SubResource("Resource_lom0l")])
+RotationShake = Array[ExtResource("2_xn4e8")]([SubResource("Resource_0053b")])
+ScaleShake = Array[ExtResource("1_588sp")]([])
+bake_internal = 64
+__follow_timeline = false
+metadata/_custom_type_script = "uid://cv21ikyailwqd"

@@ -14,13 +14,12 @@ const POOL_STICK_IDLE_OFFSET_ROT = deg_to_rad(55)
 const POOL_STICK_IDLE_POS = Vector2(151, 40)
 const POOL_STICK_IDLE_ROT = 0
 
-
-@export var left_hand: AnimatedSprite2D
-@export var right_hand: AnimatedSprite2D
-@export var pool_stick: Sprite2D
-
 @export var pool_table: Node2D
 
+@onready var left_hand: AnimatedSprite2D = $LeftHand
+@onready var right_hand: AnimatedSprite2D = $RightHand
+@onready var pool_stick: Sprite2D = $PoolStick
+@onready var stick_shadow: Sprite2D = $StickShadow
 @onready var ai: BTPlayer = $BTPlayer
 
 var hands_sine_active = false

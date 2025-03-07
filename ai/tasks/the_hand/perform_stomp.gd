@@ -23,8 +23,8 @@ func _enter() -> void:
 	tween.tween_property(
 		boss.pool_stick, 
 		'position', 
-		boss.pool_stick.position + Vector2.DOWN,
-		0.25
+		boss.pool_stick.position + Vector2.DOWN * 40,
+		0.1
 	)
 	
 

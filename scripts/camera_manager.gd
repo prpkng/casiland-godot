@@ -1,8 +1,8 @@
 class_name Camera extends Camera2D
 
-const SHAKE_STRONG = preload('res://resources/shake_strong.tres')
-const SHAKE_MID = preload('res://resources/shake_mid.tres')
-const SHAKE_WEAK = preload('res://resources/shake_weak.tres')
+const SHAKE_STRONG = preload('res://resources/shakes/cam_shake_strong.tres')
+const SHAKE_MID = preload('res://resources/shakes/cam_shake_mid.tres')
+const SHAKE_WEAK = preload('res://resources/shakes/cam_shake_weak.tres')
 
 static var INSTANCE: Camera2D
 

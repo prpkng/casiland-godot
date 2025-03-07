@@ -36,6 +36,7 @@ texture = ExtResource("5_vm0m3")
 
 [node name="PlayerGun" parent="Player" instance=ExtResource("4_ynuc3")]
 position = Vector2(-2, 3)
+bullet_damage = 150.0
 
 [node name="GunSprite" parent="Player/PlayerGun" index="0"]
 position = Vector2(4, 0)

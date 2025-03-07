@@ -19,6 +19,7 @@ func _setup() -> void:
 
 # Called each time this task is entered.
 func _enter() -> void:
+	finished = false
 	boss.left_hand.play('Hold')
 	boss.left_hand.reparent(boss.pool_stick)
 	boss.left_hand.reset_physics_interpolation()
@@ -39,7 +40,9 @@ func _exit() -> void:
 func _tick(delta: float) -> Status:
 	var stick = boss.pool_stick
 	stick.global_position = \
-		lerp(stick.global_position, GM.player.global_position + Vector2.UP * 20, delta * 4)
+		lerp(stick.global_position, GM.player.global_position + Vector2.UP * 32, delta * 8)
+	boss.stick_shadow.global_position = \
+		lerp(boss.stick_shadow.global_position, GM.player.global_position + Vector2.DOWN * 10, delta * 8)
 	stick.rotation = lerp_angle(stick.rotation, PI/2, delta * 4)
 	var hand = boss.left_hand
 	hand.position = lerp(hand.position, Vector2.LEFT * 28, delta * 4)

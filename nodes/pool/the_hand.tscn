@@ -1,9 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://dot8tsn0euulb"]
+[gd_scene load_steps=9 format=3 uid="uid://dot8tsn0euulb"]
 
 [ext_resource type="Script" uid="uid://4vf2osak7pid" path="res://scripts/entities/snooker/the_hand_boss.gd" id="1_a3k82"]
 [ext_resource type="BehaviorTree" uid="uid://cvfm482gt5v7d" path="res://ai/boss.tres" id="2_5hymv"]
 [ext_resource type="PackedScene" uid="uid://c3ht1rv36du1l" path="res://graphics/spr/the_hand/hands.aseprite" id="3_27s64"]
 [ext_resource type="Texture2D" uid="uid://bxpl8yy4oin6h" path="res://graphics/spr/the_hand/pool_stick.aseprite" id="4_l5ey3"]
+[ext_resource type="Script" uid="uid://1sacb1vns2rw" path="res://addons/shaker/src/Vector2/shaker_component2D.gd" id="4_nnl0n"]
+[ext_resource type="Resource" uid="uid://c3dnakwnbli7l" path="res://resources/shakes/stick_shake.tres" id="5_pbw44"]
+[ext_resource type="Texture2D" uid="uid://dp633w1uqq3rp" path="res://graphics/spr/the_hand/stick_shadow.png" id="7_pbw44"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_v3lj3"]
 var/desired_ball_count/name = &"desired_ball_count"
@@ -22,13 +25,9 @@ var/boss/value = NodePath("..")
 var/boss/hint = 0
 var/boss/hint_string = ""
 
-[node name="The Hand" type="Node2D" node_paths=PackedStringArray("left_hand", "right_hand", "pool_stick")]
+[node name="The Hand" type="Node2D"]
 physics_interpolation_mode = 1
-position = Vector2(302, 75)
 script = ExtResource("1_a3k82")
-left_hand = NodePath("LeftHand")
-right_hand = NodePath("RightHand")
-pool_stick = NodePath("PoolStick")
 
 [node name="BTPlayer" type="BTPlayer" parent="."]
 behavior_tree = ExtResource("2_5hymv")
@@ -38,10 +37,17 @@ blackboard_plan = SubResource("BlackboardPlan_v3lj3")
 show_behind_parent = true
 z_index = 4
 z_as_relative = false
-position = Vector2(64, 63)
-rotation = 0.959931
+position = Vector2(64.5965, 63.592)
+rotation = 0.950974
 texture = ExtResource("4_l5ey3")
 offset = Vector2(-160, 2.5)
+
+[node name="Shaker" type="Node2D" parent="PoolStick"]
+script = ExtResource("4_nnl0n")
+duration = 0.3
+fade_out = 0.00248937
+shakerPreset = ExtResource("5_pbw44")
+metadata/_custom_type_script = "uid://1sacb1vns2rw"
 
 [node name="LeftHand" parent="." instance=ExtResource("3_27s64")]
 z_index = 5
@@ -56,3 +62,7 @@ z_as_relative = false
 position = Vector2(-48, 32)
 speed_scale = 0.0
 flip_h = true
+
+[node name="StickShadow" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("7_pbw44")

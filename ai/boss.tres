@@ -1,15 +1,15 @@
 [gd_resource type="BehaviorTree" load_steps=86 format=3 uid="uid://cvfm482gt5v7d"]
 
-[ext_resource type="Script" path="res://ai/tasks/the_hand/carry_ball_with_hand.gd" id="1_q73dm"]
-[ext_resource type="Script" path="res://ai/tasks/the_hand/drop_ball.gd" id="2_lje28"]
-[ext_resource type="Script" path="res://ai/tasks/the_hand/select_random_ball.gd" id="3_ojv45"]
-[ext_resource type="Script" path="res://ai/tasks/the_hand/set_ball_count.gd" id="3_qsvbj"]
-[ext_resource type="Script" path="res://ai/tasks/the_hand/tween_hands_to_ball.gd" id="4_n57j2"]
-[ext_resource type="Script" path="res://ai/tasks/the_hand/keep_aiming.gd" id="5_euibi"]
-[ext_resource type="Script" path="res://ai/tasks/the_hand/pull_stick_back.gd" id="6_udmr7"]
-[ext_resource type="Script" path="res://ai/tasks/the_hand/push_stick.gd" id="7_ewnl4"]
-[ext_resource type="Script" path="res://ai/tasks/the_hand/stomp_follow_player.gd" id="8_yeag3"]
-[ext_resource type="Script" path="res://ai/tasks/the_hand/perform_stomp.gd" id="10_2qnbh"]
+[ext_resource type="Script" uid="uid://b3a8w52mltx6e" path="res://ai/tasks/the_hand/carry_ball_with_hand.gd" id="1_q73dm"]
+[ext_resource type="Script" uid="uid://csjxdlhot0kny" path="res://ai/tasks/the_hand/drop_ball.gd" id="2_lje28"]
+[ext_resource type="Script" uid="uid://v10rowxojk8p" path="res://ai/tasks/the_hand/select_random_ball.gd" id="3_ojv45"]
+[ext_resource type="Script" uid="uid://bscclc7380vt1" path="res://ai/tasks/the_hand/set_ball_count.gd" id="3_qsvbj"]
+[ext_resource type="Script" uid="uid://cyf5wjcejrj28" path="res://ai/tasks/the_hand/tween_hands_to_ball.gd" id="4_n57j2"]
+[ext_resource type="Script" uid="uid://7wx7pgnrcx3g" path="res://ai/tasks/the_hand/keep_aiming.gd" id="5_euibi"]
+[ext_resource type="Script" uid="uid://ckvvi53kcaho1" path="res://ai/tasks/the_hand/pull_stick_back.gd" id="6_udmr7"]
+[ext_resource type="Script" uid="uid://cier51u8xu1le" path="res://ai/tasks/the_hand/push_stick.gd" id="7_ewnl4"]
+[ext_resource type="Script" uid="uid://bx7olxa5jinhk" path="res://ai/tasks/the_hand/stomp_follow_player.gd" id="8_yeag3"]
+[ext_resource type="Script" uid="uid://c2lu4vyl3dh7a" path="res://ai/tasks/the_hand/perform_stomp.gd" id="10_2qnbh"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_2gc0k"]
 var/desired_ball_count/name = &"desired_ball_count"
@@ -39,8 +39,8 @@ var/main_ball_destroyed/hint = 0
 var/main_ball_destroyed/hint_string = ""
 
 [sub_resource type="BBNode" id="BBNode_ua0bt"]
-resource_name = "."
 saved_value = NodePath(".")
+resource_name = "."
 
 [sub_resource type="BTCallMethod" id="BTCallMethod_lvtpd"]
 node = SubResource("BBNode_ua0bt")
@@ -49,8 +49,8 @@ method = &"start_hands_sine"
 [sub_resource type="BTWait" id="BTWait_3i76k"]
 
 [sub_resource type="BBNode" id="BBNode_ts65a"]
-resource_name = "."
 saved_value = NodePath(".")
+resource_name = "."
 
 [sub_resource type="BTCallMethod" id="BTCallMethod_5r51x"]
 node = SubResource("BBNode_ts65a")
@@ -67,9 +67,9 @@ children = [SubResource("BTSequence_uf0ic")]
 variable = &"needs_populate"
 
 [sub_resource type="BBVariant" id="BBVariant_wc4lg"]
-resource_name = "$desired_ball_count"
 value_source = 1
 variable = &"desired_ball_count"
+resource_name = "$desired_ball_count"
 
 [sub_resource type="BTCheckVar" id="BTCheckVar_jpdna"]
 variable = &"ball_count"
@@ -77,9 +77,9 @@ check_type = 1
 value = SubResource("BBVariant_wc4lg")
 
 [sub_resource type="BBVariant" id="BBVariant_82xjh"]
-resource_name = "1"
-saved_value = 1
 type = 2
+saved_value = 1
+resource_name = "1"
 
 [sub_resource type="BTSetVar" id="BTSetVar_xlckc"]
 variable = &"ball_count"
@@ -90,23 +90,23 @@ operation = 1
 duration = 0.25
 
 [sub_resource type="BBVariant" id="BBVariant_e3u8m"]
-resource_name = "false"
-saved_value = false
 type = 1
+saved_value = false
+resource_name = "false"
 
 [sub_resource type="BBNode" id="BBNode_grieb"]
-resource_name = "."
 saved_value = NodePath(".")
+resource_name = "."
 
 [sub_resource type="BTCallMethod" id="BTCallMethod_531x6"]
-custom_name = "Spawn ball at hand"
 node = SubResource("BBNode_grieb")
 method = &"spawn_ball"
 args = Array[BBVariant]([SubResource("BBVariant_e3u8m")])
+custom_name = "Spawn ball at hand"
 
 [sub_resource type="BBNode" id="BBNode_dh6d7"]
-resource_name = "."
 saved_value = NodePath(".")
+resource_name = "."
 
 [sub_resource type="BTAction" id="BTAction_cxyhj"]
 script = ExtResource("1_q73dm")
@@ -114,8 +114,8 @@ boss_node = SubResource("BBNode_dh6d7")
 is_left = false
 
 [sub_resource type="BBNode" id="BBNode_sewt0"]
-resource_name = "."
 saved_value = NodePath(".")
+resource_name = "."
 
 [sub_resource type="BTAction" id="BTAction_qgprf"]
 script = ExtResource("2_lje28")
@@ -129,9 +129,9 @@ children = [SubResource("BTCheckVar_jpdna"), SubResource("BTSetVar_xlckc"), SubR
 children = [SubResource("BTSequence_mongn")]
 
 [sub_resource type="BBVariant" id="BBVariant_3qa86"]
-resource_name = "$desired_ball_count"
 value_source = 1
 variable = &"desired_ball_count"
+resource_name = "$desired_ball_count"
 
 [sub_resource type="BTCheckVar" id="BTCheckVar_3bviy"]
 variable = &"ball_count"
@@ -139,9 +139,9 @@ check_type = 1
 value = SubResource("BBVariant_3qa86")
 
 [sub_resource type="BBVariant" id="BBVariant_ilq6l"]
-resource_name = "1"
-saved_value = 1
 type = 2
+saved_value = 1
+resource_name = "1"
 
 [sub_resource type="BTSetVar" id="BTSetVar_yxhj7"]
 variable = &"ball_count"
@@ -152,23 +152,23 @@ operation = 1
 duration = 0.25
 
 [sub_resource type="BBVariant" id="BBVariant_swjfl"]
-resource_name = "true"
-saved_value = true
 type = 1
+saved_value = true
+resource_name = "true"
 
 [sub_resource type="BBNode" id="BBNode_brh6o"]
-resource_name = "."
 saved_value = NodePath(".")
+resource_name = "."
 
 [sub_resource type="BTCallMethod" id="BTCallMethod_t7fpl"]
-custom_name = "Spawn ball at hand"
 node = SubResource("BBNode_brh6o")
 method = &"spawn_ball"
 args = Array[BBVariant]([SubResource("BBVariant_swjfl")])
+custom_name = "Spawn ball at hand"
 
 [sub_resource type="BBNode" id="BBNode_3fmqk"]
-resource_name = "."
 saved_value = NodePath(".")
+resource_name = "."
 
 [sub_resource type="BTAction" id="BTAction_0wof4"]
 script = ExtResource("1_q73dm")
@@ -176,8 +176,8 @@ boss_node = SubResource("BBNode_3fmqk")
 is_left = true
 
 [sub_resource type="BBNode" id="BBNode_pxaq6"]
-resource_name = "."
 saved_value = NodePath(".")
+resource_name = "."
 
 [sub_resource type="BTAction" id="BTAction_uoqy7"]
 script = ExtResource("2_lje28")
@@ -194,8 +194,8 @@ children = [SubResource("BTSequence_kgqxu")]
 children = [SubResource("BTRepeatUntilFailure_ate72"), SubResource("BTRepeatUntilFailure_8md3q")]
 
 [sub_resource type="BBNode" id="BBNode_5hund"]
-resource_name = "."
 saved_value = NodePath(".")
+resource_name = "."
 
 [sub_resource type="BTCallMethod" id="BTCallMethod_wuy6o"]
 node = SubResource("BBNode_5hund")
@@ -204,8 +204,8 @@ method = &"start_hands_sine"
 [sub_resource type="BTWait" id="BTWait_ml1wo"]
 
 [sub_resource type="BBNode" id="BBNode_d0veh"]
-resource_name = "."
 saved_value = NodePath(".")
+resource_name = "."
 
 [sub_resource type="BTCallMethod" id="BTCallMethod_yaltm"]
 node = SubResource("BBNode_d0veh")
@@ -216,9 +216,9 @@ custom_name = "Populate balls"
 children = [SubResource("BTCheckTrigger_42tj6"), SubResource("BTParallel_xm8x3"), SubResource("BTCallMethod_wuy6o"), SubResource("BTWait_ml1wo"), SubResource("BTCallMethod_yaltm")]
 
 [sub_resource type="BBNode" id="BBNode_x2w0y"]
-resource_name = "$boss"
 value_source = 1
 variable = &"boss"
+resource_name = "$boss"
 
 [sub_resource type="BTAction" id="BTAction_av6kv"]
 script = ExtResource("3_qsvbj")
@@ -226,9 +226,9 @@ boss = SubResource("BBNode_x2w0y")
 ball_count_var = &"ball_count"
 
 [sub_resource type="BBVariant" id="BBVariant_hmjem"]
-resource_name = "0"
-saved_value = 0
 type = 2
+saved_value = 0
+resource_name = "0"
 
 [sub_resource type="BTCheckVar" id="BTCheckVar_8rhpx"]
 variable = &"ball_count"
@@ -236,17 +236,17 @@ check_type = 3
 value = SubResource("BBVariant_hmjem")
 
 [sub_resource type="BBNode" id="BBNode_bv4kw"]
-resource_name = "."
 saved_value = NodePath(".")
+resource_name = "."
 
 [sub_resource type="BTAction" id="BTAction_gji1y"]
 script = ExtResource("3_ojv45")
 boss_node = SubResource("BBNode_bv4kw")
 
 [sub_resource type="BBVariant" id="BBVariant_n07ni"]
-resource_name = "<null>"
-saved_value = false
 type = 1
+saved_value = false
+resource_name = "false"
 
 [sub_resource type="BTCheckVar" id="BTCheckVar_gk6m7"]
 variable = &"main_ball_destroyed"
@@ -257,17 +257,17 @@ script = ExtResource("4_n57j2")
 boss_node_var = &"boss"
 
 [sub_resource type="BBVariant" id="BBVariant_wlcs5"]
-resource_name = "false"
-saved_value = false
 type = 1
+saved_value = false
+resource_name = "false"
 
 [sub_resource type="BTCheckVar" id="BTCheckVar_bw8n2"]
 variable = &"main_ball_destroyed"
 value = SubResource("BBVariant_wlcs5")
 
 [sub_resource type="BBFloat" id="BBFloat_ph70d"]
-resource_name = "1.25"
 saved_value = 1.25
+resource_name = "1.25"
 
 [sub_resource type="BTAction" id="BTAction_e2tpw"]
 script = ExtResource("5_euibi")
@@ -275,9 +275,9 @@ boss_node_var = &"boss"
 delay = SubResource("BBFloat_ph70d")
 
 [sub_resource type="BBVariant" id="BBVariant_fshk2"]
-resource_name = "false"
-saved_value = false
 type = 1
+saved_value = false
+resource_name = "false"
 
 [sub_resource type="BTCheckVar" id="BTCheckVar_rwds0"]
 variable = &"main_ball_destroyed"
@@ -291,9 +291,9 @@ boss_node_var = &"boss"
 duration = 0.15
 
 [sub_resource type="BBVariant" id="BBVariant_joesp"]
-resource_name = "false"
-saved_value = false
 type = 1
+saved_value = false
+resource_name = "false"
 
 [sub_resource type="BTCheckVar" id="BTCheckVar_jwbpn"]
 variable = &"main_ball_destroyed"
@@ -308,17 +308,17 @@ custom_name = "Shot balls"
 children = [SubResource("BTAction_av6kv"), SubResource("BTCheckVar_8rhpx"), SubResource("BTAction_gji1y"), SubResource("BTCheckVar_gk6m7"), SubResource("BTAction_inqkl"), SubResource("BTCheckVar_bw8n2"), SubResource("BTAction_e2tpw"), SubResource("BTCheckVar_rwds0"), SubResource("BTAction_yhalr"), SubResource("BTWait_2nbcw"), SubResource("BTCheckVar_jwbpn"), SubResource("BTAction_xjemw")]
 
 [sub_resource type="BBVariant" id="BBVariant_uxv54"]
-resource_name = "<null>"
-saved_value = 0
 type = 2
+saved_value = 0
+resource_name = "0"
 
 [sub_resource type="BTCheckVar" id="BTCheckVar_f1jl3"]
 variable = &"ball_count"
 value = SubResource("BBVariant_uxv54")
 
 [sub_resource type="BBFloat" id="BBFloat_c5ec2"]
-resource_name = "3"
 saved_value = 3.0
+resource_name = "3.0"
 
 [sub_resource type="BTAction" id="BTAction_8tvlx"]
 script = ExtResource("8_yeag3")
@@ -333,12 +333,12 @@ boss_var = &"boss"
 children = [SubResource("BTAction_8tvlx"), SubResource("BTAction_vo78b")]
 
 [sub_resource type="BTRepeat" id="BTRepeat_nb1at"]
-children = [SubResource("BTSequence_756ou")]
 times = 4
+children = [SubResource("BTSequence_756ou")]
 
 [sub_resource type="BTRepeat" id="BTRepeat_nwtvj"]
-children = [SubResource("BTRepeat_nb1at")]
 times = 3
+children = [SubResource("BTRepeat_nb1at")]
 
 [sub_resource type="BTSequence" id="BTSequence_ahi02"]
 custom_name = "Stomp Player"

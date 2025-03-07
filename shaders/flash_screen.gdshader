@@ -10,5 +10,5 @@ void fragment() {
 	float v = (sqrt((x*x)+(y*y))/outerRadius);
 	COLOR.rgb = color;
 	COLOR.a = mix(0, 1, fac) * v;
-	
+
 }

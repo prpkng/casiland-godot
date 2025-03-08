@@ -1,3 +1,4 @@
+@icon('res://addons/shaker/assets/Shaker2D.svg')
 @tool
 extends BTAction
 

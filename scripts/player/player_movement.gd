@@ -1,10 +1,10 @@
 extends CharacterBody2D
 
-@export var movement_speed := 500
-@export var acceleration := 0.75
-@export var deceleration := 0.9
-@export var roll_speed := 550
-@export var roll_duration := 0.3
+@export_custom(PROPERTY_HINT_NONE, "suffix:m/s") var movement_speed := 500
+@export_custom(PROPERTY_HINT_NONE, "suffix:m/s²") var acceleration := 0.75
+@export_custom(PROPERTY_HINT_NONE, "suffix:m/s²") var deceleration := 0.9
+@export_custom(PROPERTY_HINT_NONE, "suffix:m/s") var roll_speed := 550
+@export_custom(PROPERTY_HINT_NONE, "suffix:s") var roll_duration := 0.3
 
 @export var player_sprite: PlayerAnimations
 @export var player_gun: PlayerGun

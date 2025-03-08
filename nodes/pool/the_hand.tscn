@@ -37,15 +37,16 @@ blackboard_plan = SubResource("BlackboardPlan_v3lj3")
 show_behind_parent = true
 z_index = 4
 z_as_relative = false
-position = Vector2(64.5965, 63.592)
-rotation = 0.950974
+position = Vector2(64.5967, 63.5921)
+rotation = 0.950973
 texture = ExtResource("4_l5ey3")
 offset = Vector2(-160, 2.5)
 
 [node name="Shaker" type="Node2D" parent="PoolStick"]
 script = ExtResource("4_nnl0n")
 duration = 0.3
-fade_out = 0.00248937
+fade_in = 1e-05
+fade_out = 0.594603
 shakerPreset = ExtResource("5_pbw44")
 metadata/_custom_type_script = "uid://1sacb1vns2rw"
 
@@ -64,5 +65,4 @@ speed_scale = 0.0
 flip_h = true
 
 [node name="StickShadow" type="Sprite2D" parent="."]
-visible = false
 texture = ExtResource("7_pbw44")

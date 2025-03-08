@@ -40,7 +40,7 @@ func _exit() -> void:
 func _tick(delta: float) -> Status:
 	var stick = boss.pool_stick
 	stick.global_position = \
-		lerp(stick.global_position, GM.player.global_position + Vector2.UP * 32, delta * 8)
+		lerp(stick.global_position, GM.player.global_position + Vector2.UP * 60, delta * 8)
 	boss.stick_shadow.global_position = \
 		lerp(boss.stick_shadow.global_position, GM.player.global_position + Vector2.DOWN * 10, delta * 8)
 	stick.rotation = lerp_angle(stick.rotation, PI/2, delta * 4)

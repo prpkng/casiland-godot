@@ -22,10 +22,10 @@ func _process(_delta: float) -> void:
 
 
 static func shake_strong():
-	Shaker.shake_by_preset(SHAKE_STRONG, INSTANCE, .45)
+	Shaker.shake_by_preset(SHAKE_STRONG, INSTANCE, .45, 1, 1, 0.0001)
 	
 static func shake_mid():
-	Shaker.shake_by_preset(SHAKE_MID, INSTANCE, .3)
+	Shaker.shake_by_preset(SHAKE_MID, INSTANCE, .3, 1, 1, 0.0001)
 	
 static func shake_weak():
-	Shaker.shake_by_preset(SHAKE_WEAK, INSTANCE, .3)
+	Shaker.shake_by_preset(SHAKE_WEAK, INSTANCE, .3, 1, 1, 0.0001)

@@ -2,13 +2,14 @@
 extends BTTweenTask
 ## PerformStomp
 
+@export var duration: float = .35
 @export var boss_var: StringName
 
 var boss: TheHandBoss
 
 # Display a customized name (requires @tool).
 func _generate_name() -> String:
-	return "Stomp - Perform Stomp"
+	return "Stomp - Pull Stomp"
 
 # Called once during initialization.
 func _setup() -> void:
@@ -18,13 +19,13 @@ func _setup() -> void:
 func _enter() -> void:
 	tween = scene_root.get_tree().create_tween()
 	
-	tween.set_ease(Tween.EASE_IN)
-	tween.set_trans(Tween.TRANS_SINE)
+	tween.set_ease(Tween.EASE_OUT)
+	tween.set_trans(Tween.TRANS_CUBIC)
 	tween.tween_property(
 		boss.pool_stick, 
 		'position', 
-		boss.pool_stick.position + Vector2.DOWN * 70,
-		0.1
+		boss.pool_stick.position + Vector2.UP * 70,
+		duration
 	)
 	
 

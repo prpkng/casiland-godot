@@ -9,15 +9,27 @@ var desired_fps: int
 var last_time: int
 var tick_counter: int
 
+func toggle_active():
+	visible = !visible
+	set_process(visible)
+	if visible:
+		tick_counter = 0
+		last_time = 0
+		sample_fps()
+		desired_fps = ceil(DisplayServer.screen_get_refresh_rate())
+
 func _ready() -> void:
 	sample_fps()
 	
 	desired_fps = ceil(DisplayServer.screen_get_refresh_rate())
+	C.add_command('fps', toggle_active, [], 0, "Toggles the FPS counter on the bottom-left of the screen")
+	C.add_hidden_command('show_fps', toggle_active, [], 0)
 
 func _process(_delta: float) -> void:
 	tick_counter += 1
 
 func sample_fps() -> void:
+	if !visible: return
 	# Calculate FPS
 	var dt = (Time.get_ticks_msec() - last_time) / 1000.0
 	var fps = tick_counter / dt

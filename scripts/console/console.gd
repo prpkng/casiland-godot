@@ -8,7 +8,7 @@ signal console_opened
 signal console_closed
 signal console_unknown_command
 
-const SCALE = 3
+const SCALE = 2
 
 class ConsoleCommand:
 	var function : Callable
@@ -93,12 +93,15 @@ func _enter_tree() -> void:
 	rich_label.scroll_following = true
 	rich_label.anchor_right = 1.0
 	rich_label.anchor_bottom = 0.5
+	rich_label.add_theme_font_override("normal_font", load("res://graphics/monogram-extended.ttf"))
+	rich_label.add_theme_font_override("italics_font", load("res://graphics/monogram-extended-italic.ttf"))
 	rich_label.add_theme_stylebox_override("normal", style)
 	control.add_child(rich_label)
 	rich_label.append_text("Development console.\n")
 	line_edit.anchor_top = 0.5
 	line_edit.anchor_right = 1.0
 	line_edit.anchor_bottom = 0.5
+	line_edit.add_theme_font_override("font", load("res://graphics/monogram-extended.ttf"))
 	line_edit.placeholder_text = "Enter \"help\" for instructions"
 	control.add_child(line_edit)
 	line_edit.text_submitted.connect(on_text_entered)
@@ -136,8 +139,9 @@ func _ready() -> void:
 	add_command("exec", exec, 1, 1, "Execute a script.")
 
 func _input(event : InputEvent) -> void:
-	if (event is InputEventKey):
-		if (event.get_physical_keycode_with_modifiers() == KEY_QUOTELEFT): # ~ key.
+	if event is InputEventKey:
+		if event.get_physical_keycode_with_modifiers() == KEY_QUOTELEFT or \
+		(event.get_keycode_with_modifiers() == KEY_SLASH && !control.visible): # ~ key.
 			if (event.pressed):
 				toggle_console()
 			get_tree().get_root().set_input_as_handled()

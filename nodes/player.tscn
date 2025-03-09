@@ -16,7 +16,6 @@ radius = 7.0
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_sprite", "player_gun")]
 physics_interpolation_mode = 1
-position = Vector2(183, 133)
 script = ExtResource("1_jqal3")
 movement_speed = 128
 roll_speed = 450
@@ -36,7 +35,6 @@ texture = ExtResource("5_vm0m3")
 
 [node name="PlayerGun" parent="Player" instance=ExtResource("4_ynuc3")]
 position = Vector2(-2, 3)
-bullet_damage = 150.0
 
 [node name="GunSprite" parent="Player/PlayerGun" index="0"]
 position = Vector2(4, 0)

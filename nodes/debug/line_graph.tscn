@@ -1,0 +1,49 @@
+[gd_scene load_steps=4 format=3 uid="uid://bsr7ht2majg73"]
+
+[ext_resource type="Script" uid="uid://c0md14ltukkh2" path="res://scripts/ui/debug/line_graph.gd" id="1_jg6ii"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ohvpo"]
+bg_color = Color(0.24, 0.18816, 0.0672, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.981565, 0.718343, 0.0322522, 1)
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pds6w"]
+bg_color = Color(0, 0, 0, 0)
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_detail = 1
+
+[node name="LineGraph" type="Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -512.0
+offset_bottom = -296.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ohvpo")
+script = ExtResource("1_jg6ii")
+sample_view_count = 64
+color = Color(0.981565, 0.718343, 0.0322522, 1)
+
+[node name="Outline" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_top = -1.0
+offset_right = 1.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_pds6w")

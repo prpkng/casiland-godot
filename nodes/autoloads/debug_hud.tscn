@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://cq17a40r2o7bi"]
+[gd_scene load_steps=2 format=3 uid="uid://cq17a40r2o7bi"]
+
+[ext_resource type="PackedScene" uid="uid://cynfnywo46pw0" path="res://nodes/debug/fps_graph.tscn" id="1_umrru"]
 
 [node name="DebugHud" type="Control"]
 layout_mode = 3
@@ -8,3 +10,20 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="FPS Graph" parent="CanvasLayer" instance=ExtResource("1_umrru")]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+offset_left = -130.0
+offset_top = -32.0
+offset_right = -2.0
+offset_bottom = -2.0
+grow_horizontal = 0
+grow_vertical = 0
+sample_per_sec = 4
+sample_view_count = 128
+dynamically_resize = true

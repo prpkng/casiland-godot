@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://cynfnywo46pw0"]
+
+[ext_resource type="PackedScene" uid="uid://bsr7ht2majg73" path="res://nodes/debug/line_graph.tscn" id="1_hims7"]
+[ext_resource type="Script" uid="uid://b7n40aile4tpo" path="res://scripts/ui/debug/fps_graph.gd" id="2_xv6dd"]
+[ext_resource type="FontFile" uid="uid://col02s8ocjll7" path="res://graphics/monogram-extended.ttf" id="3_ccqv7"]
+
+[node name="FPS Graph" instance=ExtResource("1_hims7")]
+script = ExtResource("2_xv6dd")
+sample_per_sec = 30
+sample_max = 144
+sample_view_count = 50
+
+[node name="FPS Text" type="RichTextLabel" parent="." index="0"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = -14.0
+offset_right = 46.0
+offset_bottom = -1.0
+grow_vertical = 0
+pivot_offset = Vector2(0, 13)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("3_ccqv7")
+bbcode_enabled = true
+text = " FPS [color=red]60"
+fit_content = true
+scroll_active = false
+vertical_alignment = 2

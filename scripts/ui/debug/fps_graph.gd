@@ -22,7 +22,7 @@ func _ready() -> void:
 	sample_fps()
 	
 	desired_fps = ceil(DisplayServer.screen_get_refresh_rate())
-	C.add_command('fps', toggle_active, [], 0, "Toggles the FPS counter on the bottom-left of the screen")
+	C.add_command('fps', toggle_active, [], 0, "Toggles the FPS counter on the bottom-right of the screen")
 	C.add_hidden_command('show_fps', toggle_active, [], 0)
 
 func _process(_delta: float) -> void:

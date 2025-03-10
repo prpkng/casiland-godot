@@ -27,10 +27,6 @@ var hands_sine_active = false
 var selected_ball: RigidBody2D
 var active_balls = []
 
-func _ready() -> void:
-	pass # Replace with function body.
-
-
 func start_hands_sine():
 	pool_stick.reparent(left_hand)
 	hands_sine_active = true
@@ -83,8 +79,8 @@ func destroy_ball(ball: SnookerBall) -> void:
 
 func spawn_ball(left: bool) -> void:
 	var ball = pool_ball.instantiate()
-	ball.get_node('Shadow').position.y += 32
 	GM.current_root.add_child(ball)
+	ball.get_node('Shadow').position.y += 32
 	
 	var hand = left_hand if left else right_hand
 	hand.play('Carry')

@@ -1,0 +1,45 @@
+[gd_scene load_steps=5 format=3 uid="uid://cv2l1s1ejedwr"]
+
+[ext_resource type="PackedScene" uid="uid://bsr7ht2majg73" path="res://nodes/debug/line_graph.tscn" id="1_blhu7"]
+[ext_resource type="Script" uid="uid://bpectv5707xnr" path="res://scripts/ui/debug/memory_graph.gd" id="2_blhu7"]
+[ext_resource type="FontFile" uid="uid://col02s8ocjll7" path="res://graphics/monogram-extended.ttf" id="3_ft6w1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_blhu7"]
+bg_color = Color(0.0854458, 0.151972, 0.196773, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.0322522, 0.599537, 0.981565, 1)
+corner_detail = 1
+anti_aliasing = false
+
+[node name="Memory Graph" instance=ExtResource("1_blhu7")]
+theme_override_styles/panel = SubResource("StyleBoxFlat_blhu7")
+script = ExtResource("2_blhu7")
+sample_per_sec = 2
+sample_min = 10
+sample_max = 50
+sample_view_count = 50
+dynamically_resize = true
+color = Color(0.0322522, 0.599537, 0.981565, 1)
+
+[node name="MEM Text" type="RichTextLabel" parent="." index="0"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = -14.0
+offset_right = 127.0
+offset_bottom = -1.0
+grow_vertical = 0
+pivot_offset = Vector2(0, 13)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("3_ft6w1")
+bbcode_enabled = true
+text = " MEM [color=red]60"
+fit_content = true
+scroll_active = false
+vertical_alignment = 2

@@ -1,12 +1,16 @@
-[gd_scene load_steps=9 format=3 uid="uid://dot8tsn0euulb"]
+[gd_scene load_steps=14 format=3 uid="uid://dot8tsn0euulb"]
 
 [ext_resource type="Script" uid="uid://4vf2osak7pid" path="res://scripts/entities/snooker/the_hand_boss.gd" id="1_a3k82"]
 [ext_resource type="BehaviorTree" uid="uid://cvfm482gt5v7d" path="res://ai/boss.tres" id="2_5hymv"]
 [ext_resource type="PackedScene" uid="uid://c3ht1rv36du1l" path="res://graphics/spr/the_hand/hands.aseprite" id="3_27s64"]
+[ext_resource type="Script" uid="uid://cygb3lvyqut5d" path="res://addons/health_hitbox_hurtbox/health/health.gd" id="3_p7jlc"]
 [ext_resource type="Texture2D" uid="uid://bxpl8yy4oin6h" path="res://graphics/spr/the_hand/pool_stick.aseprite" id="4_l5ey3"]
 [ext_resource type="Script" uid="uid://1sacb1vns2rw" path="res://addons/shaker/src/Vector2/shaker_component2D.gd" id="4_nnl0n"]
 [ext_resource type="Resource" uid="uid://c3dnakwnbli7l" path="res://resources/shakes/stick_shake.tres" id="5_pbw44"]
+[ext_resource type="Script" uid="uid://b2ch78dtg0ycw" path="res://scripts/vfx/flash_on_damage.gd" id="7_hatvj"]
 [ext_resource type="Texture2D" uid="uid://dp633w1uqq3rp" path="res://graphics/spr/the_hand/stick_shadow.png" id="7_pbw44"]
+[ext_resource type="Script" uid="uid://dy74wyl8i7vu3" path="res://addons/health_hitbox_hurtbox/2d/hurt_box_2d/hurt_box_2d.gd" id="9_8hs7s"]
+[ext_resource type="Material" uid="uid://b6jr2cylk5pmt" path="res://graphics/shaders/flash_sprite.material" id="10_a2grk"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_v3lj3"]
 var/desired_ball_count/name = &"desired_ball_count"
@@ -24,6 +28,9 @@ var/boss/type = 22
 var/boss/value = NodePath("..")
 var/boss/hint = 0
 var/boss/hint_string = ""
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8hs7s"]
+radius = 17.1172
 
 [node name="The Hand" type="Node2D"]
 physics_interpolation_mode = 1
@@ -50,19 +57,56 @@ fade_out = 0.594603
 shakerPreset = ExtResource("5_pbw44")
 metadata/_custom_type_script = "uid://1sacb1vns2rw"
 
+[node name="Health" type="Node" parent="."]
+script = ExtResource("3_p7jlc")
+current = 3000
+max = 3000
+metadata/_custom_type_script = "uid://cygb3lvyqut5d"
+
 [node name="LeftHand" parent="." instance=ExtResource("3_27s64")]
 z_index = 5
 z_as_relative = false
+material = ExtResource("10_a2grk")
 position = Vector2(48, 32)
 animation = &"Point"
 speed_scale = 0.0
 
+[node name="FlashOnDamage" type="Node" parent="LeftHand" node_paths=PackedStringArray("hurtbox")]
+script = ExtResource("7_hatvj")
+hurtbox = NodePath("../HurtBox2D")
+
+[node name="HurtBox2D" type="Area2D" parent="LeftHand" node_paths=PackedStringArray("health")]
+collision_layer = 32
+collision_mask = 32
+script = ExtResource("9_8hs7s")
+health = NodePath("../../Health")
+metadata/_custom_type_script = "uid://dy74wyl8i7vu3"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftHand/HurtBox2D"]
+shape = SubResource("CircleShape2D_8hs7s")
+
 [node name="RightHand" parent="." instance=ExtResource("3_27s64")]
 z_index = 5
 z_as_relative = false
+material = ExtResource("10_a2grk")
 position = Vector2(-48, 32)
 speed_scale = 0.0
 flip_h = true
 
+[node name="FlashOnDamage" type="Node" parent="RightHand" node_paths=PackedStringArray("hurtbox")]
+script = ExtResource("7_hatvj")
+hurtbox = NodePath("../HurtBox2D")
+
+[node name="HurtBox2D" type="Area2D" parent="RightHand" node_paths=PackedStringArray("health")]
+collision_layer = 32
+collision_mask = 32
+script = ExtResource("9_8hs7s")
+health = NodePath("../../Health")
+metadata/_custom_type_script = "uid://dy74wyl8i7vu3"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightHand/HurtBox2D"]
+shape = SubResource("CircleShape2D_8hs7s")
+
 [node name="StickShadow" type="Sprite2D" parent="."]
+visible = false
 texture = ExtResource("7_pbw44")

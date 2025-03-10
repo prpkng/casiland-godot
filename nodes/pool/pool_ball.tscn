@@ -47,9 +47,9 @@ material = SubResource("ShaderMaterial_b8aio")
 script = ExtResource("3_45y63")
 ball_rb = NodePath("..")
 
-[node name="FlashOnDamage" type="Node" parent="line_ball" node_paths=PackedStringArray("health")]
+[node name="FlashOnDamage" type="Node" parent="line_ball" node_paths=PackedStringArray("hurtbox")]
 script = ExtResource("4_hu0mm")
-health = NodePath("../../Health")
+hurtbox = NodePath("../../HurtBox2D")
 
 [node name="HealthStages" parent="line_ball" node_paths=PackedStringArray("health") instance=ExtResource("6_5jqll")]
 speed_scale = 0.0

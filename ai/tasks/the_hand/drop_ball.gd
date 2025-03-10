@@ -22,7 +22,7 @@ func _setup() -> void:
 # Called when the task is entered.
 func _enter() -> void:
 	hand = boss.left_hand if is_left else boss.right_hand
-	var ball = hand.get_child(0) as Node2D
+	var ball = hand.get_node('Ball') as Node2D
 	var shadow = ball.get_node('Shadow')
 	shadow.reparent(GM.current_root)
 	ball.reparent(GM.current_root)

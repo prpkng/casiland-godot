@@ -100,6 +100,7 @@ func spawn_ball(left: bool) -> void:
 	ball.global_position = hand.global_position + Vector2(0, 24)
 	ball.process_mode = Node.PROCESS_MODE_DISABLED
 	ball.reparent(hand)
+	ball.name = "Ball"
 	active_balls.append(ball)
 
 func push_ball(dir: Vector2):

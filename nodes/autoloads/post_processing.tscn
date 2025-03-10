@@ -1,12 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://cyyxqww2i4wfy"]
+[gd_scene load_steps=6 format=3 uid="uid://cyyxqww2i4wfy"]
 
 [ext_resource type="Script" uid="uid://d3kbsog4hkpuf" path="res://scripts/vfx/post_processing.gd" id="1_3fur1"]
-[ext_resource type="Shader" uid="uid://omrawhfruaxe" path="res://shaders/distortion.gdshader" id="2_nhu3h"]
+[ext_resource type="Shader" uid="uid://omrawhfruaxe" path="res://graphics/shaders/distortion.gdshader" id="2_nhu3h"]
+[ext_resource type="Shader" uid="uid://bvhnhs6qqxnhp" path="res://graphics/shaders/vignette.gdshader" id="2_puu0l"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_adwdh"]
+shader = ExtResource("2_puu0l")
+shader_parameter/outerRadius = 1.5
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_puu0l"]
 shader = ExtResource("2_nhu3h")
 shader_parameter/levels = 3
-shader_parameter/spread = 0.01
+shader_parameter/spread = 0.0
 
 [node name="PostProcessing" type="Control"]
 layout_mode = 3
@@ -20,17 +25,17 @@ script = ExtResource("1_3fur1")
 
 [node name="Pass1" type="CanvasLayer" parent="."]
 
-[node name="Flash" type="ColorRect" parent="Pass1"]
+[node name="Flash Vignette" type="ColorRect" parent="Pass1"]
+material = SubResource("ShaderMaterial_adwdh")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0, 0, 0, 0)
+color = Color(1, 1, 1, 0)
 
 [node name="Pass2" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="Distortion" type="ColorRect" parent="Pass2"]
 material = SubResource("ShaderMaterial_puu0l")

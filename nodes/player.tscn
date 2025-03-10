@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://cissejqy2qaq3" path="res://graphics/spr/player/player_shadow.png" id="5_vm0m3"]
 [ext_resource type="Script" uid="uid://dy74wyl8i7vu3" path="res://addons/health_hitbox_hurtbox/2d/hurt_box_2d/hurt_box_2d.gd" id="6_1pccs"]
 [ext_resource type="Script" uid="uid://cygb3lvyqut5d" path="res://addons/health_hitbox_hurtbox/health/health.gd" id="7_iss4e"]
-[ext_resource type="Script" uid="uid://dk6s64e8xw1ci" path="res://scripts/vfx/player_death_effect.gd" id="8_58t5b"]
+[ext_resource type="Script" uid="uid://dk6s64e8xw1ci" path="res://scripts/vfx/player_hit_effect.gd" id="8_58t5b"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rvfhd"]
 

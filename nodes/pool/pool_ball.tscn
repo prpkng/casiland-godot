@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dpkpgxoh8krtl" path="res://scripts/entities/snooker/snooker_ball.gd" id="1_wpxnu"]
 [ext_resource type="PackedScene" uid="uid://df05oco0cb7du" path="res://graphics/spr/the_hand/line_ball.aseprite" id="2_tb4xp"]
 [ext_resource type="Script" uid="uid://56imp4lggema" path="res://scripts/entities/snooker/ball_sprite.gd" id="3_45y63"]
-[ext_resource type="Shader" uid="uid://dwevmvlawyam6" path="res://shaders/flash_sprite.gdshader" id="3_f51tm"]
+[ext_resource type="Shader" uid="uid://dwevmvlawyam6" path="res://graphics/shaders/flash_sprite.gdshader" id="3_f51tm"]
 [ext_resource type="Script" uid="uid://b2ch78dtg0ycw" path="res://scripts/vfx/flash_on_damage.gd" id="4_hu0mm"]
 [ext_resource type="Texture2D" uid="uid://ghec8fensetx" path="res://graphics/spr/the_hand/ball_shadow.png" id="4_oejy8"]
 [ext_resource type="Script" uid="uid://cygb3lvyqut5d" path="res://addons/health_hitbox_hurtbox/health/health.gd" id="5_s3ghp"]

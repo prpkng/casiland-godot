@@ -32,7 +32,6 @@ width_curve = SubResource("Curve_1qkiu")
 default_color = Color(0.305882, 0.168627, 0.270588, 1)
 script = ExtResource("3_xql84")
 offset = Vector2(2, 0)
-max_points_count = 10
 
 [node name="HitBox2D" type="Area2D" parent="."]
 collision_layer = 32

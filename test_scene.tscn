@@ -225,10 +225,10 @@ pool_table = NodePath("../PoolTable")
 position = Vector2(151, 40)
 rotation = 0.0
 
-[node name="LeftHand" parent="ScaledNodes/The Hand" index="2"]
+[node name="LeftHand" parent="ScaledNodes/The Hand" index="3"]
 sprite_frames = SubResource("SpriteFrames_dj5dx")
 
-[node name="RightHand" parent="ScaledNodes/The Hand" index="3"]
+[node name="RightHand" parent="ScaledNodes/The Hand" index="4"]
 sprite_frames = SubResource("SpriteFrames_dj5dx")
 
 [editable path="ScaledNodes/The Hand"]

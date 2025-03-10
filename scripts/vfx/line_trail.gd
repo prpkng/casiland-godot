@@ -1,11 +1,11 @@
 extends Line2D
 
 @export var offset: Vector2
-@export var max_points_count := 20
+@export var max_points_count := 5
 
 var counter = 1
 
-func _process(_delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	global_position = Vector2.ZERO
 	global_rotation = 0
 	

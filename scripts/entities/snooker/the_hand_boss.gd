@@ -70,16 +70,16 @@ func _process(delta: float) -> void:
 
 func destroy_ball(ball: SnookerBall) -> void:
 	if ball == selected_ball:
-		left_hand.reparent(self)
-		left_hand.reset_physics_interpolation()
-		right_hand.reparent(self)
-		right_hand.reset_physics_interpolation()
-		pool_stick.reparent(self)
-		pool_stick.reset_physics_interpolation()
+		left_hand.reparent.call_deferred(self)
+		left_hand.reset_physics_interpolation.call_deferred()
+		right_hand.reparent.call_deferred(self)
+		right_hand.reset_physics_interpolation.call_deferred()
+		pool_stick.reparent.call_deferred(self)
+		pool_stick.reset_physics_interpolation.call_deferred()
 		selected_ball = null
 		ai.blackboard.set_var('main_ball_destroyed', true)
 	active_balls.erase(ball)
-	ball.queue_free()
+	ball.queue_free.call_deferred()
 
 func spawn_ball(left: bool) -> void:
 	var ball = pool_ball.instantiate()

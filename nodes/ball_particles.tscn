@@ -7,7 +7,7 @@
 script = ExtResource("1_d0h25")
 
 [node name="BallShards" type="Sprite2D" parent="."]
-position = Vector2(1, 1)
+position = Vector2(0.75, 1)
 texture = ExtResource("1_w28wm")
 region_enabled = true
 region_rect = Rect2(0, 0, 48, 48)
@@ -19,7 +19,7 @@ region_enabled = true
 region_rect = Rect2(48, 0, 48, 48)
 
 [node name="BallShards3" type="Sprite2D" parent="."]
-position = Vector2(1, -1)
+position = Vector2(0.6, -1)
 texture = ExtResource("1_w28wm")
 region_enabled = true
 region_rect = Rect2(96, 0, 48, 48)

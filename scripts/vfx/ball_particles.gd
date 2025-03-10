@@ -12,3 +12,7 @@ func _ready() -> void:
         var dir = c.position.normalized()
         tween.tween_property(c, 'position', dir * 48, 1) 
         tween.tween_property(c, 'modulate:a', 0, 1) 
+    
+    await tween.finished
+    if self:
+        queue_free()

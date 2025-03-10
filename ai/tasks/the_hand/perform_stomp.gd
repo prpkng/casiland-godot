@@ -30,4 +30,4 @@ func _enter() -> void:
 
 # Called each time this task is exited.
 func _exit() -> void:
-	pass
+	FX.set_aberration(2, 1)

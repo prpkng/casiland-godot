@@ -8,6 +8,24 @@
 
 config_version=5
 
+[Fmod]
+
+General/auto_initialize=true
+General/channel_count=1024
+General/is_live_update_enabled=true
+General/is_memory_tracking_enabled=false
+"Software Format/sample_rate"=48000
+"Software Format/speaker_mode"=3
+"Software Format/raw_speaker_count"=0
+General/default_listener_count=1
+General/banks_path="res://fmod/banks/"
+General/should_load_by_name=false
+DSP/dsp_buffer_size=512
+DSP/dsp_buffer_count=4
+"3D Settings/doppler_scale"=1.0
+"3D Settings/distance_factor"=1.0
+"3D Settings/rolloff_scale"=1.0
+
 [application]
 
 config/name="casiland"
@@ -23,6 +41,7 @@ C="*res://scripts/console/console.gd"
 GM="*res://scripts/game_manager.gd"
 InputHelper="*res://addons/input_helper/input_helper.gd"
 Shaker="*res://addons/shaker/src/Shaker.gd"
+FmodManager="*res://addons/fmod/FmodManager.gd"
 
 [display]
 
@@ -36,7 +55,7 @@ window/vsync/vsync_mode=0
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/health_hitbox_hurtbox/plugin.cfg", "res://addons/input_helper/plugin.cfg", "res://addons/nklbdev.importality/plugin.cfg", "res://addons/shaker/plugin.cfg", "res://addons/virtual_joystick/plugin.cfg")
+enabled=PackedStringArray("res://addons/fmod/plugin.cfg", "res://addons/health_hitbox_hurtbox/plugin.cfg", "res://addons/input_helper/plugin.cfg", "res://addons/nklbdev.importality/plugin.cfg", "res://addons/shaker/plugin.cfg", "res://addons/virtual_joystick/plugin.cfg")
 
 [global_group]
 

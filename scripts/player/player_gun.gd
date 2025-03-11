@@ -4,14 +4,16 @@ class_name PlayerGun
 
 const player_bullet: PackedScene = preload('res://nodes/player_bullet.tscn')
 
-@export var gun_sprite: AnimatedSprite2D
 @export var muzzle_point: Node2D
 @export var fire_rate: float = 6
 @export var bullet_damage: float = 10
 
+@onready var gun_sprite: AnimatedSprite2D = $GunSprite
+
 var start_x = 0
 var is_firing := false
 var fire_counter := 1.0
+var recoil_tween: Tween
 
 func _ready() -> void:
 	start_x = position.x
@@ -56,6 +58,18 @@ func fire():
 	(bullet.get_node('HitBox2D') as HitBox2D).amount = bullet_damage
 	get_tree().create_timer(1).timeout.connect(bullet.queue_free)
 	bullet.rotation = global_rotation
+	
+	# Recoil
+	if recoil_tween:
+		recoil_tween.stop()
+	recoil_tween = create_tween()
+	recoil_tween.set_ease(Tween.EASE_OUT)
+	recoil_tween.set_trans(Tween.TRANS_CUBIC)
+	
+	var recoil_force = 2 + (bullet_damage / 10.0 - 1) * 1.5
+	
+	gun_sprite.position = -transform.x * recoil_force
+	recoil_tween.tween_property(gun_sprite, 'position', Vector2.ZERO, 0.25)
 	
 
 func _unhandled_input(event: InputEvent) -> void:

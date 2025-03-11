@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bxpl8yy4oin6h"
-path="res://.godot/imported/pool_stick.aseprite-435f6b68cb1160680b510ca32676a992.ctex"
+uid="uid://ctgm0t4j3mmk6"
+path="res://.godot/imported/pool_stick.png-b528acff3585d9985278bedf6544ea2e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://graphics/spr/the_hand/pool_stick.aseprite"
-dest_files=["res://.godot/imported/pool_stick.aseprite-435f6b68cb1160680b510ca32676a992.ctex"]
+source_file="res://graphics/spr/the_hand/pool_stick.png"
+dest_files=["res://.godot/imported/pool_stick.png-b528acff3585d9985278bedf6544ea2e.ctex"]
 
 [params]
 

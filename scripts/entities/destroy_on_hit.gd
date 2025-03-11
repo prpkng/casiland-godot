@@ -10,4 +10,4 @@ func _ready() -> void:
 func destroy(_hurt_box: HurtBox2D) -> void:
 	var hitbox = (get_parent() as HitBox2D)
 	hitbox.ignore_collisions = true
-	owner.queue_free()
+	owner.queue_free.call_deferred()

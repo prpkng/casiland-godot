@@ -2,7 +2,7 @@
 extends Node2D
 class_name TheHandBoss
 
-const pool_ball = preload('res://nodes/pool/pool_ball.tscn')
+const pool_ball = preload('res://nodes/bosses/the_hand/pool_ball.tscn')
 
 const HANDS_SINE_FREQY = 1.25/1000
 const HANDS_SINE_FREQX = HANDS_SINE_FREQY*2

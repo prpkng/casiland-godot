@@ -4,7 +4,7 @@
 // Incrementing CACHE_VERSION will kick off the install event and force
 // previously cached resources to be updated from the network.
 /** @type {string} */
-const CACHE_VERSION = '1741652977|9635137';
+const CACHE_VERSION = '1741668995|9644824';
 /** @type {string} */
 const CACHE_PREFIX = 'casiland-sw-cache-';
 const CACHE_NAME = CACHE_PREFIX + CACHE_VERSION;

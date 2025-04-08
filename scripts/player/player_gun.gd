@@ -1,19 +1,20 @@
 @icon('res://editor/icons/node_2D/icon_sword.png')
-extends Node2D
 class_name PlayerGun
+extends Node2D
 
-const player_bullet: PackedScene = preload('res://nodes/player_bullet.tscn')
+const PLAYER_BULLET: PackedScene = preload('res://nodes/PLAYER_BULLET.tscn')
 
 @export var muzzle_point: Node2D
 @export var fire_rate: float = 6
 @export var bullet_damage: float = 10
 
-@onready var gun_sprite: AnimatedSprite2D = $GunSprite
-
 var start_x = 0
 var is_firing := false
 var fire_counter := 1.0
 var recoil_tween: Tween
+
+@onready var gun_sprite: AnimatedSprite2D = $GunSprite
+@onready var shot_event := $ShotEventEmitter
 
 func _ready() -> void:
 	start_x = position.x
@@ -22,6 +23,7 @@ func _ready() -> void:
 func _process(delta):
 	calculate_aim()
 	
+
 	fire_counter += delta * fire_rate
 	if not is_firing: return
 	if fire_counter > 1:
@@ -50,7 +52,7 @@ func stop_firing():
 
 func fire():
 	fire_counter = 0
-	var bullet = player_bullet.instantiate()
+	var bullet = PLAYER_BULLET.instantiate()
 	GM.current_root.add_child(bullet)
 	bullet.global_position = muzzle_point.global_position
 	bullet.set_process(true)
@@ -58,6 +60,9 @@ func fire():
 	(bullet.get_node('HitBox2D') as HitBox2D).amount = bullet_damage
 	get_tree().create_timer(1).timeout.connect(bullet.queue_free)
 	bullet.rotation = global_rotation
+	
+	# SFX
+	shot_event.play_one_shot()
 	
 	# Recoil
 	if recoil_tween:

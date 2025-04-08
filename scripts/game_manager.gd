@@ -1,4 +1,4 @@
-extends Node
+class_name GameManager extends Node
 
 var current_root: SubViewport
 var player: Node2D

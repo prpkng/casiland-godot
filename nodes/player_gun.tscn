@@ -12,3 +12,8 @@ offset = Vector2(5, 0)
 
 [node name="Muzzle" type="Node2D" parent="."]
 position = Vector2(13, 0)
+
+[node name="ShotEventEmitter" type="FmodEventEmitter2D" parent="."]
+event_name = "event:/SFX/Player/SFX_ShotGun"
+event_guid = "{67e7e0c8-ef22-4524-8790-4de1298c8f4d}"
+attached = false

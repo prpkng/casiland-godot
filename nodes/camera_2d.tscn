@@ -3,7 +3,8 @@
 [ext_resource type="Script" uid="uid://dpacea5xl6rwe" path="res://scripts/camera_manager.gd" id="1_q07q2"]
 
 [node name="Camera2D" type="Camera2D"]
-position = Vector2(271.001, 152)
 ignore_rotation = false
 position_smoothing_enabled = true
 script = ExtResource("1_q07q2")
+
+[node name="FmodListener2D" type="FmodListener2D" parent="."]

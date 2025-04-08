@@ -1,0 +1,3 @@
+[submodule "fmod/project"]
+	path = fmod/project
+	url = https://github.com/YatriGameaudio/BossRush25AudioProject.git

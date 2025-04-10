@@ -18,7 +18,6 @@ func _ready() -> void:
 ## Called when the entity is damaged
 func damaged(_node: Node):
 	if spr.material is ShaderMaterial:
-		var mat = spr.material as ShaderMaterial
-		mat.set_shader_parameter('flash', true)
+		spr.set_instance_shader_parameter('flash', true)
 		await get_tree().create_timer(.1, false).timeout
-		mat.set_shader_parameter('flash', false)
+		spr.set_instance_shader_parameter('flash', false)

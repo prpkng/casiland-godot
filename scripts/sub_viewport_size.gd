@@ -7,7 +7,6 @@ func _ready() -> void:
 	start_size = size
 	resized()
 
-
 func resized():
 	var root_size = get_tree().root.size as Vector2
 	if root_size.x / 16 > root_size.y / 9:

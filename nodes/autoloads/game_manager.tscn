@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://b6r0k44gfrkew"]
+[gd_scene load_steps=3 format=3 uid="uid://b6r0k44gfrkew"]
 
 [ext_resource type="Script" uid="uid://b16vywijgv64r" path="res://scripts/game_manager.gd" id="1_auep1"]
+[ext_resource type="Script" uid="uid://dpl2ws8ymehuj" path="res://scripts/window_manager.gd" id="2_im1bq"]
 
 [node name="GameManager" type="Node"]
 script = ExtResource("1_auep1")
@@ -8,3 +9,6 @@ metadata/_custom_type_script = "uid://b16vywijgv64r"
 
 [node name="FmodBankLoader" type="FmodBankLoader" parent="."]
 bank_paths = ["res://fmod/banks//Master.strings.bank", "res://fmod/banks//Master.bank"]
+
+[node name="WindowManager" type="Node" parent="."]
+script = ExtResource("2_im1bq")

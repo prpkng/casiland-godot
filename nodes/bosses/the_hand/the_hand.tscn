@@ -11,7 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://dp633w1uqq3rp" path="res://graphics/spr/the_hand/stick_shadow.png" id="7_pbw44"]
 [ext_resource type="Script" uid="uid://dy74wyl8i7vu3" path="res://addons/health_hitbox_hurtbox/2d/hurt_box_2d/hurt_box_2d.gd" id="9_8hs7s"]
 [ext_resource type="Material" uid="uid://b6jr2cylk5pmt" path="res://graphics/shaders/flash_sprite.material" id="10_a2grk"]
-[ext_resource type="Script" uid="uid://cwdkwj7l2abi8" path="res://nodes/bosses/boss_communicator.gd" id="12_5oer0"]
+[ext_resource type="Script" uid="uid://cwdkwj7l2abi8" path="res://scripts/entities/boss_communicator.gd" id="12_5oer0"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_v3lj3"]
 var/desired_ball_count/name = &"desired_ball_count"

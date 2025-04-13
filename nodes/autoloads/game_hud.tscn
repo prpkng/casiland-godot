@@ -1,5 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://c3ynw2bqynnil"]
+[gd_scene load_steps=10 format=3 uid="uid://c3ynw2bqynnil"]
 
+[ext_resource type="Script" uid="uid://bgji6ri848fpt" path="res://scripts/ui/game_hud.gd" id="1_ki572"]
 [ext_resource type="Script" uid="uid://blehbvefkubvn" path="res://scripts/hud_controls.gd" id="1_rdeul"]
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="1_s03pb"]
 [ext_resource type="Texture2D" uid="uid://d0koyif5agh0m" path="res://graphics/ui/joystick_base.png" id="2_ab61y"]
@@ -19,6 +20,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+script = ExtResource("1_ki572")
 
 [node name="UI" type="CanvasLayer" parent="."]
 layer = 100

@@ -1,8 +1,7 @@
 @icon('res://editor/icons/node_2D/icon_skull.png')
-extends Node2D
-class_name TheHandBoss
+class_name TheHandBoss extends Node2D
 
-const pool_ball = preload('res://nodes/bosses/the_hand/pool_ball.tscn')
+const POOL_BALL = preload('res://nodes/bosses/the_hand/pool_ball.tscn')
 
 const HANDS_SINE_FREQY = 1.25/1000
 const HANDS_SINE_FREQX = HANDS_SINE_FREQY*2
@@ -16,16 +15,15 @@ const POOL_STICK_IDLE_ROT = 0
 
 @export var pool_table: Node2D
 
+var hands_sine_active = false
+var selected_ball: RigidBody2D
+var active_balls = []
+
 @onready var left_hand: AnimatedSprite2D = $LeftHand
 @onready var right_hand: AnimatedSprite2D = $RightHand
 @onready var pool_stick: Sprite2D = $PoolStick
 @onready var stick_shadow: Sprite2D = $StickShadow
-@onready var ai: BTPlayer = $BTPlayer
-
-var hands_sine_active = false
-
-var selected_ball: RigidBody2D
-var active_balls = []
+@onready var ai: BTPlayer = $AI
 
 func start_hands_sine():
 	pool_stick.reparent(left_hand)
@@ -34,7 +32,7 @@ func start_hands_sine():
 func stop_hands_sine():
 	pool_stick.reparent(self)
 	hands_sine_active = false
-	
+
 	var tween = get_tree().create_tween()
 	tween.set_ease(Tween.EASE_OUT)
 	tween.set_trans(Tween.TRANS_CUBIC)
@@ -48,7 +46,7 @@ func perform_hands_sine(delta: float):
 	hand_origin.y += sin(Time.get_ticks_msec() * HANDS_SINE_FREQY)  * HANDS_SINE_AMPY 
 	hand_origin.x += sin(Time.get_ticks_msec() * HANDS_SINE_FREQX)  * HANDS_SINE_AMPX
 	left_hand.global_position = lerp(left_hand.global_position, hand_origin, delta * 4)
-	
+
 	# Right Hand
 	hand_origin = position + Vector2.LEFT * 32 + Vector2.DOWN * 32
 	hand_origin.y += sin(Time.get_ticks_msec() * HANDS_SINE_FREQY)  * HANDS_SINE_AMPY 
@@ -78,7 +76,7 @@ func destroy_ball(ball: SnookerBall) -> void:
 	ball.queue_free.call_deferred()
 
 func spawn_ball(left: bool) -> void:
-	var ball = pool_ball.instantiate()
+	var ball = POOL_BALL.instantiate()
 	GM.current_root.add_child(ball)
 	ball.get_node('Shadow').position.y += 32
 	

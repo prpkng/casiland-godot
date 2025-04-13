@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dot8tsn0euulb"]
+[gd_scene load_steps=15 format=3 uid="uid://dot8tsn0euulb"]
 
 [ext_resource type="Script" uid="uid://4vf2osak7pid" path="res://scripts/entities/snooker/the_hand_boss.gd" id="1_a3k82"]
 [ext_resource type="BehaviorTree" uid="uid://cvfm482gt5v7d" path="res://ai/boss.tres" id="2_5hymv"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://dp633w1uqq3rp" path="res://graphics/spr/the_hand/stick_shadow.png" id="7_pbw44"]
 [ext_resource type="Script" uid="uid://dy74wyl8i7vu3" path="res://addons/health_hitbox_hurtbox/2d/hurt_box_2d/hurt_box_2d.gd" id="9_8hs7s"]
 [ext_resource type="Material" uid="uid://b6jr2cylk5pmt" path="res://graphics/shaders/flash_sprite.material" id="10_a2grk"]
+[ext_resource type="Script" uid="uid://cwdkwj7l2abi8" path="res://nodes/bosses/boss_communicator.gd" id="12_5oer0"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_v3lj3"]
 var/desired_ball_count/name = &"desired_ball_count"
@@ -36,7 +37,7 @@ radius = 17.1172
 physics_interpolation_mode = 1
 script = ExtResource("1_a3k82")
 
-[node name="BTPlayer" type="BTPlayer" parent="."]
+[node name="AI" type="BTPlayer" parent="."]
 behavior_tree = ExtResource("2_5hymv")
 blackboard_plan = SubResource("BlackboardPlan_v3lj3")
 
@@ -110,3 +111,7 @@ shape = SubResource("CircleShape2D_8hs7s")
 [node name="StickShadow" type="Sprite2D" parent="."]
 visible = false
 texture = ExtResource("7_pbw44")
+
+[node name="BossCommunicator" type="Node" parent="." node_paths=PackedStringArray("health")]
+script = ExtResource("12_5oer0")
+health = NodePath("../Health")

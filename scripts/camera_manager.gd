@@ -19,7 +19,9 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	position = target.position if target_override == null else target_override.position
-
+	
+	# Update listener position
+	FmodServer.set_listener_transform2d(0, transform)
 
 static func shake_strong():
 	Shaker.shake_by_preset(SHAKE_STRONG, INSTANCE, .45, 1, 1, 0.0001)

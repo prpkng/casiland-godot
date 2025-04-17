@@ -7,6 +7,8 @@ const HITBOX_FORCE := 2.0
 @onready var health = $Health
 @onready var hurtbox = $HurtBox2D
 
+@onready var ball_hit_sound = $BallHitSound
+
 var boss: TheHandBoss
 
 func _ready() -> void:
@@ -16,7 +18,7 @@ func _ready() -> void:
 
 func _on_collision(_body):
 	$Health.damage(COLLISION_DAMAGE)
-	print('collision')
+	ball_hit_sound.play_one_shot()
 
 func _on_damaged(entity: Node2D) -> void:
 	if entity == null: return

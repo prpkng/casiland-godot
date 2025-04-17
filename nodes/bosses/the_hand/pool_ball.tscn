@@ -76,6 +76,11 @@ script = ExtResource("9_dy2hy")
 current = 250
 max = 250
 
+[node name="BallHitSound" type="FmodEventEmitter2D" parent="."]
+event_name = "event:/BOSSES/Snooker/SFX_BallHitBall"
+event_guid = "{2de6db90-811f-4134-b5ab-78908d78e42c}"
+allow_fadeout = false
+
 [node name="HurtBox2D" type="Area2D" parent="." node_paths=PackedStringArray("health")]
 visible = false
 collision_layer = 32

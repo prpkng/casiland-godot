@@ -29,8 +29,10 @@ position = Vector2(320, 180)
 position = Vector2(320, -12)
 pool_table = NodePath("../PoolTable")
 
-[node name="PoolStick" parent="ScaledNodes/The Hand" index="1"]
-position = Vector2(151, 40)
-rotation = 0.0
-
-[editable path="ScaledNodes/The Hand"]
+[node name="Music" type="FmodEventEmitter2D" parent="ScaledNodes"]
+event_name = "event:/MUS/MUS_Boss01"
+event_guid = "{575a0ce7-4a85-4ef5-bf86-be37540be224}"
+autoplay = true
+fmod_parameters/AgressiveAct/id = 2116540528131937014
+fmod_parameters/AgressiveAct = 0.0
+fmod_parameters/AgressiveAct/variant_type = 3

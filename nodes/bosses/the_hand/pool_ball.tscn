@@ -1,9 +1,8 @@
-[gd_scene load_steps=17 format=3 uid="uid://buatpvadejxgf"]
+[gd_scene load_steps=15 format=3 uid="uid://buatpvadejxgf"]
 
 [ext_resource type="Script" uid="uid://dpkpgxoh8krtl" path="res://scripts/entities/snooker/snooker_ball.gd" id="1_ialjt"]
 [ext_resource type="SpriteFrames" uid="uid://df05oco0cb7du" path="res://graphics/spr/the_hand/line_ball.aseprite" id="2_4ptnb"]
-[ext_resource type="Shader" uid="uid://be43qu6xvx0j8" path="res://graphics/shaders/ball_pallete_switch.gdshader" id="3_ialjt"]
-[ext_resource type="Texture2D" uid="uid://cjk3hv6vcnfp1" path="res://graphics/spr/the_hand/ball_pallete.png" id="4_4ptnb"]
+[ext_resource type="Material" uid="uid://ore11g4b3ws2" path="res://graphics/shaders/pool_ball.tres" id="2_ialjt"]
 [ext_resource type="Script" uid="uid://56imp4lggema" path="res://scripts/entities/snooker/ball_sprite.gd" id="4_ovfl3"]
 [ext_resource type="Script" uid="uid://b2ch78dtg0ycw" path="res://scripts/vfx/flash_on_damage.gd" id="5_ng7is"]
 [ext_resource type="PackedScene" uid="uid://dq5qlq8m0ial0" path="res://graphics/spr/the_hand/ball_stages.aseprite" id="6_p21ck"]
@@ -16,13 +15,6 @@
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5ighl"]
 friction = 0.0
 bounce = 1.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_4ptnb"]
-shader = ExtResource("3_ialjt")
-shader_parameter/color_count = 4
-shader_parameter/pallete_count = 6
-shader_parameter/pallete_sprite = ExtResource("4_4ptnb")
-shader_parameter/flash_force = 0.4
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_q74lu"]
 radius = 24.0
@@ -42,22 +34,22 @@ angular_damp_mode = 1
 angular_damp = 100.0
 script = ExtResource("1_ialjt")
 
-[node name="line_ball" type="AnimatedSprite2D" parent="." node_paths=PackedStringArray("ball_rb")]
+[node name="Sprite" type="AnimatedSprite2D" parent="." node_paths=PackedStringArray("ball_rb")]
 show_behind_parent = true
 z_as_relative = false
 texture_filter = 1
-material = SubResource("ShaderMaterial_4ptnb")
+material = ExtResource("2_ialjt")
 instance_shader_parameters/pallete_index = 0
 sprite_frames = ExtResource("2_4ptnb")
 autoplay = "default"
 script = ExtResource("4_ovfl3")
 ball_rb = NodePath("..")
 
-[node name="FlashOnDamage" type="Node" parent="line_ball" node_paths=PackedStringArray("hurtbox")]
+[node name="FlashOnDamage" type="Node" parent="Sprite" node_paths=PackedStringArray("hurtbox")]
 script = ExtResource("5_ng7is")
 hurtbox = NodePath("../../HurtBox2D")
 
-[node name="HealthStages" parent="line_ball" node_paths=PackedStringArray("health") instance=ExtResource("6_p21ck")]
+[node name="HealthStages" parent="Sprite" node_paths=PackedStringArray("health") instance=ExtResource("6_p21ck")]
 speed_scale = 0.0
 script = ExtResource("7_su2gm")
 health = NodePath("../../Health")
@@ -84,6 +76,11 @@ fmod_parameters/HitWhat/id = -7540708318509762888
 fmod_parameters/HitWhat = "Wall"
 fmod_parameters/HitWhat/labels = PackedStringArray("Ball", "Wall")
 fmod_parameters/HitWhat/variant_type = 4
+
+[node name="BallExplodeSound" type="FmodEventEmitter2D" parent="."]
+event_name = "event:/BOSSES/Snooker/SFX_BallExplosion"
+event_guid = "{46d30e16-9d75-4b8a-b90f-c16df258f1a4}"
+allow_fadeout = false
 
 [node name="HurtBox2D" type="Area2D" parent="." node_paths=PackedStringArray("health")]
 visible = false

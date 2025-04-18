@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://ore11g4b3ws2"]
+
+[ext_resource type="Shader" uid="uid://be43qu6xvx0j8" path="res://graphics/shaders/ball_pallete_switch.gdshader" id="1_nh4mu"]
+[ext_resource type="Texture2D" uid="uid://cjk3hv6vcnfp1" path="res://graphics/spr/the_hand/ball_pallete.png" id="2_cbxm7"]
+
+[resource]
+shader = ExtResource("1_nh4mu")
+shader_parameter/color_count = 4
+shader_parameter/pallete_count = 6
+shader_parameter/pallete_sprite = ExtResource("2_cbxm7")
+shader_parameter/flash_force = 0.4

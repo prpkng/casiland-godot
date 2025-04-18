@@ -1,6 +1,7 @@
-[gd_resource type="BehaviorTree" load_steps=119 format=3 uid="uid://cvfm482gt5v7d"]
+[gd_resource type="BehaviorTree" load_steps=124 format=3 uid="uid://cvfm482gt5v7d"]
 
 [ext_resource type="Script" uid="uid://b3a8w52mltx6e" path="res://ai/tasks/the_hand/carry_ball_with_hand.gd" id="1_q73dm"]
+[ext_resource type="Script" uid="uid://bsyx6h6hqam4b" path="res://ai/tasks/play_fmod_event.gd" id="1_w3mmd"]
 [ext_resource type="Script" uid="uid://csjxdlhot0kny" path="res://ai/tasks/the_hand/drop_ball.gd" id="2_lje28"]
 [ext_resource type="Script" uid="uid://v10rowxojk8p" path="res://ai/tasks/the_hand/select_random_ball.gd" id="3_ojv45"]
 [ext_resource type="Script" uid="uid://bscclc7380vt1" path="res://ai/tasks/the_hand/set_ball_count.gd" id="3_qsvbj"]
@@ -113,6 +114,15 @@ method = &"spawn_ball"
 args = Array[BBVariant]([SubResource("BBVariant_e3u8m")])
 custom_name = "Spawn ball at hand"
 
+[sub_resource type="BBString" id="BBString_w3mmd"]
+saved_value = "{f7b73dc3-6343-41d8-8546-bd7209f57381}"
+resource_name = "{f7b73dc3-6343-41d8-8546-bd7209f57381}"
+
+[sub_resource type="BTAction" id="BTAction_j3nmd"]
+custom_name = "Play move ball sound"
+script = ExtResource("1_w3mmd")
+fmod_guid = SubResource("BBString_w3mmd")
+
 [sub_resource type="BBNode" id="BBNode_dh6d7"]
 saved_value = NodePath(".")
 resource_name = "."
@@ -132,7 +142,7 @@ boss_node = SubResource("BBNode_sewt0")
 is_left = false
 
 [sub_resource type="BTSequence" id="BTSequence_mongn"]
-children = [SubResource("BTCheckVar_jpdna"), SubResource("BTSetVar_xlckc"), SubResource("BTWait_c2i2o"), SubResource("BTCallMethod_531x6"), SubResource("BTAction_cxyhj"), SubResource("BTAction_qgprf")]
+children = [SubResource("BTCheckVar_jpdna"), SubResource("BTSetVar_xlckc"), SubResource("BTWait_c2i2o"), SubResource("BTCallMethod_531x6"), SubResource("BTAction_j3nmd"), SubResource("BTAction_cxyhj"), SubResource("BTAction_qgprf")]
 
 [sub_resource type="BTRepeatUntilFailure" id="BTRepeatUntilFailure_ate72"]
 children = [SubResource("BTSequence_mongn")]
@@ -175,6 +185,15 @@ method = &"spawn_ball"
 args = Array[BBVariant]([SubResource("BBVariant_swjfl")])
 custom_name = "Spawn ball at hand"
 
+[sub_resource type="BBString" id="BBString_548dc"]
+saved_value = "{f7b73dc3-6343-41d8-8546-bd7209f57381}"
+resource_name = "{f7b73dc3-6343-41d8-8546-bd7209f57381}"
+
+[sub_resource type="BTAction" id="BTAction_koych"]
+custom_name = "Play move ball sound"
+script = ExtResource("1_w3mmd")
+fmod_guid = SubResource("BBString_548dc")
+
 [sub_resource type="BBNode" id="BBNode_3fmqk"]
 saved_value = NodePath(".")
 resource_name = "."
@@ -194,7 +213,7 @@ boss_node = SubResource("BBNode_pxaq6")
 is_left = true
 
 [sub_resource type="BTSequence" id="BTSequence_kgqxu"]
-children = [SubResource("BTCheckVar_3bviy"), SubResource("BTSetVar_yxhj7"), SubResource("BTWait_ypthf"), SubResource("BTCallMethod_t7fpl"), SubResource("BTAction_0wof4"), SubResource("BTAction_uoqy7")]
+children = [SubResource("BTCheckVar_3bviy"), SubResource("BTSetVar_yxhj7"), SubResource("BTWait_ypthf"), SubResource("BTCallMethod_t7fpl"), SubResource("BTAction_koych"), SubResource("BTAction_0wof4"), SubResource("BTAction_uoqy7")]
 
 [sub_resource type="BTRepeatUntilFailure" id="BTRepeatUntilFailure_8md3q"]
 children = [SubResource("BTSequence_kgqxu")]

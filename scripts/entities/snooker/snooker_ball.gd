@@ -8,6 +8,7 @@ const HITBOX_FORCE := 2.0
 @onready var hurtbox = $HurtBox2D
 
 @onready var ball_hit_sound = $BallHitSound
+@onready var ball_explode_sound = $BallExplodeSound
 
 var boss: TheHandBoss
 
@@ -31,11 +32,16 @@ func _on_death(_entity: Node):
 	boss.destroy_ball(self)
 	FX.set_aberration(1.5, 1)
 	Camera.shake_mid()
-
+	
+	
 	var particles: Node = DEATH_PARTICLES.instantiate()
+	ball_explode_sound.reparent(particles)
+	ball_explode_sound.play()
 	GM.current_root.add_child(particles)
 	particles.global_position = global_position
 	particles.global_rotation = global_rotation
+	for child: CanvasItem in particles.get_children():
+		child.set_instance_shader_parameter('pallete_index', $Sprite.color_idx)
 	
 	
 

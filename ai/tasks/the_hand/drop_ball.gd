@@ -31,7 +31,7 @@ func _enter() -> void:
 	tween = scene_root.get_tree().create_tween()
 	tween.set_ease(Tween.EASE_IN)
 	tween.set_trans(Tween.TRANS_CUBIC)
-	tween.tween_property(ball, 'global_position', dest_pos, .65)
+	tween.tween_property(ball, 'global_position', dest_pos, .75)
 	await tween.finished
 	ball.physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_ON
 	ball.process_mode = Node.PROCESS_MODE_INHERIT

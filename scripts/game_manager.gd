@@ -6,6 +6,8 @@ var current_root: SubViewport
 var player: Node2D
 var ui: CanvasLayer
 var ignoring_input: bool = false
+var music: MusicManager ## May be null
+
 var is_using_gamepad := false
 var is_mobile := false
 var player_aim_input: Vector2

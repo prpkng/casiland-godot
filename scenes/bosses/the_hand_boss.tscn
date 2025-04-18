@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://j7y8fy4xtwfq"]
+[gd_scene load_steps=8 format=3 uid="uid://j7y8fy4xtwfq"]
 
 [ext_resource type="PackedScene" uid="uid://c3ynw2bqynnil" path="res://nodes/autoloads/game_hud.tscn" id="1_ewqdl"]
 [ext_resource type="Script" uid="uid://cf3tdn871pxoq" path="res://scripts/scale_on_play.gd" id="2_3c7da"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cdl3r8uf84ux7" path="res://nodes/camera_2d.tscn" id="4_a4rw6"]
 [ext_resource type="PackedScene" uid="uid://ctx77y216smqf" path="res://nodes/bosses/the_hand/pool_table.tscn" id="5_1xa03"]
 [ext_resource type="PackedScene" uid="uid://dot8tsn0euulb" path="res://nodes/bosses/the_hand/the_hand.tscn" id="6_tqg7h"]
+[ext_resource type="Script" uid="uid://cbi2akccnathf" path="res://scripts/music_manager.gd" id="7_3c7da"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -36,3 +37,4 @@ autoplay = true
 fmod_parameters/AgressiveAct/id = 2116540528131937014
 fmod_parameters/AgressiveAct = 0.0
 fmod_parameters/AgressiveAct/variant_type = 3
+script = ExtResource("7_3c7da")

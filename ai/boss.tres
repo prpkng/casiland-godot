@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=128 format=3 uid="uid://cvfm482gt5v7d"]
+[gd_resource type="BehaviorTree" load_steps=131 format=3 uid="uid://cvfm482gt5v7d"]
 
 [ext_resource type="Script" uid="uid://b3a8w52mltx6e" path="res://ai/tasks/the_hand/carry_ball_with_hand.gd" id="1_q73dm"]
 [ext_resource type="Script" uid="uid://bsyx6h6hqam4b" path="res://ai/tasks/play_fmod_event.gd" id="1_w3mmd"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://bx7olxa5jinhk" path="res://ai/tasks/the_hand/stomp_follow_player.gd" id="8_yeag3"]
 [ext_resource type="Script" uid="uid://dy87m42ucyr5g" path="res://ai/tasks/the_hand/toogle_stick_shadow.gd" id="9_njekd"]
 [ext_resource type="Script" uid="uid://c2lu4vyl3dh7a" path="res://ai/tasks/the_hand/perform_stomp.gd" id="10_2qnbh"]
+[ext_resource type="Script" uid="uid://dj32gmwxfsoqh" path="res://ai/tasks/set_fmod_aggressive.gd" id="10_548dc"]
 [ext_resource type="Script" uid="uid://o71mcfukpr1c" path="res://ai/tasks/shake_camera.gd" id="10_ivom6"]
 [ext_resource type="Script" uid="uid://bws5wnseuo1qp" path="res://ai/tasks/the_hand/warn_stomp.gd" id="10_p3ini"]
 [ext_resource type="Script" uid="uid://djy8rrhiulqlt" path="res://ai/tasks/the_hand/pull_stomp.gd" id="16_548dc"]
@@ -374,6 +375,11 @@ resource_name = "0"
 variable = &"ball_count"
 value = SubResource("BBVariant_uxv54")
 
+[sub_resource type="BTAction" id="BTAction_4ln3g"]
+custom_name = "Set aggressive"
+script = ExtResource("10_548dc")
+aggressive = true
+
 [sub_resource type="BTAction" id="BTAction_w3mmd"]
 script = ExtResource("9_njekd")
 boss_var = &"boss"
@@ -501,9 +507,14 @@ script = ExtResource("9_njekd")
 boss_var = &"boss"
 value = false
 
+[sub_resource type="BTAction" id="BTAction_2rsnj"]
+custom_name = "Unset aggressive"
+script = ExtResource("10_548dc")
+aggressive = false
+
 [sub_resource type="BTSequence" id="BTSequence_ahi02"]
 custom_name = "Stomp Player"
-children = [SubResource("BTCheckVar_f1jl3"), SubResource("BTAction_w3mmd"), SubResource("BTAction_qoakg"), SubResource("BTRepeat_nwtvj"), SubResource("BTAction_548dc")]
+children = [SubResource("BTCheckVar_f1jl3"), SubResource("BTAction_4ln3g"), SubResource("BTAction_w3mmd"), SubResource("BTAction_qoakg"), SubResource("BTRepeat_nwtvj"), SubResource("BTAction_548dc"), SubResource("BTAction_2rsnj")]
 
 [sub_resource type="BTSelector" id="BTSelector_iq5h4"]
 children = [SubResource("BTRunLimit_0ywxg"), SubResource("BTSequence_gmo24"), SubResource("BTSequence_acrei"), SubResource("BTSequence_ahi02")]

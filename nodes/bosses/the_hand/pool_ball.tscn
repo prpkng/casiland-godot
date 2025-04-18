@@ -77,9 +77,13 @@ current = 250
 max = 250
 
 [node name="BallHitSound" type="FmodEventEmitter2D" parent="."]
-event_name = "event:/BOSSES/Snooker/SFX_BallHitBall"
-event_guid = "{2de6db90-811f-4134-b5ab-78908d78e42c}"
+event_name = "event:/BOSSES/Snooker/SFX_BallHit"
+event_guid = "{5692a3e0-6597-4244-8052-37f9d9ae848d}"
 allow_fadeout = false
+fmod_parameters/HitWhat/id = -7540708318509762888
+fmod_parameters/HitWhat = "Wall"
+fmod_parameters/HitWhat/labels = PackedStringArray("Ball", "Wall")
+fmod_parameters/HitWhat/variant_type = 4
 
 [node name="HurtBox2D" type="Area2D" parent="." node_paths=PackedStringArray("health")]
 visible = false

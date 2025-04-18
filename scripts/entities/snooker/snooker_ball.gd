@@ -16,9 +16,11 @@ func _ready() -> void:
 	health.died.connect(_on_death)
 	hurtbox.area_entered.connect(_on_damaged)
 
-func _on_collision(_body):
+func _on_collision(body):
 	$Health.damage(COLLISION_DAMAGE)
-	ball_hit_sound.play_one_shot()
+	print(body is StaticBody2D)
+	ball_hit_sound.set_parameter('HitWhat', 'Wall' if body is StaticBody2D else 'Ball')
+	ball_hit_sound.play()
 
 func _on_damaged(entity: Node2D) -> void:
 	if entity == null: return

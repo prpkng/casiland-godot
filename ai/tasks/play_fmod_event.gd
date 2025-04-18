@@ -20,7 +20,7 @@ func _setup() -> void:
 # Called each time this task is entered.
 func _enter() -> void:
 	print(event_str)
-	FmodServer.play_one_shot_using_guid(event_str)
+	FmodServer.play_one_shot_using_guid_attached(event_str, scene_root)
 	pass
 
 # Called each time this task is exited.

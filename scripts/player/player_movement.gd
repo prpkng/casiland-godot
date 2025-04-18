@@ -17,6 +17,12 @@ var is_rolling: bool
 
 func _ready() -> void:
 	GM.player = self
+	
+	if OS.is_debug_build():
+		C.add_command('op', func():
+			player_gun.bullet_damage = 100, [], 0, "Overpowers the player")
+		C.add_command('deop', func():
+			player_gun.bullet_damage = 10, [], 0, "Reverts /op")
 
 func _physics_process(_delta):
 	if is_rolling:

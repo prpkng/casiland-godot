@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=124 format=3 uid="uid://cvfm482gt5v7d"]
+[gd_resource type="BehaviorTree" load_steps=128 format=3 uid="uid://cvfm482gt5v7d"]
 
 [ext_resource type="Script" uid="uid://b3a8w52mltx6e" path="res://ai/tasks/the_hand/carry_ball_with_hand.gd" id="1_q73dm"]
 [ext_resource type="Script" uid="uid://bsyx6h6hqam4b" path="res://ai/tasks/play_fmod_event.gd" id="1_w3mmd"]
@@ -352,9 +352,18 @@ custom_name = "SHOT!!"
 script = ExtResource("7_ewnl4")
 boss_node_var = &"boss"
 
+[sub_resource type="BBString" id="BBString_n8roh"]
+saved_value = "{f094b577-a632-4064-8633-f51c6259dc25}"
+resource_name = "{f094b577-a632-4064-8633-f51c6259dc25}"
+
+[sub_resource type="BTAction" id="BTAction_5a3l7"]
+custom_name = "Play shot sound"
+script = ExtResource("1_w3mmd")
+fmod_guid = SubResource("BBString_n8roh")
+
 [sub_resource type="BTSequence" id="BTSequence_acrei"]
 custom_name = "Shot balls"
-children = [SubResource("BTComment_njekd"), SubResource("BTAction_av6kv"), SubResource("BTCheckVar_8rhpx"), SubResource("BTComment_axrxi"), SubResource("BTAction_gji1y"), SubResource("BTComment_w3mmd"), SubResource("BTCheckVar_gk6m7"), SubResource("BTComment_548dc"), SubResource("BTAction_inqkl"), SubResource("BTCheckVar_bw8n2"), SubResource("BTComment_n8roh"), SubResource("BTAction_e2tpw"), SubResource("BTCheckVar_rwds0"), SubResource("BTComment_cveds"), SubResource("BTAction_yhalr"), SubResource("BTWait_2nbcw"), SubResource("BTCheckVar_jwbpn"), SubResource("BTComment_sbc0j"), SubResource("BTAction_xjemw")]
+children = [SubResource("BTComment_njekd"), SubResource("BTAction_av6kv"), SubResource("BTCheckVar_8rhpx"), SubResource("BTComment_axrxi"), SubResource("BTAction_gji1y"), SubResource("BTComment_w3mmd"), SubResource("BTCheckVar_gk6m7"), SubResource("BTComment_548dc"), SubResource("BTAction_inqkl"), SubResource("BTCheckVar_bw8n2"), SubResource("BTComment_n8roh"), SubResource("BTAction_e2tpw"), SubResource("BTCheckVar_rwds0"), SubResource("BTComment_cveds"), SubResource("BTAction_yhalr"), SubResource("BTWait_2nbcw"), SubResource("BTCheckVar_jwbpn"), SubResource("BTComment_sbc0j"), SubResource("BTAction_xjemw"), SubResource("BTAction_5a3l7")]
 
 [sub_resource type="BBVariant" id="BBVariant_uxv54"]
 type = 2
@@ -409,6 +418,15 @@ boss_var = &"boss"
 [sub_resource type="BTAction" id="BTAction_vo78b"]
 script = ExtResource("10_2qnbh")
 boss_var = &"boss"
+
+[sub_resource type="BBString" id="BBString_cveds"]
+saved_value = "{ebfded70-17dc-476b-a6d1-acb365918d79}"
+resource_name = "{ebfded70-17dc-476b-a6d1-acb365918d79}"
+
+[sub_resource type="BTAction" id="BTAction_x2eet"]
+custom_name = "Play stomp sound"
+script = ExtResource("1_w3mmd")
+fmod_guid = SubResource("BBString_cveds")
 
 [sub_resource type="BTAction" id="BTAction_axrxi"]
 script = ExtResource("10_ivom6")
@@ -468,7 +486,7 @@ children = [SubResource("BTAction_sbc0j")]
 children = [SubResource("BTSequence_w3mmd"), SubResource("BTSequence_qoakg")]
 
 [sub_resource type="BTSequence" id="BTSequence_756ou"]
-children = [SubResource("BTSetVar_axrxi"), SubResource("BTAction_8tvlx"), SubResource("BTAction_njekd"), SubResource("BTAction_ivom6"), SubResource("BTAction_vo78b"), SubResource("BTAction_axrxi"), SubResource("BTWait_w3mmd"), SubResource("BTSelector_548dc")]
+children = [SubResource("BTSetVar_axrxi"), SubResource("BTAction_8tvlx"), SubResource("BTAction_njekd"), SubResource("BTAction_ivom6"), SubResource("BTAction_vo78b"), SubResource("BTAction_x2eet"), SubResource("BTAction_axrxi"), SubResource("BTWait_w3mmd"), SubResource("BTSelector_548dc")]
 
 [sub_resource type="BTRepeat" id="BTRepeat_nb1at"]
 times = 4

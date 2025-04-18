@@ -26,7 +26,11 @@ func _enter() -> void:
 		boss.pool_stick.position + Vector2.DOWN * 70,
 		0.1
 	)
-	
+
+
+func _tick(delta: float) -> Status:
+	return SUCCESS
+
 
 # Called each time this task is exited.
 func _exit() -> void:

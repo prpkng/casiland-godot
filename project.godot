@@ -56,7 +56,7 @@ window/vsync/vsync_mode=0
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/fmod/plugin.cfg", "res://addons/gdLinter/plugin.cfg", "res://addons/health_hitbox_hurtbox/plugin.cfg", "res://addons/input_helper/plugin.cfg", "res://addons/maaacks_scene_loader/plugin.cfg", "res://addons/nklbdev.importality/plugin.cfg", "res://addons/script-ide/plugin.cfg", "res://addons/shaker/plugin.cfg", "res://addons/virtual_joystick/plugin.cfg")
+enabled=PackedStringArray("res://addons/fmod/plugin.cfg", "res://addons/gdLinter/plugin.cfg", "res://addons/health_hitbox_hurtbox/plugin.cfg", "res://addons/input_helper/plugin.cfg", "res://addons/maaacks_scene_loader/plugin.cfg", "res://addons/nklbdev.importality/plugin.cfg", "res://addons/shaker/plugin.cfg", "res://addons/virtual_joystick/plugin.cfg")
 
 [global_group]
 

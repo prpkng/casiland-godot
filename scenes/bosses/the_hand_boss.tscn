@@ -1,0 +1,38 @@
+[gd_scene load_steps=7 format=3 uid="uid://j7y8fy4xtwfq"]
+
+[ext_resource type="PackedScene" uid="uid://c3ynw2bqynnil" path="res://nodes/autoloads/game_hud.tscn" id="1_ewqdl"]
+[ext_resource type="Script" uid="uid://cf3tdn871pxoq" path="res://scripts/scale_on_play.gd" id="2_3c7da"]
+[ext_resource type="PackedScene" uid="uid://bhogxlfujshgh" path="res://nodes/player.tscn" id="3_w8jm8"]
+[ext_resource type="PackedScene" uid="uid://cdl3r8uf84ux7" path="res://nodes/camera_2d.tscn" id="4_a4rw6"]
+[ext_resource type="PackedScene" uid="uid://ctx77y216smqf" path="res://nodes/bosses/the_hand/pool_table.tscn" id="5_1xa03"]
+[ext_resource type="PackedScene" uid="uid://dot8tsn0euulb" path="res://nodes/bosses/the_hand/the_hand.tscn" id="6_tqg7h"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="GameHud" parent="." instance=ExtResource("1_ewqdl")]
+
+[node name="ScaledNodes" type="Node2D" parent="."]
+script = ExtResource("2_3c7da")
+
+[node name="Player" parent="ScaledNodes" groups=["player"] instance=ExtResource("3_w8jm8")]
+position = Vector2(319, 168)
+collision_layer = 3
+collision_mask = 3
+
+[node name="Camera2D" parent="ScaledNodes" instance=ExtResource("4_a4rw6")]
+position = Vector2(240, 135)
+
+[node name="PoolTable" parent="ScaledNodes" instance=ExtResource("5_1xa03")]
+position = Vector2(320, 180)
+
+[node name="The Hand" parent="ScaledNodes" node_paths=PackedStringArray("pool_table") instance=ExtResource("6_tqg7h")]
+position = Vector2(320, -12)
+pool_table = NodePath("../PoolTable")
+
+[node name="Music" type="FmodEventEmitter2D" parent="ScaledNodes"]
+event_name = "event:/MUS/MUS_Boss01"
+event_guid = "{575a0ce7-4a85-4ef5-bf86-be37540be224}"
+autoplay = true
+fmod_parameters/AgressiveAct/id = 2116540528131937014
+fmod_parameters/AgressiveAct = 0.0
+fmod_parameters/AgressiveAct/variant_type = 3

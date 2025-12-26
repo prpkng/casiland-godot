@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://bxbp22g2lx7b6"]
+
+[ext_resource type="Script" uid="uid://cepcdh8670vhd" path="res://Systems/ProceduralGen/ProceduralRoomGenerator.cs" id="1_ppyta"]
+[ext_resource type="Script" uid="uid://voxy632bro1g" path="res://Systems/ProceduralGen/RoomsDebugVisualizer.cs" id="2_ppyta"]
+[ext_resource type="Script" uid="uid://c1lgu0x34m5h2" path="res://Systems/TestScript.cs" id="3_ykrsh"]
+[ext_resource type="Resource" uid="uid://rknxtcpf0hkc" path="res://Systems/ProceduralGen/Data/base_procgen.tres" id="4_g14j6"]
+
+[sub_resource type="GDScript" id="GDScript_ppyta"]
+resource_name = "camera_movement"
+script/source = "extends Camera2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+var last_pos: Vector2
+var current_pos: Vector2
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	current_pos = get_local_mouse_position()
+	var delta_pos := last_pos - current_pos
+	last_pos = current_pos
+	
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_MIDDLE):
+		position += delta_pos
+"
+
+[node name="Test" type="Node2D" unique_id=81459051]
+
+[node name="RoomGenerator" type="Node" parent="." unique_id=2095976244]
+script = ExtResource("1_ppyta")
+
+[node name="RoomsDebugVisualizer" type="Node2D" parent="." unique_id=89596583 node_paths=PackedStringArray("_generator")]
+script = ExtResource("2_ppyta")
+_generator = NodePath("../RoomGenerator")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=17372746]
+script = SubResource("GDScript_ppyta")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1893954925]
+
+[node name="Button" type="Button" parent="CanvasLayer" unique_id=43627872 node_paths=PackedStringArray("generator")]
+offset_left = 375.0
+offset_top = 230.0
+offset_right = 472.0
+offset_bottom = 261.0
+text = "Generate"
+script = ExtResource("3_ykrsh")
+generator = NodePath("../../RoomGenerator")
+settings = ExtResource("4_g14j6")
+
+[connection signal="pressed" from="CanvasLayer/Button" to="CanvasLayer/Button" method="_on_pressed"]

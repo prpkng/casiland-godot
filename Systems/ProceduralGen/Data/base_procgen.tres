@@ -1,0 +1,15 @@
+[gd_resource type="Resource" format=3 uid="uid://rknxtcpf0hkc"]
+
+[ext_resource type="Script" uid="uid://dq0qnphrb3s6t" path="res://Systems/ProceduralGen/ProceduralGenerationSettings.cs" id="1_yml8i"]
+
+[resource]
+script = ExtResource("1_yml8i")
+StartCellCount = 60
+MaxRoomCount = 12
+MinRoomDistance = 60
+MinRoomWidth = 10
+MaxRoomWidth = 50
+MinRoomHeight = 10
+MaxRoomAspectDeviation = 0.5
+RoomWidthThreshold = 42
+LoopCount = 1

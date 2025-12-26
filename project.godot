@@ -1,0 +1,46 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Casiland"
+run/main_scene="uid://bxbp22g2lx7b6"
+config/features=PackedStringArray("4.6", "C#", "Forward Plus")
+config/icon="res://icon.svg"
+
+[autoload]
+
+[debug]
+
+gdscript/warnings/shadowed_global_identifier=0
+
+[display]
+
+window/size/viewport_width=480
+window/size/viewport_height=270
+window/size/window_width_override=1600
+window/size/window_height_override=900
+window/stretch/mode="canvas_items"
+
+[dotnet]
+
+project/assembly_name="Casiland"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/gdDelaunay/plugin.cfg", "res://addons/log/plugin.cfg")
+
+[physics]
+
+3d/physics_engine="Jolt Physics"
+
+[rendering]
+
+rendering_device/driver.windows="d3d12"

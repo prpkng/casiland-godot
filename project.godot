@@ -17,6 +17,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+BetterTerrain="*uid://d06lw72qe37ik"
+
 [debug]
 
 gdscript/warnings/shadowed_global_identifier=0
@@ -25,8 +27,8 @@ gdscript/warnings/shadowed_global_identifier=0
 
 window/size/viewport_width=480
 window/size/viewport_height=270
-window/size/window_width_override=1600
-window/size/window_height_override=900
+window/size/window_width_override=960
+window/size/window_height_override=540
 window/stretch/mode="canvas_items"
 
 [dotnet]
@@ -35,7 +37,7 @@ project/assembly_name="Casiland"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/gdDelaunay/plugin.cfg", "res://addons/log/plugin.cfg")
+enabled=PackedStringArray("res://addons/better-terrain/plugin.cfg", "res://addons/gdDelaunay/plugin.cfg", "res://addons/log/plugin.cfg")
 
 [physics]
 

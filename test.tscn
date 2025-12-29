@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://voxy632bro1g" path="res://Systems/ProceduralGen/RoomsDebugVisualizer.cs" id="2_ppyta"]
 [ext_resource type="Script" uid="uid://c1lgu0x34m5h2" path="res://Systems/TestScript.cs" id="3_ykrsh"]
 [ext_resource type="Resource" uid="uid://rknxtcpf0hkc" path="res://Systems/ProceduralGen/Data/base_procgen.tres" id="4_g14j6"]
+[ext_resource type="TileSet" uid="uid://cub01tq8ncrlk" path="res://Entities/World/temp_tileset.tres" id="5_ykrsh"]
 
 [sub_resource type="GDScript" id="GDScript_ppyta"]
 resource_name = "camera_movement"
@@ -51,5 +52,9 @@ text = "Generate"
 script = ExtResource("3_ykrsh")
 generator = NodePath("../../RoomGenerator")
 settings = ExtResource("4_g14j6")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1865007474]
+texture_filter = 1
+tile_set = ExtResource("5_ykrsh")
 
 [connection signal="pressed" from="CanvasLayer/Button" to="CanvasLayer/Button" method="_on_pressed"]

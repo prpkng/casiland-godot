@@ -48,6 +48,8 @@ public partial class RoomsDebugVisualizer : Node2D
         foreach (var  room in state.CorridorRooms) {
             DrawRect(room.Rect, CorridorRoomsColor, true);
             DrawRect(room.Rect, GenRoomsBorder, false, 1);
+            DrawString(_font, room.Position, state.CorridorRooms.IndexOf(room).ToString(), HorizontalAlignment.Center, -1, 
+                12, Colors.White);
         }
 		
 	
@@ -59,7 +61,7 @@ public partial class RoomsDebugVisualizer : Node2D
             DrawRect(room.Rect, MainRoomsColor, true);
             DrawRect(room.Rect, MainRoomsBorder, false, 1);
             DrawString(_font, room.Position, state.MainRooms.IndexOf(room).ToString(), HorizontalAlignment.Center, -1, 
-            16, Colors.White);
+            12, Colors.White);
 
         }
 		

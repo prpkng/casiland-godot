@@ -1,11 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using Casiland.Common;
 using Godot;
+using Serilog;
 
 namespace Casiland.Systems.ProceduralGen.Steps;
 
-public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSettings settings) : GenerationStep(state, settings)
+public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSettings settings)
+    : GenerationStep(state, settings)
 {
-    
     private Rect2 CheckForDirectLine(Rect2 from, Rect2 to, Vector2 axis)
     {
         var inv = Vector2.One - axis.Abs();
@@ -117,9 +120,101 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
         }
     }
 
+    private void SolveLongCorridor(LineSegment longCorridor)
+    {
+        Log.Verbose("> Found corridor with length {Len} which surpasses the maximum length!",
+            longCorridor.From.DistanceTo(longCorridor.To));
+
+        float width = Mathf.Lerp(Settings.MinRoomWidth, Settings.MaxRoomWidth, State.Rng.RandfRange(0.25f, .75f));
+        float height = Mathf.Lerp(Settings.MinRoomHeight, Settings.MaxRoomHeight, State.Rng.RandfRange(0.25f, .75f));
+
+        var from = (Vector2)longCorridor.From;
+        var lineDir = from.DirectionTo(longCorridor.To);
+
+        var size = new Vector2(width, height);
+        var room = new ProceduralRoom(from.Lerp(longCorridor.To, 0.5f) - size / 2, size);
+        State.CorridorRooms.Add(room);
+
+        State.CorridorLines.Remove(longCorridor);
+
+        room.Rect.Position += Vector2.FromAngle(State.Rng.Randf() * Mathf.Pi * 2) * State.Rng.RandfRange(0, 4);
+        Log.Verbose("> Added in-between room {Index}!", State.CorridorRooms.IndexOf(room));
+    }
+
+    private void EnsureCorridorsNotEmpty()
+    {
+        var obstacleRectangles = State.CorridorRooms.Concat(State.MainRooms).Select(room => room.Rect).ToList();
+
+        foreach (var line in State.CorridorLines.ToList())
+        {
+            var longCorridorLines = ProceduralGeometry.GetVisibleSegments(line, obstacleRectangles);
+            longCorridorLines =
+                longCorridorLines.Where(l => l.From.DistanceTo(l.To) > Settings.MaximumCorridorLength).ToList();
+            if (longCorridorLines.Count <= 0)
+                continue;
+            foreach (var longCorridor in longCorridorLines)
+                SolveLongCorridor(longCorridor);
+        }
+    }
+
+    private void FixOverlappingCorridorLines()
+    {
+        var obstacleRectangles = State.CorridorRooms.Concat(State.MainRooms).Select(room => room.Rect).ToList();
+        foreach (var line in State.CorridorLines.ToList())
+        {
+            var corridorLines = ProceduralGeometry.GetVisibleSegments(line, obstacleRectangles);
+            State.CorridorLines.Remove(line);
+            State.CorridorLines.AddRange(corridorLines);
+        }
+    }
+
+
+    // This step attempts to move corridor rooms that lay too away from its corridor line
+    private void FixCorridorRoomsPlacement()
+    {
+        foreach (var corridor in State.CorridorRooms)
+        foreach (var intersectingLine in
+                 State.CorridorLines.Where(line => ProceduralGeometry.EdgeIntersectsRect(line, corridor.Rect)))
+        {
+            var dir = ((Vector2)intersectingLine.From).DirectionTo(intersectingLine.To).Sign().Abs();
+            var invertedDir = Vector2.One - dir;
+
+            var lineMediumPoint = intersectingLine.From * invertedDir + corridor.Position * dir;
+            var axisSize = (corridor.Size / 2 * invertedDir).Sum();
+
+            float distanceToMediumPoint = corridor.Position.DistanceTo(lineMediumPoint);
+            if (distanceToMediumPoint < axisSize - Settings.MinimumDirectCorridorOverlapLength)
+                continue;
+
+            float deviationAmount = distanceToMediumPoint - axisSize + Settings.MinimumDirectCorridorOverlapLength;
+            var lastPos = corridor.Rect.Position;
+            
+            corridor.Rect.Position += corridor.Position.DirectionTo(lineMediumPoint) * deviationAmount;
+            bool intersects = false;
+            var rect = corridor.Rect.Grow(2);
+            foreach (var room in State.CorridorRooms)
+            {
+                if (room == corridor) continue;
+                if (!room.Rect.Intersects(rect)) continue;
+                intersects = true;
+                break;
+            }
+
+            if (intersects) // Roll back if we hit something
+                corridor.Rect.Position = lastPos;
+            
+            Log.Verbose("> Found room {Idx} too far away from the line!", State.CorridorRooms.IndexOf(corridor));
+        }
+    }
+
     public override void Perform()
     {
         CreateCorridorLines();
         CreateCorridors();
+        EnsureCorridorsNotEmpty();
+
+        FixCorridorRoomsPlacement();
+
+        FixOverlappingCorridorLines();
     }
 }

@@ -14,3 +14,4 @@ MaxRoomHeight = 25
 MaxRoomAspectDeviation = 0.5
 RoomWidthThreshold = 42
 LoopCount = 1
+MaximumCorridorLength = 40

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Godot;
 
 namespace Casiland.Systems.ProceduralGen;
@@ -23,4 +24,8 @@ public class ProceduralRoom(Vector2 pos, Vector2 size)
     }
 
     public int GetConnectionsCount() => Connections.Count;
+
+
+    public List<Vector2> GetConnectionSides() =>
+        Connections.Select(conn => Position.DirectionTo(conn.Position).Sign()).ToList();
 }

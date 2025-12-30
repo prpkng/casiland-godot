@@ -151,6 +151,10 @@ public class PlaceRoomsStep(GenerationState state, ProceduralGenerationSettings 
         
         PackRooms(rooms, 0);
 
+        foreach (var room in rooms)
+            room.Rect = room.Rect.Grow(-2); // Shrink rooms to ensure corridors have at least one tile of length
+            
         State.GeneratedRooms = rooms;
+        
     }
 }

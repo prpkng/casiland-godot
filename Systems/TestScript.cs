@@ -53,6 +53,8 @@ public partial class TestScript : Button
         var now = new Stopwatch();
         now.Restart();
 
+        // return;
+        
         int roomMinX = (int)generator.ResultingState.MainRooms.Min(room => room.Rect.Position.X);
         int roomMinY = (int)generator.ResultingState.MainRooms.Min(room => room.Rect.Position.Y);
         int roomMaxX = (int)generator.ResultingState.MainRooms.Max(room => room.Rect.End.X);
@@ -81,7 +83,7 @@ public partial class TestScript : Button
         foreach (var room in generator.ResultingState.MainRooms.Concat(generator.ResultingState.CorridorRooms))
         {
             cells.Clear();
-            var rect = new Rect2I((Vector2I)room.Rect.Position, (Vector2I)room.Size).Grow(-1);
+            var rect = new Rect2I((Vector2I)room.Rect.Position, (Vector2I)room.Size);
             FillWithPoints(rect, ref cells);
             betterTerrain.SetCells(cells, 0);
         }

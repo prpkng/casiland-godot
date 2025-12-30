@@ -16,8 +16,7 @@ public partial class RoomsDebugVisualizer : Node2D
 
     private static readonly Color MstLineColor = Colors.Yellow;
 
-    [Export]
-    private ProceduralRoomGenerator _generator;
+    [Export] private ProceduralRoomGenerator _generator;
 
     private Font _font;
     private int _fontSize;
@@ -27,12 +26,11 @@ public partial class RoomsDebugVisualizer : Node2D
         base._Ready();
         _font = ThemeDB.GetFallbackFont();
         _fontSize = ThemeDB.GetFallbackFontSize();
-
-        _generator.GenerationFinished += QueueRedraw;
     }
 
     public override void _Process(double delta)
     {
+        QueueRedraw();
         base._Process(delta);
     }
 
@@ -64,7 +62,6 @@ public partial class RoomsDebugVisualizer : Node2D
             16, Colors.White);
 
         }
-
 		
 
         foreach (var  room in state.OtherRooms) {

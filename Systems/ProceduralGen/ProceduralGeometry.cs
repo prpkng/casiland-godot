@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Godot;
+using Godot.Collections;
 
 namespace Casiland.Systems.ProceduralGen;
 
@@ -51,5 +53,107 @@ public static class ProceduralGeometry
         };
 
         return lines.Any(x => x);
+    }
+    
+    public static void BresenhamLine(Vector2I start, Vector2I end, Array<Vector2I> points)
+    {
+        int x0 = start.X;
+        int y0 = start.Y;
+        int x1 = end.X;
+        int y1 = end.Y;
+
+        int dx = Mathf.Abs(x1 - x0);
+        int dy = Mathf.Abs(y1 - y0);
+
+        int sx = x0 < x1 ? 1 : -1;
+        int sy = y0 < y1 ? 1 : -1;
+
+        int err = dx - dy;
+
+        while (true)
+        {
+            points.Add(new Vector2I(x0, y0));
+
+            if (x0 == x1 && y0 == y1)
+                break;
+
+            int e2 = err * 2;
+
+            if (e2 > -dy)
+            {
+                err -= dy;
+                x0 += sx;
+            }
+
+            if (e2 < dx)
+            {
+                err += dx;
+                y0 += sy;
+            }
+        }
+
+    }
+    public static Array<Vector2I> BresenhamLine(Vector2I start, Vector2I end)
+    {
+        var points = new Array<Vector2I>();
+        BresenhamLine(start, end, points);
+        return points;
+    }
+
+    /// <summary>
+    /// Generates a Bresenham line with custom width.
+    /// Width >= 1. Width = 1 = normal single-pixel line.
+    /// If useManhattan = false → square thickness (Chebyshev)
+    /// If useManhattan = true  → diamond thickness (Manhattan)
+    /// </summary>
+    public static Array<Vector2I> BresenhamLineWidth(Vector2I start, Vector2I end, int width, bool useManhattan = false)
+    {
+        var points = new Array<Vector2I>();
+        BresenhamLineWidth(points, start, end, width, useManhattan);
+        return points;
+    }
+    
+    /// <summary>
+    /// Generates a Bresenham line with custom width.
+    /// Width >= 1. Width = 1 = normal single-pixel line.
+    /// If useManhattan = false → square thickness (Chebyshev)
+    /// If useManhattan = true  → diamond thickness (Manhattan)
+    /// </summary>
+    public static void BresenhamLineWidth(Array<Vector2I> points, Vector2I start, Vector2I end, int width, bool useManhattan = false)
+    {
+        if (width < 1)
+            width = 1;
+
+        var result = new HashSet<Vector2I>();
+        var centerLine = BresenhamLine(start, end);
+
+        int radius = width / 2;
+
+        foreach (var p in centerLine)
+        {
+            // Expand thickness around center line tile
+            for (int dx = -radius; dx <= radius; dx++)
+            {
+                for (int dy = -radius; dy <= radius; dy++)
+                {
+                    Vector2I tile = new Vector2I(p.X + dx, p.Y + dy);
+
+                    if (useManhattan)
+                    {
+                        // Diamond / manhattan
+                        if (Mathf.Abs(dx) + Mathf.Abs(dy) <= radius)
+                            result.Add(tile);
+                    }
+                    else
+                    {
+                        // Square / chebyshev
+                        if (Mathf.Max(Mathf.Abs(dx), Mathf.Abs(dy)) <= radius)
+                            result.Add(tile);
+                    }
+                }
+            }
+        }
+
+        points.AddRange(result);
     }
 }

@@ -10,11 +10,9 @@
 resource_name = "camera_movement"
 script/source = "extends Camera2D
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
-
 
 var last_pos: Vector2
 var current_pos: Vector2
@@ -27,6 +25,29 @@ func _process(delta: float) -> void:
 	
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_MIDDLE):
 		position += delta_pos
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.is_pressed():
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			zoom += Vector2.ONE*0.1
+		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			zoom -= Vector2.ONE*0.1
+"
+
+[sub_resource type="GDScript" id="GDScript_ykrsh"]
+script/source = "extends Label
+
+@onready var camera_2d: Camera2D = $\"../../Camera2D\"
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta: float) -> void:
+	text = \"Zoom: %s\" % camera_2d.zoom
 "
 
 [node name="Test" type="Node2D" unique_id=81459051]
@@ -35,6 +56,7 @@ func _process(delta: float) -> void:
 script = ExtResource("1_ppyta")
 
 [node name="RoomsDebugVisualizer" type="Node2D" parent="." unique_id=89596583 node_paths=PackedStringArray("_generator")]
+z_index = 100
 script = ExtResource("2_ppyta")
 _generator = NodePath("../RoomGenerator")
 
@@ -43,7 +65,7 @@ script = SubResource("GDScript_ppyta")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1893954925]
 
-[node name="Button" type="Button" parent="CanvasLayer" unique_id=43627872 node_paths=PackedStringArray("generator")]
+[node name="Button" type="Button" parent="CanvasLayer" unique_id=43627872 node_paths=PackedStringArray("generator", "tilemap")]
 offset_left = 375.0
 offset_top = 230.0
 offset_right = 472.0
@@ -52,6 +74,13 @@ text = "Generate"
 script = ExtResource("3_ykrsh")
 generator = NodePath("../../RoomGenerator")
 settings = ExtResource("4_g14j6")
+tilemap = NodePath("../../TileMapLayer")
+
+[node name="Label" type="Label" parent="CanvasLayer" unique_id=2103677277]
+offset_right = 154.0
+offset_bottom = 23.0
+text = "Zoom: "
+script = SubResource("GDScript_ykrsh")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1865007474]
 texture_filter = 1

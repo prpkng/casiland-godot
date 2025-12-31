@@ -27,6 +27,8 @@ public partial class CasilandUtils : EditorPlugin
 			})
 			.CreateLogger();
 		Log.Logger = logger;
+		
+		Log.Information("Initialized Serilog");
 	}
 
 	public override void _ExitTree()

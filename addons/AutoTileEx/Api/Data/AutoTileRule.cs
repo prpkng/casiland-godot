@@ -22,7 +22,8 @@ public partial class AutoTileRule : Resource
     [Export] public int TargetTileSourceId { get; set; }
 
     /// Neighbours in clockwise order: N, NE, E, SE, S, SW, W, NW
-    [Export] public Array<NeighbourType> Neighbours { get; set; }
+    [Export]
+    public Array<NeighbourType> Neighbours { get; set; } = [];
 
     [Export] public byte RequiredMask { get; set; }
     [Export] public byte EmptyMask { get; set; }

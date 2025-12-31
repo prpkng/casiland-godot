@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://c8xur0q2paf20"]
+
+[ext_resource type="Texture2D" uid="uid://b3bx72kla4tgb" path="res://Entities/World/temp_tileset.png" id="1_ui7lq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x2lwk"]
+atlas = ExtResource("1_ui7lq")
+region = Rect2(0.3680153, -0.3870926, 15.631985, 16.387093)
+
+[node name="RuleSet" type="Button" unique_id=230260960]
+custom_minimum_size = Vector2(0, 50)
+offset_right = 120.0
+offset_bottom = 50.0
+toggle_mode = true
+
+[node name="Icon" type="TextureRect" parent="." unique_id=1858170586]
+texture_filter = 1
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 45.0
+offset_bottom = 45.0
+texture = SubResource("AtlasTexture_x2lwk")
+
+[node name="Label" type="Label" parent="." unique_id=1972155274]
+layout_mode = 0
+offset_left = 55.0
+offset_top = 5.0
+offset_right = 103.0
+offset_bottom = 28.0
+text = "Rule 0"

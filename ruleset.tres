@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="AutoTileRuleSet" format=3 uid="uid://c132loxwr5n81"]
+
+[ext_resource type="Script" uid="uid://wn0em4r3tgfd" path="res://addons/AutoTileEx/Api/Data/AutoTileRule.cs" id="1_bgs60"]
+[ext_resource type="Script" uid="uid://d183kokl5ih3f" path="res://addons/AutoTileEx/Api/Data/AutoTileRuleSet.cs" id="2_aeaxt"]
+[ext_resource type="TileSet" uid="uid://cub01tq8ncrlk" path="res://Entities/World/temp_tileset.tres" id="3_aeaxt"]
+
+[sub_resource type="Resource" id="Resource_xersf"]
+script = ExtResource("1_bgs60")
+SourceTileCoords = Vector2i(8, 0)
+TargetTileCoords = Vector2i(2, 2)
+Neighbours = [2, 2, 2, 0, 0, 0, 0, 0]
+OtherMask = 1
+metadata/_custom_type_script = "uid://wn0em4r3tgfd"
+
+[sub_resource type="Resource" id="Resource_aeaxt"]
+script = ExtResource("1_bgs60")
+Neighbours = []
+
+[sub_resource type="Resource" id="Resource_pcsex"]
+script = ExtResource("1_bgs60")
+Neighbours = []
+
+[sub_resource type="Resource" id="Resource_0ovf6"]
+script = ExtResource("1_bgs60")
+Neighbours = []
+
+[resource]
+script = ExtResource("2_aeaxt")
+tileSet = ExtResource("3_aeaxt")
+Rules = Array[ExtResource("1_bgs60")]([SubResource("Resource_xersf"), SubResource("Resource_aeaxt"), SubResource("Resource_pcsex"), SubResource("Resource_0ovf6")])
+metadata/_custom_type_script = "uid://d183kokl5ih3f"

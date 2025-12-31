@@ -1,0 +1,384 @@
+[gd_scene format=3 uid="uid://gdwaceouo60f"]
+
+[ext_resource type="Texture2D" uid="uid://b3bx72kla4tgb" path="res://Entities/World/temp_tileset.png" id="1_d1gkt"]
+[ext_resource type="Script" uid="uid://c8x3f6dn0hypf" path="res://addons/AutoTileEx/Editor/AutoTileEditor.cs" id="1_fxuku"]
+[ext_resource type="Texture2D" uid="uid://bpoyjf0u3te4c" path="res://addons/AutoTileEx/Editor/Line.svg" id="2_x2lwk"]
+[ext_resource type="Script" uid="uid://bcx30p0ulaas4" path="res://addons/AutoTileEx/Editor/TilesetView.cs" id="3_kq2a6"]
+[ext_resource type="Texture2D" uid="uid://dfhdr7sjv4mdd" path="res://addons/AutoTileEx/Editor/Icons/ban.svg" id="4_1f6q7"]
+[ext_resource type="TileSet" uid="uid://cub01tq8ncrlk" path="res://Entities/World/temp_tileset.tres" id="4_fxuku"]
+[ext_resource type="Script" uid="uid://dufme6y6xuulp" path="res://addons/AutoTileEx/Editor/RightClickableButton.cs" id="4_mtogm"]
+[ext_resource type="Script" uid="uid://djhqmh5y6he0r" path="res://addons/AutoTileEx/Editor/scroll_with_mouse.gd" id="4_umxbf"]
+[ext_resource type="Texture2D" uid="uid://wdvqeuxda0vw" path="res://addons/AutoTileEx/Editor/Icons/eraser.svg" id="6_a8rnt"]
+[ext_resource type="Texture2D" uid="uid://waslikrbd263" path="res://addons/AutoTileEx/Editor/Icons/circle-check.svg" id="7_kcv6v"]
+[ext_resource type="Texture2D" uid="uid://crdj36ivsfman" path="res://addons/AutoTileEx/Editor/Icons/circle-question-mark.svg" id="8_0vkha"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x2lwk"]
+atlas = ExtResource("1_d1gkt")
+region = Rect2(0.3680153, -0.3870926, 15.631985, 16.387093)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d1gkt"]
+atlas = ExtResource("1_d1gkt")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_x2lwk"]
+
+[node name="Dock" type="Control" unique_id=712867307]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 55.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fxuku")
+metadata/_custom_type_script = "uid://c8x3f6dn0hypf"
+
+[node name="HBox" type="HBoxContainer" parent="." unique_id=679837996]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RulesPanel" type="Control" parent="HBox" unique_id=474621674]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+
+[node name="BG" type="Panel" parent="HBox/RulesPanel" unique_id=1531216223]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBox/RulesPanel/BG" unique_id=284244300]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="HBox/RulesPanel/BG/ScrollContainer" unique_id=1273354152]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBox/RulesPanel/BG" unique_id=472982272]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -60.0
+offset_top = -35.0
+offset_right = 60.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="AddRule" type="Button" parent="HBox/RulesPanel/BG/HBoxContainer" unique_id=1014473817]
+custom_minimum_size = Vector2(28, 0)
+layout_mode = 2
+icon = ExtResource("6_a8rnt")
+icon_alignment = 1
+expand_icon = true
+
+[node name="RemoveRule" type="Button" parent="HBox/RulesPanel/BG/HBoxContainer" unique_id=1675386485]
+custom_minimum_size = Vector2(28, 0)
+layout_mode = 2
+icon = ExtResource("6_a8rnt")
+icon_alignment = 1
+expand_icon = true
+
+[node name="MoveUp" type="Button" parent="HBox/RulesPanel/BG/HBoxContainer" unique_id=1854835101]
+custom_minimum_size = Vector2(28, 0)
+layout_mode = 2
+icon = ExtResource("6_a8rnt")
+icon_alignment = 1
+expand_icon = true
+
+[node name="MoveDown" type="Button" parent="HBox/RulesPanel/BG/HBoxContainer" unique_id=1562382859]
+custom_minimum_size = Vector2(28, 0)
+layout_mode = 2
+icon = ExtResource("6_a8rnt")
+icon_alignment = 1
+expand_icon = true
+
+[node name="RulePanel" type="Control" parent="HBox" unique_id=2052965573]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="BG" type="Panel" parent="HBox/RulePanel" unique_id=1130860808]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+
+[node name="VBox" type="VBoxContainer" parent="HBox/RulePanel/BG" unique_id=605331039]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TargetEditor" type="Control" parent="HBox/RulePanel/BG/VBox" unique_id=918085339]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+
+[node name="SourceTileBtn" type="Button" parent="HBox/RulePanel/BG/VBox/TargetEditor" unique_id=903069573]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -79.0
+offset_top = -30.0
+offset_right = -19.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(30, 30)
+icon = SubResource("AtlasTexture_x2lwk")
+icon_alignment = 1
+expand_icon = true
+
+[node name="TextureRect" type="TextureRect" parent="HBox/RulePanel/BG/VBox/TargetEditor" unique_id=1491046213]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -21.0
+offset_top = -21.0
+offset_right = 21.0
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_x2lwk")
+stretch_mode = 3
+
+[node name="TargetTileBtn" type="Button" parent="HBox/RulePanel/BG/VBox/TargetEditor" unique_id=675705904]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 21.0
+offset_top = -30.0
+offset_right = 81.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(30, 30)
+icon = SubResource("AtlasTexture_d1gkt")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Control" type="Control" parent="HBox/RulePanel/BG/VBox" unique_id=1164995060]
+custom_minimum_size = Vector2(0, 160)
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="HBox/RulePanel/BG/VBox/Control" unique_id=1102952350]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 11.0
+offset_right = -11.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 3
+
+[node name="TopLeft" type="Button" parent="HBox/RulePanel/BG/VBox/Control/GridContainer" unique_id=1960614927]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Top" type="Button" parent="HBox/RulePanel/BG/VBox/Control/GridContainer" unique_id=1558126991]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="TopRight" type="Button" parent="HBox/RulePanel/BG/VBox/Control/GridContainer" unique_id=1593188598]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Left" type="Button" parent="HBox/RulePanel/BG/VBox/Control/GridContainer" unique_id=1197130942]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Middle" type="Button" parent="HBox/RulePanel/BG/VBox/Control/GridContainer" unique_id=1320816479]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+disabled = true
+icon = SubResource("AtlasTexture_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Right" type="Button" parent="HBox/RulePanel/BG/VBox/Control/GridContainer" unique_id=471621846]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="BottomLeft" type="Button" parent="HBox/RulePanel/BG/VBox/Control/GridContainer" unique_id=1240478896]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Bottom" type="Button" parent="HBox/RulePanel/BG/VBox/Control/GridContainer" unique_id=627888279]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="BottomRight" type="Button" parent="HBox/RulePanel/BG/VBox/Control/GridContainer" unique_id=1360744514]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Toolbar" type="Control" parent="HBox/RulePanel/BG/VBox" unique_id=1750543477]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HFlowContainer" parent="HBox/RulePanel/BG/VBox/Toolbar" unique_id=1918752646]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -79.0
+offset_top = -15.0
+offset_right = 79.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="NothingSelector" type="Button" parent="HBox/RulePanel/BG/VBox/Toolbar/HBoxContainer" unique_id=314067200]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+toggle_mode = true
+button_pressed = true
+icon = ExtResource("4_1f6q7")
+expand_icon = true
+
+[node name="MatchSelector" type="Button" parent="HBox/RulePanel/BG/VBox/Toolbar/HBoxContainer" unique_id=1290077093]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+toggle_mode = true
+icon = ExtResource("7_kcv6v")
+expand_icon = true
+
+[node name="IgnoreSelector" type="Button" parent="HBox/RulePanel/BG/VBox/Toolbar/HBoxContainer" unique_id=707356707]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+toggle_mode = true
+icon = ExtResource("6_a8rnt")
+expand_icon = true
+
+[node name="AnySelector" type="Button" parent="HBox/RulePanel/BG/VBox/Toolbar/HBoxContainer" unique_id=995583914]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+toggle_mode = true
+icon = ExtResource("8_0vkha")
+expand_icon = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBox" unique_id=1551729484]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("4_umxbf")
+
+[node name="TilesetView" type="Control" parent="HBox/ScrollContainer" unique_id=1359718987]
+texture_filter = 1
+custom_minimum_size = Vector2(420, 554)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+focus_mode = 1
+mouse_filter = 1
+script = ExtResource("3_kq2a6")
+TileSet = ExtResource("4_fxuku")
+metadata/_custom_type_script = "uid://bcx30p0ulaas4"

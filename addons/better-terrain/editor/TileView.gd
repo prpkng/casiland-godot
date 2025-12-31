@@ -95,7 +95,7 @@ func _exit_tree() -> void:
 		RenderingServer.free_rid(_canvas_item_map[p])
 	_canvas_item_map.clear()
 
-
+	
 func refresh_tileset(ts: TileSet) -> void:
 	tileset = ts
 	

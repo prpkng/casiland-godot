@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Linq;
+using Casiland.AutoTileEx.Api;
+using Casiland.AutoTileEx.Api.Data;
 using Casiland.Common;
 using Casiland.Systems.ProceduralGen;
 using Godot;
@@ -19,6 +21,7 @@ public partial class TestScript : Button
     [Export] public ProceduralGenerationSettings settings;
 
     [Export] public TileMapLayer tilemap;
+    [Export] public AutoTileRuleSet ruleSet;
 
     public override void _Ready()
     {
@@ -70,11 +73,11 @@ public partial class TestScript : Button
         
         tilemap.Clear();
 
-        var betterTerrain = new BetterTerrain(tilemap);
         var cells = new Array<Vector2I>();
 
         FillWithPoints(boundsRect, ref cells);
-        betterTerrain.SetCells(cells, 1);
+        foreach (var pos in cells)
+            tilemap.SetCell(pos, 0, new Vector2I(1, 0));
 
 
         Log.Debug("> Filled with empty tiles (took {Duration} ms)", now.Elapsed.TotalMilliseconds);
@@ -85,7 +88,8 @@ public partial class TestScript : Button
             cells.Clear();
             var rect = new Rect2I((Vector2I)room.Rect.Position, (Vector2I)room.Size);
             FillWithPoints(rect, ref cells);
-            betterTerrain.SetCells(cells, 0);
+            foreach (var pos in cells)
+                tilemap.SetCell(pos, 0, new Vector2I(0, 0));
         }
 
 
@@ -99,10 +103,12 @@ public partial class TestScript : Button
             ProceduralGeometry.BresenhamLineWidth(cells, line.From, line.To, 5);
         }
         
-        betterTerrain.SetCells(cells, 0); 
+        foreach (var pos in cells)
+            tilemap.SetCell(pos, 0, new Vector2I(0, 0));
+        //
+        // betterTerrain.UpdateTerrainArea(boundsRect);
 
-        betterTerrain.UpdateTerrainArea(boundsRect);
-
+        AutoTileImplementation.PerformAutoTile(tilemap, ruleSet.Rules);
 
         Log.Debug("> Updated terrain area (took {Duration} ms)", now.Elapsed.TotalMilliseconds);
         now.Restart();

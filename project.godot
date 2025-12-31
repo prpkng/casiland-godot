@@ -37,7 +37,7 @@ project/assembly_name="Casiland"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/better-terrain/plugin.cfg", "res://addons/gdDelaunay/plugin.cfg", "res://addons/log/plugin.cfg")
+enabled=PackedStringArray("res://addons/AutoTileEx/plugin.cfg", "res://addons/CasilandUtils/plugin.cfg", "res://addons/better-terrain/plugin.cfg", "res://addons/gdDelaunay/plugin.cfg", "res://addons/log/plugin.cfg")
 
 [physics]
 

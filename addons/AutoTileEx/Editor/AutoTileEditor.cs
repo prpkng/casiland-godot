@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Casiland.AutoTileEx.Api;
 using Casiland.AutoTileEx.Api.Data;
 using Godot;
 using HCoroutines;
@@ -14,7 +16,6 @@ public partial class AutoTileEditor : Control
     private TilesetView _tilesetView;
     private Button _sourceTileBtn;
     private Button _targetTileBtn;
-    private Button _middleNeighboursBtn;
     private TileSet _tileset;
 
     private RightClickableButton[] _neighbourButtons;
@@ -43,9 +44,8 @@ public partial class AutoTileEditor : Control
     public override void _Ready()
     {
         _tilesetView = GetNode("HBox/ScrollContainer/TilesetView") as TilesetView;
-        _sourceTileBtn = GetNode<Button>("HBox/RulePanel/BG/VBox/TargetEditor/SourceTileBtn");
-        _targetTileBtn = GetNode<Button>("HBox/RulePanel/BG/VBox/TargetEditor/TargetTileBtn");
-        _middleNeighboursBtn = GetNode("HBox/RulePanel/BG/VBox/Control/GridContainer/Middle") as Button;
+        _sourceTileBtn = GetNode<Button>("HBox/HSplitContainer/RulePanel/BG/VBox/TargetEditor/SourceTileBtn");
+        _targetTileBtn = GetNode<Button>("HBox/HSplitContainer/RulePanel/BG/VBox/TargetEditor/TargetTileBtn");
 
         _nothingNeighbourIcon = GD.Load<Texture2D>("res://addons/AutoTileEx/Editor/Icons/ban.svg");
         _matchNeighbourIcon = GD.Load<Texture2D>("res://addons/AutoTileEx/Editor/Icons/circle-check.svg");
@@ -53,17 +53,8 @@ public partial class AutoTileEditor : Control
         _sourceTileBtn.Pressed += OnSourceTilePressed;
         _targetTileBtn.Pressed += OnTargetTilePressed;
 
-        _neighbourButtons =
-        [
-            GetNode("HBox/RulePanel/BG/VBox/Control/GridContainer/Top") as RightClickableButton,
-            GetNode("HBox/RulePanel/BG/VBox/Control/GridContainer/TopRight") as RightClickableButton,
-            GetNode("HBox/RulePanel/BG/VBox/Control/GridContainer/Right") as RightClickableButton,
-            GetNode("HBox/RulePanel/BG/VBox/Control/GridContainer/BottomRight") as RightClickableButton,
-            GetNode("HBox/RulePanel/BG/VBox/Control/GridContainer/Bottom") as RightClickableButton,
-            GetNode("HBox/RulePanel/BG/VBox/Control/GridContainer/BottomLeft") as RightClickableButton,
-            GetNode("HBox/RulePanel/BG/VBox/Control/GridContainer/Left") as RightClickableButton,
-            GetNode("HBox/RulePanel/BG/VBox/Control/GridContainer/TopLeft") as RightClickableButton,
-        ];
+        _neighbourButtons = GetNode("HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer").GetChildren()
+            .Select(c => c as RightClickableButton).ToArray();
 
         for (int i = 0; i < _neighbourButtons.Length; i++)
         {
@@ -74,10 +65,10 @@ public partial class AutoTileEditor : Control
 
         _toolbarSelectors =
         [
-            GetNode<Button>("HBox/RulePanel/BG/VBox/Toolbar/HBoxContainer/NothingSelector"),
-            GetNode<Button>("HBox/RulePanel/BG/VBox/Toolbar/HBoxContainer/IgnoreSelector"),
-            GetNode<Button>("HBox/RulePanel/BG/VBox/Toolbar/HBoxContainer/MatchSelector"),
-            GetNode<Button>("HBox/RulePanel/BG/VBox/Toolbar/HBoxContainer/AnySelector"),
+            GetNode<Button>("HBox/HSplitContainer/RulePanel/BG/VBox/Toolbar/HBoxContainer/NothingSelector"),
+            GetNode<Button>("HBox/HSplitContainer/RulePanel/BG/VBox/Toolbar/HBoxContainer/IgnoreSelector"),
+            GetNode<Button>("HBox/HSplitContainer/RulePanel/BG/VBox/Toolbar/HBoxContainer/MatchSelector"),
+            GetNode<Button>("HBox/HSplitContainer/RulePanel/BG/VBox/Toolbar/HBoxContainer/AnySelector"),
         ];
 
         for (int i = 0; i < _toolbarSelectors.Length; i++)
@@ -86,15 +77,15 @@ public partial class AutoTileEditor : Control
             _toolbarSelectors[i].Pressed += () => OnNbToolbarButtonClicked(idx);
         }
 
-        _rulesVboxContainer = GetNode<VBoxContainer>("HBox/RulesPanel/BG/ScrollContainer/VBox");
+        _rulesVboxContainer = GetNode<VBoxContainer>("HBox/HSplitContainer/RulesPanel/BG/ScrollContainer/VBox");
 
-        _addRuleButton = GetNode<Button>("HBox/RulesPanel/BG/HBoxContainer/AddRule");
+        _addRuleButton = GetNode<Button>("HBox/HSplitContainer/RulesPanel/BG/HBoxContainer/AddRule");
         _addRuleButton.Icon = GetThemeIcon("Add", "EditorIcons");
-        _removeRuleButton = GetNode<Button>("HBox/RulesPanel/BG/HBoxContainer/RemoveRule");
+        _removeRuleButton = GetNode<Button>("HBox/HSplitContainer/RulesPanel/BG/HBoxContainer/RemoveRule");
         _removeRuleButton.Icon = GetThemeIcon("GuiClose", "EditorIcons");
-        _moveUpButton = GetNode<Button>("HBox/RulesPanel/BG/HBoxContainer/MoveUp");
+        _moveUpButton = GetNode<Button>("HBox/HSplitContainer/RulesPanel/BG/HBoxContainer/MoveUp");
         _moveUpButton.Icon = GetThemeIcon("ArrowUp", "EditorIcons");
-        _moveDownButton = GetNode<Button>("HBox/RulesPanel/BG/HBoxContainer/MoveDown");
+        _moveDownButton = GetNode<Button>("HBox/HSplitContainer/RulesPanel/BG/HBoxContainer/MoveDown");
         _moveDownButton.Icon = GetThemeIcon("ArrowDown", "EditorIcons");
 
         _addRuleButton.Pressed += OnAddRulePressed;
@@ -104,14 +95,21 @@ public partial class AutoTileEditor : Control
         
     }
     
-    private void OnAddRulePressed() 
+    private void OnAddRulePressed()
     {
-        CurrentEditingRuleSet.Rules.Add(new AutoTileRule());
+        var newRule = new AutoTileRule();
+        newRule.Neighbours[24] = NeighbourType.Required;
+        var currentRule = CurrentEditingRuleSet.Rules[_currentRuleIndex];
+        CurrentEditingRuleSet.Rules.Add(newRule);
         RecomputeRuleButtons();
     }
     private void OnRemoveRulePressed() 
     {
         CurrentEditingRuleSet.Rules.RemoveAt(_currentRuleIndex);
+        if (_currentRuleIndex >= CurrentEditingRuleSet.Rules.Count - 1)
+            _currentRuleIndex--;
+        RecomputeTileButtons();
+        RecomputeNeighbourButtons();
         RecomputeRuleButtons();
     }
     private void OnMoveUpPressed()
@@ -147,6 +145,8 @@ public partial class AutoTileEditor : Control
         RecomputeNeighbourButtons();
         RecomputeTileButtons();
     }
+    
+    public void RecomputeRuleMasks() => CurrentEditingRuleSet.RecomputeAllRuleMasks();
 
     
     public void RecomputeRuleButtons()
@@ -165,20 +165,21 @@ public partial class AutoTileEditor : Control
             var action = () => RuleBtnPressed(idx);
             var btn = packedScene.Instantiate<Button>();
             var rule = CurrentEditingRuleSet.Rules[i];
-            var sourceTileSource = (_tileset.GetSource(rule.SourceTileSourceId) as TileSetAtlasSource);
+            var sourceTileSource = (_tileset.GetSource(rule.TargetTileSourceId) as TileSetAtlasSource);
             var sourceTexture = new AtlasTexture
             {
                 Atlas = sourceTileSource?.Texture,
-                Region = sourceTileSource?.GetTileTextureRegion(rule.SourceTileCoords) ?? new Rect2()
+                Region = sourceTileSource?.GetTileTextureRegion(rule.TargetTileCoords) ?? new Rect2()
             };
             btn.GetNode<TextureRect>("Icon").Texture = sourceTexture;
-            btn.GetNode<Label>("Label").Text = $"Rule {idx}";
+            btn.GetNode<Label>("Label").Text = $"Rule {idx+1}";
             btn.Pressed += action;
             btn.ButtonPressed = i == _currentRuleIndex;
             _ruleButtonActions.Add(action);
             _ruleButtons.Add(btn);
             _rulesVboxContainer.AddChild(btn);
         }
+        RecomputeRuleMasks();
     }
 
     private void RuleBtnPressed(int index)
@@ -200,17 +201,16 @@ public partial class AutoTileEditor : Control
 
     private void OnSourceTilePressed()
     {
-        var rule = CurrentEditingRuleSet.Rules[_currentRuleIndex];
-        var last = new TilesetView.TileInfo(rule.SourceTileCoords, rule.SourceTileSourceId);
+        var last = new TileInfo(CurrentEditingRuleSet.SourceTileCoords, CurrentEditingRuleSet.SourceTileSourceId);
         _tilesetView.StartTilePicking(last, tileInfo =>
         {
             if (tileInfo == null || !tileInfo.Value.IsValid()) return;
 
             UndoRedoManager.CreateAction($"Set rule {_currentRuleIndex} source tile");
-            UndoRedoManager.AddUndoProperty(rule, AutoTileRule.PropertyName.SourceTileSourceId, rule.SourceTileSourceId);
-            UndoRedoManager.AddDoProperty(rule, AutoTileRule.PropertyName.SourceTileSourceId, tileInfo.Value.Source);
-            UndoRedoManager.AddUndoProperty(rule, AutoTileRule.PropertyName.SourceTileCoords, rule.SourceTileCoords);
-            UndoRedoManager.AddDoProperty(rule, AutoTileRule.PropertyName.SourceTileCoords, tileInfo.Value.Pos);
+            UndoRedoManager.AddUndoProperty(CurrentEditingRuleSet, AutoTileRuleSet.PropertyName.SourceTileSourceId, CurrentEditingRuleSet.SourceTileSourceId);
+            UndoRedoManager.AddDoProperty(CurrentEditingRuleSet, AutoTileRuleSet.PropertyName.SourceTileSourceId, tileInfo.Value.Source);
+            UndoRedoManager.AddUndoProperty(CurrentEditingRuleSet, AutoTileRuleSet.PropertyName.SourceTileCoords, CurrentEditingRuleSet.SourceTileCoords);
+            UndoRedoManager.AddDoProperty(CurrentEditingRuleSet, AutoTileRuleSet.PropertyName.SourceTileCoords, tileInfo.Value.Pos);
             UndoRedoManager.AddDoMethod(this, MethodName.RecomputeTileButtons);
             UndoRedoManager.AddUndoMethod(this, MethodName.RecomputeTileButtons);
             
@@ -223,7 +223,7 @@ public partial class AutoTileEditor : Control
     private void OnTargetTilePressed()
     {
         var rule = CurrentEditingRuleSet.Rules[_currentRuleIndex];
-        var last = new TilesetView.TileInfo(rule.TargetTileCoords, rule.TargetTileSourceId);
+        var last = new TileInfo(rule.TargetTileCoords, rule.TargetTileSourceId);
         _tilesetView.StartTilePicking(last, tileInfo =>
         {
             if (tileInfo == null || !tileInfo.Value.IsValid()) return;
@@ -249,17 +249,14 @@ public partial class AutoTileEditor : Control
     {
         var rule = CurrentEditingRuleSet.Rules[_currentRuleIndex];
 
-        var sourceTileSource = (_tileset.GetSource(rule.SourceTileSourceId) as TileSetAtlasSource);
+        var sourceTileSource = _tileset.GetSource(CurrentEditingRuleSet.SourceTileSourceId) as TileSetAtlasSource;
         var sourceTexture = new AtlasTexture
         {
             Atlas = sourceTileSource?.Texture,
-            Region = sourceTileSource?.GetTileTextureRegion(rule.SourceTileCoords) ?? new Rect2()
+            Region = sourceTileSource?.GetTileTextureRegion(CurrentEditingRuleSet.SourceTileCoords) ?? new Rect2()
         };
         _sourceTileBtn.Icon = sourceTexture;
-        _middleNeighboursBtn.Icon = sourceTexture;
-
-        _ruleButtons[_currentRuleIndex].GetNode<TextureRect>("Icon").Texture = sourceTexture;
-        
+        // _middleNeighboursBtn.Icon = sourceTexture;
         
         var targetTileSource = _tileset.GetSource(rule.TargetTileSourceId) as TileSetAtlasSource;
         var targetTexture = new AtlasTexture
@@ -268,6 +265,9 @@ public partial class AutoTileEditor : Control
             Region = targetTileSource?.GetTileTextureRegion(rule.TargetTileCoords) ?? new Rect2()
         };
         _targetTileBtn.Icon = targetTexture;
+        
+        _ruleButtons[_currentRuleIndex].GetNode<TextureRect>("Icon").Texture = targetTexture;
+        RecomputeRuleMasks();
     }
 
     private void RecomputeNeighbourButtons()
@@ -276,18 +276,19 @@ public partial class AutoTileEditor : Control
 
         while (rule.Neighbours.Count < 8)
             rule.Neighbours.Add(NeighbourType.Ignore);
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < _neighbourButtons.Length; i++)
         {
             var texture = rule.Neighbours[i] switch
             {
                 NeighbourType.Ignore => null,
                 NeighbourType.Nothing => _nothingNeighbourIcon,
-                NeighbourType.Match => _matchNeighbourIcon,
+                NeighbourType.Required => _matchNeighbourIcon,
                 NeighbourType.Other => _anyNeighbourIcon,
                 _ => throw new ArgumentOutOfRangeException()
             };
             _neighbourButtons[i].Icon = texture;
         }
+        RecomputeRuleMasks();
         
     }
 
@@ -334,7 +335,7 @@ public partial class AutoTileEditor : Control
         {
             0 => NeighbourType.Nothing,
             1 => NeighbourType.Ignore,
-            2 => NeighbourType.Match,
+            2 => NeighbourType.Required,
             3 => NeighbourType.Other,
             _ => NeighbourType.Nothing
         };

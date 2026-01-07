@@ -9,6 +9,8 @@ namespace Casiland.AutoTileEx.Api.Data;
 public partial class AutoTileRuleSet : Resource
 {
     [Export] public TileSet tileSet;
+    [Export] public Vector2I SourceTileCoords { get; set; }
+    [Export] public int SourceTileSourceId { get; set; }
     [Export] public Array<AutoTileRule> Rules { get; set; } = [];
 
     [ExportToolButton("Recompute All Rule Masks")]

@@ -21,37 +21,64 @@ public static class AutoTileImplementation
         new Vector2I(-1, -1)  // NW
     ];
     
-    private static bool RuleMatches(AutoTileRule rule, TileMapLayer layer, Vector2I pos)
+    //TODO continue from here, finish bitmask implementation
+    
+    private static void BuildMasks(
+        TileMapLayer map,
+        Vector2I anchor,
+        int radius,
+        TileInfo sourceTile,
+        ulong[] same,
+        ulong[] empty,
+        ulong[] other)
     {
-        var tileCoords = layer.GetCellAtlasCoords(pos);
-        int tileId = layer.GetCellSourceId(pos);
-        if (tileId != rule.SourceTileSourceId || tileCoords != rule.SourceTileCoords) return false;
+        int size = radius * 2 + 1;
+        int index = 0;
 
-        for (int i = 0; i < rule.Neighbours.Count; i++)
+        for (int y = -radius; y <= radius; y++)
         {
-            var type = rule.Neighbours[i];
-            if (type == NeighbourType.Ignore) continue;
-
-            var neighbourPos = pos + NeighborOffsets[i];
-            var neighbourCoords = layer.GetCellAtlasCoords(neighbourPos);
-            int neighbourId = layer.GetCellSourceId(neighbourPos);
-
-            bool isMatch = (neighbourId == rule.SourceTileSourceId && neighbourCoords == rule.SourceTileCoords);
-            bool isEmpty = neighbourId == -1; // Empty cell = -1
-
-            switch (type)
+            for (int x = -radius; x <= radius; x++)
             {
-                case NeighbourType.Match when !isMatch:
-                case NeighbourType.Nothing when !isEmpty:
-                case NeighbourType.Other when isMatch:    
-                    return false;
+                Vector2I p = anchor + new Vector2I(x, y);
+                var tile = new TileInfo(map.GetCellAtlasCoords(p), map.GetCellSourceId(p));
+
+                int chunk = index / 64;
+                int bit   = index % 64;
+                ulong flag = 1UL << bit;
+
+                if (!tile.IsValid())
+                    empty[chunk] |= flag;
+                else if (tile == sourceTile)
+                    same[chunk] |= flag;
+                else
+                    other[chunk] |= flag;
+
+                index++;
             }
         }
+    }
+    
+    private static bool MatchRule(
+        ulong[] same,
+        ulong[] empty,
+        ulong[] other,
+        AutoTileRule rule)
+    {
+        for (int i = 0; i < rule.ArrayChunkCount; i++)
+        {
+            if ((same[i] & rule.RequiredMask[i]) != rule.RequiredMask[i])
+                return false;
 
+            if ((empty[i] & rule.EmptyMask[i]) != rule.EmptyMask[i])
+                return false;
+
+            if ((other[i] & rule.OtherMask[i]) != rule.OtherMask[i])
+                return false;
+        }
         return true;
     }
     
-    public static void PerformAutoTile(TileMapLayer layer, Godot.Collections.Array<AutoTileRule> rules)
+    public static void PerformAutoTile(TileMapLayer layer, AutoTileRuleSet rules)
     {
         Dictionary<Vector2I, (int, Vector2I)> output = [];
         var used = layer.GetUsedCells();
@@ -59,10 +86,17 @@ public static class AutoTileImplementation
         foreach (var pos in used)
         {
             (int, Vector2I)? chosenTile = null;
-            
-            foreach (var rule in rules)
-                if (RuleMatches(rule, layer, pos))
-                    chosenTile = (rule.TargetTileSourceId, rule.TargetTileCoords);
+            ulong[] requiredMask = new ulong[3];
+            ulong[] emptyMask = new ulong[3];
+            ulong[] otherMask = new ulong[3];
+            BuildMasks(layer, pos, AutoTileRule.Radius, new TileInfo(rules.SourceTileCoords, rules.SourceTileSourceId), requiredMask, emptyMask, otherMask);
+            foreach (var rule in rules.Rules)
+            {
+                if (!MatchRule(requiredMask, emptyMask, otherMask, rule))
+                    continue;
+
+                chosenTile = (rule.TargetTileSourceId, rule.TargetTileCoords);
+            }
 
             if (!chosenTile.HasValue) continue;
             output[pos] = chosenTile.Value;

@@ -77,7 +77,7 @@ public partial class TestScript : Button
 
         FillWithPoints(boundsRect, ref cells);
         foreach (var pos in cells)
-            tilemap.SetCell(pos, 0, new Vector2I(1, 0));
+            tilemap.SetCell(pos, 1, new Vector2I(0, 0));
 
 
         Log.Debug("> Filled with empty tiles (took {Duration} ms)", now.Elapsed.TotalMilliseconds);
@@ -89,7 +89,7 @@ public partial class TestScript : Button
             var rect = new Rect2I((Vector2I)room.Rect.Position, (Vector2I)room.Size);
             FillWithPoints(rect, ref cells);
             foreach (var pos in cells)
-                tilemap.SetCell(pos, 0, new Vector2I(0, 0));
+                tilemap.SetCell(pos, 1, new Vector2I(1, 0));
         }
 
 
@@ -104,13 +104,17 @@ public partial class TestScript : Button
         }
         
         foreach (var pos in cells)
-            tilemap.SetCell(pos, 0, new Vector2I(0, 0));
+            tilemap.SetCell(pos, 1, new Vector2I(1, 0));
         //
         // betterTerrain.UpdateTerrainArea(boundsRect);
-
-        AutoTileImplementation.PerformAutoTile(tilemap, ruleSet.Rules);
-
+        
         Log.Debug("> Updated terrain area (took {Duration} ms)", now.Elapsed.TotalMilliseconds);
+        now.Restart();
+
+        AutoTileImplementation.PerformAutoTile(tilemap, ruleSet);
+        
+        Log.Debug("> Performed auto-tiling (took {Duration} ms)", now.Elapsed.TotalMilliseconds);
+
         now.Restart();
     }
 }

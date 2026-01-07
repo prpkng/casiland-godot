@@ -12,6 +12,10 @@
 [ext_resource type="Texture2D" uid="uid://waslikrbd263" path="res://addons/AutoTileEx/Editor/Icons/circle-check.svg" id="7_kcv6v"]
 [ext_resource type="Texture2D" uid="uid://crdj36ivsfman" path="res://addons/AutoTileEx/Editor/Icons/circle-question-mark.svg" id="8_0vkha"]
 
+[sub_resource type="DPITexture" id="DPITexture_kcv6v"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#ff5d5d\" d=\"M2 1v8.586l1.293-1.293a1 1 0 0 1 1.414 0L7 10.587l2.293-2.293a1 1 0 0 1 1.414 0L13 10.586l1-1V6H9V1H2zm8 0v4h4zm-6 9.414-2 2V15h12v-2.586l-.293.293a1 1 0 0 1-1.414 0L10 10.414l-2.293 2.293a1 1 0 0 1-1.414 0L4 10.414z\"/></svg>
+"
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_x2lwk"]
 atlas = ExtResource("1_d1gkt")
 region = Rect2(0.3680153, -0.3870926, 15.631985, 16.387093)
@@ -33,7 +37,7 @@ grow_vertical = 2
 script = ExtResource("1_fxuku")
 metadata/_custom_type_script = "uid://c8x3f6dn0hypf"
 
-[node name="HBox" type="HBoxContainer" parent="." unique_id=679837996]
+[node name="HBox" type="HSplitContainer" parent="." unique_id=249743056]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -41,11 +45,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="RulesPanel" type="Control" parent="HBox" unique_id=474621674]
-custom_minimum_size = Vector2(140, 0)
+[node name="HSplitContainer" type="HSplitContainer" parent="HBox" unique_id=1728527501]
 layout_mode = 2
 
-[node name="BG" type="Panel" parent="HBox/RulesPanel" unique_id=1531216223]
+[node name="RulesPanel" type="Control" parent="HBox/HSplitContainer" unique_id=474621674]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BG" type="Panel" parent="HBox/HSplitContainer/RulesPanel" unique_id=1531216223]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -58,7 +66,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
 
-[node name="ScrollContainer" type="ScrollContainer" parent="HBox/RulesPanel/BG" unique_id=284244300]
+[node name="ScrollContainer" type="ScrollContainer" parent="HBox/HSplitContainer/RulesPanel/BG" unique_id=284244300]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -70,12 +78,12 @@ offset_bottom = -40.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBox" type="VBoxContainer" parent="HBox/RulesPanel/BG/ScrollContainer" unique_id=1273354152]
+[node name="VBox" type="VBoxContainer" parent="HBox/HSplitContainer/RulesPanel/BG/ScrollContainer" unique_id=1273354152]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBox/RulesPanel/BG" unique_id=472982272]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBox/HSplitContainer/RulesPanel/BG" unique_id=472982272]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -90,39 +98,40 @@ grow_horizontal = 2
 grow_vertical = 0
 alignment = 1
 
-[node name="AddRule" type="Button" parent="HBox/RulesPanel/BG/HBoxContainer" unique_id=1014473817]
+[node name="AddRule" type="Button" parent="HBox/HSplitContainer/RulesPanel/BG/HBoxContainer" unique_id=1014473817]
 custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
-icon = ExtResource("6_a8rnt")
+icon = SubResource("DPITexture_kcv6v")
 icon_alignment = 1
 expand_icon = true
 
-[node name="RemoveRule" type="Button" parent="HBox/RulesPanel/BG/HBoxContainer" unique_id=1675386485]
+[node name="RemoveRule" type="Button" parent="HBox/HSplitContainer/RulesPanel/BG/HBoxContainer" unique_id=1675386485]
 custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
-icon = ExtResource("6_a8rnt")
+icon = SubResource("DPITexture_kcv6v")
 icon_alignment = 1
 expand_icon = true
 
-[node name="MoveUp" type="Button" parent="HBox/RulesPanel/BG/HBoxContainer" unique_id=1854835101]
+[node name="MoveUp" type="Button" parent="HBox/HSplitContainer/RulesPanel/BG/HBoxContainer" unique_id=1854835101]
 custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
-icon = ExtResource("6_a8rnt")
+icon = SubResource("DPITexture_kcv6v")
 icon_alignment = 1
 expand_icon = true
 
-[node name="MoveDown" type="Button" parent="HBox/RulesPanel/BG/HBoxContainer" unique_id=1562382859]
+[node name="MoveDown" type="Button" parent="HBox/HSplitContainer/RulesPanel/BG/HBoxContainer" unique_id=1562382859]
 custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
-icon = ExtResource("6_a8rnt")
+icon = SubResource("DPITexture_kcv6v")
 icon_alignment = 1
 expand_icon = true
 
-[node name="RulePanel" type="Control" parent="HBox" unique_id=2052965573]
+[node name="RulePanel" type="Control" parent="HBox/HSplitContainer" unique_id=2052965573]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
+size_flags_horizontal = 3
 
-[node name="BG" type="Panel" parent="HBox/RulePanel" unique_id=1130860808]
+[node name="BG" type="Panel" parent="HBox/HSplitContainer/RulePanel" unique_id=1130860808]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -135,7 +144,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
 
-[node name="VBox" type="VBoxContainer" parent="HBox/RulePanel/BG" unique_id=605331039]
+[node name="VBox" type="VBoxContainer" parent="HBox/HSplitContainer/RulePanel/BG" unique_id=605331039]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -143,11 +152,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TargetEditor" type="Control" parent="HBox/RulePanel/BG/VBox" unique_id=918085339]
+[node name="TargetEditor" type="Control" parent="HBox/HSplitContainer/RulePanel/BG/VBox" unique_id=918085339]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 
-[node name="SourceTileBtn" type="Button" parent="HBox/RulePanel/BG/VBox/TargetEditor" unique_id=903069573]
+[node name="SourceTileBtn" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/TargetEditor" unique_id=903069573]
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 8
@@ -166,7 +175,7 @@ icon = SubResource("AtlasTexture_x2lwk")
 icon_alignment = 1
 expand_icon = true
 
-[node name="TextureRect" type="TextureRect" parent="HBox/RulePanel/BG/VBox/TargetEditor" unique_id=1491046213]
+[node name="TextureRect" type="TextureRect" parent="HBox/HSplitContainer/RulePanel/BG/VBox/TargetEditor" unique_id=1491046213]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 1
 anchors_preset = 8
@@ -183,7 +192,7 @@ grow_vertical = 2
 texture = ExtResource("2_x2lwk")
 stretch_mode = 3
 
-[node name="TargetTileBtn" type="Button" parent="HBox/RulePanel/BG/VBox/TargetEditor" unique_id=675705904]
+[node name="TargetTileBtn" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/TargetEditor" unique_id=675705904]
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 8
@@ -202,11 +211,11 @@ icon = SubResource("AtlasTexture_d1gkt")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Control" type="Control" parent="HBox/RulePanel/BG/VBox" unique_id=1164995060]
+[node name="Control" type="Control" parent="HBox/HSplitContainer/RulePanel/BG/VBox" unique_id=1164995060]
 custom_minimum_size = Vector2(0, 160)
 layout_mode = 2
 
-[node name="GridContainer" type="GridContainer" parent="HBox/RulePanel/BG/VBox/Control" unique_id=1102952350]
+[node name="GridContainer" type="GridContainer" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control" unique_id=1102952350]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -215,9 +224,9 @@ offset_left = 11.0
 offset_right = -11.0
 grow_horizontal = 2
 grow_vertical = 2
-columns = 3
+columns = 7
 
-[node name="TopLeft" type="Button" parent="HBox/RulePanel/BG/VBox/Control/GridContainer" unique_id=1960614927]
+[node name="Button1" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=1960614927]
 texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
@@ -228,7 +237,7 @@ expand_icon = true
 script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
-[node name="Top" type="Button" parent="HBox/RulePanel/BG/VBox/Control/GridContainer" unique_id=1558126991]
+[node name="Button2" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=2035195720]
 texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
@@ -239,7 +248,7 @@ expand_icon = true
 script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
-[node name="TopRight" type="Button" parent="HBox/RulePanel/BG/VBox/Control/GridContainer" unique_id=1593188598]
+[node name="Button3" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=2095377001]
 texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
@@ -250,7 +259,7 @@ expand_icon = true
 script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
-[node name="Left" type="Button" parent="HBox/RulePanel/BG/VBox/Control/GridContainer" unique_id=1197130942]
+[node name="Button4" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=1284335090]
 texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
@@ -261,19 +270,7 @@ expand_icon = true
 script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
-[node name="Middle" type="Button" parent="HBox/RulePanel/BG/VBox/Control/GridContainer" unique_id=1320816479]
-texture_filter = 1
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-disabled = true
-icon = SubResource("AtlasTexture_x2lwk")
-icon_alignment = 1
-expand_icon = true
-script = ExtResource("4_mtogm")
-metadata/_custom_type_script = "uid://dufme6y6xuulp"
-
-[node name="Right" type="Button" parent="HBox/RulePanel/BG/VBox/Control/GridContainer" unique_id=471621846]
+[node name="Button5" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=246379084]
 texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
@@ -284,7 +281,7 @@ expand_icon = true
 script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
-[node name="BottomLeft" type="Button" parent="HBox/RulePanel/BG/VBox/Control/GridContainer" unique_id=1240478896]
+[node name="Button6" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=700133767]
 texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
@@ -295,7 +292,7 @@ expand_icon = true
 script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
-[node name="Bottom" type="Button" parent="HBox/RulePanel/BG/VBox/Control/GridContainer" unique_id=627888279]
+[node name="Button7" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=715879613]
 texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
@@ -306,7 +303,7 @@ expand_icon = true
 script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
-[node name="BottomRight" type="Button" parent="HBox/RulePanel/BG/VBox/Control/GridContainer" unique_id=1360744514]
+[node name="Button8" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=546859048]
 texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
@@ -317,11 +314,462 @@ expand_icon = true
 script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
-[node name="Toolbar" type="Control" parent="HBox/RulePanel/BG/VBox" unique_id=1750543477]
+[node name="Button9" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=1049045463]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button10" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=2071276440]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button11" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=1386712183]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button12" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=532201627]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button13" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=774210378]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button14" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=1644836594]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button15" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=865415099]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button16" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=1080518611]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button17" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=1656587060]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button18" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=962964172]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button19" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=493810646]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button20" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=505578371]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button21" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=923190155]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button22" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=1925067789]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button23" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=389005057]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button24" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=730757220]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button25" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=789369855]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button26" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=1992784837]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button27" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=788747789]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button28" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=341146944]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button29" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=544217473]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button30" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=1186732988]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button31" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=389672222]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button32" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=547361542]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button33" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=5207460]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button34" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=1074779055]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button35" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=1967687593]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button36" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=465711350]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button37" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=628738209]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button38" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=307953582]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button39" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=2072093487]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button40" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=1703446128]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button41" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=1489875457]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button42" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=1988257587]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button43" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=537745773]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button44" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=604620596]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button45" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=846994253]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button46" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=1281499206]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button47" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=1246258251]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button48" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=681578458]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Button49" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer" unique_id=894903871]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = SubResource("PlaceholderTexture2D_x2lwk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_mtogm")
+metadata/_custom_type_script = "uid://dufme6y6xuulp"
+
+[node name="Toolbar" type="Control" parent="HBox/HSplitContainer/RulePanel/BG/VBox" unique_id=1750543477]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
-[node name="HBoxContainer" type="HFlowContainer" parent="HBox/RulePanel/BG/VBox/Toolbar" unique_id=1918752646]
+[node name="HBoxContainer" type="HFlowContainer" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Toolbar" unique_id=1918752646]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 1
 anchors_preset = 8
@@ -337,7 +785,7 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="NothingSelector" type="Button" parent="HBox/RulePanel/BG/VBox/Toolbar/HBoxContainer" unique_id=314067200]
+[node name="NothingSelector" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Toolbar/HBoxContainer" unique_id=314067200]
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
 toggle_mode = true
@@ -345,21 +793,21 @@ button_pressed = true
 icon = ExtResource("4_1f6q7")
 expand_icon = true
 
-[node name="MatchSelector" type="Button" parent="HBox/RulePanel/BG/VBox/Toolbar/HBoxContainer" unique_id=1290077093]
+[node name="MatchSelector" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Toolbar/HBoxContainer" unique_id=1290077093]
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
 toggle_mode = true
 icon = ExtResource("7_kcv6v")
 expand_icon = true
 
-[node name="IgnoreSelector" type="Button" parent="HBox/RulePanel/BG/VBox/Toolbar/HBoxContainer" unique_id=707356707]
+[node name="IgnoreSelector" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Toolbar/HBoxContainer" unique_id=707356707]
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
 toggle_mode = true
 icon = ExtResource("6_a8rnt")
 expand_icon = true
 
-[node name="AnySelector" type="Button" parent="HBox/RulePanel/BG/VBox/Toolbar/HBoxContainer" unique_id=995583914]
+[node name="AnySelector" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Toolbar/HBoxContainer" unique_id=995583914]
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
 toggle_mode = true

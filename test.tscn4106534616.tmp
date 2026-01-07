@@ -24,7 +24,7 @@ func _process(delta: float) -> void:
 	var delta_pos := last_pos - current_pos
 	last_pos = current_pos
 	
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_MIDDLE) or (
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_MIDDLE) and !(
 		Input.is_key_pressed(KEY_ALT) and Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)
 	):
 		position += delta_pos

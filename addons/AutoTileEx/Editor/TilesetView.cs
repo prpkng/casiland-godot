@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Casiland.AutoTileEx.Api;
 using Fractural.Tasks;
 using HCoroutines;
 
@@ -16,10 +17,6 @@ namespace Casiland.AutoTileEx.Editor;
 [GlobalClass]
 public partial class TilesetView : Control
 {
-	public readonly record struct TileInfo(Vector2I Pos, int Source)
-	{
-		public bool IsValid() => Pos != -Vector2I.One && Source != -1;
-	}
 	private TileSet _tileset;
 	[Export] public TileSet TileSet
 	{

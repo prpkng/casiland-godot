@@ -59,11 +59,16 @@ public static class AutoTileImplementation
     }
     
     private static bool MatchRule(
+        Vector2I pos,
         ulong[] same,
         ulong[] empty,
         ulong[] other,
         AutoTileRule rule)
     {
+        if (rule.ModuloX > 1 && (pos.X + rule.ModuloXOffset) % rule.ModuloX != 0)
+            return false;
+        if (rule.ModuloY > 1 && (pos.Y + rule.ModuloYOffset) % rule.ModuloY != 0)
+            return false;
         for (int i = 0; i < rule.ArrayChunkCount; i++)
         {
             if ((same[i] & rule.RequiredMask[i]) != rule.RequiredMask[i])
@@ -92,7 +97,7 @@ public static class AutoTileImplementation
             BuildMasks(layer, pos, AutoTileRule.Radius, new TileInfo(rules.SourceTileCoords, rules.SourceTileSourceId), requiredMask, emptyMask, otherMask);
             foreach (var rule in rules.Rules)
             {
-                if (!MatchRule(requiredMask, emptyMask, otherMask, rule))
+                if (!MatchRule(pos, requiredMask, emptyMask, otherMask, rule))
                     continue;
 
                 chosenTile = (rule.TargetTileSourceId, rule.TargetTileCoords);

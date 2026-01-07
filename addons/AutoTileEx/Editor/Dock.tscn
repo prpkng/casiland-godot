@@ -27,11 +27,15 @@ region = Rect2(80, 0, 16, 16)
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_x2lwk"]
 
 [node name="Dock" type="Control" unique_id=712867307]
+custom_minimum_size = Vector2(600, 400)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = 55.0
+offset_left = -60.0
+offset_top = -37.5
+offset_right = 60.0
+offset_bottom = 112.5
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_fxuku")
@@ -49,7 +53,7 @@ grow_vertical = 2
 layout_mode = 2
 
 [node name="RulesPanel" type="Control" parent="HBox/HSplitContainer" unique_id=474621674]
-custom_minimum_size = Vector2(140, 0)
+custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -127,7 +131,7 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="RulePanel" type="Control" parent="HBox/HSplitContainer" unique_id=2052965573]
-custom_minimum_size = Vector2(200, 0)
+custom_minimum_size = Vector2(240, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -217,11 +221,15 @@ layout_mode = 2
 
 [node name="GridContainer" type="GridContainer" parent="HBox/HSplitContainer/RulePanel/BG/VBox/Control" unique_id=1102952350]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 11.0
-offset_right = -11.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -87.0
+offset_top = -87.0
+offset_right = 87.0
+offset_bottom = 87.0
 grow_horizontal = 2
 grow_vertical = 2
 columns = 7
@@ -813,6 +821,64 @@ layout_mode = 2
 toggle_mode = true
 icon = ExtResource("8_0vkha")
 expand_icon = true
+
+[node name="HSeparator" type="HSeparator" parent="HBox/HSplitContainer/RulePanel/BG/VBox" unique_id=915847086]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBox/HSplitContainer/RulePanel/BG/VBox" unique_id=1058326097]
+layout_mode = 2
+text = "Modulo"
+horizontal_alignment = 1
+
+[node name="ModuloSettings" type="Control" parent="HBox/HSplitContainer/RulePanel/BG/VBox" unique_id=2106246774]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="X" type="SpinBox" parent="HBox/HSplitContainer/RulePanel/BG/VBox/ModuloSettings" unique_id=1455413105]
+layout_mode = 0
+offset_left = 18.0
+offset_top = -4.5
+offset_right = 104.5
+offset_bottom = 26.5
+min_value = 1.0
+max_value = 3.0
+value = 1.0
+rounded = true
+prefix = "X:"
+
+[node name="XOffset" type="SpinBox" parent="HBox/HSplitContainer/RulePanel/BG/VBox/ModuloSettings" unique_id=726015276]
+layout_mode = 0
+offset_left = 118.0
+offset_top = -4.5
+offset_right = 223.0
+offset_bottom = 26.5
+max_value = 3.0
+value = 1.0
+rounded = true
+prefix = "Offset:"
+
+[node name="Y" type="SpinBox" parent="HBox/HSplitContainer/RulePanel/BG/VBox/ModuloSettings" unique_id=530475457]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 30.5
+offset_right = 104.5
+offset_bottom = 61.5
+min_value = 1.0
+max_value = 3.0
+value = 1.0
+rounded = true
+prefix = "Y:"
+
+[node name="YOffset" type="SpinBox" parent="HBox/HSplitContainer/RulePanel/BG/VBox/ModuloSettings" unique_id=1462416978]
+layout_mode = 0
+offset_left = 118.0
+offset_top = 30.5
+offset_right = 223.0
+offset_bottom = 61.5
+max_value = 3.0
+value = 1.0
+rounded = true
+prefix = "Offset:"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="HBox" unique_id=1551729484]
 layout_mode = 2

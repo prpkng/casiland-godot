@@ -33,6 +33,7 @@ public partial class AutoTileEditor : Control
     private Button _moveDownButton;
     private List<Button> _ruleButtons;
     private List<Action> _ruleButtonActions;
+    private List<SpinBox> _ruleModuloSettings; // x, xoffset, y, yoffset
     
     /// Nothing, Ignore, Match and Any
     private Button[] _toolbarSelectors;
@@ -88,13 +89,42 @@ public partial class AutoTileEditor : Control
         _moveDownButton = GetNode<Button>("HBox/HSplitContainer/RulesPanel/BG/HBoxContainer/MoveDown");
         _moveDownButton.Icon = GetThemeIcon("ArrowDown", "EditorIcons");
 
+        _ruleModuloSettings =
+        [
+            GetNode<SpinBox>("HBox/HSplitContainer/RulePanel/BG/VBox/ModuloSettings/X"),
+            GetNode<SpinBox>("HBox/HSplitContainer/RulePanel/BG/VBox/ModuloSettings/XOffset"),
+            GetNode<SpinBox>("HBox/HSplitContainer/RulePanel/BG/VBox/ModuloSettings/Y"),
+            GetNode<SpinBox>("HBox/HSplitContainer/RulePanel/BG/VBox/ModuloSettings/YOffset"),
+        ];
+        
+        foreach (var spinBox in _ruleModuloSettings)
+            spinBox.ValueChanged += OnModuloChanged;
+
         _addRuleButton.Pressed += OnAddRulePressed;
         _removeRuleButton.Pressed += OnRemoveRulePressed;
         _moveUpButton.Pressed += OnMoveUpPressed;
         _moveDownButton.Pressed += OnMoveDownPressed;
         
     }
-    
+
+    private void OnModuloChanged(double value)
+    {
+        var rule = CurrentEditingRuleSet.Rules[_currentRuleIndex];
+        rule.ModuloX = (int)_ruleModuloSettings[0].Value;
+        rule.ModuloXOffset = (int)_ruleModuloSettings[1].Value;
+        rule.ModuloY = (int)_ruleModuloSettings[2].Value;
+        rule.ModuloYOffset = (int)_ruleModuloSettings[3].Value;
+    }
+
+    private void RecomputeModuloSettings()
+    {
+        var rule = CurrentEditingRuleSet.Rules[_currentRuleIndex];
+        _ruleModuloSettings[0].Value = rule.ModuloX;
+        _ruleModuloSettings[1].Value = rule.ModuloXOffset;
+        _ruleModuloSettings[2].Value = rule.ModuloY;
+        _ruleModuloSettings[3].Value = rule.ModuloYOffset;
+    }
+
     private void OnAddRulePressed()
     {
         var newRule = new AutoTileRule();
@@ -111,6 +141,7 @@ public partial class AutoTileEditor : Control
         RecomputeTileButtons();
         RecomputeNeighbourButtons();
         RecomputeRuleButtons();
+        RecomputeModuloSettings();
     }
     private void OnMoveUpPressed()
     {
@@ -144,6 +175,7 @@ public partial class AutoTileEditor : Control
         RecomputeRuleButtons();
         RecomputeNeighbourButtons();
         RecomputeTileButtons();
+        RecomputeModuloSettings();
     }
     
     public void RecomputeRuleMasks() => CurrentEditingRuleSet.RecomputeAllRuleMasks();
@@ -191,6 +223,7 @@ public partial class AutoTileEditor : Control
         
         RecomputeNeighbourButtons();
         RecomputeTileButtons();
+        RecomputeModuloSettings();
     }
 
     public void UpdateTileset(TileSet tileSet)

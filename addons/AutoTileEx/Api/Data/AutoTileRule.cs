@@ -29,6 +29,11 @@ public partial class AutoTileRule : Resource
     [Export] public Array<ulong> RequiredMask { get; set; } = [];
     [Export] public Array<ulong> EmptyMask { get; set; } = [];
     [Export] public Array<ulong> OtherMask { get; set; } = [];
+    
+    [Export] public int ModuloX {get; set; } = 1;
+    [Export] public int ModuloXOffset {get; set; }
+    [Export] public int ModuloY {get; set; } = 1;
+    [Export] public int ModuloYOffset {get; set; }
 
 
     public static int GridToIndex(int x, int y, int radius)

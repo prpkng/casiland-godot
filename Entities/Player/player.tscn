@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://bnjweurtnnx4f"]
+
+[ext_resource type="Script" uid="uid://cle600a3ags80" path="res://Entities/Player/Player.cs" id="1_mv1ah"]
+[ext_resource type="Script" uid="uid://ca0llfybyho2k" path="res://Common/Movement/TopDownMovement.cs" id="2_3uyv8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mv1ah"]
+
+[node name="Player" type="CharacterBody2D" unique_id=1528480435 node_paths=PackedStringArray("Movement")]
+script = ExtResource("1_mv1ah")
+Movement = NodePath("TopDownMovement")
+metadata/_custom_type_script = "uid://cle600a3ags80"
+
+[node name="TopDownMovement" type="Node" parent="." unique_id=68064283 node_paths=PackedStringArray("CharacterBody")]
+script = ExtResource("2_3uyv8")
+CharacterBody = NodePath("..")
+metadata/_custom_type_script = "uid://ca0llfybyho2k"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=170218100]
+shape = SubResource("RectangleShape2D_mv1ah")

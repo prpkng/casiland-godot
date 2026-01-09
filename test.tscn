@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://o87amdw1sspy" path="res://Common/SpriteStacking/StackedSprite.cs" id="7_ehkex"]
 [ext_resource type="Texture2D" uid="uid://cycyf2isxphl3" path="res://Entities/World/Dungeons/Doors/Pool/left_pool_door.png" id="8_ehkex"]
 [ext_resource type="Texture2D" uid="uid://v1x2bs36khmy" path="res://Entities/World/Dungeons/Doors/Pool/right_pool_door.png" id="9_xersf"]
+[ext_resource type="PackedScene" uid="uid://bnjweurtnnx4f" path="res://Entities/Player/player.tscn" id="10_00tp4"]
 
 [sub_resource type="GDScript" id="GDScript_ppyta"]
 resource_name = "camera_movement"
@@ -704,5 +705,8 @@ texture = ExtResource("9_xersf")
 hframes = 16
 vframes = 2
 frame = 31
+
+[node name="Player" parent="." unique_id=1528480435 instance=ExtResource("10_00tp4")]
+position = Vector2(69, -259)
 
 [connection signal="pressed" from="CanvasLayer/Button" to="CanvasLayer/Button" method="_on_pressed"]

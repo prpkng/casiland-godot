@@ -2,8 +2,10 @@
 
 [ext_resource type="Script" uid="uid://cle600a3ags80" path="res://Entities/Player/Player.cs" id="1_mv1ah"]
 [ext_resource type="Script" uid="uid://ca0llfybyho2k" path="res://Common/Movement/TopDownMovement.cs" id="2_3uyv8"]
+[ext_resource type="Texture2D" uid="uid://cvbkqhvm5s0as" path="res://Entities/Player/Sprites/player_sheet.png" id="3_lu8i8"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_mv1ah"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_lu8i8"]
+radius = 8.0
 
 [node name="Player" type="CharacterBody2D" unique_id=1528480435 node_paths=PackedStringArray("Movement")]
 script = ExtResource("1_mv1ah")
@@ -13,7 +15,13 @@ metadata/_custom_type_script = "uid://cle600a3ags80"
 [node name="TopDownMovement" type="Node" parent="." unique_id=68064283 node_paths=PackedStringArray("CharacterBody")]
 script = ExtResource("2_3uyv8")
 CharacterBody = NodePath("..")
+MovementSpeed = 180.0
 metadata/_custom_type_script = "uid://ca0llfybyho2k"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=170218100]
-shape = SubResource("RectangleShape2D_mv1ah")
+shape = SubResource("CircleShape2D_lu8i8")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1486684564]
+texture = ExtResource("3_lu8i8")
+hframes = 6
+vframes = 7

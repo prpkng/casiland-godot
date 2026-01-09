@@ -22,8 +22,8 @@ public partial class TopDownMovement : Node
 
     [ExportGroup("Movement", "movement")]
     [Export] public float MovementSpeed;
-    [Export] public float MovementAcceleration;
-    [Export] public float MovementDeceleration;
+    [Export] public float MovementAcceleration = 0.6f;
+    [Export] public float MovementDeceleration = 0.9f;
 
     public Vector2 MovementInput;
 
@@ -42,21 +42,32 @@ public partial class TopDownMovement : Node
         
         _fsm.AddState("idle", null, OnIdle);
         _fsm.AddState("move", null, OnMove);
+
+        _fsm.AddTwoWayTransition("idle", "move", _ => MovementInput.Length() > Mathf.Epsilon);
         
         _fsm.Init();
     }
 
+    private void MovementStep(Vector2 targetVector)
+    {
+        var speedDiff = targetVector - CharacterBody.Velocity;
+        float accelRate = targetVector.Length() == 0 ? MovementDeceleration : MovementAcceleration;
+        CharacterBody.Velocity += speedDiff * accelRate;
+    }
+
     private void OnIdle(State<string, string> state)
     {
-        Log.Information("idle");
+        MovementStep(Vector2.Zero);
     }
     private void OnMove(State<string, string> state)
     {
-        
+        MovementStep(MovementInput * MovementSpeed);
+        Log.Information("Moving {Vector}", MovementInput);   
     }
 
     public override void _PhysicsProcess(double delta)
     {
         _fsm.OnLogic();
+        CharacterBody.MoveAndSlide();
     }
 }

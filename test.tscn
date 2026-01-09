@@ -707,6 +707,6 @@ vframes = 2
 frame = 31
 
 [node name="Player" parent="." unique_id=1528480435 instance=ExtResource("10_00tp4")]
-position = Vector2(69, -259)
+position = Vector2(92, 39)
 
 [connection signal="pressed" from="CanvasLayer/Button" to="CanvasLayer/Button" method="_on_pressed"]

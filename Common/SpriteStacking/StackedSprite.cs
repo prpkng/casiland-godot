@@ -17,6 +17,19 @@ public partial class StackedSprite : Node2D
     [Export] public float Spacing { get; set; } = 4f;
     [Export] public Array<Sprite2D> StackSprites;
 
+    [Export]
+    public int Fps
+    {
+        get => _fps;
+        set
+        {
+            _fps = value;
+            _updateTime = 1.0 / _fps;
+        }
+    }
+    private int _fps = -1;
+    private double _updateTime = -1;
+
     [Export] private Node2D _root;
     
     [ExportToolButton("Regenerate Stack")]
@@ -33,7 +46,10 @@ public partial class StackedSprite : Node2D
         var node = new Node();
         AddChild(node);
         node.Owner = GetTree().GetEditedSceneRoot();
-        _root = new Node2D();
+        _root = new Node2D
+        {
+            YSortEnabled = true
+        };
         node.AddChild(_root);
         _root.Owner = GetTree().GetEditedSceneRoot();
 
@@ -46,7 +62,8 @@ public partial class StackedSprite : Node2D
                 Vframes = VFrames,
                 Frame = i,
                 Position = new Vector2(0, i * Spacing),
-                Texture = StackTexture
+                Texture = StackTexture,
+                ZIndex = i
             };
             _root.AddChild(sprite);
             StackSprites.Add(sprite);
@@ -54,8 +71,16 @@ public partial class StackedSprite : Node2D
         }
     }
 
+    private double _counter = 0f;
+
     public override void _Process(double delta)
     {
+        _counter += delta;
+        if (_updateTime > 0 && _counter < _updateTime)
+            return;
+
+        _counter = 0;
+        
         _root.GlobalPosition = GlobalPosition;
         
         if (StackTexture == null || HFrames <= 0 || VFrames <= 0) return;

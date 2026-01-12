@@ -7,6 +7,7 @@ namespace Casiland.Entities.Player;
 public partial class Player : CharacterBody2D
 {
     [Export] public TopDownMovement Movement;
+    [Export] public Sprite2D Sprite;
 
     public override void _Process(double delta)
     {
@@ -16,5 +17,9 @@ public partial class Player : CharacterBody2D
             Y = Input.GetAxis("move_up", "move_down")
         }.Normalized();
         Movement.MovementInput = input;
+
+        if (input.X != 0)
+            Sprite.FlipH = input.X < 0;
+
     }
 }

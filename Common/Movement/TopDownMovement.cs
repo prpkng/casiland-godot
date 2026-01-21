@@ -20,7 +20,7 @@ public partial class TopDownMovement : Node
     }
     private CharacterBody2D _body;
 
-    [ExportGroup("Movement", "movement")]
+    [ExportGroup("Movement", "Movement")]
     [Export] public float MovementSpeed;
     [Export] public float MovementAcceleration = 0.6f;
     [Export] public float MovementDeceleration = 0.9f;
@@ -30,7 +30,7 @@ public partial class TopDownMovement : Node
     public override string[] _GetConfigurationWarnings()
     {
         if (CharacterBody == null)
-            return ["TopDownMovement needs a ChracterBody2D to work properly"];
+            return ["TopDownMovement needs a CharacterBody2D to work properly"];
         return [];
     }
 
@@ -62,11 +62,10 @@ public partial class TopDownMovement : Node
     private void OnMove(State<string, string> state)
     {
         MovementStep(MovementInput * MovementSpeed);
-        Log.Information("Moving {Vector}", MovementInput);   
     }
 
     public override void _PhysicsProcess(double delta)
-    {
+    { 
         _fsm.OnLogic();
         CharacterBody.MoveAndSlide();
     }

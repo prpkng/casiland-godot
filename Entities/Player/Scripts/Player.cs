@@ -22,4 +22,4 @@ public partial class Player : CharacterBody2D
             Sprite.FlipH = input.X < 0;
 
     }
-}
+} 

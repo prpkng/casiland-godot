@@ -22,16 +22,19 @@ public partial class WeaponData : Resource
     [Export] public TriggerType TriggerType;
     [Export] public AttackType AttackType;
 
-    [Export] public float Damage;
-    [Export] public float FireRate;
-    [Export] public float Range;
+    [Export] public double Damage;
+    /// <summary>
+    /// The weapon firing rate in shots / second
+    /// </summary>
+    [Export] public double FireRate;
+    [Export] public double Range;
     
     // Optional Modifiers;
     [ExportGroup("Gun Modifiers")] 
     
-    [Export] public float Spread;
-    [Export] public float Recoil;
-    [Export] public float ChargeTime;
+    [Export] public double Spread;
+    [Export] public double Recoil;
+    [Export] public double ChargeTime;
     
     [ExportGroup("Visual / FX")]
     

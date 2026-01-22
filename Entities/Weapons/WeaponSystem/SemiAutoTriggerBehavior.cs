@@ -1,4 +1,5 @@
-﻿using Casiland.Entities.Weapons.WeaponSystem.Interface;
+﻿using Casiland.Common;
+using Casiland.Entities.Weapons.WeaponSystem.Interface;
 using Godot;
 
 namespace Casiland.Entities.Weapons.WeaponSystem;
@@ -6,23 +7,27 @@ namespace Casiland.Entities.Weapons.WeaponSystem;
 //TODO!
 public partial class SemiAutoTriggerBehavior : Node, ITriggerBehavior
 {
+    private Weapon _weapon;
+    private Countdown _fireRateCountdown;
+    
     public void OnEquip(Weapon weapon, Node owner)
     {
-        throw new System.NotImplementedException();
+        _weapon = weapon;
     }
 
     public void OnUnequip()
     {
-        throw new System.NotImplementedException();
     }
 
     public void Press()
     {
-        throw new System.NotImplementedException();
+        if (!_fireRateCountdown.IsFinished) return;
+        
+        _weapon.ExecuteAttack();
+        _fireRateCountdown.SetCountdown(1.0 / _weapon.Data.FireRate);
     }
 
     public void Release()
     {
-        throw new System.NotImplementedException();
     }
 }

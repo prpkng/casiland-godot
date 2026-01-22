@@ -6,23 +6,37 @@ namespace Casiland.Entities.Weapons.WeaponSystem;
 //TODO!
 public partial class ChargeTriggerBehavior : Node, ITriggerBehavior
 {
+    private double _charge;
+    private Weapon _weapon;
+
+    public override void _Ready()
+    {
+        SetProcess(false);
+    }
+
     public void OnEquip(Weapon weapon, Node owner)
     {
-        throw new System.NotImplementedException();
+        _weapon = weapon;
     }
 
     public void OnUnequip()
     {
-        throw new System.NotImplementedException();
     }
 
     public void Press()
     {
-        throw new System.NotImplementedException();
+        _charge = 0;
+        SetProcess(true);
     }
 
+
+    public override void _Process(double delta)
+    {
+        _charge = Mathf.Min(_charge + (float)delta, _weapon.Data.ChargeTime);
+    }
     public void Release()
     {
-        throw new System.NotImplementedException();
+        _weapon.ExecuteAttack(_charge / _weapon.Data.ChargeTime);
+        SetProcess(false);
     }
 }

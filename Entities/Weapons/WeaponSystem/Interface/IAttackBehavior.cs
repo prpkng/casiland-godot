@@ -2,5 +2,5 @@
 
 public interface IAttackBehavior : IWeaponBehavior
 {
-    public bool ExecuteAttack(float force);
+    public bool ExecuteAttack(double force);
 }

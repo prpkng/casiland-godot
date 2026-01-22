@@ -6,23 +6,39 @@ namespace Casiland.Entities.Weapons.WeaponSystem;
 //TODO!
 public partial class FullAutoTriggerBehavior : Node, ITriggerBehavior
 {
+    private double _fireRateCounter;
+    private bool _isHoldingFire;
+    private Weapon _weapon;
+    
     public void OnEquip(Weapon weapon, Node owner)
     {
-        throw new System.NotImplementedException();
+        _weapon = weapon;
     }
 
     public void OnUnequip()
     {
-        throw new System.NotImplementedException();
+    }
+
+    private void ExecuteAttack()
+    {
+        _weapon.ExecuteAttack();
+        _fireRateCounter = _weapon.Data.FireRate;
     }
 
     public void Press()
     {
-        throw new System.NotImplementedException();
+        _isHoldingFire = true;
+        if (_fireRateCounter <= 0) ExecuteAttack();
     }
 
     public void Release()
     {
-        throw new System.NotImplementedException();
+        _isHoldingFire = false;
+    }
+
+    public override void _Process(double delta)
+    {
+        _fireRateCounter -= delta;
+        if (_fireRateCounter <= 0) ExecuteAttack();
     }
 }

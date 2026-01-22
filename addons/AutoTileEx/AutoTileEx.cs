@@ -24,7 +24,7 @@ public partial class AutoTileEx : EditorPlugin
 		{
 			Title = "Auto Tile Rules",
 			DockIcon = _dockControl.GetThemeIcon("TileMap", "EditorIcons"),
-			DefaultSlot = DockSlot.Bottom,
+			DefaultSlot = EditorDock.DockSlot.Bottom,
 			AvailableLayouts = EditorDock.DockLayout.Horizontal
 		};
 		_dock.AddChild(_dockControl);

@@ -5,6 +5,7 @@ using Godot;
 
 namespace Casiland.Entities.Weapons.WeaponSystem;
 
+[GlobalClass]
 public partial class Weapon : Node2D
 {
     [Export] public WeaponData Data;

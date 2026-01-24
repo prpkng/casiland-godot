@@ -4,6 +4,7 @@ using Godot;
 
 namespace Casiland.Entities.Weapons.WeaponSystem;
 
+[GlobalClass]
 //TODO!
 public partial class SemiAutoTriggerBehavior : Node, ITriggerBehavior
 {

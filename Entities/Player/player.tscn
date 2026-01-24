@@ -1,9 +1,19 @@
 [gd_scene format=3 uid="uid://bnjweurtnnx4f"]
 
 [ext_resource type="Script" uid="uid://cle600a3ags80" path="res://Entities/Player/Scripts/Player.cs" id="1_mv1ah"]
+[ext_resource type="Script" uid="uid://cwpqm1pomckmi" path="res://Entities/Weapons/WeaponSystem/WeaponData.cs" id="2_01a4e"]
 [ext_resource type="Script" uid="uid://ca0llfybyho2k" path="res://Common/Movement/TopDownMovement.cs" id="2_3uyv8"]
 [ext_resource type="Texture2D" uid="uid://cvbkqhvm5s0as" path="res://Entities/Player/Sprites/player_sheet.png" id="3_lu8i8"]
 [ext_resource type="Script" uid="uid://dc1gb7yiq3j3h" path="res://Entities/Player/Scripts/PlayerAnimations.cs" id="3_tekja"]
+[ext_resource type="Script" uid="uid://cqjjobj3xmcgi" path="res://Entities/Weapons/WeaponSystem/WeaponManager.cs" id="5_5c2io"]
+[ext_resource type="PackedScene" uid="uid://dvr8g5sbut4b7" path="res://Entities/Weapons/base_weapon.tscn" id="6_4wf4l"]
+
+[sub_resource type="Resource" id="Resource_7a1se"]
+script = ExtResource("2_01a4e")
+Name = "Bengala"
+Damage = 10.0
+FireRate = 0.5
+metadata/_custom_type_script = "uid://cwpqm1pomckmi"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lu8i8"]
 radius = 8.0
@@ -89,6 +99,7 @@ node_connections = [&"output", 0, &"MovementBlendSpace"]
 script = ExtResource("1_mv1ah")
 Movement = NodePath("TopDownMovement")
 Sprite = NodePath("Sprite2D")
+WeaponData = SubResource("Resource_7a1se")
 metadata/_custom_type_script = "uid://cle600a3ags80"
 
 [node name="TopDownMovement" type="Node" parent="." unique_id=68064283 node_paths=PackedStringArray("CharacterBody")]
@@ -115,3 +126,12 @@ Player = NodePath("..")
 texture = ExtResource("3_lu8i8")
 hframes = 6
 vframes = 8
+
+[node name="WeaponManager" type="Node2D" parent="." unique_id=609029894]
+script = ExtResource("5_5c2io")
+WeaponSocketPath = NodePath("Socket")
+WeaponScene = ExtResource("6_4wf4l")
+metadata/_custom_type_script = "uid://cqjjobj3xmcgi"
+
+[node name="Socket" type="Node2D" parent="WeaponManager" unique_id=1598038009]
+position = Vector2(-1, 2)

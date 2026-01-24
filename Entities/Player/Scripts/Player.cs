@@ -1,13 +1,30 @@
 ﻿using Casiland.Common.Movement;
+using Casiland.Entities.Weapons.WeaponSystem;
 using Godot;
 
 namespace Casiland.Entities.Player;
 
 [GlobalClass]
-public partial class Player : CharacterBody2D
+public partial class Player : CharacterBody2D, IAimProvider
 {
     [Export] public TopDownMovement Movement;
     [Export] public Sprite2D Sprite;
+
+    [Export] public WeaponData WeaponData;
+
+
+    public override void _Ready()
+    {
+        GetNode<WeaponManager>("WeaponManager").EquipWeapon(WeaponData);
+    }
+
+
+
+    public Vector2 GetAimDirection()
+    {
+        return GlobalPosition.DirectionTo(GetGlobalMousePosition());
+    }
+
 
     public override void _Process(double delta)
     {

@@ -3,6 +3,7 @@ using Godot;
 
 namespace Casiland.Entities.Weapons.WeaponSystem;
 
+[GlobalClass]
 //TODO!
 public partial class FullAutoTriggerBehavior : Node, ITriggerBehavior
 {

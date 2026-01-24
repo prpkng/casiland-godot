@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://dvr8g5sbut4b7"]
 
+[ext_resource type="Script" uid="uid://5gv4ucidqf7u" path="res://Entities/Weapons/WeaponSystem/Weapon.cs" id="1_71i6g"]
 [ext_resource type="Texture2D" uid="uid://kfctt1q1taw0" path="res://Entities/Weapons/player_gun.png" id="1_khd6n"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ognud"]
@@ -58,8 +59,9 @@ animations = [{
 }]
 
 [node name="Weapon" type="Node2D" unique_id=1467717947]
+script = ExtResource("1_71i6g")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=825374148]
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=825374148]
 position = Vector2(3, 0)
 sprite_frames = SubResource("SpriteFrames_yk6v1")
 animation = &"walk"

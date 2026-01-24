@@ -15,6 +15,8 @@ public enum TriggerType
     Charge
 }
 
+[GlobalClass]
+
 public partial class WeaponData : Resource
 {
     [Export] public string Name;

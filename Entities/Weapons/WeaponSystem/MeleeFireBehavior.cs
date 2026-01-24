@@ -3,21 +3,19 @@ using Godot;
 
 namespace Casiland.Entities.Weapons.WeaponSystem;
 
-//TODO!
+[GlobalClass]
 public partial class MeleeAttackBehavior : Node, IAttackBehavior
 {
     public void OnEquip(Weapon weapon, Node owner)
     {
-        throw new System.NotImplementedException();
     }
 
     public void OnUnequip()
     {
-        throw new System.NotImplementedException();
     }
 
-    public bool ExecuteAttack(float force)
+    public bool ExecuteAttack(double force)
     {
-        throw new System.NotImplementedException();
+        return false;
     }
 }

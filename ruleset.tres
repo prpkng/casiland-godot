@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://wn0em4r3tgfd" path="res://addons/AutoTileEx/Api/Data/AutoTileRule.cs" id="1_bgs60"]
 [ext_resource type="Script" uid="uid://d183kokl5ih3f" path="res://addons/AutoTileEx/Api/Data/AutoTileRuleSet.cs" id="2_aeaxt"]
-[ext_resource type="TileSet" uid="uid://cub01tq8ncrlk" path="res://Entities/World/temp_tileset.tres" id="3_aeaxt"]
+[ext_resource type="TileSet" uid="uid://cub01tq8ncrlk" path="res://Entities/World/pool_tileset.tres" id="3_aeaxt"]
 
 [sub_resource type="Resource" id="Resource_0ovf6"]
 script = ExtResource("1_bgs60")

@@ -14,7 +14,7 @@ public partial class WeaponManager : Node2D
     private Node2D _weaponSocket;
     private Weapon _currentWeapon;
 
-    private readonly List<WeaponData> _inventory = [];
+    private readonly List<Weapon> _inventory = [];
 
     private Vector2 GetAimDirection() => _aimProvider?.GetAimDirection() ?? Vector2.Right;
 
@@ -40,13 +40,13 @@ public partial class WeaponManager : Node2D
             _currentWeapon.PrimaryReleased(); 
     }
 
-    public async void EquipWeapon(WeaponData data)
+    public void EquipWeapon(Weapon weapon) => EquipWeapon(_inventory.IndexOf(weapon));
+    public void EquipWeapon(int index)
     {
         UnequipCurrent();
 
-        _currentWeapon = WeaponScene.Instantiate<Weapon>();
+        _currentWeapon = _inventory[index];
         _currentWeapon.GetAimDirection = GetAimDirection;
-        _currentWeapon.Data = data;
         _weaponSocket.AddChild(_currentWeapon);
         
         _currentWeapon.OnEquip(GetParent());
@@ -57,19 +57,32 @@ public partial class WeaponManager : Node2D
         if (_currentWeapon == null) return;
 
         _currentWeapon.OnUnequip(); 
-        _currentWeapon.QueueFree(); 
+        _weaponSocket.RemoveChild(_currentWeapon); 
         _currentWeapon = null; 
     }
 
     /* =============
      * = INVENTORY =
      * =============*/
-    public void AddWeapon(WeaponData data)
+
+    
+    public void AddWeapon(PackedScene scene)
     {
-        _inventory.Add(data);
+        if (scene.Instantiate() is not Weapon weapon)
+        {
+            Log.Error("Tried to add non-weapon to weapon inventory!");
+            return;
+        }
+
+        AddWeapon(weapon);
+    }
+    
+    public void AddWeapon(Weapon weapon)
+    {
+        _inventory.Add(weapon);
 
         if (_currentWeapon == null)
-            EquipWeapon(data);
+            EquipWeapon(weapon);
     }
 
     public void EquipNext()
@@ -77,9 +90,9 @@ public partial class WeaponManager : Node2D
         if (_inventory.Count == 0)
             return;
 
-        int index = _inventory.IndexOf(_currentWeapon.Data);
+        int index = _inventory.IndexOf(_currentWeapon);
         int next = (index + 1) % _inventory.Count;
         
-        EquipWeapon(_inventory[next]);
+        EquipWeapon(next);
     }
 }

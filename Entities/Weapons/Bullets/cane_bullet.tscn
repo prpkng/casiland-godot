@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://b1rmxmhmkmhs7"]
+
+[ext_resource type="Texture2D" uid="uid://dtll8akgj3kab" path="res://Entities/Player/Sprites/bullet.png" id="1_6xnov"]
+[ext_resource type="Script" uid="uid://c0u0wkyoykf8t" path="res://Entities/Weapons/Bullets/BulletMovement.cs" id="1_602rs"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gcqhl"]
+radius = 3.0
+
+[node name="BengalBullet" type="CharacterBody2D" unique_id=829848736]
+collision_layer = 0
+collision_mask = 2
+
+[node name="BulletMovement" type="Node" parent="." unique_id=376653623]
+script = ExtResource("1_602rs")
+MovementSpeed = 400.0
+EnableWallBounce = false
+Lifetime = 5.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=249443208]
+shape = SubResource("CircleShape2D_gcqhl")
+
+[node name="Bullet" type="Sprite2D" parent="." unique_id=485521619]
+texture = ExtResource("1_6xnov")

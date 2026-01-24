@@ -10,12 +10,12 @@ public partial class Player : CharacterBody2D, IAimProvider
     [Export] public TopDownMovement Movement;
     [Export] public Sprite2D Sprite;
 
-    [Export] public WeaponData WeaponData;
+    [Export] public PackedScene Weapon;
 
 
     public override void _Ready()
     {
-        GetNode<WeaponManager>("WeaponManager").EquipWeapon(WeaponData);
+        GetNode<WeaponManager>("WeaponManager").AddWeapon(Weapon);
     }
 
 
@@ -35,8 +35,15 @@ public partial class Player : CharacterBody2D, IAimProvider
         }.Normalized();
         Movement.MovementInput = input;
 
-        if (input.X != 0)
-            Sprite.FlipH = input.X < 0;
+        var aimDir = GetAimDirection();
+        if (aimDir.X != 0)
+            Sprite.FlipH = aimDir.X < 0;
+
+        
+        if (Input.IsMouseButtonPressed(MouseButton.Right))
+        {
+            GlobalPosition = GetGlobalMousePosition();
+        }
 
     }
 } 

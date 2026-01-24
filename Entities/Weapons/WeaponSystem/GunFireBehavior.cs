@@ -8,6 +8,10 @@ namespace Casiland.Entities.Weapons.WeaponSystem;
 //TODO!
 public partial class GunFireBehavior : Node, IAttackBehavior
 {
+    [Export] public PackedScene BulletScene;
+    [Export] public Marker2D Muzzle;
+
+
     public void OnEquip(Weapon weapon, Node owner)
     {
     }
@@ -18,6 +22,12 @@ public partial class GunFireBehavior : Node, IAttackBehavior
 
     public bool ExecuteAttack(double force)
     {
-        return false;
+        var bullet = BulletScene.Instantiate<CharacterBody2D>();
+        GetTree().Root.AddChild(bullet);
+        bullet.GlobalPosition = Muzzle.GlobalPosition;
+        bullet.Rotation = Muzzle.GlobalRotation;
+        bullet.ResetPhysicsInterpolation();
+
+        return true;
     }
 }

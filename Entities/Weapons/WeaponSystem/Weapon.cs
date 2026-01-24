@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Casiland.Entities.Weapons.WeaponSystem.Interface;
 using Godot;
+using Serilog;
 
 namespace Casiland.Entities.Weapons.WeaponSystem;
 
 [GlobalClass]
 public partial class Weapon : Node2D
 {
-    [Export] public WeaponData Data;
-    
-    public Marker2D Muzzle { get; private set; }
+    [Export] public WeaponStats Stats;
     
     
     private Node _owner;
@@ -25,9 +25,7 @@ public partial class Weapon : Node2D
     
     public override void _Ready()
     {
-        base._Ready();
-        Muzzle = GetNode<Marker2D>("Muzzle");
-        BuildFromData();
+        GatherBehaviors();
     }
     
     public void OnEquip(Node owner)
@@ -91,70 +89,24 @@ public partial class Weapon : Node2D
     /// Main weapon creation factory
     /// </summary>
     /// <remarks>
-    /// Creates and adds <see cref="IWeaponBehavior"/>s to the node depending on the <see cref="WeaponData"/> contents.
+    /// Creates and adds <see cref="IWeaponBehavior"/>s to the node depending on the <see cref="WeaponStats"/> contents.
     /// </remarks>
-    private void BuildFromData()
+    private void GatherBehaviors()
     {
-        ClearBehaviors();
-        
-        // Every weapon has an Aim system
-        AddBehavior(new AimBehavior());
+        _allBehaviors = [.. GetChildren().OfType<IWeaponBehavior>()];
 
-        switch (Data.AttackType)
+        if (_allBehaviors.Count == 0)
         {
-            case AttackType.Melee: 
-                _attackBehavior = AddBehavior(new MeleeAttackBehavior());
-                break;
-            case AttackType.Ranged: 
-                _attackBehavior = AddBehavior(new GunFireBehavior());
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        };
-        switch (Data.TriggerType)
-        {
-            case TriggerType.SemiAuto: 
-                _triggerBehavior = AddBehavior(new SemiAutoTriggerBehavior());
-                break;
-            case TriggerType.Auto: 
-                _triggerBehavior = AddBehavior(new FullAutoTriggerBehavior());
-                break;
-            case TriggerType.Charge: 
-                _triggerBehavior = AddBehavior(new ChargeTriggerBehavior());
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        };
-        
-        //TODO Visual effects:
-        
-        // if (Data.HasRecoil)
-        //     AddChild(new RecoilBehavior { Strength = Data.Recoil });
-        //
-        // if (Data.Spread > 0)
-        //     AddChild(new SpreadBehavior { MaxSpread = Data.Spread });
-        //
-        // if (Data.HasMuzzleFlash)
-        //     AddChild(new MuzzleFlashBehavior());
-        
-    }
-
-    private T AddBehavior<T>(T behavior) where T : Node, IWeaponBehavior
-    {
-        AddChild(behavior);
-        _allBehaviors.Add(behavior);
-        return behavior;
-    }
-
-    private void ClearBehaviors()
-    {
-        foreach (var child in GetChildren())
-        {
-            if (child is not IWeaponBehavior) continue;
-            
-            child.QueueFree();
+            Log.Error("Weapon has no behaviors attached!");
+            return;
         }
-        
-        _allBehaviors.Clear();
+
+        try {
+            _aimBehavior = _allBehaviors.OfType<AimBehavior>().Single();
+            _attackBehavior = _allBehaviors.OfType<IAttackBehavior>().Single();
+            _triggerBehavior = _allBehaviors.OfType<ITriggerBehavior>().Single();
+        } catch (InvalidOperationException e) {
+            Log.Error("Weapon is missing a required behavior\n Any weapon must have exactly one AIM, ATTACK, and TRIGGER behavior.", e.Message);
+        }
     }
 }

@@ -18,12 +18,13 @@ public partial class FullAutoTriggerBehavior : Node, ITriggerBehavior
 
     public void OnUnequip()
     {
+        _weapon = null;
     }
 
     private void ExecuteAttack()
     {
         _weapon.ExecuteAttack();
-        _fireRateCounter = _weapon.Data.FireRate;
+        _fireRateCounter = 1 / _weapon.Stats.FireRate;
     }
 
     public void Press()
@@ -39,7 +40,9 @@ public partial class FullAutoTriggerBehavior : Node, ITriggerBehavior
 
     public override void _Process(double delta)
     {
+        if (_weapon == null) return;
+
         _fireRateCounter -= delta;
-        if (_fireRateCounter <= 0) ExecuteAttack();
+        if (_fireRateCounter <= 0 && _isHoldingFire) ExecuteAttack();
     }
 }

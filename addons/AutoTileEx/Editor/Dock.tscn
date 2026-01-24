@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://bpoyjf0u3te4c" path="res://addons/AutoTileEx/Editor/Line.svg" id="2_x2lwk"]
 [ext_resource type="Script" uid="uid://bcx30p0ulaas4" path="res://addons/AutoTileEx/Editor/TilesetView.cs" id="3_kq2a6"]
 [ext_resource type="Texture2D" uid="uid://dfhdr7sjv4mdd" path="res://addons/AutoTileEx/Editor/Icons/ban.svg" id="4_1f6q7"]
-[ext_resource type="TileSet" uid="uid://cub01tq8ncrlk" path="res://Entities/World/temp_tileset.tres" id="4_fxuku"]
+[ext_resource type="TileSet" uid="uid://cub01tq8ncrlk" path="res://Entities/World/pool_tileset.tres" id="4_fxuku"]
 [ext_resource type="Script" uid="uid://dufme6y6xuulp" path="res://addons/AutoTileEx/Editor/RightClickableButton.cs" id="4_mtogm"]
 [ext_resource type="Script" uid="uid://djhqmh5y6he0r" path="res://addons/AutoTileEx/Editor/scroll_with_mouse.gd" id="4_umxbf"]
 [ext_resource type="Texture2D" uid="uid://wdvqeuxda0vw" path="res://addons/AutoTileEx/Editor/Icons/eraser.svg" id="6_a8rnt"]

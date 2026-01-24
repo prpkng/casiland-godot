@@ -1,0 +1,98 @@
+[gd_scene format=3 uid="uid://b2rf3ddt3m8c3"]
+
+[ext_resource type="PackedScene" uid="uid://dvr8g5sbut4b7" path="res://Entities/Weapons/base_weapon.tscn" id="1_4robe"]
+[ext_resource type="Script" uid="uid://bterrwqgi0a2l" path="res://Entities/Weapons/WeaponSystem/WeaponStats.cs" id="2_wsajc"]
+[ext_resource type="Texture2D" uid="uid://kfctt1q1taw0" path="res://Entities/Weapons/player_gun.png" id="3_kwswi"]
+[ext_resource type="Script" uid="uid://b0oigiys8fan8" path="res://Entities/Weapons/WeaponSystem/AimBehavior.cs" id="4_1yjqc"]
+[ext_resource type="Script" uid="uid://d10egxy5pe7os" path="res://Entities/Weapons/WeaponSystem/FullAutoTriggerBehavior.cs" id="5_weru4"]
+[ext_resource type="Script" uid="uid://qi13a1v78kfl" path="res://Entities/Weapons/WeaponSystem/GunFireBehavior.cs" id="6_qkynb"]
+[ext_resource type="PackedScene" uid="uid://b1rmxmhmkmhs7" path="res://Entities/Weapons/Bullets/cane_bullet.tscn" id="7_0gl2d"]
+
+[sub_resource type="Resource" id="Resource_3bbu6"]
+script = ExtResource("2_wsajc")
+Name = "Bengal Gun"
+BaseDamage = 20.0
+FireRate = 10.0
+Range = 60.0
+metadata/_custom_type_script = "uid://bterrwqgi0a2l"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ognud"]
+atlas = ExtResource("3_kwswi")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t0jf1"]
+atlas = ExtResource("3_kwswi")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ydhqt"]
+atlas = ExtResource("3_kwswi")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h1jda"]
+atlas = ExtResource("3_kwswi")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2usi8"]
+atlas = ExtResource("3_kwswi")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2eyjc"]
+atlas = ExtResource("3_kwswi")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_y0rfr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ognud")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t0jf1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ydhqt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h1jda")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2usi8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2eyjc")
+}],
+"loop": false,
+"name": &"walk",
+"speed": 15.0
+}]
+
+[node name="Weapon" unique_id=1467717947 instance=ExtResource("1_4robe")]
+Stats = SubResource("Resource_3bbu6")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." index="0" unique_id=2102515018]
+position = Vector2(3, 0)
+sprite_frames = SubResource("SpriteFrames_y0rfr")
+animation = &"walk"
+autoplay = "idle"
+
+[node name="Muzzle" type="Marker2D" parent="." index="1" unique_id=114462654]
+position = Vector2(11, 0)
+
+[node name="AimBehavior" type="Node" parent="." index="2" unique_id=1464331269]
+script = ExtResource("4_1yjqc")
+metadata/_custom_type_script = "uid://b0oigiys8fan8"
+
+[node name="FullAutoTriggerBehavior" type="Node" parent="." index="3" unique_id=1143347165]
+script = ExtResource("5_weru4")
+metadata/_custom_type_script = "uid://d10egxy5pe7os"
+
+[node name="GunFireBehavior" type="Node" parent="." index="4" unique_id=170619183 node_paths=PackedStringArray("Muzzle")]
+script = ExtResource("6_qkynb")
+BulletScene = ExtResource("7_0gl2d")
+Muzzle = NodePath("../Muzzle")
+metadata/_custom_type_script = "uid://qi13a1v78kfl"

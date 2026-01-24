@@ -1,19 +1,12 @@
 [gd_scene format=3 uid="uid://bnjweurtnnx4f"]
 
 [ext_resource type="Script" uid="uid://cle600a3ags80" path="res://Entities/Player/Scripts/Player.cs" id="1_mv1ah"]
-[ext_resource type="Script" uid="uid://cwpqm1pomckmi" path="res://Entities/Weapons/WeaponSystem/WeaponData.cs" id="2_01a4e"]
+[ext_resource type="PackedScene" uid="uid://b2rf3ddt3m8c3" path="res://Entities/Weapons/cane_gun.tscn" id="2_01a4e"]
 [ext_resource type="Script" uid="uid://ca0llfybyho2k" path="res://Common/Movement/TopDownMovement.cs" id="2_3uyv8"]
 [ext_resource type="Texture2D" uid="uid://cvbkqhvm5s0as" path="res://Entities/Player/Sprites/player_sheet.png" id="3_lu8i8"]
 [ext_resource type="Script" uid="uid://dc1gb7yiq3j3h" path="res://Entities/Player/Scripts/PlayerAnimations.cs" id="3_tekja"]
 [ext_resource type="Script" uid="uid://cqjjobj3xmcgi" path="res://Entities/Weapons/WeaponSystem/WeaponManager.cs" id="5_5c2io"]
 [ext_resource type="PackedScene" uid="uid://dvr8g5sbut4b7" path="res://Entities/Weapons/base_weapon.tscn" id="6_4wf4l"]
-
-[sub_resource type="Resource" id="Resource_7a1se"]
-script = ExtResource("2_01a4e")
-Name = "Bengala"
-Damage = 10.0
-FireRate = 0.5
-metadata/_custom_type_script = "uid://cwpqm1pomckmi"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lu8i8"]
 radius = 8.0
@@ -96,10 +89,12 @@ nodes/MovementBlendSpace/position = Vector2(-293.33334, 160)
 node_connections = [&"output", 0, &"MovementBlendSpace"]
 
 [node name="Player" type="CharacterBody2D" unique_id=1528480435 node_paths=PackedStringArray("Movement", "Sprite")]
+collision_layer = 8
+collision_mask = 2
 script = ExtResource("1_mv1ah")
 Movement = NodePath("TopDownMovement")
 Sprite = NodePath("Sprite2D")
-WeaponData = SubResource("Resource_7a1se")
+Weapon = ExtResource("2_01a4e")
 metadata/_custom_type_script = "uid://cle600a3ags80"
 
 [node name="TopDownMovement" type="Node" parent="." unique_id=68064283 node_paths=PackedStringArray("CharacterBody")]
@@ -123,6 +118,7 @@ script = ExtResource("3_tekja")
 Player = NodePath("..")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1486684564]
+z_index = 5
 texture = ExtResource("3_lu8i8")
 hframes = 6
 vframes = 8

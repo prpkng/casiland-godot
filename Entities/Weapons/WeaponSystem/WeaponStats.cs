@@ -2,31 +2,16 @@
 
 namespace Casiland.Entities.Weapons.WeaponSystem;
 
-public enum AttackType
-{
-    Melee,
-    Ranged
-}
-
-public enum TriggerType
-{
-    SemiAuto,
-    Auto,
-    Charge
-}
 
 [GlobalClass]
 
-public partial class WeaponData : Resource
+public partial class WeaponStats : Resource
 {
     [Export] public string Name;
 
-    [Export] public TriggerType TriggerType;
-    [Export] public AttackType AttackType;
-
-    [Export] public double Damage;
+    [Export] public double BaseDamage;
     /// <summary>
-    /// The weapon firing rate in shots / second
+    /// The weapon attacking rate in attacks / second
     /// </summary>
     [Export] public double FireRate;
     [Export] public double Range;

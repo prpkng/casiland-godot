@@ -33,11 +33,11 @@ public partial class ChargeTriggerBehavior : Node, ITriggerBehavior
 
     public override void _Process(double delta)
     {
-        _charge = Mathf.Min(_charge + (float)delta, _weapon.Data.ChargeTime);
+        _charge = Mathf.Min(_charge + (float)delta, _weapon.Stats.ChargeTime);
     }
     public void Release()
     {
-        _weapon.ExecuteAttack(_charge / _weapon.Data.ChargeTime);
+        _weapon.ExecuteAttack(_charge / _weapon.Stats.ChargeTime);
         SetProcess(false);
     }
 }

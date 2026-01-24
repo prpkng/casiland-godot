@@ -25,7 +25,7 @@ public partial class SemiAutoTriggerBehavior : Node, ITriggerBehavior
         if (!_fireRateCountdown.IsFinished) return;
         
         _weapon.ExecuteAttack();
-        _fireRateCountdown.SetCountdown(1.0 / _weapon.Data.FireRate);
+        _fireRateCountdown.SetCountdown(1.0 / _weapon.Stats.FireRate);
     }
 
     public void Release()

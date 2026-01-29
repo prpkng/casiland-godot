@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cle600a3ags80" path="res://Entities/Player/Scripts/Player.cs" id="1_mv1ah"]
 [ext_resource type="PackedScene" uid="uid://b2rf3ddt3m8c3" path="res://Entities/Weapons/cane_gun.tscn" id="2_01a4e"]
 [ext_resource type="Script" uid="uid://ca0llfybyho2k" path="res://Common/Movement/TopDownMovement.cs" id="2_3uyv8"]
+[ext_resource type="Script" uid="uid://dec5jl4hlirlc" path="res://Common/Health/Health.cs" id="3_7a1se"]
 [ext_resource type="Texture2D" uid="uid://cvbkqhvm5s0as" path="res://Entities/Player/Sprites/player_sheet.png" id="3_lu8i8"]
 [ext_resource type="Script" uid="uid://dc1gb7yiq3j3h" path="res://Entities/Player/Scripts/PlayerAnimations.cs" id="3_tekja"]
 [ext_resource type="Script" uid="uid://cqjjobj3xmcgi" path="res://Entities/Weapons/WeaponSystem/WeaponManager.cs" id="5_5c2io"]
@@ -96,6 +97,11 @@ Movement = NodePath("TopDownMovement")
 Sprite = NodePath("Sprite2D")
 Weapon = ExtResource("2_01a4e")
 metadata/_custom_type_script = "uid://cle600a3ags80"
+
+[node name="Health" type="Node" parent="." unique_id=1935918873 node_paths=PackedStringArray("Entity")]
+script = ExtResource("3_7a1se")
+Entity = NodePath("..")
+metadata/_custom_type_script = "uid://dec5jl4hlirlc"
 
 [node name="TopDownMovement" type="Node" parent="." unique_id=68064283 node_paths=PackedStringArray("CharacterBody")]
 script = ExtResource("2_3uyv8")

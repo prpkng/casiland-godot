@@ -1,4 +1,5 @@
-﻿using Casiland.Common.Movement;
+﻿using Casiland.Common.Interaction;
+using Casiland.Common.Movement;
 using Casiland.Entities.Weapons.WeaponSystem;
 using Godot;
 
@@ -11,11 +12,13 @@ public partial class Player : CharacterBody2D, IAimProvider
     [Export] public Sprite2D Sprite;
 
     [Export] public PackedScene Weapon;
+    [Export] public WeaponManager WeaponManager;
+    [Export] public Interactor Interactor;
 
 
     public override void _Ready()
     {
-        GetNode<WeaponManager>("WeaponManager").AddWeapon(Weapon);
+        WeaponManager.AddWeapon(Weapon);
     }
 
 
@@ -44,6 +47,19 @@ public partial class Player : CharacterBody2D, IAimProvider
         {
             GlobalPosition = GetGlobalMousePosition();
         }
+
+        
+        // Input Forwarding
+        if (Input.IsActionJustPressed("fire"))
+            WeaponManager.PerformPrimary();
+        
+        if (Input.IsActionJustReleased("fire"))
+            WeaponManager.StopPrimary(); 
+
+        if (Input.IsActionJustPressed("interact"))
+            Interactor.InteractPressed();
+        if (input.Length() > 0)
+            Interactor.Rotation = input.Angle();
 
     }
 } 

@@ -31,14 +31,10 @@ public partial class WeaponManager : Node2D
     public override void _Process(double delta)
     {
         if (_currentWeapon == null) return;
-        
-        // Input Forwarding
-        if (Input.IsActionJustPressed("fire"))
-            _currentWeapon.PrimaryPressed();
-        
-        if (Input.IsActionJustReleased("fire"))
-            _currentWeapon.PrimaryReleased(); 
     }
+
+    public void PerformPrimary() => _currentWeapon?.PrimaryPressed();
+    public void StopPrimary() => _currentWeapon?.PrimaryReleased();
 
     public void EquipWeapon(Weapon weapon) => EquipWeapon(_inventory.IndexOf(weapon));
     public void EquipWeapon(int index)

@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://cycyf2isxphl3" path="res://Entities/World/Dungeons/Doors/Pool/left_pool_door.png" id="8_ehkex"]
 [ext_resource type="Texture2D" uid="uid://v1x2bs36khmy" path="res://Entities/World/Dungeons/Doors/Pool/right_pool_door.png" id="9_xersf"]
 [ext_resource type="PackedScene" uid="uid://bnjweurtnnx4f" path="res://Entities/Player/player.tscn" id="10_00tp4"]
+[ext_resource type="PackedScene" uid="uid://dvxen8vg3bed0" path="res://Entities/Enemies/Testing/dummy_enemy.tscn" id="10_77dp3"]
 
 [sub_resource type="GDScript" id="GDScript_ppyta"]
 resource_name = "camera_movement"
@@ -712,6 +713,9 @@ texture = ExtResource("9_xersf")
 hframes = 16
 vframes = 2
 frame = 31
+
+[node name="Dummy Enemy" parent="." unique_id=1902365087 instance=ExtResource("10_77dp3")]
+position = Vector2(186, 49)
 
 [node name="Player" parent="." unique_id=1528480435 instance=ExtResource("10_00tp4")]
 physics_interpolation_mode = 1

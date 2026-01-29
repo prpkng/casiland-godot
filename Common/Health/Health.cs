@@ -36,6 +36,9 @@ public partial class Health : Node {
     /// <summary>Emitted after damage or healing is applied.</summary>
     [Signal] public delegate void ActionAppliedEventHandler(HealthModifiedAction action, int applied);
     
+    /// <summary> Emitted when health changes.</summary>
+    [Signal] public delegate void HealthChangedEventHandler(int newHealth);
+    
     /// <summary>Emitted when damaged and entity had full health.</summary>
     [Signal] public delegate void FirstHitEventHandler(Node entity);
 
@@ -93,7 +96,11 @@ public partial class Health : Node {
         get => _entity ??= Owner;
         set => _entity = value;
     }
-    [Export] public Godot.Collections.Dictionary<HealthActionType, HealthModifier> Modifiers { get; set; } = [];
+    [Export] public Godot.Collections.Dictionary<HealthActionType, HealthModifier> Modifiers { get; set; } = new Godot.Collections.Dictionary<HealthActionType, HealthModifier>
+    {
+        [HealthActionType.Kinetic] = new HealthModifier(HealthAffect.Damage),
+        [HealthActionType.Medicine] = new HealthModifier(HealthAffect.Heal),
+    };
 
     /// <summary>
     /// Enable verbose log events for this health component
@@ -106,6 +113,7 @@ public partial class Health : Node {
     public bool IsAlive => !IsDead;
     public bool IsFull => Current >= Max;
     public float Percent => Mathf.Clamp((float)Current / Max, 0f, 1f);
+    public float PercentHundred => Percent * 100f;
 
 
     #endregion
@@ -141,7 +149,7 @@ public partial class Health : Node {
     {
         if (action == null) return;
 
-        var modifier = GetModifier(action.ActionType) ?? new HealthModifier();
+        var modifier = GetModifier(action.ActionType);
         ApplyModifiedAction(new HealthModifiedAction(action, modifier));
     }
 
@@ -175,15 +183,15 @@ public partial class Health : Node {
 
     public void Damage(int amount, int preInc = 0, float multiplier = 1f, int postInc = 0)
     {
-        var action = new HealthAction(HealthAffect.Damage, HealthActionType.Kinetic, amount);
-        var modifier = new HealthModifier(preInc, multiplier, postInc);
+        var action = new HealthAction() { ActionType = HealthActionType.Kinetic, Amount = amount };
+        var modifier = new HealthModifier(HealthAffect.Damage, preInc, multiplier, postInc);
         ApplyModifiedAction(new HealthModifiedAction(action, modifier));
     }
 
     public void Heal(int amount, int preInc = 0, float multiplier = 1f, int postInc = 0)
     {
-        var action = new HealthAction(HealthAffect.Heal, HealthActionType.Medicine, amount);
-        var modifier = new HealthModifier(preInc, multiplier, postInc);
+        var action = new HealthAction() { ActionType = HealthActionType.Medicine, Amount = amount };
+        var modifier = new HealthModifier(HealthAffect.Heal, preInc, multiplier, postInc);
         ApplyModifiedAction(new HealthModifiedAction(action, modifier));
     }
 
@@ -219,6 +227,7 @@ public partial class Health : Node {
 
         bool isFirstHit = IsFull && appliedDamage > 0;
         Current -= appliedDamage;
+        EmitSignalHealthChanged(Current);
         LogDebug("Entity '{entity}' took {appliedDamage} damage (action affect: {affect}, type: {type}, amount: {amount}, preInc: {preInc}, mult: {mult}, postInc: {postInc}). New health: {current}/{max}.",
             Entity.Name, appliedDamage, action.Affect, action.ActionType, action.Amount, action.PreIncrement, action.Multiplier, action.PostIncrement, Current, Max);
         
@@ -269,6 +278,7 @@ public partial class Health : Node {
         bool notifyRevived = IsDead && appliedHeal > 0;
 
         Current += appliedHeal;
+        EmitSignalHealthChanged(Current);
         LogDebug("Entity '{entity}' healed {appliedHeal} health (action affect: {affect}, type: {type}, amount: {amount}, preInc: {preInc}, mult: {mult}, postInc: {postInc}). New health: {current}/{max}.",
             Entity.Name, appliedHeal, action.Affect, action.ActionType, action.Amount, action.PreIncrement, action.Multiplier, action.PostIncrement, Current, Max);
         
@@ -290,15 +300,15 @@ public partial class Health : Node {
 
 
     /// <summary>
-    /// Gets the health modifier for the given action type. If none exists, means the entity is IMUNE to the modifier
+    /// Gets the health modifier for the given action type. If none exists, means the entity is IMUNE to the action type
     /// </summary>
-    /// <returns>A modifier or null (imune)</returns>
-    private HealthModifier GetModifier(HealthActionType actionType)
+    /// <returns>A custom modifier or the default one (imune)</returns>
+    public HealthModifier GetModifier(HealthActionType actionType)
     {
         if (Modifiers.TryGetValue(actionType, out HealthModifier value))
             return value;
         // Do NOT return an error here, this is intended (same as ignoring the modifier)
-        return null;
+        return new HealthModifier();
     }
 
     private void LogDebug(params object[] args) {

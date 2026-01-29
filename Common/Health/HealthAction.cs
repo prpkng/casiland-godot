@@ -25,18 +25,11 @@ public enum HealthActionType
 
 
 [GlobalClass]
-public partial class HealthAction(
-    HealthAffect affect = HealthAffect.Damage,
-    HealthActionType actionType = HealthActionType.Kinetic,
-    int amount = 1
-    ) : Resource, ICloneable
+public partial class HealthAction() : Resource
 {
-    [Export] public HealthAffect Affect = affect;
-    [Export] public HealthActionType ActionType = actionType;
-    [Export] public int Amount = amount;
-
-    public object Clone() => new HealthAction(Affect, ActionType, Amount);
+    [Export] public HealthActionType ActionType = HealthActionType.Kinetic;
+    [Export] public int Amount = 1;
 
     public override string ToString() 
-        => string.Format("HealthAction<affect={0} type={1} amount={2}>", Enum.GetName(Affect), Enum.GetName(ActionType), Amount);
+        => string.Format("HealthAction<type={0} amount={1}>", Enum.GetName(ActionType), Amount);
 }

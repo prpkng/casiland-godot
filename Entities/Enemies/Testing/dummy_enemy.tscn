@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://dvxen8vg3bed0"]
+
+[ext_resource type="Script" uid="uid://hksmdyqpj4v3" path="res://Common/Health/2D/HurtBox2D.cs" id="1_ugga2"]
+[ext_resource type="Script" uid="uid://dec5jl4hlirlc" path="res://Common/Health/Health.cs" id="2_ugsgn"]
+[ext_resource type="Script" uid="uid://b88u7nnb5mmxb" path="res://Common/Health/HealthModifier.cs" id="3_rfeub"]
+[ext_resource type="Script" uid="uid://ba76x1wy6sjbj" path="res://Entities/Enemies/Testing/DummyProgressBar.cs" id="4_t30hb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0m0f1"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_77dp3"]
+size = Vector2(16, 16)
+
+[sub_resource type="Resource" id="Resource_mhym6"]
+script = ExtResource("3_rfeub")
+Multiplier = 1.0
+Affect = 1
+
+[sub_resource type="Resource" id="Resource_a3se8"]
+script = ExtResource("3_rfeub")
+Multiplier = 1.0
+Affect = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5tkv4"]
+bg_color = Color(1, 0.3612377, 0.35217205, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0m0f1"]
+bg_color = Color(2.887845e-06, 0.84149784, 0.1379435, 1)
+
+[node name="Dummy Enemy" type="Node2D" unique_id=1902365087]
+
+[node name="HurtBox2D" type="Area2D" parent="." unique_id=655409236 node_paths=PackedStringArray("Health")]
+collision_layer = 1024
+collision_mask = 1024
+monitoring = false
+script = ExtResource("1_ugga2")
+Health = NodePath("../Health")
+metadata/_custom_type_script = "uid://hksmdyqpj4v3"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox2D" unique_id=240692367]
+shape = SubResource("RectangleShape2D_0m0f1")
+debug_color = Color(0, 0.64553434, 0.26468146, 0.41960785)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=717890160]
+texture_repeat = 2
+texture = SubResource("PlaceholderTexture2D_77dp3")
+
+[node name="Health" type="Node" parent="." unique_id=1893257979 node_paths=PackedStringArray("Entity")]
+script = ExtResource("2_ugsgn")
+Entity = NodePath("")
+Modifiers = Dictionary[int, ExtResource("3_rfeub")]({
+1: SubResource("Resource_a3se8"),
+2: SubResource("Resource_mhym6")
+})
+Verbose = true
+metadata/_custom_type_script = "uid://dec5jl4hlirlc"
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=5525996 node_paths=PackedStringArray("health")]
+offset_left = -18.0
+offset_top = -17.0
+offset_right = 19.0
+offset_bottom = -13.0
+theme_override_styles/background = SubResource("StyleBoxFlat_5tkv4")
+theme_override_styles/fill = SubResource("StyleBoxFlat_0m0f1")
+value = 100.0
+show_percentage = false
+script = ExtResource("4_t30hb")
+health = NodePath("../Health")

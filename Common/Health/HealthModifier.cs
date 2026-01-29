@@ -5,11 +5,10 @@ using Godot;
 
 [GlobalClass]
 public partial class HealthModifier(
+    HealthAffect affect = HealthAffect.None,
     int preIncrement = 0,
     float multiplier = 1.0f,
-    int postIncrement = 0,
-    HealthAffect convertAffect = HealthAffect.None,
-    HealthActionType convertActionType = HealthActionType.None
+    int postIncrement = 0
     ) : Resource, ICloneable
 {
     /// <summary>
@@ -25,13 +24,14 @@ public partial class HealthModifier(
     /// </summary>
     [Export] public int PostIncrement = postIncrement;
 
-    [Export] public HealthAffect ConvertAffect = convertAffect;
-    [Export] public HealthActionType ConvertActionType = convertActionType;
+    [Export] public HealthAffect Affect = affect;
+
+    public HealthModifier() : this(HealthAffect.None, 0, 1.0f, 0) { }
 
     public object Clone()
-        => new HealthModifier(PreIncrement, Multiplier, PostIncrement, ConvertAffect, ConvertActionType);
+        => new HealthModifier(Affect, PreIncrement, Multiplier, PostIncrement);
 
     public override string ToString()
-        => string.Format("HealthModifier<inc={0} mult={1} postInc={2} convertAffect={3} convertType={4}>", 
-            PreIncrement, Multiplier, PostIncrement, Enum.GetName(ConvertAffect), Enum.GetName(ConvertActionType));
+        => string.Format("HealthModifier<affect={0} inc={1} mult={2} postInc={3}>", 
+            Enum.GetName(Affect), PreIncrement, Multiplier, PostIncrement);
 }

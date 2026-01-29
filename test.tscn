@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://v1x2bs36khmy" path="res://Entities/World/Dungeons/Doors/Pool/right_pool_door.png" id="9_xersf"]
 [ext_resource type="PackedScene" uid="uid://bnjweurtnnx4f" path="res://Entities/Player/player.tscn" id="10_00tp4"]
 [ext_resource type="PackedScene" uid="uid://dvxen8vg3bed0" path="res://Entities/Enemies/Testing/dummy_enemy.tscn" id="10_77dp3"]
+[ext_resource type="Script" uid="uid://c142d3ds7lke8" path="res://Common/Interaction/Interactable.cs" id="12_5tkv4"]
 
 [sub_resource type="GDScript" id="GDScript_ppyta"]
 resource_name = "camera_movement"
@@ -56,6 +57,17 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	text = \"Zoom: %s\" % camera_2d.zoom
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0m0f1"]
+
+[sub_resource type="GDScript" id="GDScript_5tkv4"]
+resource_name = "test_callback"
+script/source = "extends Node
+
+
+func _on_interactable_interacted(interactor: Area2D) -> void:
+	print(\"Interaction happened!!!\")
 "
 
 [node name="Test" type="Node2D" unique_id=81459051]
@@ -721,4 +733,17 @@ position = Vector2(186, 49)
 physics_interpolation_mode = 1
 position = Vector2(92, 39)
 
+[node name="Interactable" type="Area2D" parent="." unique_id=1604597610]
+position = Vector2(134, 90)
+script = ExtResource("12_5tkv4")
+metadata/_custom_type_script = "uid://c142d3ds7lke8"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactable" unique_id=322732445]
+shape = SubResource("RectangleShape2D_0m0f1")
+debug_color = Color(0.95218855, 0.68952936, 0, 0.41960785)
+
+[node name="Test logger" type="Node" parent="Interactable" unique_id=2047213991]
+script = SubResource("GDScript_5tkv4")
+
 [connection signal="pressed" from="CanvasLayer/Button" to="CanvasLayer/Button" method="_on_pressed"]
+[connection signal="Interacted" from="Interactable" to="Interactable/Test logger" method="_on_interactable_interacted"]

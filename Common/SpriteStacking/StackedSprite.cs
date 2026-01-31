@@ -76,6 +76,7 @@ public partial class StackedSprite : Node2D
     public override void _Process(double delta)
     {
         _counter += delta;
+        if (_root == null) return;
         if (_updateTime > 0 && _counter < _updateTime)
             return;
 

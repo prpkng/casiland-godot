@@ -78,6 +78,7 @@ interact={
 
 2d_physics/layer_2="Solid"
 2d_physics/layer_4="Player"
+2d_physics/layer_9="Interaction"
 2d_physics/layer_11="Hits Enemies"
 2d_physics/layer_12="Hits Player"
 

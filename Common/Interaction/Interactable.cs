@@ -6,6 +6,8 @@ using Serilog;
 [GlobalClass]
 public partial class Interactable : Area2D
 {
+    public Interactable() { CollisionLayer = 1 << 9; CollisionMask = 1 << 9; }
+
     [Signal]
     public delegate void InteractedEventHandler(Interactor interactor);
 

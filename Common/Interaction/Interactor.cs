@@ -6,7 +6,7 @@ using Serilog;
 [GlobalClass]
 public partial class Interactor : Area2D
 {
-
+    public Interactor() { CollisionLayer = 1 << 9; CollisionMask = 1 << 9; }
     public void InteractPressed()
     {
         foreach (var body in GetOverlappingAreas())

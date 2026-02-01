@@ -7,5 +7,7 @@ public abstract class GenerationStep(GenerationState state, ProceduralGeneration
 
 
     public abstract void Perform();
+
+    public abstract string StateDescription { get; }
 }
 

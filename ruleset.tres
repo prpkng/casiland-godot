@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="AutoTileRuleSet" format=3 uid="uid://c132loxwr5n81"]
+[gd_resource type="Resource" script_class="AutoTileRuleSet" format=3 uid="uid://cfrfxh7vllrky"]
 
 [ext_resource type="Script" uid="uid://wn0em4r3tgfd" path="res://addons/AutoTileEx/Api/Data/AutoTileRule.cs" id="1_bgs60"]
 [ext_resource type="Script" uid="uid://d183kokl5ih3f" path="res://addons/AutoTileEx/Api/Data/AutoTileRuleSet.cs" id="2_aeaxt"]

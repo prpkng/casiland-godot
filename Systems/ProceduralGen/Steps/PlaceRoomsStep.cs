@@ -6,7 +6,7 @@ namespace Casiland.Systems.ProceduralGen.Steps;
 
 public class PlaceRoomsStep(GenerationState state, ProceduralGenerationSettings settings) : GenerationStep(state, settings)
 {
-    
+    public override string StateDescription => $"Generating {State.GeneratedRooms?.Count} rooms";
     
     private Vector2 RandomPointAroundCircle(int radius)
     {

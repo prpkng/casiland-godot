@@ -1,4 +1,5 @@
-﻿using Godot;
+﻿using Casiland.AutoTileEx.Api.Data;
+using Godot;
 
 namespace Casiland.Systems.ProceduralGen;
 
@@ -50,4 +51,11 @@ public partial class ProceduralGenerationSettings : Resource
     /// Defines the maximum length for a corridor before another room is generated in-between
     /// </summary>
     [Export] public int MaximumCorridorLength = 24;
+
+    [ExportGroup("Corridor Props")]
+    [Export] public PackedScene DoorScene;
+
+    
+    [ExportGroup("Tile Settings")]
+    [Export] public AutoTileRuleSet AutoTileRuleSet;
 }

@@ -4,15 +4,15 @@ namespace Casiland.Systems.ProceduralGen;
 
 public partial class RoomsDebugVisualizer : Node2D
 {
-    private static readonly Color GenRoomsColor = new Color("#ffafaf", 0.4f);
-    private static readonly Color GenRoomsBorder = new Color("#dd5f5f", 0.6f);
-    private static readonly Color MainRoomsColor = new Color("#afffaf", 0.4f);
-    private static readonly Color MainRoomsBorder = new Color("#5fdd5f", 0.6f);
-    private static readonly Color OtherRoomsColor = new Color("#afafff", 0.15f);
-    private static readonly Color OtherRoomsBorder = new Color("#5f5fdd", 0.3f);
-    private static readonly Color CorridorRoomsColor = new Color("#ffffaf", 0.15f);
-    private static readonly Color CorridorRoomsBorder = new Color("#dddd5f", 0.3f);
-    private static readonly Color TriangleLineColor = new Color("#6fff6f", 0.5f);
+    private static readonly Color GenRoomsColor = new("#ffafaf", 0.4f);
+    private static readonly Color GenRoomsBorder = new("#dd5f5f", 0.6f);
+    private static readonly Color MainRoomsColor = new("#afffaf", 0.4f);
+    private static readonly Color MainRoomsBorder = new("#5fdd5f", 0.6f);
+    private static readonly Color OtherRoomsColor = new("#afafff", 0.15f);
+    private static readonly Color OtherRoomsBorder = new("#5f5fdd", 0.3f);
+    private static readonly Color CorridorRoomsColor = new("#ffffaf", 0.15f);
+    private static readonly Color CorridorRoomsBorder = new("#dddd5f", 0.3f);
+    private static readonly Color TriangleLineColor = new("#6fff6f", 0.5f);
 
     private static readonly Color MstLineColor = Colors.Yellow;
 
@@ -34,6 +34,8 @@ public partial class RoomsDebugVisualizer : Node2D
         base._Process(delta);
     }
 
+    private const int GridSize = 8;
+
     public override void _Draw()
     {
         var state = _generator.ResultingState;
@@ -41,34 +43,34 @@ public partial class RoomsDebugVisualizer : Node2D
 
         foreach (var room in state.GeneratedRooms)
         {
-            DrawRect(room.Rect, GenRoomsColor, true);
-            DrawRect(room.Rect, GenRoomsBorder, false, 1);
+            DrawRect(new Rect2(room.Rect.Position * GridSize, room.Size * GridSize), GenRoomsColor, true);
+            DrawRect(new Rect2(room.Rect.Position * GridSize, room.Size * GridSize), GenRoomsBorder, false, 1);
         }	
 
         foreach (var  room in state.CorridorRooms) {
-            DrawRect(room.Rect, CorridorRoomsColor, true);
-            DrawRect(room.Rect, GenRoomsBorder, false, 1);
+            DrawRect(new Rect2(room.Rect.Position * GridSize, room.Size * GridSize), CorridorRoomsColor, true);
+            DrawRect(new Rect2(room.Rect.Position * GridSize, room.Size * GridSize), GenRoomsBorder, false, 1);
             DrawString(_font, room.Position, state.CorridorRooms.IndexOf(room).ToString(), HorizontalAlignment.Center, -1, 
                 12, Colors.White);
         }
 		
 	
         foreach (var  edge in state.CorridorLines) {
-            DrawLine(edge.From, edge.To, MstLineColor);
+            DrawLine(edge.From * GridSize, edge.To * GridSize, MstLineColor);
         }
 		
         foreach (var  room in state.MainRooms) {
-            DrawRect(room.Rect, MainRoomsColor, true);
-            DrawRect(room.Rect, MainRoomsBorder, false, 1);
-            DrawString(_font, room.Position, state.MainRooms.IndexOf(room).ToString(), HorizontalAlignment.Center, -1, 
+            DrawRect(new Rect2(room.Rect.Position * GridSize, room.Size * GridSize), MainRoomsColor, true);
+            DrawRect(new Rect2(room.Rect.Position * GridSize, room.Size * GridSize), MainRoomsBorder, false, 1);
+            DrawString(_font, room.Rect.Position * GridSize, state.MainRooms.IndexOf(room).ToString(), HorizontalAlignment.Center, -1, 
             12, Colors.White);
 
         }
 		
 
         foreach (var  room in state.OtherRooms) {
-            DrawRect(room.Rect, OtherRoomsColor/4, true);
-            DrawRect(room.Rect, OtherRoomsBorder/4, false, 1);
+            DrawRect(new Rect2(room.Rect.Position * GridSize, room.Size * GridSize), OtherRoomsColor/4, true);
+            DrawRect(new Rect2(room.Rect.Position * GridSize, room.Size * GridSize), OtherRoomsBorder/4, false, 1);
         }
 
 

@@ -21,25 +21,20 @@ public partial class ProceduralRoomGenerator : Node
     [Signal]
     public delegate void GenerationFinishedEventHandler();
 
-    public async Task PerformGeneration(ProceduralGenerationSettings generationSettings,
-        string seed = "default seed prpkng")
+    public async Task PerformGeneration(
+        ProceduralGenerationSettings generationSettings,
+        GenerationState state)
     {
         var result = await Task.Run(() =>
         {
-            var state = new GenerationState
-            {
-                Rng = new RandomNumberGenerator
-                {
-                    Seed = seed.Hash()
-                }
-            };
-
             List<GenerationStep> generationSteps =
             [
                 new PlaceRoomsStep(state, generationSettings),
                 new PickRoomsStep(state, generationSettings),
                 new GenerateConnectionsStep(state, generationSettings),
-                new PlaceCorridorsStep(state, generationSettings)
+                new PlaceCorridorsStep(state, generationSettings),
+                new PlaceRoomTilesStep(state, generationSettings),
+                // new PerformAutoTileStep(state, generationSettings),
             ];
 
             Log.Information("Starting procedural generation with {StepCount} steps!", generationSteps.Count);
@@ -51,8 +46,7 @@ public partial class ProceduralRoomGenerator : Node
 
                 step.Perform();
 
-                Log.Debug("> Finished {StepName} in {Duration} ms", ToSentenceCase(step.GetType().Name),
-                    stopwatch.Elapsed.TotalMilliseconds);
+                Log.Debug($"> Finished {step.StateDescription.ToLower()} in {stopwatch.Elapsed.TotalMilliseconds} ms");
             }
 
 

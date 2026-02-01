@@ -9,6 +9,9 @@ namespace Casiland.Systems.ProceduralGen.Steps;
 public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSettings settings)
     : GenerationStep(state, settings)
 {
+
+    public override string StateDescription => $"Placing {State.CorridorLines?.Count} corridor lines and {State.CorridorRooms?.Count} corridor rooms";
+
     private Rect2 CheckForDirectLine(Rect2 from, Rect2 to, Vector2 axis)
     {
         var inv = Vector2.One - axis.Abs();
@@ -17,16 +20,16 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
         return r1.Intersection(r2);
     }
 
-    private void CreateDirectCorridor(LineSegment edge, Vector2 axis, Rect2 overlap)
+    private LineSegment CreateDirectCorridor(LineSegment edge, Vector2 axis, Rect2 overlap)
     {
         var inv = Vector2.One - axis;
         var from = (Vector2)edge.From * axis + overlap.GetCenter() * inv;
         var dest = (Vector2)edge.To * axis + overlap.GetCenter() * inv;
 
-        State.CorridorLines.Add(new LineSegment(from, dest));
+        return new LineSegment(from, dest);
     }
 
-    private void CreateSShapedCorridor(LineSegment edge, Vector2 axis, Vector2 dir)
+    private LineSegment[] CreateSShapedCorridor(LineSegment edge, Vector2 axis, Vector2 dir)
     {
         var from = edge.From;
         var to = edge.To;
@@ -37,12 +40,10 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
         var c1 = from + dir * axis * bias;
         var c2 = from + (dir * axis * bias + dir * inv);
 
-        State.CorridorLines.Add(new LineSegment(from, c1));
-        State.CorridorLines.Add(new LineSegment(c1, c2));
-        State.CorridorLines.Add(new LineSegment(c2, to));
+        return [new LineSegment(from, c1), new LineSegment(c1, c2), new LineSegment(c2, to)];
     }
 
-    private void CreateCornerCorridor(Rect2 fromRoom, LineSegment edge, Vector2 axis, Vector2 dir)
+    private LineSegment[] CreateCornerCorridor(Rect2 fromRoom, LineSegment edge, Vector2 axis, Vector2 dir)
     {
         var dirs = new List<Vector2>
         {
@@ -60,8 +61,7 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
         var selected = dirs[0];
         var corner = edge.From + dir * selected;
 
-        State.CorridorLines.Add(new LineSegment(edge.From, corner));
-        State.CorridorLines.Add(new LineSegment(corner, edge.To));
+        return [new LineSegment(edge.From, corner), new LineSegment(corner, edge.To)];
     }
 
 
@@ -74,6 +74,9 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
             var fromRoom = State.PointToRoom[edge.From];
             var toRoom = State.PointToRoom[edge.To];
 
+            fromRoom.CorridorLines ??= [];
+            toRoom.CorridorLines ??= [];
+
             var dir = edge.To - edge.From;
             bool horizontal = Mathf.Abs(dir.X) > Mathf.Abs(dir.Y);
 
@@ -85,7 +88,10 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
 
             if (length > Settings.MinimumDirectCorridorOverlapLength)
             {
-                CreateDirectCorridor(edge, axis, overlap);
+                var line = CreateDirectCorridor(edge, axis, overlap);
+                fromRoom.CorridorLines.Add(line);
+                toRoom.CorridorLines.Add(line);
+                State.CorridorLines.Add(line);
                 continue;
             }
 
@@ -95,10 +101,17 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
                     .DistanceTo(toRoom.Rect.GetCenter() * axis);
             }
 
+            LineSegment[] lines;
+
             if (length <= Settings.MaximumCornerCorridorOverlapLength)
-                CreateCornerCorridor(fromRoom.Rect, edge, axis, dir);
+                lines = CreateCornerCorridor(fromRoom.Rect, edge, axis, dir);
             else
-                CreateSShapedCorridor(edge, axis, dir);
+                lines = CreateSShapedCorridor(edge, axis, dir);
+
+            State.CorridorLines.AddRange(lines);
+            fromRoom.CorridorLines.Add(lines[0]);
+            toRoom.CorridorLines.Add(lines[^1]);
+            
         }
     }
 
@@ -118,11 +131,13 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
                 }
             }
         }
+
+        State.AllRooms = [.. State.MainRooms, .. State.CorridorRooms];
     }
 
     private void SolveLongCorridor(LineSegment longCorridor)
     {
-        Log.Verbose("> Found corridor with length {Len} which surpasses the maximum length!",
+        Log.Verbose("> Found corridor with length {Len} which exceeds the maximum length!",
             longCorridor.From.DistanceTo(longCorridor.To));
 
         float width = Mathf.Lerp(Settings.MinRoomWidth, Settings.MaxRoomWidth, State.Rng.RandfRange(0.25f, .75f));
@@ -169,7 +184,7 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
     }
 
 
-    // This step attempts to move corridor rooms that lay too away from its corridor line
+    // This step attempts to move corridor rooms that lay too far away from its corridor line
     private void FixCorridorRoomsPlacement()
     {
         foreach (var corridor in State.CorridorRooms)

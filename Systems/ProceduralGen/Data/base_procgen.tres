@@ -1,5 +1,6 @@
 [gd_resource type="Resource" format=3 uid="uid://rknxtcpf0hkc"]
 
+[ext_resource type="Resource" uid="uid://cfrfxh7vllrky" path="res://ruleset.tres" id="1_l3m43"]
 [ext_resource type="Script" uid="uid://dq0qnphrb3s6t" path="res://Systems/ProceduralGen/ProceduralGenerationSettings.cs" id="1_yml8i"]
 
 [resource]
@@ -15,3 +16,4 @@ MaxRoomAspectDeviation = 0.5
 RoomWidthThreshold = 42
 LoopCount = 1
 MaximumCorridorLength = 40
+AutoTileRuleSet = ExtResource("1_l3m43")

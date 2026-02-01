@@ -7,6 +7,9 @@ public class PickRoomsStep(GenerationState state, ProceduralGenerationSettings s
 {
     private List<ProceduralRoom> _mainRooms = [];
     private List<ProceduralRoom> _otherRooms = [];
+
+    public override string StateDescription => $"Picking {_mainRooms?.Count} main rooms and {_otherRooms?.Count} other rooms";
+
     
     private bool CheckValidMainRoom(
         ProceduralRoom room,

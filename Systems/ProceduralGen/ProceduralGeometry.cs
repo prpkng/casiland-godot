@@ -118,20 +118,7 @@ public static class ProceduralGeometry
     /// If useManhattan = false → square thickness (Chebyshev)
     /// If useManhattan = true  → diamond thickness (Manhattan)
     /// </summary>
-    public static Array<Vector2I> BresenhamLineWidth(Vector2I start, Vector2I end, int width, bool useManhattan = false)
-    {
-        var points = new Array<Vector2I>();
-        BresenhamLineWidth(points, start, end, width, useManhattan);
-        return points;
-    }
-    
-    /// <summary>
-    /// Generates a Bresenham line with custom width.
-    /// Width >= 1. Width = 1 = normal single-pixel line.
-    /// If useManhattan = false → square thickness (Chebyshev)
-    /// If useManhattan = true  → diamond thickness (Manhattan)
-    /// </summary>
-    public static void BresenhamLineWidth(Array<Vector2I> points, Vector2I start, Vector2I end, int width, bool useManhattan = false)
+    public static List<Vector2I> BresenhamLineWidth(Vector2I start, Vector2I end, int width, bool useManhattan = false)
     {
         if (width < 1)
             width = 1;
@@ -166,7 +153,7 @@ public static class ProceduralGeometry
             }
         }
 
-        points.AddRange(result);
+        return result.ToList();
     }
     public static List<LineSegment> GetVisibleSegments(LineSegment segment, IReadOnlyList<Rect2> rects)
     {

@@ -10,7 +10,8 @@ namespace Casiland.Systems.ProceduralGen.Steps;
 
 public class GenerateConnectionsStep(GenerationState state, ProceduralGenerationSettings settings) : GenerationStep(state, settings)
 {
-    
+    public override string StateDescription => "Generating room connections";
+
     public List<LineSegment> CalculateDelaunayConnections(List<ProceduralRoom> rooms)
     {
         var triangulator = new TriangleNet.Meshing.Algorithm.Dwyer();

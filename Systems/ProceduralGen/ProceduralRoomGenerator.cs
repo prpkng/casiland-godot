@@ -25,38 +25,35 @@ public partial class ProceduralRoomGenerator : Node
         ProceduralGenerationSettings generationSettings,
         GenerationState state)
     {
-        var result = await Task.Run(() =>
+        List<GenerationStep> generationSteps =
+        [
+            new PlaceRoomsStep(state, generationSettings),
+            new PickRoomsStep(state, generationSettings),
+            new GenerateConnectionsStep(state, generationSettings),
+            new PlaceCorridorsStep(state, generationSettings),
+            new PlaceRoomTilesStep(state, generationSettings),
+            new PerformAutoTileStep(state, generationSettings),
+        ];
+
+        Log.Information("Starting procedural generation with {StepCount} steps!", generationSteps.Count);
+        var totalStopwatch = System.Diagnostics.Stopwatch.StartNew();
+
+        foreach (var step in generationSteps)
         {
-            List<GenerationStep> generationSteps =
-            [
-                new PlaceRoomsStep(state, generationSettings),
-                new PickRoomsStep(state, generationSettings),
-                new GenerateConnectionsStep(state, generationSettings),
-                new PlaceCorridorsStep(state, generationSettings),
-                new PlaceRoomTilesStep(state, generationSettings),
-                // new PerformAutoTileStep(state, generationSettings),
-            ];
+            var stopwatch = System.Diagnostics.Stopwatch.StartNew();
 
-            Log.Information("Starting procedural generation with {StepCount} steps!", generationSteps.Count);
-            var totalStopwatch = System.Diagnostics.Stopwatch.StartNew();
+            step.Perform();
 
-            foreach (var step in generationSteps)
-            {
-                var stopwatch = System.Diagnostics.Stopwatch.StartNew();
-
-                step.Perform();
-
-                Log.Debug($"> Finished {step.StateDescription.ToLower()} in {stopwatch.Elapsed.TotalMilliseconds} ms");
-            }
+                Log.Debug("> Finished {Description} in {ElapsedTotalMilliseconds} ms", step.StateDescription.ToLower(), stopwatch.Elapsed.TotalMilliseconds);
+            await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+        }
 
 
-            Log.Information("Finished procedural generation in {Duration} ms!",
-                totalStopwatch.Elapsed.TotalMilliseconds);
+        Log.Information("Finished procedural generation in {Duration} ms!",
+            totalStopwatch.Elapsed.TotalMilliseconds);
 
-            return state;
-        });
 
-        ResultingState = result;
+        ResultingState = state;
 
         EmitSignalGenerationFinished();
     }

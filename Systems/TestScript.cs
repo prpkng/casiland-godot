@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Casiland.AutoTileEx.Api;
 using Casiland.AutoTileEx.Api.Data;
@@ -41,11 +42,24 @@ public partial class TestScript : Button
             .CreateLogger();
         Log.Logger = logger;
     }
+    private Rect2I ComputeRoomBounds(IEnumerable<ProceduralRoom> rooms)
+    {
+        var roomsArr = rooms.ToArray();
+        int roomMinX = (int)roomsArr.Min(room => room.Rect.Position.X);
+        int roomMinY = (int)roomsArr.Min(room => room.Rect.Position.Y);
+        int roomMaxX = (int)roomsArr.Max(room => room.Rect.End.X);
+        int roomMaxY = (int)roomsArr.Max(room => room.Rect.End.Y);
+
+        var boundsRect = new Rect2I(roomMinX,
+            roomMinY,
+            roomMaxX - roomMinX,
+            roomMaxY - roomMinY).Grow(20);
+        return boundsRect;
+    }
 
 
     public override async void _Pressed()
     {
-
         var state = new GenerationState
         {
             Rng = new RandomNumberGenerator
@@ -54,8 +68,7 @@ public partial class TestScript : Button
             },
             TilemapLayer = tilemap,
         };
-
-
+        
         GD.Randomize();
         await generator.PerformGeneration(settings, state);
         var now = new Stopwatch();

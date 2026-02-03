@@ -14,11 +14,11 @@ public class PlaceRoomTilesStep(GenerationState state, ProceduralGenerationSetti
 
     public override string StateDescription => "Placing room tiles";
     
-    private static void FillWithPoints(Rect2I rect, ref List<Vector2I> points)
+    private static void FillTilemap(Rect2I rect, TileMapLayer tl, int srcId, Vector2I tileCoord)
     {
         for (int y = rect.Position.Y; y < rect.End.Y; ++y)
             for (int x = rect.Position.X; x < rect.End.X; ++x)
-                points.Add(new Vector2I(x, y));
+                tl.SetCell(new Vector2I(x, y), srcId, tileCoord);
     }
     private Rect2I ComputeRoomBounds()
     {
@@ -33,67 +33,50 @@ public class PlaceRoomTilesStep(GenerationState state, ProceduralGenerationSetti
             roomMaxY - roomMinY).Grow(20);
         return boundsRect;
     }
+    
+    
 
-    private async void PlaceBlankTiles()
+    private void PlaceBlankTiles()
     {
         State.TilemapLayer.Clear();
-        await Engine.GetMainLoop().ToSignal(Engine.GetMainLoop(), SceneTree.SignalName.ProcessFrame);
 
-        var cells = new List<Vector2I>();
-        FillWithPoints(ComputeRoomBounds(), ref cells);
-        //
-        // foreach (var room in State.AllRooms)
-        // {
-        //     var rect = new Rect2I((Vector2I)room.Rect.Position, (Vector2I)room.Rect.Size);//.Grow(5);
-        //     FillWithPoints(rect, ref cells);
-        // }
-
-        var tilemap = State.TilemapLayer;
-        int c = 0;
-        foreach (var pos in cells)
+        foreach (var rect in State.AllRooms.Select(room => new Rect2I((Vector2I)room.Rect.Position, (Vector2I)room.Rect.Size)))
         {
-            c++;
-            if (c>1000)
-            {
-                await Engine.GetMainLoop()
-                    .ToSignal(Engine.GetMainLoop(), SceneTree.SignalName.ProcessFrame);
-                c = 0;
-            }
-            tilemap.SetCell(pos, 1, new Vector2I(0, 0));
+            FillTilemap(rect.Grow(15), State.TilemapLayer, TilesSrcId, SolidTileCoord);
+        }
+        
+        foreach (var line in State.CorridorLines)
+        {
+            State.TilemapLayer.SetCells(
+                ProceduralGeometry.BresenhamLineWidth(line.From, line.To, 20), TilesSrcId,
+                SolidTileCoord);
         }
     }
 
     private void CreateRoomFloors()
     {
-        var cells = new List<Vector2I>();
-        foreach (var room in State.AllRooms)
+        foreach (var rect in State.AllRooms.Select(room => new Rect2I((Vector2I)room.Rect.Position, (Vector2I)room.Rect.Size)))
         {
-            cells.Clear();
-            var rect = new Rect2I((Vector2I)room.Rect.Position, (Vector2I)room.Size);
-            FillWithPoints(rect, ref cells);
-
-            foreach (var pos in cells)
-                State.TilemapLayer.SetCell(pos, TilesSrcId, FloorTileCoord);
+            FillTilemap(rect, State.TilemapLayer, TilesSrcId, FloorTileCoord);
         }
     }
 
     private void CreateCorridorFloors()
     {
-        var cells = new List<Vector2I>();
         foreach (var line in State.CorridorLines)
         {
-            cells.AddRange(ProceduralGeometry.BresenhamLineWidth(line.From, line.To, 5));
+            State.TilemapLayer.SetCells(
+                ProceduralGeometry.BresenhamLineWidth(line.From, line.To, 5), TilesSrcId,
+                FloorTileCoord);
         }
-        foreach (var pos in cells)
-            State.TilemapLayer.SetCell(pos, TilesSrcId, FloorTileCoord);
     }
     
     public override void Perform()
     {
         PlaceBlankTiles();
 
-        // CreateRoomFloors();
+        CreateRoomFloors();
 
-        // CreateCorridorFloors();
+        CreateCorridorFloors();
     }
 }

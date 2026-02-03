@@ -7,6 +7,6 @@ public class PerformAutoTileStep(GenerationState state, ProceduralGenerationSett
     public override string StateDescription => "Performing auto-tiling";
     public override void Perform()
     {
-        // AutoTileImplementation.PerformAutoTile(State.TilemapLayer, Settings.AutoTileRuleSet);
+        AutoTileImplementation.PerformAutoTile(State.TilemapLayer, Settings.AutoTileRuleSet);
     }
 }

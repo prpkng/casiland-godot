@@ -132,7 +132,6 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
             }
         }
 
-        State.AllRooms = [.. State.MainRooms, .. State.CorridorRooms];
     }
 
     private void SolveLongCorridor(LineSegment longCorridor)
@@ -231,5 +230,8 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
         FixCorridorRoomsPlacement();
 
         FixOverlappingCorridorLines();
+        
+        
+        State.AllRooms = [.. State.MainRooms, .. State.CorridorRooms];
     }
 }

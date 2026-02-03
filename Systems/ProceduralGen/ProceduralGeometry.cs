@@ -24,6 +24,14 @@ public record struct LineSegment
 
 public static class ProceduralGeometry
 {
+
+    public static void SetCells(this TileMapLayer tilemap, IEnumerable<Vector2I> tiles,
+        int sourceId, Vector2I coords)
+    {
+        foreach (var tile in tiles)
+            tilemap.SetCell(tile, sourceId, coords);
+    }
+    
     public static Vector2 FindLineIntersection(Vector2 p1A, Vector2 p1B, Vector2 p2A, Vector2 p2B)
     {
         float denom =

@@ -34,32 +34,43 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
     };
 
 
-    private LineSegment CreateDirectCorridor(ProceduralRoom fromRoom, ProceduralRoom toRoom, Vector2 axis, Rect2 overlap)
+    /// <summary>
+    /// Tries to create a direct corridor between the two rooms and returns null if there is already another corridor in the way
+    /// </summary>
+    private LineSegment? CreateDirectCorridor(ProceduralRoom fromRoom, ProceduralRoom toRoom, Vector2 axis, Rect2 overlap)
     {
         var inv = Vector2.One - axis;
         var from = fromRoom.Center * axis + overlap.GetCenter() * inv;
         var dest = toRoom.Center * axis + overlap.GetCenter() * inv;
 
         var dir = (dest - from).Sign();
+
+        if (fromRoom.ConnectionDirections.Contains(_vecToDirDict[dir]))
+            return null;
+
         fromRoom.ConnectionDirections.Add(_vecToDirDict[dir]);
         toRoom.ConnectionDirections.Add(_vecToDirDict[-dir]);
 
         return new LineSegment(from, dest);
     }
 
-    private LineSegment[] CreateSShapedCorridor(ProceduralRoom fromRoom, ProceduralRoom toRoom, Vector2 axis, Vector2 dir)
+    private LineSegment[] CreateSShapedCorridor(ProceduralRoom fromRoom, ProceduralRoom toRoom, Vector2 axis)
     {
         var from = fromRoom.Center;
         var to = toRoom.Center;
+        var dir = to - from;
+
+
+
         var inv = Vector2.One - axis.Abs();
 
         float bias = State.Rng.RandfRange(0.45f, 0.55f);
 
         var c1 = from + dir * axis * bias;
-        var c2 = from + (dir * axis * bias + dir * inv);
+        var c2 = to - dir * axis * (1f-bias);
 
-        toRoom.ConnectionDirections.Add(_vecToDirDict[(c2 - from).Sign()]);
-        toRoom.ConnectionDirections.Add(_vecToDirDict[(c1 - from).Sign()]);
+        fromRoom.ConnectionDirections.Add(_vecToDirDict[(c1 - from).Sign()]);
+        toRoom.ConnectionDirections.Add(_vecToDirDict[(c2 - to).Sign()]);
 
         return [new LineSegment(from, c1), new LineSegment(c1, c2), new LineSegment(c2, to)];
     }
@@ -72,7 +83,23 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
             Vector2.Down * Mathf.Sign(dir.Y)
         };
 
-        var destDir = fromRoom.ConnectionDirections.Contains(_vecToDirDict[vecs[0]]) ? vecs[1] : vecs[0];
+        Vector2 destDir;
+
+        // Try first pattern
+        if (!fromRoom.ConnectionDirections.Contains(_vecToDirDict[vecs[0]]) && 
+            !toRoom.ConnectionDirections.Contains(_vecToDirDict[-vecs[1]]) &&
+            Mathf.Abs(dir.X) > fromRoom.Size.X + 4)
+            destDir = vecs[0];
+        else if (
+            !fromRoom.ConnectionDirections.Contains(_vecToDirDict[vecs[1]]) && 
+            !toRoom.ConnectionDirections.Contains(_vecToDirDict[-vecs[0]]) &&
+            Mathf.Abs(dir.Y) > fromRoom.Size.Y + 4)
+            destDir = vecs[1];
+        else 
+            return null; // Fail to find a viable corner segment
+
+
+        // var destDir = fromRoom.ConnectionDirections.Contains(_vecToDirDict[vecs[0]]) ? vecs[1] : vecs[0];
 
         var corner = fromRoom.Center + dir * destDir.Abs();
         fromRoom.ConnectionDirections.Add(_vecToDirDict[(corner - fromRoom.Center).Sign()]);
@@ -83,7 +110,7 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
     }
 
 
-    public void CreateCorridorLines()
+    public async GDTask CreateCorridorLines()
     {
         State.CorridorLines.Clear();
 
@@ -95,43 +122,38 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
             fromRoom.CorridorLines ??= [];
             toRoom.CorridorLines ??= [];
 
-            var dir = edge.To - edge.From;
+            var dir = fromRoom.Center - toRoom.Center;
             bool horizontal = Mathf.Abs(dir.X) > Mathf.Abs(dir.Y);
 
             var axis = horizontal ? Vector2.Right : Vector2.Down;
 
             var overlap = CheckForDirectLine(fromRoom.Rect, toRoom.Rect, axis);
-            float length = (overlap.Size * (Vector2.One - axis)).Abs().X +
-                           (overlap.Size * (Vector2.One - axis)).Abs().Y;
+            float length = (overlap.Size * (Vector2.One - axis)).Abs().Sum();
 
-            if (length > Settings.MinimumDirectCorridorOverlapLength)
+            LineSegment[] generateLines()
             {
-                var line = CreateDirectCorridor(fromRoom, toRoom, axis, overlap);
-                fromRoom.CorridorLines.Add(line);
-                toRoom.CorridorLines.Add(line);
-                State.CorridorLines.Add(line);
-                State.CorridorLineGroups.Add([line]);
-                continue;
+                if (length > Settings.MinimumDirectCorridorOverlapLength)
+                {
+                    var line = CreateDirectCorridor(fromRoom, toRoom, axis, overlap);
+                    if (line.HasValue) return [line.Value];
+                }
+
+                if (length <= Settings.MaximumCornerCorridorOverlapLength)
+                {
+                    var result = CreateCornerCorridor(fromRoom, toRoom);
+                    if (result != null) return result;
+                }
+
+                return CreateSShapedCorridor(fromRoom, toRoom, axis);
             }
 
-            if (length <= 0)
-            {
-                length = (fromRoom.Rect.GetCenter() * axis)
-                    .DistanceTo(toRoom.Rect.GetCenter() * axis);
-            }
-
-            LineSegment[] lines;
-
-            if (length <= Settings.MaximumCornerCorridorOverlapLength)
-                lines = CreateCornerCorridor(fromRoom, toRoom);
-            else
-                lines = CreateSShapedCorridor(fromRoom, toRoom, axis, dir);
+            var lines = generateLines();
 
             State.CorridorLines.AddRange(lines);
             State.CorridorLineGroups.Add(lines);
             fromRoom.CorridorLines.Add(lines[0]);
             toRoom.CorridorLines.Add(lines[^1]);
-            
+            await GDTask.Delay(200);
         }
     }
 
@@ -254,7 +276,7 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
 
     public override async GDTask Perform()
     {
-        CreateCorridorLines();
+        await CreateCorridorLines();
         SelectCorridorRooms();
         // EnsureCorridorsNotEmpty();
 

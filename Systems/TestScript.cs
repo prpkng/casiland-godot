@@ -61,6 +61,7 @@ public partial class TestScript : Button
 
     public override async void _Pressed()
     {
+        tilemap.Clear();
         var seed = seedInput.Text.ToUpper() == "" ? (GD.Randi() % 9999) : (ulong)seedInput.Text.ToInt();
         var state = new GenerationState
         {

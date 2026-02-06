@@ -11,7 +11,7 @@ public class PickRoomsStep(GenerationState state, ProceduralGenerationSettings s
 
     public override string StateDescription => $"Picking {_mainRooms?.Count} main rooms and {_otherRooms?.Count} other rooms";
 
-    
+
     private bool CheckValidMainRoom(
         ProceduralRoom room,
         float widthThresh,
@@ -25,7 +25,7 @@ public class PickRoomsStep(GenerationState state, ProceduralGenerationSettings s
 
         return room.Rect.Size.X > widthThresh && room.Rect.Size.Y > heightThresh;
     }
-    
+
     public void CalculateMainRooms(List<ProceduralRoom> rooms)
     {
         rooms.Sort((a, b) => a.Rect.Area.CompareTo(b.Rect.Area));
@@ -46,6 +46,7 @@ public class PickRoomsStep(GenerationState state, ProceduralGenerationSettings s
             foreach (var room in rooms.Where(room => _mainRooms.Count < Settings.MaxRoomCount &&
                                                      CheckValidMainRoom(room, widthThresh, heightThresh)))
             {
+                room.Index = _mainRooms.Count;
                 _mainRooms.Add(room);
             }
 
@@ -58,12 +59,15 @@ public class PickRoomsStep(GenerationState state, ProceduralGenerationSettings s
         foreach (var room in rooms)
         {
             if (!_mainRooms.Contains(room))
+            {
+                room.Index = _otherRooms.Count;
                 _otherRooms.Add(room);
+            }
         }
 
         State.GeneratedRooms.Clear();
     }
-    
+
     public override async GDTask Perform()
     {
         CalculateMainRooms(State.GeneratedRooms);

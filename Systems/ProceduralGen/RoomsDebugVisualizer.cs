@@ -20,7 +20,7 @@ public partial class RoomsDebugVisualizer : Node2D
     [Export] private ProceduralRoomGenerator _generator;
 
     private Font _font;
-    private int _fontSize;
+    private int _fontSize = 24;
 
     public override void _Ready()
     {
@@ -56,38 +56,55 @@ public partial class RoomsDebugVisualizer : Node2D
         var state = _generator._currentState;
         if (state == null) return;
 
-        foreach (var room in state.GeneratedRooms)
+        foreach (var room in state.GeneratedRooms ?? [])
         {
             DrawRect(new Rect2(room.Rect.Position * GridSize, room.Size * GridSize), GenRoomsColor, true);
             DrawRect(new Rect2(room.Rect.Position * GridSize, room.Size * GridSize), GenRoomsBorder, false, 1);
         }	
 
-        foreach (var  room in state.CorridorRooms) {
+        foreach (var  room in state.CorridorRooms ?? []) {
             DrawRect(new Rect2(room.Rect.Position * GridSize, room.Size * GridSize), CorridorRoomsColor, true);
             DrawRect(new Rect2(room.Rect.Position * GridSize, room.Size * GridSize), GenRoomsBorder, false, 1);
             DrawString(_font, room.Center * GridSize, state.CorridorRooms.IndexOf(room).ToString(), HorizontalAlignment.Center, -1, 
-                12, Colors.White);
+                _fontSize, Colors.White);
         }
 		
 	
-        foreach (var  edge in state.CorridorLines) {
+        foreach (var  edge in state.CorridorLines?? []) {
             DrawLine(edge.From * GridSize, edge.To * GridSize, MstLineColor);
         }
 	
-        foreach (var  edge in state.MinimumSpanningTree) {
+        foreach (var  edge in state.MinimumSpanningTree?? []) {
             DrawLine(edge.From * GridSize, edge.To * GridSize, TriangleLineColor);
         }
 		
-        foreach (var  room in state.MainRooms) {
-            DrawRect(new Rect2(room.Rect.Position * GridSize, room.Size * GridSize), MainRoomsColor, true);
-            DrawRect(new Rect2(room.Rect.Position * GridSize, room.Size * GridSize), MainRoomsBorder, false, 1);
-            DrawString(_font, room.Rect.Position * GridSize, state.MainRooms.IndexOf(room).ToString(), HorizontalAlignment.Center, -1, 
-            12, Colors.White);
+        foreach (var  room in state.MainRooms ?? []) {
+
+            var (color, border) = room.RoomType switch
+            {
+                RoomTypes.StartRoom => (Colors.Green, Colors.Lime),
+                RoomTypes.BossRoom => (Colors.IndianRed, Colors.OrangeRed),
+                _ => (MainRoomsColor, MainRoomsBorder)
+            };
+
+            // foreach (var conn in room.Connections)
+            //     DrawLine(room.Center * GridSize, conn.Center * GridSize, MstLineColor);
+
+            DrawRect(new Rect2(room.Rect.Position * GridSize, room.Size * GridSize), color, true);
+            DrawRect(new Rect2(room.Rect.Position * GridSize, room.Size * GridSize), border, false, 1);
+            DrawString(_font, room.Center * GridSize, $"ID: {room.Index}", HorizontalAlignment.Center, -1, 
+            _fontSize, Colors.White);
+            DrawString(_font, room.Center * GridSize + Vector2.Down*24, $"StartDepth: {room.StartDistance}", HorizontalAlignment.Center, -1, 
+            _fontSize, Colors.White);
+            DrawString(_font, room.Center * GridSize + Vector2.Down*48, $"BossDepth: {room.BossDistance}", HorizontalAlignment.Center, -1, 
+            _fontSize, Colors.White);
+            DrawString(_font, room.Center * GridSize + Vector2.Down*64, $"Bias: {room.ProgressBias}", HorizontalAlignment.Center, -1, 
+            _fontSize, Colors.White);
 
         }
 		
 
-        foreach (var  room in state.OtherRooms) {
+        foreach (var  room in state.OtherRooms ?? []) {
             DrawRect(new Rect2(room.Rect.Position * GridSize, room.Size * GridSize), OtherRoomsColor/4, true);
             DrawRect(new Rect2(room.Rect.Position * GridSize, room.Size * GridSize), OtherRoomsBorder/4, false, 1);
         }
@@ -96,7 +113,7 @@ public partial class RoomsDebugVisualizer : Node2D
             _fontSize, Colors.White);
 
         // Draw arrows
-        foreach (var room in state.AllRooms)
+        foreach (var room in state.MainRooms ?? [])
         {
             foreach (var dir in room.ConnectionDirections)
             {

@@ -12,6 +12,14 @@ public enum Directions
     Right
 }
 
+public enum RoomTypes
+{
+    NormalRoom,
+    CorridorRoom,
+    StartRoom,
+    BossRoom
+}
+
 public class ProceduralRoom(Vector2 pos, Vector2 size)
 {
     public Rect2 Rect = new(pos, size);
@@ -25,6 +33,8 @@ public class ProceduralRoom(Vector2 pos, Vector2 size)
     /// </summary>
     public readonly List<ProceduralRoom> Connections = [];
     public readonly List<Directions> ConnectionDirections = [];
+
+    public RoomTypes RoomType = RoomTypes.NormalRoom;
 
     public void AddConnection(ProceduralRoom room)
     {
@@ -53,4 +63,9 @@ public class ProceduralRoom(Vector2 pos, Vector2 size)
     /// before the corridor placement step is an expected null.</para>
     /// </remarks>
     public List<LineSegment> CorridorLines { get; set; } = null;
+
+    public int Index;
+    public int StartDistance;
+    public int BossDistance;
+    public int ProgressBias;
 }

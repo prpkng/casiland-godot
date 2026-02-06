@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Casiland.Common;
 using Casiland.Systems.ProceduralGen.Algorithms;
@@ -18,8 +19,8 @@ public class GenerateConnectionsStep(GenerationState state, ProceduralGeneration
         var triangulator = new TriangleNet.Meshing.Algorithm.Dwyer();
         var points = rooms.Select(r => new Vertex(r.Rect.GetCenter().X, r.Rect.GetCenter().Y));
         var mesh = triangulator.Triangulate(points.ToArray(), new Configuration());
-        
-        
+
+
         var segments = new List<LineSegment>();
         var verts = mesh.Vertices.ToArray();
         foreach (var edge in mesh.Edges)
@@ -55,7 +56,7 @@ public class GenerateConnectionsStep(GenerationState state, ProceduralGeneration
 
     public void FillRoomConnections()
     {
-        State.PointToRoom =  new Dictionary<Vector2I, ProceduralRoom>();
+        State.PointToRoom = new Dictionary<Vector2I, ProceduralRoom>();
         foreach (var room in State.MainRooms)
         {
             foreach (var e in State.MinimumSpanningTree.Where(e => room.Center.DistanceTo(e.From) <= 2))
@@ -73,6 +74,29 @@ public class GenerateConnectionsStep(GenerationState state, ProceduralGeneration
         }
     }
 
+    public void PickStartRoom()
+    {
+        var leafRooms = State.MainRooms
+            .Where(r => r.GetConnectionsCount() == 1)
+            .ToList();
+
+        var startRoom = leafRooms.PickRandom(State.Rng);
+        startRoom.RoomType = RoomTypes.StartRoom;
+    }
+
+    public void PickBossRoom()
+    {
+        var leafRooms = State.MainRooms
+            .Where(r => r.GetConnectionsCount() == 1 && r.RoomType == RoomTypes.NormalRoom)
+            .ToList();
+
+        var bossRoom = leafRooms
+            .OrderByDescending(r => r.StartDistance)
+            .Take(2)
+            .PickRandom(State.Rng);
+        bossRoom.RoomType = RoomTypes.BossRoom;
+    }
+
 
     /* ============================
      * Add Loops
@@ -81,20 +105,15 @@ public class GenerateConnectionsStep(GenerationState state, ProceduralGeneration
     public void AddLoops()
     {
         var leafRooms = State.MainRooms
-            .Where(r => r.GetConnectionsCount() == 1)
+            .Where(r => r.GetConnectionsCount() == 1 && r.RoomType == RoomTypes.NormalRoom)
             .ToList();
 
         if (leafRooms.Count == 0) return;
 
-        var startRoom = leafRooms.PickRandom();
-        leafRooms.Remove(startRoom);
 
-        var bossRoom = leafRooms.PickRandom();
-        leafRooms.Remove(bossRoom);
-
-        var potential = new List<ProceduralRoom>(State.MainRooms);
-        potential.Remove(startRoom);
-        potential.Remove(bossRoom);
+        var potential = new List<ProceduralRoom>(State.MainRooms)
+            .Where(r => r.RoomType == RoomTypes.NormalRoom)
+            .ToList();
 
         for (int i = 0; i < Settings.LoopCount; i++)
         {
@@ -116,17 +135,104 @@ public class GenerateConnectionsStep(GenerationState state, ProceduralGeneration
             }
 
             if (!valid) break;
-            
+
             room.AddConnection(other);
             other.AddConnection(room);
         }
     }
+
+    public void PopulateStartDepth()
+    {
+        var startRoom = State.MainRooms.First(r => r.RoomType == RoomTypes.StartRoom);
+        startRoom.StartDistance = 0;
+
+        Queue<ProceduralRoom> rooms = [];
+        rooms.Enqueue(startRoom);
+        var passed = new HashSet<ProceduralRoom>();
+        while (rooms.Count > 0)
+        {
+            var room = rooms.Dequeue();
+            passed.Add(room);
+            foreach (var conn in room.Connections)
+            {
+                if (passed.Contains(conn)) continue;
+                conn.StartDistance = room.StartDistance + 1;
+                rooms.Enqueue(conn);
+            }
+        }
+    }
+
+    public void PopulateBossDepth()
+    {
+        var bossRoom = State.MainRooms.First(r => r.RoomType == RoomTypes.BossRoom);
+        bossRoom.BossDistance = 0;
+
+        Queue<ProceduralRoom> rooms = [];
+        rooms.Enqueue(bossRoom);
+        var passed = new HashSet<ProceduralRoom>();
+        while (rooms.Count > 0)
+        {
+            var room = rooms.Dequeue();
+            passed.Add(room);
+            foreach (var conn in room.Connections)
+            {
+                if (passed.Contains(conn)) continue;
+                conn.BossDistance = room.BossDistance + 1;
+                rooms.Enqueue(conn);
+            }
+        }
+    }
+
+    public void PopulateRoomsBias()
+    {
+        var bossRoom = State.MainRooms.First(r => r.RoomType == RoomTypes.BossRoom);
+
+        foreach (var room in State.MainRooms)
+        {
+            var detourPenalty = room.StartDistance + room.BossDistance - bossRoom.StartDistance;
+            room.ProgressBias = room.StartDistance + 5 * detourPenalty;
+        }
+    }
+
+    public void SortMainRoomsByBias()
+    {
+        State.MainRooms = State.MainRooms.OrderBy(room => room.ProgressBias).ToList();
+        for (int i = 0; i < State.MainRooms.Count; i++)
+        {
+            State.MainRooms[i].Index = i;
+        }
+    }
+    public void SortMst()
+    {
+        State.MinimumSpanningTree = [.. State.MinimumSpanningTree.OrderBy(line => {
+                var meanBias = (State.PointToRoom[(Vector2I)line.From].ProgressBias + State.PointToRoom[(Vector2I)line.To].ProgressBias) / 2f;
+                return meanBias;
+            }
+        )];
+    }
+
 
     public override async GDTask Perform()
     {
         var connections = CalculateDelaunayConnections(State.MainRooms);
         ConstructMst(connections);
         FillRoomConnections();
+
+        PickStartRoom();
+
         AddLoops();
+
+        PopulateStartDepth();
+
+        PickBossRoom();
+
+        PopulateBossDepth();
+
+        PopulateRoomsBias();
+
+
+        SortMainRoomsByBias();
+
+        SortMst();
     }
 }

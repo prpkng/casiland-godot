@@ -6,6 +6,7 @@ using Serilog;
 
 namespace Casiland.Systems.ProceduralGen;
 
+using Fractural.Tasks;
 using Godot;
 
 public partial class ProceduralRoomGenerator : Node
@@ -18,6 +19,10 @@ public partial class ProceduralRoomGenerator : Node
 
     public GenerationState ResultingState;
 
+
+    public GenerationState _currentState;
+    public ulong _seed;
+
     [Signal]
     public delegate void GenerationFinishedEventHandler();
 
@@ -25,6 +30,8 @@ public partial class ProceduralRoomGenerator : Node
         ProceduralGenerationSettings generationSettings,
         GenerationState state)
     {
+        _currentState = state;
+        _seed = state.Rng.Seed;
         List<GenerationStep> generationSteps =
         [
             new PlaceRoomsStep(state, generationSettings),
@@ -32,7 +39,7 @@ public partial class ProceduralRoomGenerator : Node
             new GenerateConnectionsStep(state, generationSettings),
             new PlaceCorridorsStep(state, generationSettings),
             new PlaceRoomTilesStep(state, generationSettings),
-            new PerformAutoTileStep(state, generationSettings),
+            // new PerformAutoTileStep(state, generationSettings),
         ];
 
         Log.Information("Starting procedural generation with {StepCount} steps!", generationSteps.Count);
@@ -42,10 +49,10 @@ public partial class ProceduralRoomGenerator : Node
         {
             var stopwatch = System.Diagnostics.Stopwatch.StartNew();
 
-            step.Perform();
+            await step.Perform();
 
-                Log.Debug("> Finished {Description} in {ElapsedTotalMilliseconds} ms", step.StateDescription.ToLower(), stopwatch.Elapsed.TotalMilliseconds);
-            await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+            Log.Debug("> Finished {Description} in {ElapsedTotalMilliseconds} ms", step.StateDescription.ToLower(), stopwatch.Elapsed.TotalMilliseconds);
+            await GDTask.DelayFrame(1);
         }
 
 

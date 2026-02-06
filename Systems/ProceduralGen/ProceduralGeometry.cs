@@ -20,6 +20,20 @@ public record struct LineSegment
         from = From;
         to = To;
     }
+    public Vector2 GetNearestPoint(Vector2 point)
+    {
+        Vector2 segmentVec = To - From;
+        float segmentLenSq = segmentVec.LengthSquared();
+        
+        if (segmentLenSq < 1e-8f)
+            return From;
+        
+        float t = (point - From).Dot(segmentVec) / segmentLenSq;
+        t = Mathf.Clamp(t, 0f, 1f);
+        
+        return From + t * segmentVec;
+    }
+    
 }
 
 public static class ProceduralGeometry

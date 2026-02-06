@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Casiland.AutoTileEx.Api;
 using Casiland.Systems.ProceduralGen.Algorithms;
+using Fractural.Tasks;
 using Godot;
 
 namespace Casiland.Systems.ProceduralGen.Steps;
@@ -71,7 +72,7 @@ public class PlaceRoomTilesStep(GenerationState state, ProceduralGenerationSetti
         }
     }
     
-    public override void Perform()
+    public override async GDTask Perform()
     {
         PlaceBlankTiles();
 

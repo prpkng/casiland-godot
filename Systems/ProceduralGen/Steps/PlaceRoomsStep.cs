@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Casiland.Systems.ProceduralGen.Algorithms;
+using Fractural.Tasks;
 using Godot;
 
 namespace Casiland.Systems.ProceduralGen.Steps;
@@ -143,16 +144,20 @@ public class PlaceRoomsStep(GenerationState state, ProceduralGenerationSettings 
     }
 
     
-    public override void Perform()
+    public override async GDTask Perform()
     {
         var rooms = GenerateRooms(Settings.StartCellCount);
+
+        foreach (var room in rooms)
+            room.Rect = room.Rect.Grow(5); // Shrink rooms to ensure corridors have at least one tile of length
         
         SeparateRooms(rooms);
         
         PackRooms(rooms, 0);
 
         foreach (var room in rooms)
-            room.Rect = room.Rect.Grow(-2); // Shrink rooms to ensure corridors have at least one tile of length
+            room.Rect = room.Rect.Grow(-5); // Shrink rooms to ensure corridors have at least one tile of length
+
             
         State.GeneratedRooms = rooms;
         

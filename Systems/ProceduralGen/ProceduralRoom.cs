@@ -4,18 +4,27 @@ using Godot;
 
 namespace Casiland.Systems.ProceduralGen;
 
+public enum Directions
+{
+    Up,
+    Down,
+    Left,
+    Right
+}
+
 public class ProceduralRoom(Vector2 pos, Vector2 size)
 {
     public Rect2 Rect = new(pos, size);
 
     
-    public Vector2 Position => Rect.GetCenter();
+    public Vector2 Center => Rect.GetCenter();
     public Vector2 Size => Rect.Size;
 
     /// <summary>
     /// All rooms that this room is connected to via corridors.
     /// </summary>
     public readonly List<ProceduralRoom> Connections = [];
+    public readonly List<Directions> ConnectionDirections = [];
 
     public void AddConnection(ProceduralRoom room)
     {
@@ -31,7 +40,7 @@ public class ProceduralRoom(Vector2 pos, Vector2 size)
 
 
     public List<Vector2> GetConnectionSides() =>
-        Connections.Select(conn => Position.DirectionTo(conn.Position).Sign()).ToList();
+        Connections.Select(conn => Center.DirectionTo(conn.Center).Sign()).ToList();
 
 
     /// <summary>

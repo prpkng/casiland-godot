@@ -1,4 +1,6 @@
-﻿namespace Casiland.Systems.ProceduralGen.Steps;
+﻿using Fractural.Tasks;
+
+namespace Casiland.Systems.ProceduralGen.Steps;
 
 public abstract class GenerationStep(GenerationState state, ProceduralGenerationSettings settings)
 {
@@ -6,7 +8,7 @@ public abstract class GenerationStep(GenerationState state, ProceduralGeneration
     protected ProceduralGenerationSettings Settings { get; private set; } = settings;
 
 
-    public abstract void Perform();
+    public abstract GDTask Perform();
 
     public abstract string StateDescription { get; }
 }

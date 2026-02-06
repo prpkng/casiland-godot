@@ -52,6 +52,12 @@ public partial class ProceduralGenerationSettings : Resource
     /// </summary>
     [Export] public int MaximumCorridorLength = 24;
 
+    /// <summary>
+    /// The maximum distance that a corridor line can pass by (in both axis) from the center of its room. This ensures no corridor line 
+    /// is too near the room boundaries. Tweak this number along with the room boundaries
+    /// </summary>
+    [Export] public int CorridorMaxDistanceToCenter = 6;
+
     [ExportGroup("Corridor Props")]
     [Export] public PackedScene DoorScene;
 

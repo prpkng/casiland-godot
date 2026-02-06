@@ -36,9 +36,9 @@ func _process(delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_pressed():
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
-			zoom += Vector2.ONE*0.1
+			zoom *= 2
 		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-			zoom -= Vector2.ONE*0.1
+			zoom /= 2
 "
 
 [sub_resource type="GDScript" id="GDScript_ykrsh"]
@@ -85,17 +85,27 @@ script = SubResource("GDScript_ppyta")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1893954925]
 
-[node name="Button" type="Button" parent="CanvasLayer" unique_id=43627872 node_paths=PackedStringArray("generator", "tilemap")]
-offset_left = 375.0
-offset_top = 230.0
-offset_right = 472.0
-offset_bottom = 261.0
+[node name="LineEdit" type="LineEdit" parent="CanvasLayer" unique_id=79803838]
+offset_left = 372.0
+offset_top = 228.0
+offset_right = 576.0
+offset_bottom = 264.0
+scale = Vector2(0.5, 0.5)
+placeholder_text = "Enter seed..."
+
+[node name="Button" type="Button" parent="CanvasLayer" unique_id=43627872 node_paths=PackedStringArray("generator", "tilemap", "seedInput")]
+offset_left = 386.0
+offset_top = 248.0
+offset_right = 538.0
+offset_bottom = 279.0
+scale = Vector2(0.5, 0.5)
 text = "Generate"
 script = ExtResource("3_ykrsh")
 generator = NodePath("../../RoomGenerator")
 settings = ExtResource("4_g14j6")
 tilemap = NodePath("../../TileMapLayer")
 ruleSet = ExtResource("5_g14j6")
+seedInput = NodePath("../LineEdit")
 
 [node name="Label" type="Label" parent="CanvasLayer" unique_id=2103677277]
 offset_right = 154.0

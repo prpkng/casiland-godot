@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Fractural.Tasks;
 
 namespace Casiland.Systems.ProceduralGen.Steps;
 
@@ -19,7 +20,7 @@ public class PickRoomsStep(GenerationState state, ProceduralGenerationSettings s
         if (_mainRooms.Contains(room))
             return false;
 
-        if (_mainRooms.Any(other => room.Position.DistanceTo(other.Position) < Settings.MinRoomDistance))
+        if (_mainRooms.Any(other => room.Center.DistanceTo(other.Center) < Settings.MinRoomDistance))
             return false;
 
         return room.Rect.Size.X > widthThresh && room.Rect.Size.Y > heightThresh;
@@ -63,7 +64,7 @@ public class PickRoomsStep(GenerationState state, ProceduralGenerationSettings s
         State.GeneratedRooms.Clear();
     }
     
-    public override void Perform()
+    public override async GDTask Perform()
     {
         CalculateMainRooms(State.GeneratedRooms);
 

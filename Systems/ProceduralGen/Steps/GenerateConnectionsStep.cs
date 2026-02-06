@@ -2,6 +2,7 @@
 using System.Linq;
 using Casiland.Common;
 using Casiland.Systems.ProceduralGen.Algorithms;
+using Fractural.Tasks;
 using Godot;
 using TriangleNet;
 using TriangleNet.Geometry;
@@ -57,11 +58,11 @@ public class GenerateConnectionsStep(GenerationState state, ProceduralGeneration
         State.PointToRoom =  new Dictionary<Vector2I, ProceduralRoom>();
         foreach (var room in State.MainRooms)
         {
-            foreach (var e in State.MinimumSpanningTree.Where(e => room.Position.DistanceTo(e.From) <= 2))
+            foreach (var e in State.MinimumSpanningTree.Where(e => room.Center.DistanceTo(e.From) <= 2))
             {
                 State.PointToRoom[e.From] = room;
 
-                foreach (var other in State.MainRooms.Where(other => other.Position.DistanceTo(e.To) <= 2))
+                foreach (var other in State.MainRooms.Where(other => other.Center.DistanceTo(e.To) <= 2))
                 {
                     State.PointToRoom[e.To] = other;
 
@@ -111,7 +112,7 @@ public class GenerateConnectionsStep(GenerationState state, ProceduralGeneration
                 potential.Remove(other);
 
                 valid = !room.HasConnection(other) &&
-                        room.Position.DistanceTo(other.Position) <= Settings.MinRoomDistance;
+                        room.Center.DistanceTo(other.Center) <= Settings.MinRoomDistance;
             }
 
             if (!valid) break;
@@ -121,7 +122,7 @@ public class GenerateConnectionsStep(GenerationState state, ProceduralGeneration
         }
     }
 
-    public override void Perform()
+    public override async GDTask Perform()
     {
         var connections = CalculateDelaunayConnections(State.MainRooms);
         ConstructMst(connections);

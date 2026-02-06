@@ -24,6 +24,7 @@ public partial class TestScript : Button
 
     [Export] public TileMapLayer tilemap;
     [Export] public AutoTileRuleSet ruleSet;
+    [Export] public LineEdit seedInput;
 
     public override void _Ready()
     {
@@ -60,11 +61,12 @@ public partial class TestScript : Button
 
     public override async void _Pressed()
     {
+        var seed = seedInput.Text.ToUpper() == "" ? (GD.Randi() % 9999) : (ulong)seedInput.Text.ToInt();
         var state = new GenerationState
         {
             Rng = new RandomNumberGenerator
             {
-                Seed = GD.Randi()
+                Seed = seed
             },
             TilemapLayer = tilemap,
         };

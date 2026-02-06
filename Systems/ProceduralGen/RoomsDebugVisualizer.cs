@@ -8,7 +8,7 @@ public partial class RoomsDebugVisualizer : Node2D
     private static readonly Color GenRoomsBorder = new("#dd5f5f", 0.6f);
     private static readonly Color MainRoomsColor = new("#afffaf", 0.4f);
     private static readonly Color MainRoomsBorder = new("#5fdd5f", 0.6f);
-    private static readonly Color OtherRoomsColor = new("#afafff", 0.15f);
+    private static readonly Color OtherRoomsColor = new("#afafff", 0.3f);
     private static readonly Color OtherRoomsBorder = new("#5f5fdd", 0.3f);
     private static readonly Color CorridorRoomsColor = new("#ffffaf", 0.15f);
     private static readonly Color CorridorRoomsBorder = new("#dddd5f", 0.3f);
@@ -16,6 +16,7 @@ public partial class RoomsDebugVisualizer : Node2D
 
     private static readonly Color MstLineColor = Colors.Yellow;
 
+    
     [Export] private ProceduralRoomGenerator _generator;
 
     private Font _font;
@@ -36,9 +37,23 @@ public partial class RoomsDebugVisualizer : Node2D
 
     private const int GridSize = 8;
 
+    private void DrawArrow(Vector2 from, Vector2 to, Color color, float width = 1f, float arrowSize = 10f)
+    {
+        DrawLine(from, to, color, width);
+        
+        Vector2 direction = (to - from).Normalized();
+        Vector2 perpendicular = new Vector2(-direction.Y, direction.X);
+        
+        Vector2 arrowPoint1 = to - direction * arrowSize + perpendicular * arrowSize * 0.5f;
+        Vector2 arrowPoint2 = to - direction * arrowSize - perpendicular * arrowSize * 0.5f;
+        
+        DrawLine(to, arrowPoint1, color, width);
+        DrawLine(to, arrowPoint2, color, width);
+    }
+
     public override void _Draw()
     {
-        var state = _generator.ResultingState;
+        var state = _generator._currentState;
         if (state == null) return;
 
         foreach (var room in state.GeneratedRooms)
@@ -50,13 +65,17 @@ public partial class RoomsDebugVisualizer : Node2D
         foreach (var  room in state.CorridorRooms) {
             DrawRect(new Rect2(room.Rect.Position * GridSize, room.Size * GridSize), CorridorRoomsColor, true);
             DrawRect(new Rect2(room.Rect.Position * GridSize, room.Size * GridSize), GenRoomsBorder, false, 1);
-            DrawString(_font, room.Position, state.CorridorRooms.IndexOf(room).ToString(), HorizontalAlignment.Center, -1, 
+            DrawString(_font, room.Center * GridSize, state.CorridorRooms.IndexOf(room).ToString(), HorizontalAlignment.Center, -1, 
                 12, Colors.White);
         }
 		
 	
         foreach (var  edge in state.CorridorLines) {
             DrawLine(edge.From * GridSize, edge.To * GridSize, MstLineColor);
+        }
+	
+        foreach (var  edge in state.MinimumSpanningTree) {
+            DrawLine(edge.From * GridSize, edge.To * GridSize, TriangleLineColor);
         }
 		
         foreach (var  room in state.MainRooms) {
@@ -71,6 +90,29 @@ public partial class RoomsDebugVisualizer : Node2D
         foreach (var  room in state.OtherRooms) {
             DrawRect(new Rect2(room.Rect.Position * GridSize, room.Size * GridSize), OtherRoomsColor/4, true);
             DrawRect(new Rect2(room.Rect.Position * GridSize, room.Size * GridSize), OtherRoomsBorder/4, false, 1);
+        }
+
+        DrawString(_font, new Vector2(10, 20), $"Seed: {state.Rng.Seed}", HorizontalAlignment.Left, -1, 
+            _fontSize, Colors.White);
+
+        // Draw arrows
+        foreach (var room in state.AllRooms)
+        {
+            foreach (var dir in room.ConnectionDirections)
+            {
+                var vec = dir switch
+                {
+                    Directions.Up => Vector2.Up,
+                    Directions.Down => Vector2.Down,
+                    Directions.Left => Vector2.Left,
+                    Directions.Right => Vector2.Right,
+                    _ => throw new System.NotImplementedException(),
+                };
+
+                var end = room.Center + room.Size / 2f * vec + vec * 4;
+                var start = room.Center + room.Size / 2f * vec;
+                DrawArrow(start * GridSize, end * GridSize, Colors.IndianRed, 2);
+            }
         }
 
 

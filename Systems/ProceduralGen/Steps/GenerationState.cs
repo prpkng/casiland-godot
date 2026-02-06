@@ -35,6 +35,7 @@ public class GenerationState
 
     public List<LineSegment> MinimumSpanningTree = [];
     public List<LineSegment> CorridorLines = [];
+    public List<LineSegment[]> CorridorLineGroups = [];
 
     public Dictionary<Vector2I, ProceduralRoom> PointToRoom = [];
 

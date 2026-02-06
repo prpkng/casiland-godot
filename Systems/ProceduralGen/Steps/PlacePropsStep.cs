@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Casiland.Systems.ProceduralGen.Algorithms;
+using Fractural.Tasks;
 using Godot;
 
 namespace Casiland.Systems.ProceduralGen.Steps;
@@ -12,7 +13,7 @@ public class PlacePropsStep(GenerationState state, ProceduralGenerationSettings 
         
     }
     
-    public override void Perform()
+    public override async GDTask Perform()
     {
         PlaceDoors();
     }

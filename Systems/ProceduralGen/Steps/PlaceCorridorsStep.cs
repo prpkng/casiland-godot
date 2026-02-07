@@ -405,6 +405,12 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
         State.AllRooms = [.. State.MainRooms, .. State.CorridorRooms];
         State.AllRooms = State.AllRooms.OrderBy(room => room.ProgressBias).ToList();
         
+        foreach (var room in State.AllRooms)
+        {
+            room.Rect.Position = room.Rect.Position.Round();
+            room.Rect.Size = (room.Rect.Size / 2f).Round() * 2f;
+        }
+        
         await CreateCorridorLines();
         // SelectCorridorRooms();
         // EnsureCorridorsNotEmpty();
@@ -412,6 +418,8 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
         // await FixCorridorRoomsPlacement();
 
         // FixOverlappingCorridorLines();
+
+
         
         
 

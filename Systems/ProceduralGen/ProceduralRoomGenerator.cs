@@ -43,6 +43,7 @@ public partial class ProceduralRoomGenerator : Node
             new PlaceCorridorsStep(state, generationSettings),
             new PlaceRoomTilesStep(state, generationSettings),
             // new PerformAutoTileStep(state, generationSettings),
+            new PlacePropsStep(state, generationSettings),
         ];
 
         Log.Information("Starting procedural generation with {StepCount} steps!", generationSteps.Count);

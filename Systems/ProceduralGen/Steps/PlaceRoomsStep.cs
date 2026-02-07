@@ -24,7 +24,7 @@ public class PlaceRoomsStep(GenerationState state, ProceduralGenerationSettings 
 
         for (int i = 0; i < count; i++)
         {
-            Vector2 pos = RandomPointAroundCircle(Settings.StartCellsRadius);
+            Vector2 pos = RandomPointAroundCircle(Settings.StartCellsRadius).Round();
 
             Vector2 size = Vector2.Zero;
             const int maxIter = 100;
@@ -32,13 +32,13 @@ public class PlaceRoomsStep(GenerationState state, ProceduralGenerationSettings 
             for (int iter = 0; iter < maxIter; iter++)
             {
                 float baseSize = parkMiller.NextFloat(Settings.MinBaseRoomSize, Settings.MaxBaseRoomSize);
-                size = ProceduralGeometry.AspectWiseRandomSize(
+                size = (ProceduralGeometry.AspectWiseRandomSize(
                     State.Rng,
                     Settings.BaseRoomAspect,
                     Settings.MaxRoomAspectDeviation,
                     baseSize,
                     Settings.MaxRoomSizeDeviation
-                );
+                ) / 2f).Round() * 2f;
 
                 if (Mathf.Abs(size.Aspect() - 1f) < Settings.MaxRoomAspectDeviation)
                     break;

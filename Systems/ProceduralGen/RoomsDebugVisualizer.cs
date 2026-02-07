@@ -75,7 +75,7 @@ public partial class RoomsDebugVisualizer : Node2D
 		
 	
         foreach (var  edge in state.CorridorLines?? []) {
-            DrawLine(edge.From * GridSize, edge.To * GridSize, MstLineColor);
+            DrawLine(edge.From * GridSize + Vector2.One * (GridSize / 2f), edge.To * GridSize + Vector2.One * (GridSize / 2f), MstLineColor, GridSize);
         }
 	
         foreach (var  edge in state.MinimumSpanningTree?? [])

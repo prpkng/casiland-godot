@@ -67,5 +67,5 @@ public partial class ProceduralGenerationSettings : Resource
     [ExportGroup("Tile Settings")]
     [Export] public AutoTileRuleSet AutoTileRuleSet;
 
-    [Export] public int CorridorTileWidth = 5;
+    [Export] public int CorridorTileWidth = 6;
 }

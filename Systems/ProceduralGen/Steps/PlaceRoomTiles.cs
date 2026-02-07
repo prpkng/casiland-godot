@@ -66,10 +66,21 @@ public class PlaceRoomTilesStep(GenerationState state, ProceduralGenerationSetti
     {
         foreach (var line in State.CorridorLines)
         {
-            State.TilemapLayer.SetCells(
-                ProceduralGeometry.BresenhamLineWidth(line.From, line.To, Settings.CorridorTileWidth), TilesSrcId,
-                FloorTileCoord);
+                ProceduralGeometry.DrawLine(State.TilemapLayer, line.From, line.To, Settings.CorridorTileWidth, TilesSrcId,
+                    FloorTileCoord);
         }
+    }
+
+    private void PlaceDoorBorders()
+    {
+        foreach (var room in State.AllRooms)
+        {
+            foreach ((var corridor, int endpoint) in room.Neighbors.Values.SelectMany(l => l))
+            {
+                var point = endpoint == 0 ? corridor.FromPos : corridor.ToPos;
+                State.TilemapLayer.SetCell(point.RoundToInt(), TilesSrcId, SolidTileCoord);
+            }
+        } 
     }
     
     public override async GDTask Perform()
@@ -79,5 +90,7 @@ public class PlaceRoomTilesStep(GenerationState state, ProceduralGenerationSetti
         CreateRoomFloors();
 
         CreateCorridorFloors();
+                
+        PlaceDoorBorders();
     }
 }

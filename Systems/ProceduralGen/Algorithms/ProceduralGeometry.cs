@@ -113,7 +113,7 @@ public static class ProceduralGeometry
     {
         float aspect = baseRoomAspect + rng.RandfRange(-aspectDeviation, aspectDeviation);
         float size = baseRoomSize + rng.RandfRange(-sizeDeviation, sizeDeviation);
-        return new Vector2(size * aspect, size);
+        return new Vector2I(Mathf.RoundToInt(size * aspect), Mathf.RoundToInt(size));
     }
 
     #endregion
@@ -131,6 +131,81 @@ public static class ProceduralGeometry
 
     #region === LINE ALGORITHMS ===
 
+    public static void DrawLine(
+        TileMapLayer tileMap,
+        Vector2I start,
+        Vector2I end,
+        int width,
+        int sourceId,
+        Vector2I atlasCoords
+    )
+    {
+        int x0 = start.X;
+        int y0 = start.Y;
+        int x1 = end.X;
+        int y1 = end.Y;
+
+        int dx = Mathf.Abs(x1 - x0);
+        int dy = Mathf.Abs(y1 - y0);
+
+        int sx = x0 < x1 ? 1 : -1;
+        int sy = y0 < y1 ? 1 : -1;
+
+        int err = dx - dy;
+
+        bool xDominant = dx >= dy;
+
+        // Width handling (works for even & odd)
+        int halfLow  = (width - 1) / 2;
+        int halfHigh = width / 2;
+
+        while (true)
+        {
+            if (xDominant)
+            {
+                // Fill vertical strip
+                for (int i = -halfLow; i <= halfHigh; i++)
+                {
+                    tileMap.SetCell(
+                        new Vector2I(x0, y0 + i),
+                        sourceId,
+                        atlasCoords
+                    );
+                }
+            }
+            else
+            {
+                // Fill horizontal strip
+                for (int i = -halfLow; i <= halfHigh; i++)
+                {
+                    tileMap.SetCell(
+                        new Vector2I(x0 + i, y0),
+                        sourceId,
+                        atlasCoords
+                    );
+                }
+            }
+
+            if (x0 == x1 && y0 == y1)
+                break;
+
+            int e2 = err * 2;
+
+            if (e2 > -dy)
+            {
+                err -= dy;
+                x0 += sx;
+            }
+
+            if (e2 < dx)
+            {
+                err += dx;
+                y0 += sy;
+            }
+        }
+    }
+
+    
     public static Vector2 FindLineIntersection(Vector2 p1A, Vector2 p1B, Vector2 p2A, Vector2 p2B)
     {
         float denom =

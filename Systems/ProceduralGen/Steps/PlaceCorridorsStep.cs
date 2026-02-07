@@ -33,7 +33,9 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
         { Vector2.Right, RoomNeighborDirection.Right }
     };
 
-
+    #region === CREATE CORRIDOR LINES SUBSTEP ===
+    
+    #region === CORRIDOR CREATION ALGORITHMS 
     /// <summary>
     /// Tries to create a direct corridor between the two rooms and returns null if there is already another corridor in the way
     /// </summary>
@@ -53,27 +55,10 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
 
         return new LineSegment(from, dest);
     }
-
-    private LineSegment[] CreateSShapedCorridor(ProceduralRoom fromRoom, ProceduralRoom toRoom, Vector2 axis)
-    {
-        var from = fromRoom.Center;
-        var to = toRoom.Center;
-        var dir = to - from;
-
-
-
-        var inv = Vector2.One - axis.Abs();
-
-        float bias = State.Rng.RandfRange(0.45f, 0.55f);
-
-        var c1 = from + dir * axis * bias;
-        var c2 = to - dir * axis * (1f-bias);
-
-        fromRoom.ConnectionDirections.Add(VecToDirDict[(c1 - from).Sign()]);
-        toRoom.ConnectionDirections.Add(VecToDirDict[(c2 - to).Sign()]);
-
-        return [new LineSegment(from, c1), new LineSegment(c1, c2), new LineSegment(c2, to)];
-    }
+    
+    /// <summary>
+    /// Tries to create a corner-shaped corridor between the two given rooms and return null if the all possible corners are blocked
+    /// </summary>
     private LineSegment[] CreateCornerCorridor(ProceduralRoom fromRoom, ProceduralRoom toRoom)
     {
         var dir = toRoom.Center - fromRoom.Center;
@@ -108,7 +93,33 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
 
         return [new LineSegment(fromRoom.Center, corner), new LineSegment(corner, toRoom.Center)];
     }
+    
+    /// <summary>
+    /// Creates an S-shaped corridor between the two given rooms
+    /// </summary>
+    private LineSegment[] CreateSShapedCorridor(ProceduralRoom fromRoom, ProceduralRoom toRoom, Vector2 axis)
+    {
+        var from = fromRoom.Center;
+        var to = toRoom.Center;
+        var dir = to - from;
 
+
+
+        var inv = Vector2.One - axis.Abs();
+
+        float bias = State.Rng.RandfRange(0.45f, 0.55f);
+
+        var c1 = from + dir * axis * bias;
+        var c2 = to - dir * axis * (1f-bias);
+
+        fromRoom.ConnectionDirections.Add(VecToDirDict[(c1 - from).Sign()]);
+        toRoom.ConnectionDirections.Add(VecToDirDict[(c2 - to).Sign()]);
+
+        return [new LineSegment(from, c1), new LineSegment(c1, c2), new LineSegment(c2, to)];
+    }
+    
+    #endregion
+    
 
     public async GDTask CreateCorridorLines()
     {
@@ -156,7 +167,8 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
             await GDTask.Delay(200);
         }
     }
-
+    
+    #endregion
 
     public void SelectCorridorRooms()
     {

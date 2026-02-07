@@ -4,7 +4,7 @@ using Godot;
 
 namespace Casiland.Systems.ProceduralGen;
 
-public enum Directions
+public enum RoomNeighborDirection
 {
     Up,
     Down,
@@ -32,7 +32,7 @@ public class ProceduralRoom(Vector2 pos, Vector2 size)
     /// All rooms that this room is connected to via corridors.
     /// </summary>
     public readonly List<ProceduralRoom> Connections = [];
-    public readonly List<Directions> ConnectionDirections = [];
+    public readonly List<RoomNeighborDirection> ConnectionDirections = [];
 
     public RoomTypes RoomType = RoomTypes.NormalRoom;
 

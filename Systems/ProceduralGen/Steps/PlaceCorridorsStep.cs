@@ -14,23 +14,23 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
 
     public override string StateDescription => $"Placing {State.CorridorLines?.Count} corridor lines and {State.CorridorRooms?.Count} corridor rooms";
 
-    private Rect2 CheckForDirectLine(Rect2 from, Rect2 to, Vector2 axis)
+    private static Rect2 GetRectOverlapOnAxis(Rect2 from, Rect2 to, Vector2 axis)
     {
         var inv = Vector2.One - axis.Abs();
         var r1 = new Rect2(from.Position * inv, from.Size);
         var r2 = new Rect2(to.Position * inv, to.Size);
         return r1.Intersection(r2);
     }
-    private static readonly Dictionary<Vector2, Directions> _vecToDirDict = new()
+    private static readonly Dictionary<Vector2, RoomNeighborDirection> VecToDirDict = new()
     {
-        { new Vector2(1, -1), Directions.Up },
-        { new Vector2(-1, -1), Directions.Up },
-        { Vector2.Up, Directions.Up },
-        { new Vector2(1, 1), Directions.Down },
-        { new Vector2(-1, 1), Directions.Down },
-        { Vector2.Down, Directions.Down },
-        { Vector2.Left, Directions.Left },
-        { Vector2.Right, Directions.Right }
+        { new Vector2(1, -1), RoomNeighborDirection.Up },
+        { new Vector2(-1, -1), RoomNeighborDirection.Up },
+        { Vector2.Up, RoomNeighborDirection.Up },
+        { new Vector2(1, 1), RoomNeighborDirection.Down },
+        { new Vector2(-1, 1), RoomNeighborDirection.Down },
+        { Vector2.Down, RoomNeighborDirection.Down },
+        { Vector2.Left, RoomNeighborDirection.Left },
+        { Vector2.Right, RoomNeighborDirection.Right }
     };
 
 
@@ -45,11 +45,11 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
 
         var dir = (dest - from).Sign();
 
-        if (fromRoom.ConnectionDirections.Contains(_vecToDirDict[dir]))
+        if (fromRoom.ConnectionDirections.Contains(VecToDirDict[dir]))
             return null;
 
-        fromRoom.ConnectionDirections.Add(_vecToDirDict[dir]);
-        toRoom.ConnectionDirections.Add(_vecToDirDict[-dir]);
+        fromRoom.ConnectionDirections.Add(VecToDirDict[dir]);
+        toRoom.ConnectionDirections.Add(VecToDirDict[-dir]);
 
         return new LineSegment(from, dest);
     }
@@ -69,8 +69,8 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
         var c1 = from + dir * axis * bias;
         var c2 = to - dir * axis * (1f-bias);
 
-        fromRoom.ConnectionDirections.Add(_vecToDirDict[(c1 - from).Sign()]);
-        toRoom.ConnectionDirections.Add(_vecToDirDict[(c2 - to).Sign()]);
+        fromRoom.ConnectionDirections.Add(VecToDirDict[(c1 - from).Sign()]);
+        toRoom.ConnectionDirections.Add(VecToDirDict[(c2 - to).Sign()]);
 
         return [new LineSegment(from, c1), new LineSegment(c1, c2), new LineSegment(c2, to)];
     }
@@ -86,13 +86,13 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
         Vector2 destDir;
 
         // Try first pattern
-        if (!fromRoom.ConnectionDirections.Contains(_vecToDirDict[vecs[0]]) && 
-            !toRoom.ConnectionDirections.Contains(_vecToDirDict[-vecs[1]]) &&
+        if (!fromRoom.ConnectionDirections.Contains(VecToDirDict[vecs[0]]) && 
+            !toRoom.ConnectionDirections.Contains(VecToDirDict[-vecs[1]]) &&
             Mathf.Abs(dir.X) > fromRoom.Size.X + 4)
             destDir = vecs[0];
         else if (
-            !fromRoom.ConnectionDirections.Contains(_vecToDirDict[vecs[1]]) && 
-            !toRoom.ConnectionDirections.Contains(_vecToDirDict[-vecs[0]]) &&
+            !fromRoom.ConnectionDirections.Contains(VecToDirDict[vecs[1]]) && 
+            !toRoom.ConnectionDirections.Contains(VecToDirDict[-vecs[0]]) &&
             Mathf.Abs(dir.Y) > fromRoom.Size.Y + 4)
             destDir = vecs[1];
         else 
@@ -102,8 +102,8 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
         // var destDir = fromRoom.ConnectionDirections.Contains(_vecToDirDict[vecs[0]]) ? vecs[1] : vecs[0];
 
         var corner = fromRoom.Center + dir * destDir.Abs();
-        fromRoom.ConnectionDirections.Add(_vecToDirDict[(corner - fromRoom.Center).Sign()]);
-        toRoom.ConnectionDirections.Add(_vecToDirDict[(corner - toRoom.Center).Sign()]);
+        fromRoom.ConnectionDirections.Add(VecToDirDict[(corner - fromRoom.Center).Sign()]);
+        toRoom.ConnectionDirections.Add(VecToDirDict[(corner - toRoom.Center).Sign()]);
 
 
         return [new LineSegment(fromRoom.Center, corner), new LineSegment(corner, toRoom.Center)];
@@ -127,7 +127,7 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
 
             var axis = horizontal ? Vector2.Right : Vector2.Down;
 
-            var overlap = CheckForDirectLine(fromRoom.Rect, toRoom.Rect, axis);
+            var overlap = GetRectOverlapOnAxis(fromRoom.Rect, toRoom.Rect, axis);
             float length = (overlap.Size * (Vector2.One - axis)).Abs().Sum();
 
             LineSegment[] generateLines()
@@ -180,8 +180,8 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
                     var validEdge =  validEdges[0];
                     var dir = ((Vector2)validEdge.From).DirectionTo(validEdge.To).Abs();
                     bool horizontal = dir.X > dir.Y;
-                    List<Directions> directions = horizontal 
-                        ? [Directions.Left, Directions.Right] : [Directions.Up, Directions.Down];
+                    List<RoomNeighborDirection> directions = horizontal 
+                        ? [RoomNeighborDirection.Left, RoomNeighborDirection.Right] : [RoomNeighborDirection.Up, RoomNeighborDirection.Down];
                     room.ConnectionDirections.AddRange(directions);
                 }
                 else
@@ -195,7 +195,7 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
                             var vectDir = room.Center.DirectionTo(p);
                             bool horizontal = vectDir.X > vectDir.Y;
                             vectDir *= horizontal ? Vector2.Right : Vector2.Down;
-                            var dir = _vecToDirDict[vectDir.Sign()];
+                            var dir = VecToDirDict[vectDir.Sign()];
                             if (room.ConnectionDirections.Contains(dir)) continue;
                             room.ConnectionDirections.Add(dir);
                         }
@@ -219,8 +219,8 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
         var from = (Vector2)longCorridor.From;
         var lineDirAbs = from.DirectionTo(longCorridor.To).Abs();
         bool horizontal = lineDirAbs.X > lineDirAbs.Y;
-        List<Directions> directions = horizontal 
-            ? [Directions.Left, Directions.Right] : [Directions.Up, Directions.Down];
+        List<RoomNeighborDirection> directions = horizontal 
+            ? [RoomNeighborDirection.Left, RoomNeighborDirection.Right] : [RoomNeighborDirection.Up, RoomNeighborDirection.Down];
         
 
         float baseSize = Mathf.Lerp(Settings.MinBaseRoomSize, Settings.MaxBaseRoomSize, State.Rng.RandfRange(0f, 0.5f));

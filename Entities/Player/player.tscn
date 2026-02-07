@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://bnjweurtnnx4f"]
 
 [ext_resource type="Script" uid="uid://cle600a3ags80" path="res://Entities/Player/Scripts/Player.cs" id="1_mv1ah"]
-[ext_resource type="PackedScene" uid="uid://b2rf3ddt3m8c3" path="res://Entities/Weapons/cane_gun.tscn" id="2_01a4e"]
 [ext_resource type="Script" uid="uid://ca0llfybyho2k" path="res://Common/Movement/TopDownMovement.cs" id="2_3uyv8"]
 [ext_resource type="Script" uid="uid://dec5jl4hlirlc" path="res://Common/Health/Health.cs" id="3_7a1se"]
 [ext_resource type="Texture2D" uid="uid://cvbkqhvm5s0as" path="res://Entities/Player/Sprites/player_sheet.png" id="3_lu8i8"]
@@ -108,15 +107,12 @@ nodes/MovementBlendSpace/node = SubResource("AnimationNodeBlendSpace1D_5c2io")
 nodes/MovementBlendSpace/position = Vector2(-293.33334, 160)
 node_connections = [&"output", 0, &"MovementBlendSpace"]
 
-[node name="Player" type="CharacterBody2D" unique_id=1528480435 node_paths=PackedStringArray("Movement", "Sprite", "WeaponManager", "Interactor")]
+[node name="Player" type="CharacterBody2D" unique_id=1528480435 node_paths=PackedStringArray("Movement", "Sprite")]
 collision_layer = 8
 collision_mask = 2
 script = ExtResource("1_mv1ah")
 Movement = NodePath("TopDownMovement")
 Sprite = NodePath("Sprite2D")
-Weapon = ExtResource("2_01a4e")
-WeaponManager = NodePath("WeaponManager")
-Interactor = NodePath("Interactor")
 metadata/_custom_type_script = "uid://cle600a3ags80"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=170218100]

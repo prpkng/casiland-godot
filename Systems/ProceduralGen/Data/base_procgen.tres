@@ -1,13 +1,12 @@
 [gd_resource type="Resource" format=3 uid="uid://rknxtcpf0hkc"]
 
-[ext_resource type="Resource" uid="uid://cfrfxh7vllrky" path="res://ruleset.tres" id="1_l3m43"]
 [ext_resource type="Script" uid="uid://dq0qnphrb3s6t" path="res://Systems/ProceduralGen/ProceduralGenerationSettings.cs" id="1_yml8i"]
 
 [resource]
 script = ExtResource("1_yml8i")
 StartCellCount = 60
 MaxRoomCount = 12
-MinRoomDistance = 60
+MinRoomDistance = 40
 MinRoomWidth = 15
 MaxRoomWidth = 42
 MinRoomHeight = 8
@@ -18,5 +17,3 @@ LoopCount = 1
 MinimumDirectCorridorOverlapLength = 20
 MaximumCornerCorridorOverlapLength = 2
 MaximumCorridorLength = 40
-CorridorMaxDistanceToCenter = 4
-AutoTileRuleSet = ExtResource("1_l3m43")

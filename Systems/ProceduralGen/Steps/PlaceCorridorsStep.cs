@@ -175,6 +175,33 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
 
                 var validEdges = edges.Where(e => ProceduralGeometry.EdgeIntersectsRect(e, room.Rect.Grow(5))).ToArray();
 
+                if (validEdges.Length == 1)
+                {
+                    var validEdge =  validEdges[0];
+                    var dir = ((Vector2)validEdge.From).DirectionTo(validEdge.To).Abs();
+                    bool horizontal = dir.X > dir.Y;
+                    List<Directions> directions = horizontal 
+                        ? [Directions.Left, Directions.Right] : [Directions.Up, Directions.Down];
+                    room.ConnectionDirections.AddRange(directions);
+                }
+                else
+                {
+                    foreach (var validEdge in validEdges)
+                    {
+                        Vector2[] points = [validEdge.From, validEdge.To];
+                        foreach (var p in points)
+                        {
+                            if (room.Rect.HasPoint(p)) continue;
+                            var vectDir = room.Center.DirectionTo(p);
+                            bool horizontal = vectDir.X > vectDir.Y;
+                            vectDir *= horizontal ? Vector2.Right : Vector2.Down;
+                            var dir = _vecToDirDict[vectDir.Sign()];
+                            if (room.ConnectionDirections.Contains(dir)) continue;
+                            room.ConnectionDirections.Add(dir);
+                        }
+                    }
+                }
+
                 room.CorridorLines.AddRange(validEdges);
 
                 State.CorridorRooms.Add(room);
@@ -192,12 +219,18 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
         float height = Mathf.Lerp(Settings.MinRoomHeight, Settings.MaxRoomHeight, State.Rng.RandfRange(0.25f, .75f));
 
         var from = (Vector2)longCorridor.From;
-        var lineDir = from.DirectionTo(longCorridor.To);
+        var lineDirAbs = from.DirectionTo(longCorridor.To).Abs();
+        bool horizontal = lineDirAbs.X > lineDirAbs.Y;
+        List<Directions> directions = horizontal 
+            ? [Directions.Left, Directions.Right] : [Directions.Up, Directions.Down];
+        
 
         var size = new Vector2(width, height);
         var room = new ProceduralRoom(from.Lerp(longCorridor.To, 0.5f) - size / 2, size);
+        room.ConnectionDirections.AddRange(directions);
+        room.CorridorLines = [longCorridor];
         State.CorridorRooms.Add(room);
-
+    
         State.CorridorLines.Remove(longCorridor);
 
         room.Rect.Position += Vector2.FromAngle(State.Rng.Randf() * Mathf.Pi * 2) * State.Rng.RandfRange(0, 4);
@@ -214,7 +247,7 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
             longCorridorLines =
                 longCorridorLines.Where(l => l.From.DistanceTo(l.To) > Settings.MaximumCorridorLength).ToList();
             if (longCorridorLines.Count <= 0)
-                continue;
+                continue;       
             foreach (var longCorridor in longCorridorLines)
                 SolveLongCorridor(longCorridor);
         }
@@ -278,7 +311,7 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
     {
         await CreateCorridorLines();
         SelectCorridorRooms();
-        // EnsureCorridorsNotEmpty();
+        EnsureCorridorsNotEmpty();
 
         await FixCorridorRoomsPlacement();
 

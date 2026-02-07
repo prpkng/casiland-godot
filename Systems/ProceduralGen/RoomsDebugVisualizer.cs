@@ -1,4 +1,5 @@
-﻿using Godot;
+﻿using System.Collections.Generic;
+using Godot;
 
 namespace Casiland.Systems.ProceduralGen;
 
@@ -112,8 +113,9 @@ public partial class RoomsDebugVisualizer : Node2D
         DrawString(_font, new Vector2(10, 20), $"Seed: {state.Rng.Seed}", HorizontalAlignment.Left, -1, 
             _fontSize, Colors.White);
 
+        List<ProceduralRoom> rooms = [..(state.MainRooms ?? []), ..(state.CorridorRooms ?? [])];
         // Draw arrows
-        foreach (var room in state.MainRooms ?? [])
+        foreach (var room in rooms)
         {
             foreach (var dir in room.ConnectionDirections)
             {

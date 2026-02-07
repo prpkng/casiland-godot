@@ -57,6 +57,16 @@ func _process(_delta: float) -> void:
 	text = \"Zoom: %s\" % camera_2d.zoom
 "
 
+[sub_resource type="GDScript" id="GDScript_00tp4"]
+resource_name = "toggle_debug_renderer"
+script/source = "extends CheckBox
+
+@export var rooms_debug_visualizer: Node2D
+
+func _on_toggled(toggled_on: bool) -> void:
+	rooms_debug_visualizer.visible = toggled_on
+"
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0m0f1"]
 
 [sub_resource type="GDScript" id="GDScript_5tkv4"]
@@ -113,6 +123,20 @@ offset_bottom = 23.0
 text = "Zoom: "
 script = SubResource("GDScript_ykrsh")
 
+[node name="CheckBox" type="CheckBox" parent="CanvasLayer" unique_id=37312457 node_paths=PackedStringArray("rooms_debug_visualizer")]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -124.0
+offset_bottom = 31.0
+grow_horizontal = 0
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(124, 0)
+button_pressed = true
+text = "Debug Draw"
+script = SubResource("GDScript_00tp4")
+rooms_debug_visualizer = NodePath("../../RoomsDebugVisualizer")
+
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1865007474]
 texture_filter = 1
 tile_set = ExtResource("5_ykrsh")
@@ -142,4 +166,5 @@ script = SubResource("GDScript_5tkv4")
 position = Vector2(44, 43)
 
 [connection signal="pressed" from="CanvasLayer/Button" to="CanvasLayer/Button" method="_on_pressed"]
+[connection signal="toggled" from="CanvasLayer/CheckBox" to="CanvasLayer/CheckBox" method="_on_toggled"]
 [connection signal="Interacted" from="Interactable" to="Interactable/Test logger" method="_on_interactable_interacted"]

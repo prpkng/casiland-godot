@@ -38,6 +38,10 @@ public partial class RoomsDebugVisualizer : Node2D
 
     private const int GridSize = 8;
 
+    private void DrawText(Vector2 pos, string text) =>
+        DrawString(_font, pos, text, HorizontalAlignment.Center, -1, 
+            _fontSize, Colors.White);
+
     private void DrawArrow(Vector2 from, Vector2 to, Color color, float width = 1f, float arrowSize = 10f)
     {
         DrawLine(from, to, color, width);
@@ -66,8 +70,7 @@ public partial class RoomsDebugVisualizer : Node2D
         foreach (var  room in state.CorridorRooms ?? []) {
             DrawRect(new Rect2(room.Rect.Position * GridSize, room.Size * GridSize), CorridorRoomsColor, true);
             DrawRect(new Rect2(room.Rect.Position * GridSize, room.Size * GridSize), GenRoomsBorder, false, 1);
-            DrawString(_font, room.Center * GridSize, state.CorridorRooms.IndexOf(room).ToString(), HorizontalAlignment.Center, -1, 
-                _fontSize, Colors.White);
+            DrawText(room.Center * GridSize, state.CorridorRooms.IndexOf(room).ToString());
         }
 		
 	
@@ -75,7 +78,12 @@ public partial class RoomsDebugVisualizer : Node2D
             DrawLine(edge.From * GridSize, edge.To * GridSize, MstLineColor);
         }
 	
-        foreach (var  edge in state.MinimumSpanningTree?? []) {
+        foreach (var  edge in state.MinimumSpanningTree?? [])
+        {
+            var center = edge.FromF + edge.FromF.DirectionTo(edge.ToF) * edge.EuclideanLength / 2f;
+            center *= GridSize;
+            DrawText(center + Vector2.Up * 12f, $"Ec. Length: {edge.EuclideanLength}");
+            DrawText(center + Vector2.Down * 12f, $"Ar. Length: {edge.ArithmeticLength}");
             DrawLine(edge.From * GridSize, edge.To * GridSize, TriangleLineColor);
         }
 		
@@ -93,14 +101,10 @@ public partial class RoomsDebugVisualizer : Node2D
 
             DrawRect(new Rect2(room.Rect.Position * GridSize, room.Size * GridSize), color, true);
             DrawRect(new Rect2(room.Rect.Position * GridSize, room.Size * GridSize), border, false, 1);
-            DrawString(_font, room.Center * GridSize, $"ID: {room.Index}", HorizontalAlignment.Center, -1, 
-            _fontSize, Colors.White);
-            DrawString(_font, room.Center * GridSize + Vector2.Down*24, $"StartDepth: {room.StartDistance}", HorizontalAlignment.Center, -1, 
-            _fontSize, Colors.White);
-            DrawString(_font, room.Center * GridSize + Vector2.Down*48, $"BossDepth: {room.BossDistance}", HorizontalAlignment.Center, -1, 
-            _fontSize, Colors.White);
-            DrawString(_font, room.Center * GridSize + Vector2.Down*64, $"Bias: {room.ProgressBias}", HorizontalAlignment.Center, -1, 
-            _fontSize, Colors.White);
+            DrawText(room.Center * GridSize, $"ID: {room.Index}");
+            DrawText(room.Center * GridSize + Vector2.Down*24, $"StartDepth: {room.StartDistance}");
+            DrawText(room.Center * GridSize + Vector2.Down*48, $"BossDepth: {room.BossDistance}");
+            DrawText(room.Center * GridSize + Vector2.Down*64, $"Bias: {room.ProgressBias}");
 
         }
 		
@@ -110,8 +114,7 @@ public partial class RoomsDebugVisualizer : Node2D
             DrawRect(new Rect2(room.Rect.Position * GridSize, room.Size * GridSize), OtherRoomsBorder/4, false, 1);
         }
 
-        DrawString(_font, new Vector2(10, 20), $"Seed: {state.Rng.Seed}", HorizontalAlignment.Left, -1, 
-            _fontSize, Colors.White);
+        DrawText(new Vector2(10, 20), $"Seed: {state.Rng.Seed}");
 
         List<ProceduralRoom> rooms = [..(state.MainRooms ?? []), ..(state.CorridorRooms ?? [])];
         // Draw arrows
@@ -121,10 +124,10 @@ public partial class RoomsDebugVisualizer : Node2D
             {
                 var vec = dir switch
                 {
-                    Directions.Up => Vector2.Up,
-                    Directions.Down => Vector2.Down,
-                    Directions.Left => Vector2.Left,
-                    Directions.Right => Vector2.Right,
+                    RoomNeighborDirection.Up => Vector2.Up,
+                    RoomNeighborDirection.Down => Vector2.Down,
+                    RoomNeighborDirection.Left => Vector2.Left,
+                    RoomNeighborDirection.Right => Vector2.Right,
                     _ => throw new System.NotImplementedException(),
                 };
 

@@ -9,6 +9,8 @@ public record struct LineSegment
 {
     public Vector2I From;
     public Vector2I To;
+    public Vector2 FromF => From;
+    public Vector2 ToF => To;
 
     public LineSegment(Vector2 from, Vector2 to)
     {
@@ -20,6 +22,10 @@ public record struct LineSegment
         from = From;
         to = To;
     }
+
+    public float EuclideanLength => FromF.DistanceTo(ToF);
+    public float ArithmeticLength => Mathf.Abs(To.X - From.X) + Mathf.Abs(To.Y - From.Y);
+    
     public Vector2 GetNearestPoint(Vector2 point)
     {
         Vector2 segmentVec = To - From;

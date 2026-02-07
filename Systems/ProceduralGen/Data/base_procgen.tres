@@ -17,3 +17,4 @@ LoopCount = 1
 MinimumDirectCorridorOverlapLength = 20
 MaximumCornerCorridorOverlapLength = 2
 MaximumCorridorLength = 40
+CorridorMaxDistanceToCenter = 4

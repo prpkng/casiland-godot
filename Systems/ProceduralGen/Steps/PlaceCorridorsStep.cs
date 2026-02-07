@@ -215,8 +215,6 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
         Log.Verbose("> Found corridor with length {Len} which exceeds the maximum length!",
             longCorridor.From.DistanceTo(longCorridor.To));
 
-        float width = Mathf.Lerp(Settings.MinRoomWidth, Settings.MaxRoomWidth, State.Rng.RandfRange(0.25f, .75f));
-        float height = Mathf.Lerp(Settings.MinRoomHeight, Settings.MaxRoomHeight, State.Rng.RandfRange(0.25f, .75f));
 
         var from = (Vector2)longCorridor.From;
         var lineDirAbs = from.DirectionTo(longCorridor.To).Abs();
@@ -225,13 +223,15 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
             ? [Directions.Left, Directions.Right] : [Directions.Up, Directions.Down];
         
 
+        float width = Mathf.Lerp(Settings.MinRoomWidth, Settings.MaxRoomWidth, State.Rng.RandfRange(0f, .5f));
+        float height = Mathf.Lerp(Settings.MinRoomHeight, Settings.MaxRoomHeight, State.Rng.RandfRange(0f, .5f));
         var size = new Vector2(width, height);
         var room = new ProceduralRoom(from.Lerp(longCorridor.To, 0.5f) - size / 2, size);
         room.ConnectionDirections.AddRange(directions);
         room.CorridorLines = [longCorridor];
         State.CorridorRooms.Add(room);
     
-        State.CorridorLines.Remove(longCorridor);
+        // State.CorridorLines.Remove(longCorridor);
 
         room.Rect.Position += Vector2.FromAngle(State.Rng.Randf() * Mathf.Pi * 2) * State.Rng.RandfRange(0, 4);
         Log.Verbose("> Added in-between room {Index}!", State.CorridorRooms.IndexOf(room));
@@ -282,6 +282,7 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
                 {
                     corridor.Rect.Position += direction;
                     center = corridor.Rect.GetCenter();
+                    await GDTask.Delay(200);
                 }
 
             }

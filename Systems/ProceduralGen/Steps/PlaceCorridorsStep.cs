@@ -223,9 +223,14 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
             ? [Directions.Left, Directions.Right] : [Directions.Up, Directions.Down];
         
 
-        float width = Mathf.Lerp(Settings.MinRoomWidth, Settings.MaxRoomWidth, State.Rng.RandfRange(0f, .5f));
-        float height = Mathf.Lerp(Settings.MinRoomHeight, Settings.MaxRoomHeight, State.Rng.RandfRange(0f, .5f));
-        var size = new Vector2(width, height);
+        float baseSize = Mathf.Lerp(Settings.MinBaseRoomSize, Settings.MaxBaseRoomSize, State.Rng.RandfRange(0f, 0.5f));
+        var size = ProceduralGeometry.AspectWiseRandomSize(
+            State.Rng,
+            Settings.BaseRoomAspect,
+            Settings.MaxRoomAspectDeviation,
+            baseSize,
+            Settings.MaxRoomSizeDeviation
+        );
         var room = new ProceduralRoom(from.Lerp(longCorridor.To, 0.5f) - size / 2, size);
         room.ConnectionDirections.AddRange(directions);
         room.CorridorLines = [longCorridor];

@@ -39,12 +39,47 @@ public record struct LineSegment
 public static class ProceduralGeometry
 {
 
+    #region === RNG HELPERS ===
+
+    /// <summary>
+    /// Generates a Vector2 containing the size of a room respecting an aspect.
+    /// </summary>
+    /// <remarks>
+    /// Despite randomness, this algorithm tries to generate sizes respecting
+    /// a given aspect.
+    /// </remarks>
+    /// <param name="rng">The RNG used</param>
+    /// <param name="baseRoomAspect">The default aspect to be calculated from. (Width / Height)</param>
+    /// <param name="aspectDeviation">The amount of randomness to add to <param name="baseRoomAspect"></param></param>
+    /// <param name="baseRoomSize">The default room size to be calculated from. (Height)</param>
+    /// <param name="sizeDeviation">The amount of randomness to add to <param name="baseRoomSize"></param></param>
+    /// <returns>A Vector2 containing the size of a room</returns>
+    public static Vector2 AspectWiseRandomSize(
+        RandomNumberGenerator rng,
+        float baseRoomAspect,
+        float aspectDeviation,
+        float baseRoomSize,
+        float sizeDeviation)
+    {
+        float aspect = baseRoomAspect + rng.RandfRange(-aspectDeviation, aspectDeviation);
+        float size = baseRoomSize + rng.RandfRange(-sizeDeviation, sizeDeviation);
+        return new Vector2(size * aspect, size);
+    }
+    
+    #endregion
+    
+    #region === TILEMAP HELPERS ===
+
     public static void SetCells(this TileMapLayer tilemap, IEnumerable<Vector2I> tiles,
         int sourceId, Vector2I coords)
     {
         foreach (var tile in tiles)
             tilemap.SetCell(tile, sourceId, coords);
     }
+
+    #endregion
+
+    #region === LINE ALGORITHMS ===
     
     public static Vector2 FindLineIntersection(Vector2 p1A, Vector2 p1B, Vector2 p2A, Vector2 p2B)
     {
@@ -291,4 +326,5 @@ public static class ProceduralGeometry
         return true;
     }
     
+    #endregion
 }

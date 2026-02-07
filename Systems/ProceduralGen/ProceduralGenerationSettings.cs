@@ -14,11 +14,11 @@ public partial class ProceduralGenerationSettings : Resource
     [Export] public int MaxRoomCount = 10;
     [Export] public int MinRoomDistance = 90;
 
-    [Export] public int MinRoomWidth = 20;
-    [Export] public int MaxRoomWidth = 40;
-    [Export] public int MinRoomHeight = 20;
-    [Export] public int MaxRoomHeight = 30;
+    [Export] public int MinBaseRoomSize = 22;
+    [Export] public int MaxBaseRoomSize = 26;
+    [Export] public int MaxRoomSizeDeviation = 5;
 
+    [Export] public float BaseRoomAspect = 1.2f;
     /// <summary>'Aspect deviation' means how wide OR tall a room can be, in the range [0.0-1.0] </summary>
     [Export] public float MaxRoomAspectDeviation = 0.4f;
 

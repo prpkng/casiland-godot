@@ -31,9 +31,13 @@ public class PlaceRoomsStep(GenerationState state, ProceduralGenerationSettings 
 
             for (int iter = 0; iter < maxIter; iter++)
             {
-                size = new Vector2(
-                    parkMiller.NextFloat(Settings.MinRoomWidth, Settings.MaxRoomWidth),
-                    parkMiller.NextFloat(Settings.MinRoomHeight, Settings.MaxRoomHeight)
+                float baseSize = parkMiller.NextFloat(Settings.MinBaseRoomSize, Settings.MaxBaseRoomSize);
+                size = ProceduralGeometry.AspectWiseRandomSize(
+                    State.Rng,
+                    Settings.BaseRoomAspect,
+                    Settings.MaxRoomAspectDeviation,
+                    baseSize,
+                    Settings.MaxRoomSizeDeviation
                 );
 
                 if (Mathf.Abs(size.Aspect() - 1f) < Settings.MaxRoomAspectDeviation)

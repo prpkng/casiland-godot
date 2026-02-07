@@ -33,6 +33,11 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
         { Vector2.Right, RoomNeighborDirection.Right }
     };
 
+    public void CreateInBetweenRooms()
+    {
+        
+    }
+
     #region === CREATE CORRIDOR LINES SUBSTEP ===
     
     #region === CORRIDOR CREATION ALGORITHMS 
@@ -141,7 +146,16 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
             var overlap = GetRectOverlapOnAxis(fromRoom.Rect, toRoom.Rect, axis);
             float length = (overlap.Size * (Vector2.One - axis)).Abs().Sum();
 
-            LineSegment[] generateLines()
+            var lines = GenerateLines();
+
+            State.CorridorLines.AddRange(lines);
+            State.CorridorLineGroups.Add(lines);
+            fromRoom.CorridorLines.Add(lines[0]);
+            toRoom.CorridorLines.Add(lines[^1]);
+            await GDTask.Delay(200);
+            continue;
+
+            LineSegment[] GenerateLines()
             {
                 if (length > Settings.MinimumDirectCorridorOverlapLength)
                 {
@@ -157,14 +171,6 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
 
                 return CreateSShapedCorridor(fromRoom, toRoom, axis);
             }
-
-            var lines = generateLines();
-
-            State.CorridorLines.AddRange(lines);
-            State.CorridorLineGroups.Add(lines);
-            fromRoom.CorridorLines.Add(lines[0]);
-            toRoom.CorridorLines.Add(lines[^1]);
-            await GDTask.Delay(200);
         }
     }
     
@@ -328,8 +334,8 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
     public override async GDTask Perform()
     {
         await CreateCorridorLines();
-        SelectCorridorRooms();
-        EnsureCorridorsNotEmpty();
+        // SelectCorridorRooms();
+        // EnsureCorridorsNotEmpty();
 
         await FixCorridorRoomsPlacement();
 

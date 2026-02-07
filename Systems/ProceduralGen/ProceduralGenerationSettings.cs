@@ -17,7 +17,7 @@ public partial class ProceduralGenerationSettings : Resource
     [Export] public int MinBaseRoomSize = 22;
     [Export] public int MaxBaseRoomSize = 26;
     [Export] public int MaxRoomSizeDeviation = 5;
-
+ 
     [Export] public float BaseRoomAspect = 1.2f;
     /// <summary>'Aspect deviation' means how wide OR tall a room can be, in the range [0.0-1.0] </summary>
     [Export] public float MaxRoomAspectDeviation = 0.4f;
@@ -37,6 +37,7 @@ public partial class ProceduralGenerationSettings : Resource
     /// This prevents the corridors from being generated TOO close from the edges
     /// </summary>
     [ExportGroup("Corridor Parameters")]
+    
     [Export] public int MinimumDirectCorridorOverlapLength = 8;
 
     /// <summary>
@@ -51,6 +52,11 @@ public partial class ProceduralGenerationSettings : Resource
     /// Defines the maximum length for a corridor before another room is generated in-between
     /// </summary>
     [Export] public int MaximumCorridorLength = 24;
+
+    /// <summary>
+    /// Every time the main room distances exceed a multiple of this number, a new room is added to the corridor.
+    /// </summary>
+    [Export] public int InBetweenRoomsDenominator = 26;
 
     /// <summary>
     /// The maximum distance that a corridor line can pass by (in both axis) from the center of its room. This ensures no corridor line 

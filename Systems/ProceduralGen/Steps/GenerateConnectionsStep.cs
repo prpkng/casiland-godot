@@ -74,6 +74,29 @@ public class GenerateConnectionsStep(GenerationState state, ProceduralGeneration
         }
     }
 
+    public void UpdateMstLines()
+    {
+        var oldPointToRoom = State.PointToRoom;
+        State.PointToRoom = new Dictionary<Vector2I, ProceduralRoom>();
+
+        for (int index = 0; index < State.MinimumSpanningTree.Count; index++)
+        {
+            var edge = State.MinimumSpanningTree[index];
+            var fromRoom = oldPointToRoom[edge.From];
+            var toRoom = oldPointToRoom[edge.To];
+            var direction = edge.FromF.DirectionTo(edge.ToF);
+            var newFrom = fromRoom.Rect.CastTowardsPerimeter(direction).RoundToInt();
+            State.PointToRoom[newFrom] = fromRoom;
+            var newTo = toRoom.Rect.CastTowardsPerimeter(-direction).RoundToInt();
+            State.PointToRoom[newTo] = toRoom;
+            
+            edge.From = newFrom;
+            edge.To = newTo;
+            
+            State.MinimumSpanningTree[index] = edge;
+        }
+    }
+
     public void PickStartRoom()
     {
         var leafRooms = State.MainRooms
@@ -205,7 +228,7 @@ public class GenerateConnectionsStep(GenerationState state, ProceduralGeneration
     public void SortMst()
     {
         State.MinimumSpanningTree = [.. State.MinimumSpanningTree.OrderBy(line => {
-                var meanBias = (State.PointToRoom[(Vector2I)line.From].ProgressBias + State.PointToRoom[(Vector2I)line.To].ProgressBias) / 2f;
+                var meanBias = (State.PointToRoom[line.From].ProgressBias + State.PointToRoom[line.To].ProgressBias) / 2f;
                 return meanBias;
             }
         )];
@@ -217,6 +240,8 @@ public class GenerateConnectionsStep(GenerationState state, ProceduralGeneration
         var connections = CalculateDelaunayConnections(State.MainRooms);
         ConstructMst(connections);
         FillRoomConnections();
+        
+        UpdateMstLines();
 
         PickStartRoom();
 

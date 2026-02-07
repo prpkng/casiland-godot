@@ -17,33 +17,58 @@ public record struct LineSegment
         From = (Vector2I)from;
         To = (Vector2I)to;
     }
-    
-    public void Deconstruct(out Vector2I from, out Vector2I to) {
+
+    public void Deconstruct(out Vector2I from, out Vector2I to)
+    {
         from = From;
         to = To;
     }
 
     public float EuclideanLength => FromF.DistanceTo(ToF);
     public float ArithmeticLength => Mathf.Abs(To.X - From.X) + Mathf.Abs(To.Y - From.Y);
-    
+
     public Vector2 GetNearestPoint(Vector2 point)
     {
         Vector2 segmentVec = To - From;
         float segmentLenSq = segmentVec.LengthSquared();
-        
+
         if (segmentLenSq < 1e-8f)
             return From;
-        
+
         float t = (point - From).Dot(segmentVec) / segmentLenSq;
         t = Mathf.Clamp(t, 0f, 1f);
-        
+
         return From + t * segmentVec;
     }
-    
 }
 
 public static class ProceduralGeometry
 {
+    public static Vector2I RoundToInt(this Vector2 vec) => new(Mathf.RoundToInt(vec.X), Mathf.RoundToInt(vec.Y));
+    public static Vector2 CastTowardsPerimeter(this Rect2I rect, Vector2 direction)
+        => CastTowardsPerimeter(new Rect2(rect.Position, rect.Size), direction);
+    public static Vector2 CastTowardsPerimeter(this Rect2 rect, Vector2 direction)
+    {
+        var center = rect.GetCenter();
+        var halfSize = rect.Size / 2f;
+
+        float dx = direction.X;
+        float dy = direction.Y;
+
+        float tx = float.PositiveInfinity;
+        float ty = float.PositiveInfinity;
+
+        if (dx != 0f)
+            tx = halfSize.X / Mathf.Abs(dx);
+
+        if (dy != 0f)
+            ty = halfSize.Y / Mathf.Abs(dy);
+
+        float t = Mathf.Min(tx, ty);
+
+        return center + direction * t;
+    }
+
 
     #region === RNG HELPERS ===
 
@@ -71,9 +96,9 @@ public static class ProceduralGeometry
         float size = baseRoomSize + rng.RandfRange(-sizeDeviation, sizeDeviation);
         return new Vector2(size * aspect, size);
     }
-    
+
     #endregion
-    
+
     #region === TILEMAP HELPERS ===
 
     public static void SetCells(this TileMapLayer tilemap, IEnumerable<Vector2I> tiles,
@@ -86,7 +111,7 @@ public static class ProceduralGeometry
     #endregion
 
     #region === LINE ALGORITHMS ===
-    
+
     public static Vector2 FindLineIntersection(Vector2 p1A, Vector2 p1B, Vector2 p2A, Vector2 p2B)
     {
         float denom =
@@ -112,6 +137,7 @@ public static class ProceduralGeometry
 
 
     public static bool EdgeIntersectsRect(LineSegment line, Rect2 rect) => EdgeIntersectsRect(line.From, line.To, rect);
+
     public static bool EdgeIntersectsRect(Vector2 a, Vector2 b, Rect2 rect)
     {
         var tl = rect.Position;
@@ -129,7 +155,7 @@ public static class ProceduralGeometry
 
         return lines.Any(x => x);
     }
-    
+
     public static void BresenhamLine(Vector2I start, Vector2I end, Array<Vector2I> points)
     {
         int x0 = start.X;
@@ -166,8 +192,8 @@ public static class ProceduralGeometry
                 y0 += sy;
             }
         }
-
     }
+
     public static Array<Vector2I> BresenhamLine(Vector2I start, Vector2I end)
     {
         var points = new Array<Vector2I>();
@@ -218,6 +244,7 @@ public static class ProceduralGeometry
 
         return result.ToList();
     }
+
     public static List<LineSegment> GetVisibleSegments(LineSegment segment, IReadOnlyList<Rect2> rects)
     {
         var (a, b) = segment;
@@ -263,6 +290,7 @@ public static class ProceduralGeometry
                 c1 = t1;
             }
         }
+
         merged.Add((c0, c1));
 
         // Now compute the EXPOSED segments = complement of merged intervals
@@ -276,6 +304,7 @@ public static class ProceduralGeometry
                 Vector2 pB = a + dir * (t0 * len);
                 result.Add(new LineSegment(pA, pB));
             }
+
             previousEnd = Mathf.Max(previousEnd, t1);
         }
 
@@ -292,7 +321,7 @@ public static class ProceduralGeometry
 
     // Intersection helper: returns t-range where the line is inside the rectangle
     private static bool RaySegmentAABBRange(
-        Vector2 origin, Vector2 dir, float length, Rect2 box, 
+        Vector2 origin, Vector2 dir, float length, Rect2 box,
         out float tMin, out float tMax)
     {
         float t0 = 0f;
@@ -319,7 +348,7 @@ public static class ProceduralGeometry
 
         float invD = 1f / d;
         float tNear = (min - o) * invD;
-        float tFar  = (max - o) * invD;
+        float tFar = (max - o) * invD;
 
         if (tNear > tFar)
             (tNear, tFar) = (tFar, tNear);
@@ -331,6 +360,6 @@ public static class ProceduralGeometry
         t1 = Mathf.Min(t1, tFar);
         return true;
     }
-    
+
     #endregion
 }

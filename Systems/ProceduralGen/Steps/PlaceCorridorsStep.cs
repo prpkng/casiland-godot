@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Casiland.Common;
+using Casiland.Systems.ProceduralGen.Algorithms;
 using Fractural.Tasks;
 using Godot;
 using Serilog;
@@ -13,14 +14,7 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
 {
 
     public override string StateDescription => $"Placing {State.CorridorLines?.Count} corridor lines and {State.CorridorRooms?.Count} corridor rooms";
-
-    private static Rect2 GetRectOverlapOnAxis(Rect2 from, Rect2 to, Vector2 axis)
-    {
-        var inv = Vector2.One - axis.Abs();
-        var r1 = new Rect2(from.Position * inv, from.Size);
-        var r2 = new Rect2(to.Position * inv, to.Size);
-        return r1.Intersection(r2);
-    }
+    
     private static readonly Dictionary<Vector2, RoomNeighborDirection> VecToDirDict = new()
     {
         { new Vector2(1, -1), RoomNeighborDirection.Up },
@@ -77,27 +71,7 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
 
     #region === CREATE CORRIDOR LINES SUBSTEP ===
     
-    #region === CORRIDOR CREATION ALGORITHMS 
-    /// <summary>
-    /// Tries to create a direct corridor between the two rooms and returns null if there is already another corridor in the way
-    /// </summary>
-    private LineSegment? CreateDirectCorridor(ProceduralRoom fromRoom, ProceduralRoom toRoom, Vector2 axis, Rect2 overlap)
-    {
-        var inv = Vector2.One - axis;
-        var from = fromRoom.Center * axis + overlap.GetCenter() * inv;
-        var dest = toRoom.Center * axis + overlap.GetCenter() * inv;
-
-        var dir = (dest - from).Sign();
-
-        if (fromRoom.ConnectionDirections.Contains(VecToDirDict[dir]))
-            return null;
-
-        fromRoom.ConnectionDirections.Add(VecToDirDict[dir]);
-        toRoom.ConnectionDirections.Add(VecToDirDict[-dir]);
-
-        return new LineSegment(from, dest);
-    }
-
+    #region === CORRIDOR CREATION ALGORITHMS
 
     private bool CheckIfCornerTooSteep(ProceduralRoom fromRoom, ProceduralRoom toRoom, Vector2 fromDir, Vector2 toDir)
     {
@@ -112,82 +86,27 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
         
         return lowest < highest / Settings.MaxCornerSizeDifference;
     }
-    /// <summary>
-    /// Tries to create a corner-shaped corridor between the two given rooms and return null if the all possible corners are blocked
-    /// </summary>
-    private LineSegment[] CreateCornerCorridor(ProceduralRoom fromRoom, ProceduralRoom toRoom)
-    {
-        var vector = toRoom.Center - fromRoom.Center;
-        var possibleDirections = new List<Vector2>
-        {
-            Vector2.Right * Mathf.Sign(vector.X),
-            Vector2.Down * Mathf.Sign(vector.Y)
-        };
-
-        Vector2 destDir;
-
-        if (!CheckIfCornerTooSteep(fromRoom, toRoom, possibleDirections[0], possibleDirections[1]) &&
-             !fromRoom.ConnectionDirections.Contains(VecToDirDict[possibleDirections[0]]) && 
-            !toRoom.ConnectionDirections.Contains(VecToDirDict[-possibleDirections[1]]))
-            destDir = possibleDirections[0];
-        else if (!CheckIfCornerTooSteep(fromRoom, toRoom, possibleDirections[1], possibleDirections[0]) &&
-                 !fromRoom.ConnectionDirections.Contains(VecToDirDict[possibleDirections[1]]) && 
-                 !toRoom.ConnectionDirections.Contains(VecToDirDict[-possibleDirections[0]]))
-            destDir = possibleDirections[1];
-        else 
-            return null; // Fail to find a viable corner segment
-
-
-        // var destDir = fromRoom.ConnectionDirections.Contains(_vecToDirDict[vecs[0]]) ? vecs[1] : vecs[0];
-
-        var corner = fromRoom.Center + vector * destDir.Abs();
-        fromRoom.ConnectionDirections.Add(VecToDirDict[(corner - fromRoom.Center).Sign()]);
-        toRoom.ConnectionDirections.Add(VecToDirDict[(corner - toRoom.Center).Sign()]);
-
-
-        return [new LineSegment(fromRoom.Center, corner), new LineSegment(corner, toRoom.Center)];
-    }
-    
-    /// <summary>
-    /// Creates an S-shaped corridor between the two given rooms
-    /// </summary>
-    private LineSegment[] CreateSShapedCorridor(ProceduralRoom fromRoom, ProceduralRoom toRoom, Vector2 axis)
-    {
-        var from = fromRoom.Center;
-        var to = toRoom.Center;
-        var dir = to - from;
-
-
-
-        var inv = Vector2.One - axis.Abs();
-
-        float bias = State.Rng.RandfRange(0.45f, 0.55f);
-
-        var c1 = from + dir * axis * bias;
-        var c2 = to - dir * axis * (1f-bias);
-
-        fromRoom.ConnectionDirections.Add(VecToDirDict[(c1 - from).Sign()]);
-        toRoom.ConnectionDirections.Add(VecToDirDict[(c2 - to).Sign()]);
-
-        return [new LineSegment(from, c1), new LineSegment(c1, c2), new LineSegment(c2, to)];
-    }
     
     #endregion
-
+    
     private async GDTask CreateCorridorBetween(ProceduralRoom fromRoom, ProceduralRoom toRoom)
     {
         fromRoom.CorridorLines ??= [];
         toRoom.CorridorLines ??= [];
 
-        var dir = fromRoom.Center - toRoom.Center;
+        var dir = toRoom.Center - fromRoom.Center;
         bool horizontal = Mathf.Abs(dir.X) > Mathf.Abs(dir.Y);
 
         var axis = horizontal ? Vector2.Right : Vector2.Down;
 
-        var overlap = GetRectOverlapOnAxis(fromRoom.Rect, toRoom.Rect, axis);
+        var overlap = ProceduralGeometry.GetRectOverlapOnAxis(fromRoom.Rect, toRoom.Rect, axis);
         float overlapLengthOnAxis = (overlap.Size * (Vector2.One - axis)).Abs().Sum();
 
-        var lines = GenerateLines();
+        var corridorShape = GenCorridorShape();
+        fromRoom.ConnectionDirections.Add(corridorShape.FromDirection);
+        toRoom.ConnectionDirections.Add(corridorShape.ToDirection);
+
+        var lines = corridorShape.ComputeLines();
 
         State.CorridorLines.AddRange(lines);
         State.CorridorLineGroups.Add(lines);
@@ -196,22 +115,35 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
         await GDTask.Delay(200);
         return;
 
-        LineSegment[] GenerateLines()
+        CorridorShape GenCorridorShape()
         {
             if (overlapLengthOnAxis > Settings.MinimumDirectCorridorOverlapLength)
             {
-                var line = CreateDirectCorridor(fromRoom, toRoom, axis, overlap);
-                if (line.HasValue) return [line.Value];
+                var shape = new DirectCorridorShape(axis, fromRoom, toRoom);
+                if (!fromRoom.ConnectionDirections.Contains(shape.FromDirection))
+                    return shape;
             }
-
-            // if (overlapLengthOnAxis <= Settings.MaximumCornerCorridorOverlapLength)
-            if (true)
+            
+            var possibleDirections = new List<Vector2>
             {
-                var result = CreateCornerCorridor(fromRoom, toRoom);
-                if (result != null) return result;
-            }
+                Vector2.Right * Mathf.Sign(dir.X),
+                Vector2.Down * Mathf.Sign(dir.Y)
+            };
 
-            return CreateSShapedCorridor(fromRoom, toRoom, axis);
+            var cornerCorridor = new CornerCorridorShape(fromRoom.Center.RoundToInt(), toRoom.Center.RoundToInt(), possibleDirections[0]);
+            if (!CheckIfCornerTooSteep(fromRoom, toRoom, possibleDirections[0], possibleDirections[1]) &&
+                !fromRoom.ConnectionDirections.Contains(VecToDirDict[possibleDirections[0]]) && 
+                !toRoom.ConnectionDirections.Contains(VecToDirDict[-possibleDirections[1]]))
+                return cornerCorridor;
+            cornerCorridor.CornerDirection = possibleDirections[1];
+            if (!CheckIfCornerTooSteep(fromRoom, toRoom, possibleDirections[1], possibleDirections[0]) &&
+                     !fromRoom.ConnectionDirections.Contains(VecToDirDict[possibleDirections[1]]) && 
+                     !toRoom.ConnectionDirections.Contains(VecToDirDict[-possibleDirections[0]]))
+                return cornerCorridor;
+
+            float stepBias = State.Rng.RandfRange(0.45f, 0.55f);
+            return new StepCorridorShape(fromRoom.Center.RoundToInt(), toRoom.Center.RoundToInt(), axis,
+                stepBias);
         }
     }
     private async GDTask CreateCorridorLines()

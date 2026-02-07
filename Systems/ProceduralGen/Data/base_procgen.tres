@@ -13,6 +13,6 @@ MaxRoomAspectDeviation = 0.5
 RoomWidthThreshold = 42
 LoopCount = 1
 MinimumDirectCorridorOverlapLength = 20
-MaximumCornerCorridorOverlapLength = 100
+MaxCornerSizeDifference = 2.4
 InBetweenRoomsDenominator = 50
 CorridorMaxDistanceToCenter = 4

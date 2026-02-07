@@ -12,6 +12,21 @@ public enum RoomNeighborDirection
     Right
 }
 
+public static class DirectionConversions
+{
+    public static readonly Dictionary<Vector2, RoomNeighborDirection> VecToDirDict = new()
+    {
+        { new Vector2(1, -1), RoomNeighborDirection.Up },
+        { new Vector2(-1, -1), RoomNeighborDirection.Up },
+        { Vector2.Up, RoomNeighborDirection.Up },
+        { new Vector2(1, 1), RoomNeighborDirection.Down },
+        { new Vector2(-1, 1), RoomNeighborDirection.Down },
+        { Vector2.Down, RoomNeighborDirection.Down },
+        { Vector2.Left, RoomNeighborDirection.Left },
+        { Vector2.Right, RoomNeighborDirection.Right }
+    };
+}
+
 public enum RoomTypes
 {
     NormalRoom,

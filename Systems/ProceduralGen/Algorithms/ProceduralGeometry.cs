@@ -44,6 +44,16 @@ public record struct LineSegment
 
 public static class ProceduralGeometry
 {
+    public static Vector2 Sign4Way(this Vector2 v)
+    {
+        var norm = v.Normalized();
+        bool horizontal = Mathf.Abs(v.X) > Mathf.Abs(v.Y);
+        return horizontal switch
+        {
+            true => (Vector2.Right * norm).Sign(),
+            false => (Vector2.Down * norm).Sign()
+        };
+    }
     public static Vector2I RoundToInt(this Vector2 vec) => new(Mathf.RoundToInt(vec.X), Mathf.RoundToInt(vec.Y));
     public static Vector2 CastTowardsPerimeter(this Rect2I rect, Vector2 direction)
         => CastTowardsPerimeter(new Rect2(rect.Position, rect.Size), direction);
@@ -67,6 +77,14 @@ public static class ProceduralGeometry
         float t = Mathf.Min(tx, ty);
 
         return center + direction * t;
+    }
+    
+    public static Rect2 GetRectOverlapOnAxis(Rect2 from, Rect2 to, Vector2 axis)
+    {
+        var inv = Vector2.One - axis.Abs();
+        var r1 = new Rect2(from.Position * inv, from.Size);
+        var r2 = new Rect2(to.Position * inv, to.Size);
+        return r1.Intersection(r2);
     }
 
 

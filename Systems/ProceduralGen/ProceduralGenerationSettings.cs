@@ -59,10 +59,13 @@ public partial class ProceduralGenerationSettings : Resource
     /// </summary>
     [Export] public int CorridorMaxDistanceToCenter = 6;
 
+
     [ExportGroup("Corridor Props")]
     [Export] public PackedScene DoorScene;
 
     
     [ExportGroup("Tile Settings")]
     [Export] public AutoTileRuleSet AutoTileRuleSet;
+
+    [Export] public int CorridorTileWidth = 5;
 }

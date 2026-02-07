@@ -138,14 +138,6 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
         toRoom.Neighbors[corridorShape.ToDirection].Add((corridorShape, 1));
         fromRoom.ConnectionDirections.Add(corridorShape.FromDirection);
         toRoom.ConnectionDirections.Add(corridorShape.ToDirection);
-
-        var lines = corridorShape.ComputeLines();
-
-        State.CorridorLines.AddRange(lines);
-        State.CorridorLineGroups.Add(lines);
-        fromRoom.CorridorLines.Add(lines[0]);
-        toRoom.CorridorLines.Add(lines[^1]);
-        await GDTask.Delay(200);
         return;
 
         CorridorShape GenCorridorShape()
@@ -175,8 +167,44 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
                      toRoom.Neighbors[VecToDirDict[-possibleDirections[0]]].Count == 0)
                 return cornerCorridor;
 
+
+            var dirOnAxis = (dir * axis);
             float stepBias = State.Rng.RandfRange(0.45f, 0.55f);
-            return new StepCorridorShape(fromRoom, toRoom, axis, stepBias);
+            
+            var corridor = new StepCorridorShape(fromRoom, toRoom, axis, stepBias);
+
+            if (fromRoom.Neighbors[VecToDirDict[dirOnAxis.Sign4Way()]].Count == 0)
+                return corridor;
+
+            var nb = fromRoom.Neighbors[VecToDirDict[dirOnAxis.Sign4Way()]].First();
+            var nbDest = nb.endpoint == 0 ? nb.shape.ToRoom : nb.shape.FromRoom;
+            float destPos = horizontal ? nbDest.Center.Y : nbDest.Center.X;
+            float toPos = horizontal ? toRoom.Center.Y : toRoom.Center.X;
+            int side = toPos > destPos ? 1 : 0;
+            
+            float roomMin = horizontal ? fromRoom.Rect.Position.Y : fromRoom.Rect.Position.X;
+            float roomMax = horizontal ? fromRoom.Rect.End.Y : fromRoom.Rect.End.X;
+
+            ref var endpointPos = ref (nb.endpoint == 0 ? ref nb.shape.FromPos : ref nb.shape.ToPos);
+            float sizeOnAxis = horizontal ? fromRoom.Size.Y : fromRoom.Size.X;
+            int increment = Mathf.Clamp(
+                Mathf.RoundToInt((sizeOnAxis - Settings.CorridorTileWidth * 2) / 2f),
+                Settings.CorridorTileWidth, 
+                (int)(sizeOnAxis/2f + Settings.CorridorTileWidth/1.75f)
+            );
+            
+            if (horizontal)
+            {
+                endpointPos.Y = side == 1 ? roomMin + increment : roomMax - increment;
+                corridor.FromPos.Y = side == 0 ? roomMin + increment : roomMax - increment;
+            }
+            else
+            {
+                endpointPos.X = side == 1 ? roomMin + increment : roomMax - increment;
+                corridor.FromPos.X = side == 0 ? roomMin + increment : roomMax - increment;
+            }
+
+            return corridor;
         }
     }
     private async GDTask CreateCorridorLines()
@@ -194,6 +222,24 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
             await CreateCorridorBetween(fromRoom, toRoom);
         }
         
+        visited.Clear();
+        foreach (var fromRoom in State.AllRooms)
+        foreach (var (shape, endpoint) in fromRoom.Neighbors.Values.SelectMany(l => l))
+        {
+            var toRoom = endpoint == 0 ? shape.ToRoom : shape.FromRoom;
+            string key = new[] { fromRoom.Id, toRoom.Id }.Order().ToArray().Join("-");
+            if (!visited.Add(key)) continue;
+            
+            
+            var lines = shape.ComputeLines();
+
+            State.CorridorLines.AddRange(lines);
+            State.CorridorLineGroups.Add(lines);
+            fromRoom.CorridorLines.Add(lines[0]);
+            toRoom.CorridorLines.Add(lines[^1]);
+        }
+        
+
     }
     
     #endregion

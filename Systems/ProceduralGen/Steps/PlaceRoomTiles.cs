@@ -67,7 +67,7 @@ public class PlaceRoomTilesStep(GenerationState state, ProceduralGenerationSetti
         foreach (var line in State.CorridorLines)
         {
             State.TilemapLayer.SetCells(
-                ProceduralGeometry.BresenhamLineWidth(line.From, line.To, 5), TilesSrcId,
+                ProceduralGeometry.BresenhamLineWidth(line.From, line.To, Settings.CorridorTileWidth), TilesSrcId,
                 FloorTileCoord);
         }
     }

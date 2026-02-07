@@ -33,9 +33,46 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
         { Vector2.Right, RoomNeighborDirection.Right }
     };
 
-    public void CreateInBetweenRooms()
+    private ProceduralRoom CreateInBetweenRoom(Vector2 center)
     {
-        
+        float baseSize = Mathf.Lerp(Settings.MinBaseRoomSize, Settings.MaxBaseRoomSize, State.Rng.RandfRange(0f, 0.5f));
+        var size = ProceduralGeometry.AspectWiseRandomSize(
+            State.Rng,
+            Settings.BaseRoomAspect,
+            Settings.MaxRoomAspectDeviation,
+            baseSize,
+            Settings.MaxRoomSizeDeviation
+        );
+        return new ProceduralRoom(center - size / 2, size);
+    }
+    
+    private void CreateInBetweenRooms()
+    {
+        foreach (var line in State.MinimumSpanningTree)
+        {
+            float len = line.EuclideanLength;
+            int roomCount = Mathf.FloorToInt(len / Settings.InBetweenRoomsDenominator);
+            if (roomCount < 1) continue;
+            var fromRoom = State.PointToRoom[line.From];
+            var toRoom = State.PointToRoom[line.To];
+            fromRoom.Connections.Remove(toRoom);
+            toRoom.Connections.Remove(fromRoom);
+            var lastRoom = fromRoom;
+            for (int i = 0; i < roomCount; i++)
+            {
+                float factor = (i + 1f) / (roomCount + 1f);
+                var center = line.FromF.Lerp(line.ToF, factor);
+                var room = CreateInBetweenRoom(center);
+                room.Connections.Add(lastRoom);
+                lastRoom.Connections.Add(room);
+                room.CorridorLines = [];
+                State.CorridorRooms.Add(room);
+                lastRoom = room;
+            }
+            lastRoom.AddConnection(toRoom);
+            toRoom.AddConnection(lastRoom);
+
+        }
     }
 
     #region === CREATE CORRIDOR LINES SUBSTEP ===
@@ -60,38 +97,50 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
 
         return new LineSegment(from, dest);
     }
-    
+
+
+    private bool CheckIfCornerTooSteep(ProceduralRoom fromRoom, ProceduralRoom toRoom, Vector2 fromDir, Vector2 toDir)
+    {
+
+        var fromBorder = fromRoom.Rect.CastTowardsPerimeter(fromDir);
+        var toBorder = toRoom.Rect.CastTowardsPerimeter(-toDir);
+        var dcVector = toBorder - fromBorder;
+
+        float[] arr = [Mathf.Abs(dcVector.X), Mathf.Abs(dcVector.Y)];
+        float highest = arr.Max();
+        float lowest = arr.Min();
+        
+        return lowest < highest / Settings.MaxCornerSizeDifference;
+    }
     /// <summary>
     /// Tries to create a corner-shaped corridor between the two given rooms and return null if the all possible corners are blocked
     /// </summary>
     private LineSegment[] CreateCornerCorridor(ProceduralRoom fromRoom, ProceduralRoom toRoom)
     {
-        var dir = toRoom.Center - fromRoom.Center;
-        var vecs = new List<Vector2>
+        var vector = toRoom.Center - fromRoom.Center;
+        var possibleDirections = new List<Vector2>
         {
-            Vector2.Right * Mathf.Sign(dir.X),
-            Vector2.Down * Mathf.Sign(dir.Y)
+            Vector2.Right * Mathf.Sign(vector.X),
+            Vector2.Down * Mathf.Sign(vector.Y)
         };
 
         Vector2 destDir;
 
-        // Try first pattern
-        if (!fromRoom.ConnectionDirections.Contains(VecToDirDict[vecs[0]]) && 
-            !toRoom.ConnectionDirections.Contains(VecToDirDict[-vecs[1]]) &&
-            Mathf.Abs(dir.X) > fromRoom.Size.X + 4)
-            destDir = vecs[0];
-        else if (
-            !fromRoom.ConnectionDirections.Contains(VecToDirDict[vecs[1]]) && 
-            !toRoom.ConnectionDirections.Contains(VecToDirDict[-vecs[0]]) &&
-            Mathf.Abs(dir.Y) > fromRoom.Size.Y + 4)
-            destDir = vecs[1];
+        if (!CheckIfCornerTooSteep(fromRoom, toRoom, possibleDirections[0], possibleDirections[1]) &&
+             !fromRoom.ConnectionDirections.Contains(VecToDirDict[possibleDirections[0]]) && 
+            !toRoom.ConnectionDirections.Contains(VecToDirDict[-possibleDirections[1]]))
+            destDir = possibleDirections[0];
+        else if (!CheckIfCornerTooSteep(fromRoom, toRoom, possibleDirections[1], possibleDirections[0]) &&
+                 !fromRoom.ConnectionDirections.Contains(VecToDirDict[possibleDirections[1]]) && 
+                 !toRoom.ConnectionDirections.Contains(VecToDirDict[-possibleDirections[0]]))
+            destDir = possibleDirections[1];
         else 
             return null; // Fail to find a viable corner segment
 
 
         // var destDir = fromRoom.ConnectionDirections.Contains(_vecToDirDict[vecs[0]]) ? vecs[1] : vecs[0];
 
-        var corner = fromRoom.Center + dir * destDir.Abs();
+        var corner = fromRoom.Center + vector * destDir.Abs();
         fromRoom.ConnectionDirections.Add(VecToDirDict[(corner - fromRoom.Center).Sign()]);
         toRoom.ConnectionDirections.Add(VecToDirDict[(corner - toRoom.Center).Sign()]);
 
@@ -124,54 +173,62 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
     }
     
     #endregion
-    
 
-    public async GDTask CreateCorridorLines()
+    private async GDTask CreateCorridorBetween(ProceduralRoom fromRoom, ProceduralRoom toRoom)
     {
+        fromRoom.CorridorLines ??= [];
+        toRoom.CorridorLines ??= [];
+
+        var dir = fromRoom.Center - toRoom.Center;
+        bool horizontal = Mathf.Abs(dir.X) > Mathf.Abs(dir.Y);
+
+        var axis = horizontal ? Vector2.Right : Vector2.Down;
+
+        var overlap = GetRectOverlapOnAxis(fromRoom.Rect, toRoom.Rect, axis);
+        float overlapLengthOnAxis = (overlap.Size * (Vector2.One - axis)).Abs().Sum();
+
+        var lines = GenerateLines();
+
+        State.CorridorLines.AddRange(lines);
+        State.CorridorLineGroups.Add(lines);
+        fromRoom.CorridorLines.Add(lines[0]);
+        toRoom.CorridorLines.Add(lines[^1]);
+        await GDTask.Delay(200);
+        return;
+
+        LineSegment[] GenerateLines()
+        {
+            if (overlapLengthOnAxis > Settings.MinimumDirectCorridorOverlapLength)
+            {
+                var line = CreateDirectCorridor(fromRoom, toRoom, axis, overlap);
+                if (line.HasValue) return [line.Value];
+            }
+
+            // if (overlapLengthOnAxis <= Settings.MaximumCornerCorridorOverlapLength)
+            if (true)
+            {
+                var result = CreateCornerCorridor(fromRoom, toRoom);
+                if (result != null) return result;
+            }
+
+            return CreateSShapedCorridor(fromRoom, toRoom, axis);
+        }
+    }
+    private async GDTask CreateCorridorLines()
+    {
+        var visited = new HashSet<string>();
         State.CorridorLines.Clear();
 
-        foreach (var edge in State.MinimumSpanningTree)
+        foreach (var fromRoom in (ProceduralRoom[]) [..State.MainRooms, ..State.CorridorRooms])
+        foreach (var toRoom in fromRoom.Connections)
         {
-            var fromRoom = State.PointToRoom[edge.From];
-            var toRoom = State.PointToRoom[edge.To];
-
-            fromRoom.CorridorLines ??= [];
-            toRoom.CorridorLines ??= [];
-
-            var dir = fromRoom.Center - toRoom.Center;
-            bool horizontal = Mathf.Abs(dir.X) > Mathf.Abs(dir.Y);
-
-            var axis = horizontal ? Vector2.Right : Vector2.Down;
-
-            var overlap = GetRectOverlapOnAxis(fromRoom.Rect, toRoom.Rect, axis);
-            float length = (overlap.Size * (Vector2.One - axis)).Abs().Sum();
-
-            var lines = GenerateLines();
-
-            State.CorridorLines.AddRange(lines);
-            State.CorridorLineGroups.Add(lines);
-            fromRoom.CorridorLines.Add(lines[0]);
-            toRoom.CorridorLines.Add(lines[^1]);
-            await GDTask.Delay(200);
-            continue;
-
-            LineSegment[] GenerateLines()
-            {
-                if (length > Settings.MinimumDirectCorridorOverlapLength)
-                {
-                    var line = CreateDirectCorridor(fromRoom, toRoom, axis, overlap);
-                    if (line.HasValue) return [line.Value];
-                }
-
-                if (length <= Settings.MaximumCornerCorridorOverlapLength)
-                {
-                    var result = CreateCornerCorridor(fromRoom, toRoom);
-                    if (result != null) return result;
-                }
-
-                return CreateSShapedCorridor(fromRoom, toRoom, axis);
-            }
+            string key = new[] { fromRoom.Id, toRoom.Id }.Order().ToArray().Join("-");
+            if (!visited.Add(key)) continue;
+            
+            Log.Information("Creating corridor {From} -> {To}",  fromRoom.Id, toRoom.Id);
+            await CreateCorridorBetween(fromRoom, toRoom);
         }
+        
     }
     
     #endregion
@@ -260,21 +317,21 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
         Log.Verbose("> Added in-between room {Index}!", State.CorridorRooms.IndexOf(room));
     }
 
-    private void EnsureCorridorsNotEmpty()
-    {
-        var obstacleRectangles = State.CorridorRooms.Concat(State.MainRooms).Select(room => room.Rect).ToList();
-
-        foreach (var line in State.CorridorLines.ToList())
-        {
-            var longCorridorLines = ProceduralGeometry.GetVisibleSegments(line, obstacleRectangles);
-            longCorridorLines =
-                longCorridorLines.Where(l => l.From.DistanceTo(l.To) > Settings.MaximumCorridorLength).ToList();
-            if (longCorridorLines.Count <= 0)
-                continue;       
-            foreach (var longCorridor in longCorridorLines)
-                SolveLongCorridor(longCorridor);
-        }
-    }
+    // private void EnsureCorridorsNotEmpty()
+    // {
+    //     var obstacleRectangles = State.CorridorRooms.Concat(State.MainRooms).Select(room => room.Rect).ToList();
+    //
+    //     foreach (var line in State.CorridorLines.ToList())
+    //     {
+    //         var longCorridorLines = ProceduralGeometry.GetVisibleSegments(line, obstacleRectangles);
+    //         longCorridorLines =
+    //             longCorridorLines.Where(l => l.From.DistanceTo(l.To) > Settings.MaxCorridorLength).ToList();
+    //         if (longCorridorLines.Count <= 0)
+    //             continue;       
+    //         foreach (var longCorridor in longCorridorLines)
+    //             SolveLongCorridor(longCorridor);
+    //     }
+    // }
 
     private void FixOverlappingCorridorLines()
     {
@@ -333,6 +390,8 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
 
     public override async GDTask Perform()
     {
+        CreateInBetweenRooms();
+        
         await CreateCorridorLines();
         // SelectCorridorRooms();
         // EnsureCorridorsNotEmpty();

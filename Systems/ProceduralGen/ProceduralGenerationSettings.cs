@@ -41,17 +41,12 @@ public partial class ProceduralGenerationSettings : Resource
     [Export] public int MinimumDirectCorridorOverlapLength = 8;
 
     /// <summary>
-    /// The maximum amount of pixels two rooms need to be apart on a single axis for a CORNER corridor to be generated.
+    /// When creating corner corridors, checks if each side of the corner isn't N times bigger than the other one. (being N this variable)
     /// </summary>
     /// <remarks>
-    /// If the requirements aren't met, an S-shaped will be generated instead.
+    /// If X is N times bigger than Y (and vice versa), creates an S-shaped corridor instead. 
     /// </remarks>
-    [Export] public int MaximumCornerCorridorOverlapLength = 128;
-
-    /// <summary>
-    /// Defines the maximum length for a corridor before another room is generated in-between
-    /// </summary>
-    [Export] public int MaximumCorridorLength = 24;
+    [Export] public float MaxCornerSizeDifference = 2.4f;
 
     /// <summary>
     /// Every time the main room distances exceed a multiple of this number, a new room is added to the corridor.
@@ -59,7 +54,7 @@ public partial class ProceduralGenerationSettings : Resource
     [Export] public int InBetweenRoomsDenominator = 26;
 
     /// <summary>
-    /// The maximum distance that a corridor line can pass by (in both axis) from the center of its room. This ensures no corridor line 
+    /// The maximum distance that a corridor line can pass by (in both axes) from the center of its room. This ensures no corridor line 
     /// is too near the room boundaries. Tweak this number along with the room boundaries
     /// </summary>
     [Export] public int CorridorMaxDistanceToCenter = 6;

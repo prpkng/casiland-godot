@@ -70,7 +70,7 @@ public partial class RoomsDebugVisualizer : Node2D
         foreach (var  room in state.CorridorRooms ?? []) {
             DrawRect(new Rect2(room.Rect.Position * GridSize, room.Size * GridSize), CorridorRoomsColor, true);
             DrawRect(new Rect2(room.Rect.Position * GridSize, room.Size * GridSize), GenRoomsBorder, false, 1);
-            DrawText(room.Center * GridSize, state.CorridorRooms.IndexOf(room).ToString());
+            DrawText(room.Center * GridSize, $"ID: {room.Id}");
         }
 		
 	
@@ -101,7 +101,7 @@ public partial class RoomsDebugVisualizer : Node2D
 
             DrawRect(new Rect2(room.Rect.Position * GridSize, room.Size * GridSize), color, true);
             DrawRect(new Rect2(room.Rect.Position * GridSize, room.Size * GridSize), border, false, 1);
-            DrawText(room.Center * GridSize, $"ID: {room.Index}");
+            DrawText(room.Center * GridSize, $"ID: {room.Id}");
             DrawText(room.Center * GridSize + Vector2.Down*24, $"StartDepth: {room.StartDistance}");
             DrawText(room.Center * GridSize + Vector2.Down*48, $"BossDepth: {room.BossDistance}");
             DrawText(room.Center * GridSize + Vector2.Down*64, $"Bias: {room.ProgressBias}");

@@ -30,6 +30,9 @@ public partial class ProceduralRoomGenerator : Node
         ProceduralGenerationSettings generationSettings,
         GenerationState state)
     {
+        // DEBUG
+        SimpleRoomIdGenerator.Reset();
+        
         _currentState = state;
         _seed = state.Rng.Seed;
         List<GenerationStep> generationSteps =

@@ -20,13 +20,21 @@ public enum RoomTypes
     BossRoom
 }
 
+public static class SimpleRoomIdGenerator
+{
+    private static int _counter = 0;
+    public static int NextId() => ++_counter;
+    public static void Reset() => _counter = 0;
+}
+
 public class ProceduralRoom(Vector2 pos, Vector2 size)
 {
     public Rect2 Rect = new(pos, size);
 
-    
+    public readonly int Id = SimpleRoomIdGenerator.NextId();
     public Vector2 Center => Rect.GetCenter();
     public Vector2 Size => Rect.Size;
+    
 
     /// <summary>
     /// All rooms that this room is connected to via corridors.

@@ -31,8 +31,9 @@ public class DirectCorridorShape : CorridorShape
     {
         var inv = Vector2.One - Axis;
         var overlap = ProceduralGeometry.GetRectOverlapOnAxis(FromRoom.Rect, ToRoom.Rect, Axis);
-        FromPos = (FromRoom.Center * Axis + overlap.GetCenter() * inv).RoundToInt();
-        ToPos = (ToRoom.Center * Axis + overlap.GetCenter() * inv).RoundToInt();
+        var baseDir = (ToRoom.Center - FromRoom.Center).Sign4Way();
+        FromPos = (FromRoom.Rect.CastTowardsPerimeter(baseDir) * Axis + overlap.GetCenter() * inv).RoundToInt();
+        ToPos = (ToRoom.Rect.CastTowardsPerimeter(-baseDir) * Axis + overlap.GetCenter() * inv).RoundToInt();
     }
 
     public override LineSegment[] ComputeLines() => [new(FromPos, ToPos)];
@@ -45,7 +46,17 @@ public class DirectCorridorShape : CorridorShape
 
 public class CornerCorridorShape : CorridorShape
 {
-    public Vector2 CornerDirection;
+    private Vector2 _cornerDirection;
+
+    public Vector2 CornerDirection
+    {
+        get => _cornerDirection;
+        set
+        {
+            _cornerDirection = value;
+            RecomputeOrigins();
+        }
+    }
     
     public CornerCorridorShape(ProceduralRoom from, ProceduralRoom to, Vector2 cornerDirection)
     {
@@ -54,6 +65,18 @@ public class CornerCorridorShape : CorridorShape
         FromPos = from.Center;
         ToPos = to.Center;
         CornerDirection = cornerDirection;
+        RecomputeOrigins();
+    }
+
+    private void RecomputeOrigins()
+    {
+        FromPos = FromRoom.Center;
+        ToPos = ToRoom.Center;
+        var vector = ToPos - FromRoom.Center;
+        var corner = FromPos + vector * CornerDirection.Abs();
+        
+        FromPos = FromRoom.Rect.CastTowardsPerimeter(FromPos.DirectionTo(corner));
+        ToPos = ToRoom.Rect.CastTowardsPerimeter(ToPos.DirectionTo(corner));
     }
     
     public override LineSegment[] ComputeLines()
@@ -89,6 +112,20 @@ public class StepCorridorShape : CorridorShape
         ToPos = to.Center;
         StepAxis = stepAxis;
         Bias = bias;
+        RecomputeOrigins();
+    }
+
+    private void RecomputeOrigins()
+    {
+        FromPos = FromRoom.Center;
+        ToPos = ToRoom.Center;
+        var dir = ToPos - FromPos;
+
+        var corner1 = FromPos + dir * StepAxis * Bias;
+        var corner2 = ToPos - dir * StepAxis * (1f - Bias);
+        
+        FromPos = FromRoom.Rect.CastTowardsPerimeter((corner1 - FromPos).Sign4Way());
+        ToPos = ToRoom.Rect.CastTowardsPerimeter((corner2 - ToPos).Sign4Way());
     }
 
     public override LineSegment[] ComputeLines()

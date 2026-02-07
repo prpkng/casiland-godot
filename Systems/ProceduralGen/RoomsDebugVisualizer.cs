@@ -132,12 +132,11 @@ public partial class RoomsDebugVisualizer : Node2D
             };
 
             var endpointRoom = endpoint == 0 ? corridor.FromRoom : corridor.ToRoom;
-            
-            
+            var origin = endpoint == 0 ? corridor.FromPos : corridor.ToPos;
             
 
-            var end = endpointRoom.Rect.CastTowardsPerimeter(directionVector) + directionVector * 4;
-            var start = endpointRoom.Rect.CastTowardsPerimeter(directionVector);
+            var end = origin - directionVector * 2;
+            var start = origin - directionVector * 6;
             DrawArrow(start * GridSize, end * GridSize, Colors.IndianRed, 2);
         }
 

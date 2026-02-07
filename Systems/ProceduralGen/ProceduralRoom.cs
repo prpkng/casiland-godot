@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Casiland.Systems.ProceduralGen.Algorithms;
 using Godot;
 
 namespace Casiland.Systems.ProceduralGen;
@@ -56,6 +57,15 @@ public class ProceduralRoom(Vector2 pos, Vector2 size)
     /// </summary>
     public readonly List<ProceduralRoom> Connections = [];
     public readonly List<RoomNeighborDirection> ConnectionDirections = [];
+
+    public readonly Dictionary<RoomNeighborDirection, List<(CorridorShape shape, int endpoint)>> Neighbors =
+        new()
+        {
+            { RoomNeighborDirection.Up, [] },
+            { RoomNeighborDirection.Down, [] },
+            { RoomNeighborDirection.Left, [] },
+            { RoomNeighborDirection.Right, [] },
+        };
 
     public RoomTypes RoomType = RoomTypes.NormalRoom;
 

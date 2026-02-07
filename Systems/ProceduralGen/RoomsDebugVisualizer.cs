@@ -119,22 +119,26 @@ public partial class RoomsDebugVisualizer : Node2D
         List<ProceduralRoom> rooms = [..(state.MainRooms ?? []), ..(state.CorridorRooms ?? [])];
         // Draw arrows
         foreach (var room in rooms)
+        foreach (var (dir, connections) in room.Neighbors)
+        foreach (var (corridor, endpoint) in connections)
         {
-            foreach (var dir in room.ConnectionDirections)
+            var directionVector = dir switch
             {
-                var vec = dir switch
-                {
-                    RoomNeighborDirection.Up => Vector2.Up,
-                    RoomNeighborDirection.Down => Vector2.Down,
-                    RoomNeighborDirection.Left => Vector2.Left,
-                    RoomNeighborDirection.Right => Vector2.Right,
-                    _ => throw new System.NotImplementedException(),
-                };
+                RoomNeighborDirection.Up => Vector2.Up,
+                RoomNeighborDirection.Down => Vector2.Down,
+                RoomNeighborDirection.Left => Vector2.Left,
+                RoomNeighborDirection.Right => Vector2.Right,
+                _ => throw new System.ArgumentOutOfRangeException(),
+            };
 
-                var end = room.Center + room.Size / 2f * vec + vec * 4;
-                var start = room.Center + room.Size / 2f * vec;
-                DrawArrow(start * GridSize, end * GridSize, Colors.IndianRed, 2);
-            }
+            var endpointRoom = endpoint == 0 ? corridor.FromRoom : corridor.ToRoom;
+            
+            
+            
+
+            var end = endpointRoom.Rect.CastTowardsPerimeter(directionVector) + directionVector * 4;
+            var start = endpointRoom.Rect.CastTowardsPerimeter(directionVector);
+            DrawArrow(start * GridSize, end * GridSize, Colors.IndianRed, 2);
         }
 
 

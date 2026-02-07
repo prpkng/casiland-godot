@@ -24,6 +24,7 @@ public record struct LineSegment
         to = To;
     }
 
+    public Vector2 Direction => FromF.DirectionTo(ToF);
     public float EuclideanLength => FromF.DistanceTo(ToF);
     public float ArithmeticLength => Mathf.Abs(To.X - From.X) + Mathf.Abs(To.Y - From.Y);
 

@@ -221,9 +221,7 @@ public class GenerateConnectionsStep(GenerationState state, ProceduralGeneration
     {
         State.MainRooms = State.MainRooms.OrderBy(room => room.ProgressBias).ToList();
         for (int i = 0; i < State.MainRooms.Count; i++)
-        {
             State.MainRooms[i].Index = i;
-        }
     }
     public void SortMst()
     {

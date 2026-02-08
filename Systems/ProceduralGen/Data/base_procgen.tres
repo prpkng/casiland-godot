@@ -20,4 +20,3 @@ InBetweenRoomsDenominator = 40
 CorridorMaxDistanceToCenter = 4
 DoorScene = ExtResource("2_ndj01")
 AutoTileRuleSet = ExtResource("1_go4an")
-CorridorTileWidth = 6

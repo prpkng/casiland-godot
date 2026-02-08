@@ -5,7 +5,10 @@ using Casiland.Common;
 using Casiland.Common.Interaction;
 using Godot;
 
-public partial class DoubleDoors : Node2D {
+public partial class DoubleDoors : Node2D
+{
+    [Export] public Curve OpeningCurve;
+    [Export] public float OpeningDuration;
     [Export] public Interactable Interactable;
     [Export] public Node2D LeftDoor;
     [Export] public Node2D RightDoor;
@@ -47,9 +50,7 @@ public partial class DoubleDoors : Node2D {
 
     private void CloseDoor()
     {
-        var tween = GetTree().CreateTween()
-            .SetTrans(Tween.TransitionType.Elastic)
-            .SetEase(Tween.EaseType.Out);
+        var tween = GetTree().CreateTween();
         _lastTween = tween;
         float curLeft = _leftLastAngle;
         float curRight = _rightLastAngle;
@@ -57,16 +58,15 @@ public partial class DoubleDoors : Node2D {
         _rightLastAngle = StartAngle;
         tween.TweenMethod(Callable.From<float>(f =>
         {
-            LeftDoor.Rotation = Mathf.LerpAngle(curLeft, StartAngle, f);
-            RightDoor.Rotation = Mathf.LerpAngle(curRight, StartAngle, f);
-        }), 0f, 1f, 0.8);
+            float wf = OpeningCurve.SampleBaked(f);
+            LeftDoor.Rotation = Mathf.LerpAngle(curLeft, StartAngle, wf);
+            RightDoor.Rotation = Mathf.LerpAngle(curRight, StartAngle, wf);
+        }), 0f, 1f, OpeningDuration);
 
     }
     public void OpenDoor(int direction)
     {
-        var tween = GetTree().CreateTween()
-            .SetTrans(Tween.TransitionType.Elastic)
-            .SetEase(Tween.EaseType.Out);
+        var tween = GetTree().CreateTween();
         _lastTween = tween;
         float curLeft = _leftLastAngle;
         float curRight = _rightLastAngle;
@@ -76,9 +76,10 @@ public partial class DoubleDoors : Node2D {
         _rightLastAngle = targetRight;
         tween.TweenMethod(Callable.From<float>(f =>
         {
-            LeftDoor.Rotation = Mathf.LerpAngle(curLeft, targetLeft, f);
-            RightDoor.Rotation = Mathf.LerpAngle(curRight, targetRight, f);
-        }), 0f, 1f, 0.8);
+            float wf = OpeningCurve.SampleBaked(f);
+            LeftDoor.Rotation = Mathf.LerpAngle(curLeft, targetLeft, wf);
+            RightDoor.Rotation = Mathf.LerpAngle(curRight, targetRight, wf);
+        }), 0f, 1f, OpeningDuration);
         
     }
 

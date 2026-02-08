@@ -6,6 +6,12 @@
 [ext_resource type="Texture2D" uid="uid://v1x2bs36khmy" path="res://Entities/World/Dungeons/Doors/Pool/right_pool_door.png" id="3_wkopt"]
 [ext_resource type="Script" uid="uid://c142d3ds7lke8" path="res://Common/Interaction/Interactable.cs" id="5_5gpbr"]
 
+[sub_resource type="Curve" id="Curve_8p43b"]
+_limits = [0.0, 1.5, 0.0, 1.0]
+_data = [Vector2(0, 0), 0.0, 6.4901395, 0, 0, Vector2(0.37063864, 1.0094122), -3.044384, -3.044384, 0, 0, Vector2(0.722844, 0.9922587), 0.0, 0.0, 0, 0, Vector2(0.99934167, 0.99841636), -0.105918415, 0.0, 0, 0]
+point_count = 4
+metadata/_snap_count = 2
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5gpbr"]
 size = Vector2(16.00006, 5.8301272)
 
@@ -16,13 +22,15 @@ size = Vector2(40, 16)
 physics_interpolation_mode = 2
 rotation = 1.5707964
 script = ExtResource("1_8p43b")
+OpeningCurve = SubResource("Curve_8p43b")
+OpeningDuration = 0.5
 Interactable = NodePath("Interactable")
 LeftDoor = NodePath("LeftDoor")
 RightDoor = NodePath("RightDoor")
 
 [node name="LeftDoor" type="AnimatableBody2D" parent="." unique_id=993431151]
 y_sort_enabled = true
-position = Vector2(4.7683716e-07, 13)
+position = Vector2(6.993822e-07, 16)
 rotation = -1.5707964
 collision_layer = 2
 collision_mask = 2
@@ -31,7 +39,7 @@ metadata/_edit_group_ = true
 
 [node name="StackedSprite" type="Node2D" parent="LeftDoor" unique_id=429912513 node_paths=PackedStringArray("StackSprites", "_root")]
 texture_filter = 1
-position = Vector2(5, 0)
+position = Vector2(8, 0)
 script = ExtResource("1_l4nst")
 StackTexture = ExtResource("2_26a53")
 HFrames = 16
@@ -268,12 +276,12 @@ vframes = 2
 frame = 31
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftDoor" unique_id=1867653219]
-position = Vector2(5, 0)
+position = Vector2(8, 0)
 shape = SubResource("RectangleShape2D_5gpbr")
 
 [node name="RightDoor" type="AnimatableBody2D" parent="." unique_id=1174830386]
 y_sort_enabled = true
-position = Vector2(-4.7683716e-07, -13)
+position = Vector2(-6.993822e-07, -16)
 rotation = -1.5707964
 collision_layer = 2
 collision_mask = 2
@@ -282,7 +290,7 @@ metadata/_edit_group_ = true
 
 [node name="StackedSprite" type="Node2D" parent="RightDoor" unique_id=586690830 node_paths=PackedStringArray("StackSprites", "_root")]
 texture_filter = 1
-position = Vector2(-5, 0)
+position = Vector2(-8, 0)
 script = ExtResource("1_l4nst")
 StackTexture = ExtResource("3_wkopt")
 HFrames = 16
@@ -519,7 +527,7 @@ vframes = 2
 frame = 31
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightDoor" unique_id=1052045379]
-position = Vector2(-5, 0)
+position = Vector2(-8, 0)
 rotation = 0.00011673568
 scale = Vector2(1.0000001, 1.0000001)
 shape = SubResource("RectangleShape2D_5gpbr")

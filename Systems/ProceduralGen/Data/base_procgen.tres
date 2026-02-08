@@ -6,18 +6,19 @@
 
 [resource]
 script = ExtResource("1_yml8i")
-StartCellCount = 60
+StartCellsRadius = 40
+MinRoomCount = 6
 MaxRoomCount = 12
-MinRoomDistance = 40
-MinBaseRoomSize = 14
-MaxBaseRoomSize = 18
-BaseRoomAspect = 1.3
-MaxRoomAspectDeviation = 0.4
+MinRoomDistance = 28
+MinBaseRoomSize = 16
+MaxBaseRoomSize = 20
+BaseRoomAspect = 1.2
+MaxRoomAspectDeviation = 0.2
 RoomWidthThreshold = 42
 LoopCount = 1
 MinimumDirectCorridorOverlapLength = 10
 MaxCornerSizeDifference = 2.4
-InBetweenRoomsDenominator = 40
+InBetweenRoomsDenominator = 30
 CorridorMaxDistanceToCenter = 4
 DoorScene = ExtResource("2_ndj01")
 AutoTileRuleSet = ExtResource("1_go4an")

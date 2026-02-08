@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Casiland.AutoTileEx.Api.Data;
+using Casiland.Systems.ProceduralGen.Algorithms;
 using Godot;
 
 namespace Casiland.Systems.ProceduralGen.Steps;
@@ -34,6 +35,7 @@ public class GenerationState
     public List<ProceduralRoom> AllRooms;
 
     public List<LineSegment> MinimumSpanningTree = [];
+    public List<CorridorShape> CorridorShapes = [];
     public List<LineSegment> CorridorLines = [];
     public List<LineSegment[]> CorridorLineGroups = [];
 

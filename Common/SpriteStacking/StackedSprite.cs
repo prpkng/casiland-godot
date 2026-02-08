@@ -43,14 +43,11 @@ public partial class StackedSprite : Node2D
     {
         foreach (var c in GetChildren()) c.QueueFree();
 
-        var node = new Node();
-        AddChild(node);
-        node.Owner = GetTree().GetEditedSceneRoot();
         _root = new Node2D
         {
-            YSortEnabled = true
+            Name = "Root"
         };
-        node.AddChild(_root);
+        AddChild(_root);
         _root.Owner = GetTree().GetEditedSceneRoot();
 
         StackSprites = [];
@@ -63,7 +60,7 @@ public partial class StackedSprite : Node2D
                 Frame = i,
                 Position = new Vector2(0, i * Spacing),
                 Texture = StackTexture,
-                ZIndex = i
+                Name = $"Sprite {i}"
             };
             _root.AddChild(sprite);
             StackSprites.Add(sprite);
@@ -75,14 +72,13 @@ public partial class StackedSprite : Node2D
 
     public override void _Process(double delta)
     {
+        _root.GlobalRotation = 0;
         _counter += delta;
         if (_root == null) return;
         if (_updateTime > 0 && _counter < _updateTime)
             return;
 
         _counter = 0;
-        
-        _root.GlobalPosition = GlobalPosition;
         
         if (StackTexture == null || HFrames <= 0 || VFrames <= 0) return;
 

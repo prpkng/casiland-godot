@@ -75,7 +75,7 @@ public partial class RoomsDebugVisualizer : Node2D
 		
 	
         foreach (var  edge in state.CorridorLines?? []) {
-            DrawLine(edge.From * GridSize + Vector2.One * (GridSize / 2f), edge.To * GridSize + Vector2.One * (GridSize / 2f), MstLineColor, GridSize);
+            DrawLine(edge.From * GridSize, edge.To * GridSize, MstLineColor);
         }
 	
         foreach (var  edge in state.MinimumSpanningTree?? [])
@@ -122,14 +122,7 @@ public partial class RoomsDebugVisualizer : Node2D
         foreach (var (dir, connections) in room.Neighbors)
         foreach (var (corridor, endpoint) in connections)
         {
-            var directionVector = dir switch
-            {
-                RoomNeighborDirection.Up => Vector2.Up,
-                RoomNeighborDirection.Down => Vector2.Down,
-                RoomNeighborDirection.Left => Vector2.Left,
-                RoomNeighborDirection.Right => Vector2.Right,
-                _ => throw new System.ArgumentOutOfRangeException(),
-            };
+            var directionVector = dir.ToVector2();
 
             var endpointRoom = endpoint == 0 ? corridor.FromRoom : corridor.ToRoom;
             var origin = endpoint == 0 ? corridor.FromPos : corridor.ToPos;

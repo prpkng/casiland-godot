@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://dvr8g5sbut4b7" path="res://Entities/Weapons/base_weapon.tscn" id="6_4wf4l"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lu8i8"]
-radius = 8.0
+radius = 4.1231055
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iplt1"]
 size = Vector2(17, 20)
@@ -129,6 +129,7 @@ MovementSpeed = 180.0
 metadata/_custom_type_script = "uid://ca0llfybyho2k"
 
 [node name="Interactor" type="Area2D" parent="." unique_id=629197179]
+position = Vector2(0, -3)
 collision_layer = 256
 collision_mask = 256
 script = ExtResource("4_ap3xn")
@@ -149,6 +150,7 @@ Modifiers = Dictionary[int, ExtResource("4_x1y6q")]({
 metadata/_custom_type_script = "uid://dec5jl4hlirlc"
 
 [node name="HurtBox2D" type="Area2D" parent="." unique_id=2036918428 node_paths=PackedStringArray("Health")]
+position = Vector2(0, -10)
 collision_layer = 2048
 collision_mask = 0
 monitoring = false
@@ -157,6 +159,7 @@ Health = NodePath("../Health")
 metadata/_custom_type_script = "uid://hksmdyqpj4v3"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox2D" unique_id=241702560]
+position = Vector2(0, 6)
 shape = SubResource("RectangleShape2D_lub02")
 debug_color = Color(6.016344e-07, 0.6491686, 0.16616055, 0.41960785)
 
@@ -172,12 +175,13 @@ script = ExtResource("3_tekja")
 Player = NodePath("..")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1486684564]
-z_index = 5
+position = Vector2(0, -10)
 texture = ExtResource("3_lu8i8")
 hframes = 6
 vframes = 8
 
 [node name="WeaponManager" type="Node2D" parent="." unique_id=609029894]
+position = Vector2(0, -10)
 script = ExtResource("5_5c2io")
 WeaponSocketPath = NodePath("Socket")
 WeaponScene = ExtResource("6_4wf4l")

@@ -19,11 +19,17 @@ script/source = "extends Camera2D
 func _ready() -> void:
 	pass # Replace with function body.
 
+@export var player: Node2D
+
+var is_following := true
+
 var last_pos: Vector2
 var current_pos: Vector2
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	if is_following:
+		global_position = player.global_position
 	current_pos = get_local_mouse_position()
 	var delta_pos := last_pos - current_pos
 	last_pos = current_pos
@@ -44,6 +50,9 @@ func _input(event: InputEvent) -> void:
 			zoom *= 2
 		elif event.keycode == KEY_MINUS:
 			zoom /= 2
+		elif event.keycode == KEY_TAB:
+			is_following = !is_following
+			position_smoothing_enabled = is_following
 "
 
 [sub_resource type="GDScript" id="GDScript_ykrsh"]
@@ -95,8 +104,10 @@ scale = Vector2(2, 2)
 script = ExtResource("2_ppyta")
 _generator = NodePath("../RoomGenerator")
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=17372746]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=17372746 node_paths=PackedStringArray("player")]
+position_smoothing_enabled = true
 script = SubResource("GDScript_ppyta")
+player = NodePath("../Environmental Objects/Player")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1893954925]
 
@@ -108,7 +119,7 @@ offset_bottom = 264.0
 scale = Vector2(0.5, 0.5)
 placeholder_text = "Enter seed..."
 
-[node name="Button" type="Button" parent="CanvasLayer" unique_id=43627872 node_paths=PackedStringArray("generator", "tilemap", "seedInput")]
+[node name="Button" type="Button" parent="CanvasLayer" unique_id=43627872 node_paths=PackedStringArray("generator", "PropsGroup", "tilemap", "seedInput")]
 offset_left = 386.0
 offset_top = 248.0
 offset_right = 538.0
@@ -118,7 +129,8 @@ text = "Generate"
 script = ExtResource("3_ykrsh")
 generator = NodePath("../../RoomGenerator")
 settings = ExtResource("4_g14j6")
-tilemap = NodePath("../../TileMapLayer")
+PropsGroup = NodePath("../../Environmental Objects/Props")
+tilemap = NodePath("../../Environmental Objects/TileMapLayer")
 ruleSet = ExtResource("5_g14j6")
 seedInput = NodePath("../LineEdit")
 
@@ -142,16 +154,37 @@ text = "Debug Draw"
 script = SubResource("GDScript_00tp4")
 rooms_debug_visualizer = NodePath("../../RoomsDebugVisualizer")
 
-[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1865007474]
-texture_filter = 1
-tile_set = ExtResource("5_ykrsh")
+[node name="Environmental Objects" type="Node2D" parent="." unique_id=1823721867]
+y_sort_enabled = true
+position = Vector2(86, 40)
 
-[node name="Dummy Enemy" parent="." unique_id=1902365087 instance=ExtResource("10_77dp3")]
-position = Vector2(186, 49)
+[node name="ColorRect" type="ColorRect" parent="Environmental Objects" unique_id=294898069]
+z_index = -1
+offset_right = 40.0
+offset_bottom = 40.0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+color = Color(0, 0, 0, 1)
 
-[node name="Player" parent="." unique_id=1528480435 instance=ExtResource("10_00tp4")]
+[node name="Double Door" parent="Environmental Objects" unique_id=1032661953 instance=ExtResource("10_5tkv4")]
+z_index = 0
+position = Vector2(-42, 3)
+
+[node name="Player" parent="Environmental Objects" unique_id=1528480435 instance=ExtResource("10_00tp4")]
 physics_interpolation_mode = 1
-position = Vector2(92, 39)
+position = Vector2(-37, 8)
+
+[node name="Dummy Enemy" parent="Environmental Objects" unique_id=1902365087 instance=ExtResource("10_77dp3")]
+position = Vector2(100, 9)
+
+[node name="Props" type="Node2D" parent="Environmental Objects" unique_id=1888682377]
+y_sort_enabled = true
+position = Vector2(-86, -40)
+
+[node name="TileMapLayer" type="TileMapLayer" parent="Environmental Objects" unique_id=1865007474]
+y_sort_enabled = true
+texture_filter = 1
+position = Vector2(-86, -40)
+tile_set = ExtResource("5_ykrsh")
 
 [node name="Interactable" type="Area2D" parent="." unique_id=1604597610]
 position = Vector2(134, 90)
@@ -166,9 +199,6 @@ debug_color = Color(0.95218855, 0.68952936, 0, 0.41960785)
 
 [node name="Test logger" type="Node" parent="Interactable" unique_id=2047213991]
 script = SubResource("GDScript_5tkv4")
-
-[node name="Double Door" parent="." unique_id=1032661953 instance=ExtResource("10_5tkv4")]
-position = Vector2(44, 43)
 
 [connection signal="pressed" from="CanvasLayer/Button" to="CanvasLayer/Button" method="_on_pressed"]
 [connection signal="toggled" from="CanvasLayer/CheckBox" to="CanvasLayer/CheckBox" method="_on_toggled"]

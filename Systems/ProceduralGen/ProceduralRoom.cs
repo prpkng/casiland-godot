@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Casiland.Systems.ProceduralGen.Algorithms;
 using Godot;
@@ -26,6 +27,18 @@ public static class DirectionConversions
         { Vector2.Left, RoomNeighborDirection.Left },
         { Vector2.Right, RoomNeighborDirection.Right }
     };
+
+    public static Vector2 ToVector2(this RoomNeighborDirection direction)
+    {
+        return direction switch
+        {
+            RoomNeighborDirection.Up => Vector2.Up,
+            RoomNeighborDirection.Down => Vector2.Down,
+            RoomNeighborDirection.Left => Vector2.Left,
+            RoomNeighborDirection.Right => Vector2.Right,
+            _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
+        };
+    }
 }
 
 public enum RoomTypes

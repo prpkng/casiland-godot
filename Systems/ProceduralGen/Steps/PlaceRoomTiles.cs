@@ -66,21 +66,55 @@ public class PlaceRoomTilesStep(GenerationState state, ProceduralGenerationSetti
     {
         foreach (var line in State.CorridorLines)
         {
-                ProceduralGeometry.DrawLine(State.TilemapLayer, line.From, line.To, Settings.CorridorTileWidth, TilesSrcId,
-                    FloorTileCoord);
+            int halfWid = Mathf.FloorToInt(Settings.CorridorTileWidth / 2f);
+            var dir = (line.ToF - line.FromF).Sign4Way().RoundToInt() * halfWid;
+            var negativeDir = -dir;
+            if (dir.X < 0 || dir.Y < 0) dir -= dir.Sign();
+            if (negativeDir.X < 0 || negativeDir.Y < 0) negativeDir -= negativeDir.Sign();
+            ProceduralGeometry.DrawLine(
+                State.TilemapLayer, 
+                line.From + negativeDir, 
+                line.To + dir, 
+                Settings.CorridorTileWidth,
+                TilesSrcId,
+                FloorTileCoord
+            );
         }
     }
 
     private void PlaceDoorBorders()
     {
         foreach (var room in State.AllRooms)
+        foreach (var (dir, nb) in room.Neighbors)
+        foreach ((var corridor, int endpoint) in nb)
         {
-            foreach ((var corridor, int endpoint) in room.Neighbors.Values.SelectMany(l => l))
-            {
-                var point = endpoint == 0 ? corridor.FromPos : corridor.ToPos;
-                State.TilemapLayer.SetCell(point.RoundToInt(), TilesSrcId, SolidTileCoord);
-            }
-        } 
+            var direction = dir.ToVector2();
+            var point = endpoint == 0 ? corridor.FromPos : corridor.ToPos;
+            if (direction.X < 0 || direction.Y < 0) point += direction.Sign();
+            // point += direction * .5f;
+            var perpendicular = direction.Rotated(Mathf.Pi/2f).RoundToInt();
+            float corridorWidth = Settings.CorridorTileWidth/2f;
+            
+            State.TilemapLayer.SetCell(
+                point.RoundToInt() - perpendicular.Abs() * Mathf.FloorToInt(corridorWidth-1), 
+                TilesSrcId, 
+                SolidTileCoord);
+            
+            State.TilemapLayer.SetCell(
+                point.RoundToInt() + perpendicular.Abs() * Mathf.CeilToInt(corridorWidth), 
+                TilesSrcId, 
+                SolidTileCoord);
+            
+            State.TilemapLayer.SetCell(
+                point.RoundToInt() - perpendicular.Abs() * Mathf.FloorToInt(corridorWidth-2), 
+                TilesSrcId, 
+                SolidTileCoord);
+            
+            State.TilemapLayer.SetCell(
+                point.RoundToInt() + perpendicular.Abs() * Mathf.CeilToInt(corridorWidth-1), 
+                TilesSrcId, 
+                SolidTileCoord);
+        }
     }
     
     public override async GDTask Perform()

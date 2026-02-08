@@ -11,6 +11,8 @@ public partial class DoubleDoors : Node2D {
     [Export] public Node2D RightDoor;
 
     private const float StartAngle = -Mathf.Pi / 2;
+    private float _leftLastAngle = StartAngle;
+    private float _rightLastAngle = StartAngle;
 
     private bool isOpened = false;
     private Tween _lastTween;
@@ -30,15 +32,15 @@ public partial class DoubleDoors : Node2D {
     public async void ToggleDoor(int direction)
     {
         _lastTween?.Kill();
-        LeftDoor.Rotation = isOpened ? StartAngle + -Mathf.Pi / 2.2f * direction : StartAngle;
-        RightDoor.Rotation = isOpened ? StartAngle + Mathf.Pi / 2.2f * direction : StartAngle;
 
-
+        isOpened = !isOpened;
+        
+        LeftDoor.GetNode<CollisionShape2D>("CollisionShape2D").Disabled = isOpened;
+        RightDoor.GetNode<CollisionShape2D>("CollisionShape2D").Disabled = isOpened;
         LeftDoor.ResetPhysicsInterpolation();
         RightDoor.ResetPhysicsInterpolation();
 
 
-        isOpened = !isOpened;
         if (isOpened) OpenDoor(direction);
         else CloseDoor();
     }
@@ -49,8 +51,10 @@ public partial class DoubleDoors : Node2D {
             .SetTrans(Tween.TransitionType.Elastic)
             .SetEase(Tween.EaseType.Out);
         _lastTween = tween;
-        float curLeft = LeftDoor.Rotation;
-        float curRight = RightDoor.Rotation;
+        float curLeft = _leftLastAngle;
+        float curRight = _rightLastAngle;
+        _leftLastAngle = StartAngle;
+        _rightLastAngle = StartAngle;
         tween.TweenMethod(Callable.From<float>(f =>
         {
             LeftDoor.Rotation = Mathf.LerpAngle(curLeft, StartAngle, f);
@@ -64,12 +68,16 @@ public partial class DoubleDoors : Node2D {
             .SetTrans(Tween.TransitionType.Elastic)
             .SetEase(Tween.EaseType.Out);
         _lastTween = tween;
-        float curLeft = LeftDoor.Rotation;
-        float curRight = RightDoor.Rotation;
+        float curLeft = _leftLastAngle;
+        float curRight = _rightLastAngle;
+        float targetLeft = StartAngle + -Mathf.Pi / 2 * direction;
+        float targetRight = StartAngle + Mathf.Pi / 2 * direction;
+        _leftLastAngle = targetLeft;
+        _rightLastAngle = targetRight;
         tween.TweenMethod(Callable.From<float>(f =>
         {
-            LeftDoor.Rotation = Mathf.LerpAngle(curLeft, StartAngle + -Mathf.Pi / 2 * direction, f);
-            RightDoor.Rotation = Mathf.LerpAngle(curRight, StartAngle + Mathf.Pi / 2 * direction, f);
+            LeftDoor.Rotation = Mathf.LerpAngle(curLeft, targetLeft, f);
+            RightDoor.Rotation = Mathf.LerpAngle(curRight, targetRight, f);
         }), 0f, 1f, 0.8);
         
     }

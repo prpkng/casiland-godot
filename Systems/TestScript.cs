@@ -21,7 +21,8 @@ public partial class TestScript : Button
 {
     [Export] public ProceduralRoomGenerator generator;
     [Export] public ProceduralGenerationSettings settings;
-
+    
+    [Export] public Node2D PropsGroup;
     [Export] public TileMapLayer tilemap;
     [Export] public AutoTileRuleSet ruleSet;
     [Export] public LineEdit seedInput;
@@ -70,6 +71,7 @@ public partial class TestScript : Button
                 Seed = seed
             },
             TilemapLayer = tilemap,
+            PropsGroup = PropsGroup
         };
         
         GD.Randomize();

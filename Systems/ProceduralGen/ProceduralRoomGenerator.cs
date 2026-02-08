@@ -42,7 +42,7 @@ public partial class ProceduralRoomGenerator : Node
             new GenerateConnectionsStep(state, generationSettings),
             new PlaceCorridorsStep(state, generationSettings),
             new PlaceRoomTilesStep(state, generationSettings),
-            // new PerformAutoTileStep(state, generationSettings),
+            new PerformAutoTileStep(state, generationSettings),
             new PlacePropsStep(state, generationSettings),
         ];
 

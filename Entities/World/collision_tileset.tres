@@ -1,0 +1,13 @@
+[gd_resource type="TileSet" format=3 uid="uid://ct3mbd7ksnekn"]
+
+[ext_resource type="Texture2D" uid="uid://85gcvknpy5lh" path="res://Entities/World/collision_tileset.png" id="1_rhmiq"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vdkps"]
+texture = ExtResource("1_rhmiq")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[resource]
+physics_layer_0/collision_layer = 2
+physics_layer_0/collision_mask = 2
+sources/0 = SubResource("TileSetAtlasSource_vdkps")

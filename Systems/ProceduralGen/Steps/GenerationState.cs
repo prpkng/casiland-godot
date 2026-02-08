@@ -7,8 +7,8 @@ namespace Casiland.Systems.ProceduralGen.Steps;
 public class GenerationState
 {
     public RandomNumberGenerator Rng;
-    public Node2D PropsGroup;
-    public TileMapLayer TilemapLayer;
+
+    public GenerationPayload Payload;
 
     /// <summary>
     /// All rooms generated at the first pass

@@ -19,13 +19,14 @@ namespace Casiland.Systems;
 
 public partial class TestScript : Button
 {
-    [Export] public ProceduralRoomGenerator generator;
-    [Export] public ProceduralGenerationSettings settings;
+    [Export] public ProceduralRoomGenerator Generator;
+    [Export] public ProceduralGenerationSettings Settings;
     
     [Export] public Node2D PropsGroup;
-    [Export] public TileMapLayer tilemap;
-    [Export] public AutoTileRuleSet ruleSet;
-    [Export] public LineEdit seedInput;
+    [Export] public TileMapLayer AutoTileLayer;
+    [Export] public TileMapLayer CollisionsLayer;
+    [Export] public AutoTileRuleSet RuleSet;
+    [Export] public LineEdit SeedInput;
 
     public override void _Ready()
     {
@@ -62,20 +63,25 @@ public partial class TestScript : Button
 
     public override async void _Pressed()
     {
-        tilemap.Clear();
-        var seed = seedInput.Text.ToUpper() == "" ? (GD.Randi() % 9999) : (ulong)seedInput.Text.ToInt();
+        AutoTileLayer.Clear();
+        CollisionsLayer.Clear();
+        ulong seed = SeedInput.Text.ToUpper() == "" ? (GD.Randi() % 9999) : (ulong)SeedInput.Text.ToInt();
         var state = new GenerationState
         {
             Rng = new RandomNumberGenerator
             {
                 Seed = seed
             },
-            TilemapLayer = tilemap,
-            PropsGroup = PropsGroup
+            Payload = new GenerationPayload()
+            {
+                AutoTileLayer = AutoTileLayer,
+                CollisionsLayer = CollisionsLayer,
+                PropsGroup = PropsGroup
+            }
         };
         
         GD.Randomize();
-        await generator.PerformGeneration(settings, state);
+        await Generator.PerformGeneration(Settings, state);
         var now = new Stopwatch();
         now.Restart();
     }

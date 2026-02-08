@@ -12,6 +12,7 @@ namespace Casiland.AutoTileEx.Editor;
 [GlobalClass]
 public partial class AutoTileEditor : Control
 {
+#if TOOLS
     public AutoTileRuleSet CurrentEditingRuleSet;
     private TilesetView _tilesetView;
     private Button _sourceTileBtn;
@@ -380,4 +381,5 @@ public partial class AutoTileEditor : Control
     }
 
     private void SetNeighbour(AutoTileRule rule, int index, int value) => rule.Neighbours[index] = (NeighbourType)value;
+#endif
 }

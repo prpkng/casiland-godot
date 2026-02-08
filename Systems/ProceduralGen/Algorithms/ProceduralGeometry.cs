@@ -113,7 +113,7 @@ public static class ProceduralGeometry
     {
         float aspect = baseRoomAspect + rng.RandfRange(-aspectDeviation, aspectDeviation);
         float size = baseRoomSize + rng.RandfRange(-sizeDeviation, sizeDeviation);
-        return new Vector2I(Mathf.RoundToInt(size * aspect), Mathf.RoundToInt(size));
+        return new Vector2I(Mathf.RoundToInt(size * aspect), Mathf.RoundToInt(size * (1f / aspect)));
     }
 
     #endregion

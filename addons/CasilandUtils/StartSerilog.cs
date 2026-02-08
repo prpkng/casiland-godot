@@ -4,7 +4,7 @@ using Serilog.Events;
 using Serilog.Sinks.GodotConsole;
 
 namespace Casiland.CasilandUtils;
-
+#if TOOLS
 [Tool]
 public partial class StartSerilog : EditorScript
 {
@@ -28,3 +28,4 @@ public partial class StartSerilog : EditorScript
 		Log.Information("Initialized Serilog");
 	}
 }
+#endif

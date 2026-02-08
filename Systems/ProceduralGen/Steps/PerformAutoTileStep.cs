@@ -8,6 +8,6 @@ public class PerformAutoTileStep(GenerationState state, ProceduralGenerationSett
     public override string StateDescription => "Performing auto-tiling";
     public override async GDTask Perform()
     {
-        AutoTileImplementation.PerformAutoTile(State.TilemapLayer, Settings.AutoTileRuleSet);
+        AutoTileImplementation.PerformAutoTile(State.Payload.AutoTileLayer, Settings.AutoTileRuleSet);
     }
 }

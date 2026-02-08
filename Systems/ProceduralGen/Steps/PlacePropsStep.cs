@@ -21,7 +21,7 @@ public class PlacePropsStep(GenerationState state, ProceduralGenerationSettings 
             var direction = dir.ToVector2();
             var point = endpoint == 0 ? corridor.FromPos : corridor.ToPos;
             var door = Settings.DoorScene.Instantiate<DoubleDoors>();
-            State.PropsGroup.AddChild(door);
+            State.Payload.PropsGroup.AddChild(door);
             door.Position = (point + direction/2f) * _gridSize;
             door.Position += direction.Orthogonal().Abs() * _gridSize;
             door.Rotation = (-direction).Angle();
@@ -31,7 +31,7 @@ public class PlacePropsStep(GenerationState state, ProceduralGenerationSettings 
     
     public override async GDTask Perform()
     {
-        _gridSize = State.TilemapLayer.TileSet.TileSize.X;
+        _gridSize = State.Payload.AutoTileLayer.TileSet.TileSize.X;
         PlaceDoors();
     }
 }

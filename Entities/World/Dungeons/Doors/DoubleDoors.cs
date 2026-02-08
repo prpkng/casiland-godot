@@ -9,10 +9,12 @@ public partial class DoubleDoors : Node2D
 {
     [Export] public Curve OpeningCurve;
     [Export] public float OpeningDuration;
+    [Export] public float OpeningMisalignment = 0.1f;
+    
     [Export] public Interactable Interactable;
     [Export] public Node2D LeftDoor;
     [Export] public Node2D RightDoor;
-
+    
     private const float StartAngle = -Mathf.Pi / 2;
     private float _leftLastAngle = StartAngle;
     private float _rightLastAngle = StartAngle;
@@ -56,12 +58,20 @@ public partial class DoubleDoors : Node2D
         float curRight = _rightLastAngle;
         _leftLastAngle = StartAngle;
         _rightLastAngle = StartAngle;
+        tween.SetParallel();
+        float rightDelay = Mathf.Max(0, -OpeningMisalignment);
+        float leftDelay = Mathf.Max(0, OpeningMisalignment);
         tween.TweenMethod(Callable.From<float>(f =>
         {
             float wf = OpeningCurve.SampleBaked(f);
             LeftDoor.Rotation = Mathf.LerpAngle(curLeft, StartAngle, wf);
+        }), 0f, 1f, OpeningDuration).SetDelay(leftDelay);
+        tween.TweenMethod(Callable.From<float>(f =>
+        {
+            float wf = OpeningCurve.SampleBaked(f);
             RightDoor.Rotation = Mathf.LerpAngle(curRight, StartAngle, wf);
-        }), 0f, 1f, OpeningDuration);
+        }), 0f, 1f, OpeningDuration).SetDelay(rightDelay);
+
 
     }
     public void OpenDoor(int direction)
@@ -74,12 +84,19 @@ public partial class DoubleDoors : Node2D
         float targetRight = StartAngle + Mathf.Pi / 2 * direction;
         _leftLastAngle = targetLeft;
         _rightLastAngle = targetRight;
+        tween.SetParallel();
+        float rightDelay = Mathf.Max(0, -OpeningMisalignment);
+        float leftDelay = Mathf.Max(0, OpeningMisalignment);
         tween.TweenMethod(Callable.From<float>(f =>
         {
             float wf = OpeningCurve.SampleBaked(f);
             LeftDoor.Rotation = Mathf.LerpAngle(curLeft, targetLeft, wf);
+        }), 0f, 1f, OpeningDuration).SetDelay(leftDelay);
+        tween.TweenMethod(Callable.From<float>(f =>
+        {
+            float wf = OpeningCurve.SampleBaked(f);
             RightDoor.Rotation = Mathf.LerpAngle(curRight, targetRight, wf);
-        }), 0f, 1f, OpeningDuration);
+        }), 0f, 1f, OpeningDuration).SetDelay(rightDelay);
         
     }
 

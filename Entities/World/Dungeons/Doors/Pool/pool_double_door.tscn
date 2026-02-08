@@ -20,17 +20,19 @@ size = Vector2(40, 16)
 
 [node name="Double Door" type="Node2D" unique_id=1032661953 node_paths=PackedStringArray("Interactable", "LeftDoor", "RightDoor")]
 physics_interpolation_mode = 2
+y_sort_enabled = true
 rotation = 1.5707964
 script = ExtResource("1_8p43b")
 OpeningCurve = SubResource("Curve_8p43b")
 OpeningDuration = 0.5
+OpeningMisalignment = 0.04
 Interactable = NodePath("Interactable")
 LeftDoor = NodePath("LeftDoor")
 RightDoor = NodePath("RightDoor")
 
 [node name="LeftDoor" type="AnimatableBody2D" parent="." unique_id=993431151]
 y_sort_enabled = true
-position = Vector2(6.993822e-07, 16)
+position = Vector2(5.682481e-07, 13)
 rotation = -1.5707964
 collision_layer = 2
 collision_mask = 2
@@ -38,15 +40,16 @@ sync_to_physics = false
 metadata/_edit_group_ = true
 
 [node name="StackedSprite" type="Node2D" parent="LeftDoor" unique_id=429912513 node_paths=PackedStringArray("StackSprites", "_root")]
+y_sort_enabled = true
 texture_filter = 1
-position = Vector2(8, 0)
+position = Vector2(5, -5.684342e-14)
 script = ExtResource("1_l4nst")
 StackTexture = ExtResource("2_26a53")
 HFrames = 16
 VFrames = 2
 Spacing = -1.0
 StackSprites = [NodePath("Root/Sprite 0"), NodePath("Root/Sprite 1"), NodePath("Root/Sprite 2"), NodePath("Root/Sprite 3"), NodePath("Root/Sprite 4"), NodePath("Root/Sprite 5"), NodePath("Root/Sprite 6"), NodePath("Root/Sprite 7"), NodePath("Root/Sprite 8"), NodePath("Root/Sprite 9"), NodePath("Root/Sprite 10"), NodePath("Root/Sprite 11"), NodePath("Root/Sprite 12"), NodePath("Root/Sprite 13"), NodePath("Root/Sprite 14"), NodePath("Root/Sprite 15"), NodePath("Root/Sprite 16"), NodePath("Root/Sprite 17"), NodePath("Root/Sprite 18"), NodePath("Root/Sprite 19"), NodePath("Root/Sprite 20"), NodePath("Root/Sprite 21"), NodePath("Root/Sprite 22"), NodePath("Root/Sprite 23"), NodePath("Root/Sprite 24"), NodePath("Root/Sprite 25"), NodePath("Root/Sprite 26"), NodePath("Root/Sprite 27"), NodePath("Root/Sprite 28"), NodePath("Root/Sprite 29"), NodePath("Root/Sprite 30"), NodePath("Root/Sprite 31")]
-Fps = 24
+Fps = 18
 _root = NodePath("Root")
 metadata/_custom_type_script = "uid://o87amdw1sspy"
 metadata/_edit_group_ = true
@@ -276,12 +279,12 @@ vframes = 2
 frame = 31
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftDoor" unique_id=1867653219]
-position = Vector2(8, 0)
+position = Vector2(5, 0)
 shape = SubResource("RectangleShape2D_5gpbr")
 
 [node name="RightDoor" type="AnimatableBody2D" parent="." unique_id=1174830386]
 y_sort_enabled = true
-position = Vector2(-6.993822e-07, -16)
+position = Vector2(-5.682481e-07, -13)
 rotation = -1.5707964
 collision_layer = 2
 collision_mask = 2
@@ -289,15 +292,16 @@ sync_to_physics = false
 metadata/_edit_group_ = true
 
 [node name="StackedSprite" type="Node2D" parent="RightDoor" unique_id=586690830 node_paths=PackedStringArray("StackSprites", "_root")]
+y_sort_enabled = true
 texture_filter = 1
-position = Vector2(-8, 0)
+position = Vector2(-5, 5.684342e-14)
 script = ExtResource("1_l4nst")
 StackTexture = ExtResource("3_wkopt")
 HFrames = 16
 VFrames = 2
 Spacing = -1.0
 StackSprites = [NodePath("Root/Sprite 0"), NodePath("Root/Sprite 1"), NodePath("Root/Sprite 2"), NodePath("Root/Sprite 3"), NodePath("Root/Sprite 4"), NodePath("Root/Sprite 5"), NodePath("Root/Sprite 6"), NodePath("Root/Sprite 7"), NodePath("Root/Sprite 8"), NodePath("Root/Sprite 9"), NodePath("Root/Sprite 10"), NodePath("Root/Sprite 11"), NodePath("Root/Sprite 12"), NodePath("Root/Sprite 13"), NodePath("Root/Sprite 14"), NodePath("Root/Sprite 15"), NodePath("Root/Sprite 16"), NodePath("Root/Sprite 17"), NodePath("Root/Sprite 18"), NodePath("Root/Sprite 19"), NodePath("Root/Sprite 20"), NodePath("Root/Sprite 21"), NodePath("Root/Sprite 22"), NodePath("Root/Sprite 23"), NodePath("Root/Sprite 24"), NodePath("Root/Sprite 25"), NodePath("Root/Sprite 26"), NodePath("Root/Sprite 27"), NodePath("Root/Sprite 28"), NodePath("Root/Sprite 29"), NodePath("Root/Sprite 30"), NodePath("Root/Sprite 31")]
-Fps = 24
+Fps = 18
 _root = NodePath("Root")
 metadata/_custom_type_script = "uid://o87amdw1sspy"
 metadata/_edit_group_ = true
@@ -527,7 +531,7 @@ vframes = 2
 frame = 31
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightDoor" unique_id=1052045379]
-position = Vector2(-8, 0)
+position = Vector2(-5, 5.684342e-14)
 rotation = 0.00011673568
 scale = Vector2(1.0000001, 1.0000001)
 shape = SubResource("RectangleShape2D_5gpbr")

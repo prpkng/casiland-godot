@@ -9,7 +9,9 @@ namespace Casiland.Systems.ProceduralGen.Steps;
 
 public class PlaceRoomTilesStep(GenerationState state, ProceduralGenerationSettings settings) : GenerationStep(state, settings)
 {
-    private static readonly int TilesSrcId = 1;
+    private const int TilesSrcId = 1;
+    private const int CollisionsSrcId = 0;
+    private static readonly Vector2I CollisionsTileCoord = new Vector2I(0, 0);
     private static readonly Vector2I SolidTileCoord = new(0, 0);
     private static readonly Vector2I FloorTileCoord = new(1, 0);
 
@@ -39,16 +41,16 @@ public class PlaceRoomTilesStep(GenerationState state, ProceduralGenerationSetti
 
     private void PlaceBlankTiles()
     {
-        State.TilemapLayer.Clear();
+        State.Payload.AutoTileLayer.Clear();
 
         foreach (var rect in State.AllRooms.Select(room => new Rect2I((Vector2I)room.Rect.Position, (Vector2I)room.Rect.Size)))
         {
-            FillTilemap(rect.Grow(15), State.TilemapLayer, TilesSrcId, SolidTileCoord);
+            FillTilemap(rect.Grow(15), State.Payload.AutoTileLayer, TilesSrcId, SolidTileCoord);
         }
         
         foreach (var line in State.CorridorLines)
         {
-            State.TilemapLayer.SetCells(
+            State.Payload.AutoTileLayer.SetCells(
                 ProceduralGeometry.BresenhamLineWidth(line.From, line.To, 20), TilesSrcId,
                 SolidTileCoord);
         }
@@ -58,7 +60,7 @@ public class PlaceRoomTilesStep(GenerationState state, ProceduralGenerationSetti
     {
         foreach (var rect in State.AllRooms.Select(room => new Rect2I((Vector2I)room.Rect.Position, (Vector2I)room.Rect.Size)))
         {
-            FillTilemap(rect, State.TilemapLayer, TilesSrcId, FloorTileCoord);
+            FillTilemap(rect, State.Payload.AutoTileLayer, TilesSrcId, FloorTileCoord);
         }
     }
 
@@ -72,7 +74,7 @@ public class PlaceRoomTilesStep(GenerationState state, ProceduralGenerationSetti
             if (dir.X < 0 || dir.Y < 0) dir -= dir.Sign();
             if (negativeDir.X < 0 || negativeDir.Y < 0) negativeDir -= negativeDir.Sign();
             ProceduralGeometry.DrawLine(
-                State.TilemapLayer, 
+                State.Payload.AutoTileLayer, 
                 line.From + negativeDir, 
                 line.To + dir, 
                 Settings.CorridorTileWidth,
@@ -95,26 +97,32 @@ public class PlaceRoomTilesStep(GenerationState state, ProceduralGenerationSetti
             var perpendicular = direction.Rotated(Mathf.Pi/2f).RoundToInt();
             float corridorWidth = Settings.CorridorTileWidth/2f;
             
-            State.TilemapLayer.SetCell(
+            State.Payload.AutoTileLayer.SetCell(
                 point.RoundToInt() - perpendicular.Abs() * Mathf.FloorToInt(corridorWidth-1), 
                 TilesSrcId, 
                 SolidTileCoord);
             
-            State.TilemapLayer.SetCell(
+            State.Payload.AutoTileLayer.SetCell(
                 point.RoundToInt() + perpendicular.Abs() * Mathf.CeilToInt(corridorWidth), 
                 TilesSrcId, 
                 SolidTileCoord);
             
-            State.TilemapLayer.SetCell(
+            State.Payload.AutoTileLayer.SetCell(
                 point.RoundToInt() - perpendicular.Abs() * Mathf.FloorToInt(corridorWidth-2), 
                 TilesSrcId, 
                 SolidTileCoord);
             
-            State.TilemapLayer.SetCell(
+            State.Payload.AutoTileLayer.SetCell(
                 point.RoundToInt() + perpendicular.Abs() * Mathf.CeilToInt(corridorWidth-1), 
                 TilesSrcId, 
                 SolidTileCoord);
         }
+    }
+
+    private void FillCollisionTiles()
+    {
+        foreach (var tile in State.Payload.AutoTileLayer.GetUsedCellsById(TilesSrcId, SolidTileCoord))
+            State.Payload.CollisionsLayer.SetCell(tile, CollisionsSrcId, CollisionsTileCoord);
     }
     
     public override async GDTask Perform()
@@ -126,5 +134,7 @@ public class PlaceRoomTilesStep(GenerationState state, ProceduralGenerationSetti
         CreateCorridorFloors();
                 
         PlaceDoorBorders();
+
+        FillCollisionTiles();
     }
 }

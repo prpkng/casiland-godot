@@ -112,6 +112,68 @@ OtherMask = Array[int]([35734127902720])
 ModuloXOffset = 1
 ModuloYOffset = 1
 
+[sub_resource type="Resource" id="Resource_psuyj"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(5, 0)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 3, 2, 3, 0, 0, 0, 0, 0, 2, 0, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([35459249995776])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([689342251008])
+ModuloXOffset = 1
+
+[sub_resource type="Resource" id="Resource_phc7v"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(5, 1)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 3, 2, 3, 0, 0, 0, 0, 0, 2, 0, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([35461397479424])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([687194767360])
+
+[sub_resource type="Resource" id="Resource_cr6el"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(5, 2)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 3, 2, 3, 0, 0, 0, 0, 0, 3, 0, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([277025390592])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([35871566856192])
+
+[sub_resource type="Resource" id="Resource_er3eh"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(2, 3)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 3, 2, 2, 0, 0, 0, 0, 0, 3, 0, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([824633720832])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([35323958525952])
+
+[sub_resource type="Resource" id="Resource_i0haa"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(3, 3)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 3, 0, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([962072674304])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([35186519572480])
+
+[sub_resource type="Resource" id="Resource_x0fpp"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(4, 3)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 2, 2, 3, 0, 0, 0, 0, 0, 3, 0, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([412316860416])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([35736275386368])
+ModuloYOffset = 1
+
 [sub_resource type="Resource" id="Resource_p22qm"]
 script = ExtResource("1_bgs60")
 TargetTileSourceId = 1
@@ -152,5 +214,5 @@ ModuloYOffset = 1
 script = ExtResource("2_aeaxt")
 tileSet = ExtResource("3_aeaxt")
 SourceTileSourceId = 1
-Rules = Array[ExtResource("1_bgs60")]([SubResource("Resource_0ovf6"), SubResource("Resource_aeaxt"), SubResource("Resource_pcsex"), SubResource("Resource_1jkk0"), SubResource("Resource_pq68y"), SubResource("Resource_5ruc4"), SubResource("Resource_gf3un"), SubResource("Resource_rucn5"), SubResource("Resource_c3ce0"), SubResource("Resource_p22qm"), SubResource("Resource_c45ji"), SubResource("Resource_rsuny")])
+Rules = Array[ExtResource("1_bgs60")]([SubResource("Resource_0ovf6"), SubResource("Resource_aeaxt"), SubResource("Resource_pcsex"), SubResource("Resource_1jkk0"), SubResource("Resource_pq68y"), SubResource("Resource_5ruc4"), SubResource("Resource_gf3un"), SubResource("Resource_rucn5"), SubResource("Resource_c3ce0"), SubResource("Resource_psuyj"), SubResource("Resource_phc7v"), SubResource("Resource_cr6el"), SubResource("Resource_er3eh"), SubResource("Resource_i0haa"), SubResource("Resource_x0fpp"), SubResource("Resource_p22qm"), SubResource("Resource_c45ji"), SubResource("Resource_rsuny")])
 metadata/_custom_type_script = "uid://d183kokl5ih3f"

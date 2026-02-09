@@ -10,6 +10,12 @@ public partial class Interactable : Area2D
 
     [Signal]
     public delegate void InteractedEventHandler(Interactor interactor);
+    
+    [Signal]
+    public delegate void BeginHoverEventHandler(Interactor interactor);
+    
+    [Signal]
+    public delegate void EndHoverEventHandler(Interactor interactor);
 
     public void Interact(Interactor interactor)
     {
@@ -17,6 +23,5 @@ public partial class Interactable : Area2D
         EmitSignalInteracted(interactor);
         OnInteracted(interactor);
     }
-
     protected virtual void OnInteracted(Interactor interactor) {}
 }

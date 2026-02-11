@@ -62,7 +62,8 @@ public partial class AutoTileEditor : Control
         for (int i = 0; i < _neighbourButtons.Length; i++)
         {
             int idx = i;
-            _neighbourButtons[i].Pressed += () => OnNeighbourButtonClicked(idx);
+            _neighbourButtons[i].MouseEntered += () => OnNeighbourButtonMouseEntered(idx);
+            _neighbourButtons[i].LeftClicked += () => OnNeighbourButtonClicked(idx);
             _neighbourButtons[i].RightClicked += () => OnNeighbourButtonRightClicked(idx);
         }
 
@@ -327,6 +328,14 @@ public partial class AutoTileEditor : Control
         
     }
 
+    private void OnNeighbourButtonMouseEntered(int index)
+    {
+        if (Input.IsMouseButtonPressed(MouseButton.Left))
+            OnNeighbourButtonClicked(index);
+        else if (Input.IsMouseButtonPressed(MouseButton.Right))
+            OnNeighbourButtonRightClicked(index);
+    }
+
     private void OnNeighbourButtonRightClicked(int index)
     {
         var rule = CurrentEditingRuleSet.Rules[_currentRuleIndex];
@@ -345,6 +354,8 @@ public partial class AutoTileEditor : Control
 
         RecomputeNeighbourButtons();
     }
+
+
     private void OnNeighbourButtonClicked(int index)
     {
         var rule = CurrentEditingRuleSet.Rules[_currentRuleIndex];

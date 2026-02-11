@@ -8,27 +8,54 @@
 script = ExtResource("1_bgs60")
 TargetTileCoords = Vector2i(3, 1)
 TargetTileSourceId = 1
-Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
 ArrayChunkCount = 1
-RequiredMask = Array[int]([274877906944])
+RequiredMask = Array[int]([16777216])
 EmptyMask = Array[int]([0])
 OtherMask = Array[int]([0])
-ModuloXOffset = 1
-ModuloYOffset = 1
 
 [sub_resource type="Resource" id="Resource_aeaxt"]
 script = ExtResource("1_bgs60")
-TargetTileCoords = Vector2i(3, 0)
+TargetTileCoords = Vector2i(7, 1)
 TargetTileSourceId = 1
-Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 2, 3, 0, 0])
 ArrayChunkCount = 1
-RequiredMask = Array[int]([274877906944])
+RequiredMask = Array[int]([36009005809664])
 EmptyMask = Array[int]([0])
-OtherMask = Array[int]([2147483648])
-ModuloXOffset = 1
-ModuloYOffset = 1
+OtherMask = Array[int]([70368744177664])
 
 [sub_resource type="Resource" id="Resource_pcsex"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(8, 1)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 3, 2, 0, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([35596688949248])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([17592186044416])
+
+[sub_resource type="Resource" id="Resource_1jkk0"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(7, 2)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([50462720])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([262144])
+
+[sub_resource type="Resource" id="Resource_pq68y"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(8, 2)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([25296896])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([65536])
+ModuloYOffset = 1
+
+[sub_resource type="Resource" id="Resource_5ruc4"]
 script = ExtResource("1_bgs60")
 TargetTileCoords = Vector2i(3, 2)
 TargetTileSourceId = 1
@@ -37,58 +64,99 @@ ArrayChunkCount = 1
 RequiredMask = Array[int]([274877906944])
 EmptyMask = Array[int]([0])
 OtherMask = Array[int]([35184372088832])
-ModuloXOffset = 1
-ModuloYOffset = 1
-
-[sub_resource type="Resource" id="Resource_1jkk0"]
-script = ExtResource("1_bgs60")
-TargetTileCoords = Vector2i(4, 1)
-TargetTileSourceId = 1
-Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-ArrayChunkCount = 1
-RequiredMask = Array[int]([274877906944])
-EmptyMask = Array[int]([0])
-OtherMask = Array[int]([549755813888])
-ModuloXOffset = 1
-ModuloYOffset = 1
-
-[sub_resource type="Resource" id="Resource_pq68y"]
-script = ExtResource("1_bgs60")
-TargetTileCoords = Vector2i(2, 1)
-TargetTileSourceId = 1
-Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-ArrayChunkCount = 1
-RequiredMask = Array[int]([274877906944])
-EmptyMask = Array[int]([0])
-OtherMask = Array[int]([137438953472])
-ModuloXOffset = 1
-ModuloYOffset = 1
-
-[sub_resource type="Resource" id="Resource_5ruc4"]
-script = ExtResource("1_bgs60")
-TargetTileCoords = Vector2i(2, 0)
-TargetTileSourceId = 1
-Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-ArrayChunkCount = 1
-RequiredMask = Array[int]([274877906944])
-EmptyMask = Array[int]([0])
-OtherMask = Array[int]([139586437120])
-ModuloXOffset = 1
-ModuloYOffset = 1
 
 [sub_resource type="Resource" id="Resource_gf3un"]
 script = ExtResource("1_bgs60")
-TargetTileCoords = Vector2i(4, 0)
+TargetTileCoords = Vector2i(4, 1)
 TargetTileSourceId = 1
-Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0])
 ArrayChunkCount = 1
-RequiredMask = Array[int]([274877906944])
+RequiredMask = Array[int]([277042167808])
 EmptyMask = Array[int]([0])
-OtherMask = Array[int]([551903297536])
-ModuloXOffset = 1
-ModuloYOffset = 1
+OtherMask = Array[int]([549755813888])
 
 [sub_resource type="Resource" id="Resource_rucn5"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(4, 1)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([2164260864])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([4294967296])
+
+[sub_resource type="Resource" id="Resource_c3ce0"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(4, 1)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([16777216])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([33554432])
+
+[sub_resource type="Resource" id="Resource_p22qm"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(2, 1)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([16777216])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([8388608])
+
+[sub_resource type="Resource" id="Resource_psuyj"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(2, 1)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([2164260864])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([1073741824])
+
+[sub_resource type="Resource" id="Resource_phc7v"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(2, 1)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([277042167808])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([137438953472])
+
+[sub_resource type="Resource" id="Resource_cr6el"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(3, 0)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([16777216])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([131072])
+ModuloYOffset = 1
+
+[sub_resource type="Resource" id="Resource_er3eh"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(2, 0)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([16777216])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([8519680])
+
+[sub_resource type="Resource" id="Resource_i0haa"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(4, 0)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([16777216])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([33685504])
+
+[sub_resource type="Resource" id="Resource_x0fpp"]
 script = ExtResource("1_bgs60")
 TargetTileCoords = Vector2i(2, 2)
 TargetTileSourceId = 1
@@ -97,10 +165,8 @@ ArrayChunkCount = 1
 RequiredMask = Array[int]([274877906944])
 EmptyMask = Array[int]([0])
 OtherMask = Array[int]([35321811042304])
-ModuloXOffset = 1
-ModuloYOffset = 1
 
-[sub_resource type="Resource" id="Resource_c3ce0"]
+[sub_resource type="Resource" id="Resource_t27vs"]
 script = ExtResource("1_bgs60")
 TargetTileCoords = Vector2i(4, 2)
 TargetTileSourceId = 1
@@ -109,81 +175,336 @@ ArrayChunkCount = 1
 RequiredMask = Array[int]([274877906944])
 EmptyMask = Array[int]([0])
 OtherMask = Array[int]([35734127902720])
-ModuloXOffset = 1
-ModuloYOffset = 1
 
-[sub_resource type="Resource" id="Resource_psuyj"]
-script = ExtResource("1_bgs60")
-TargetTileCoords = Vector2i(5, 0)
-TargetTileSourceId = 1
-Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 3, 2, 3, 0, 0, 0, 0, 0, 2, 0, 0, 0])
-ArrayChunkCount = 1
-RequiredMask = Array[int]([35459249995776])
-EmptyMask = Array[int]([0])
-OtherMask = Array[int]([689342251008])
-ModuloXOffset = 1
-
-[sub_resource type="Resource" id="Resource_phc7v"]
+[sub_resource type="Resource" id="Resource_22dkb"]
 script = ExtResource("1_bgs60")
 TargetTileCoords = Vector2i(5, 1)
 TargetTileSourceId = 1
-Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 3, 2, 3, 0, 0, 0, 0, 0, 2, 0, 0, 0])
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
 ArrayChunkCount = 1
-RequiredMask = Array[int]([35461397479424])
+RequiredMask = Array[int]([16777216])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([41943040])
+
+[sub_resource type="Resource" id="Resource_fj3e5"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(5, 1)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 3, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([2164260864])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([5368709120])
+
+[sub_resource type="Resource" id="Resource_ln87y"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(5, 1)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 3, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([277042167808])
 EmptyMask = Array[int]([0])
 OtherMask = Array[int]([687194767360])
 
-[sub_resource type="Resource" id="Resource_cr6el"]
+[sub_resource type="Resource" id="Resource_1radg"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(5, 0)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 3, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([16777216])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([42074112])
+
+[sub_resource type="Resource" id="Resource_q1our"]
 script = ExtResource("1_bgs60")
 TargetTileCoords = Vector2i(5, 2)
 TargetTileSourceId = 1
-Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 3, 2, 3, 0, 0, 0, 0, 0, 3, 0, 0, 0])
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2, 3, 0, 0, 0, 0, 0, 3, 0, 0, 0])
 ArrayChunkCount = 1
-RequiredMask = Array[int]([277025390592])
+RequiredMask = Array[int]([274877906944])
 EmptyMask = Array[int]([0])
 OtherMask = Array[int]([35871566856192])
 
-[sub_resource type="Resource" id="Resource_er3eh"]
-script = ExtResource("1_bgs60")
-TargetTileCoords = Vector2i(2, 3)
-TargetTileSourceId = 1
-Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 3, 2, 2, 0, 0, 0, 0, 0, 3, 0, 0, 0])
-ArrayChunkCount = 1
-RequiredMask = Array[int]([824633720832])
-EmptyMask = Array[int]([0])
-OtherMask = Array[int]([35323958525952])
-
-[sub_resource type="Resource" id="Resource_i0haa"]
+[sub_resource type="Resource" id="Resource_rqr8v"]
 script = ExtResource("1_bgs60")
 TargetTileCoords = Vector2i(3, 3)
 TargetTileSourceId = 1
-Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 3, 0, 0, 0])
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0])
 ArrayChunkCount = 1
-RequiredMask = Array[int]([962072674304])
+RequiredMask = Array[int]([274877906944])
 EmptyMask = Array[int]([0])
-OtherMask = Array[int]([35186519572480])
+OtherMask = Array[int]([35184372219904])
 
-[sub_resource type="Resource" id="Resource_x0fpp"]
+[sub_resource type="Resource" id="Resource_un0rt"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(2, 3)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([274877906944])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([35321811173376])
+
+[sub_resource type="Resource" id="Resource_26vgd"]
 script = ExtResource("1_bgs60")
 TargetTileCoords = Vector2i(4, 3)
 TargetTileSourceId = 1
-Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 2, 2, 3, 0, 0, 0, 0, 0, 3, 0, 0, 0])
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 0, 0, 0, 0, 0, 3, 0, 0, 0])
 ArrayChunkCount = 1
-RequiredMask = Array[int]([412316860416])
+RequiredMask = Array[int]([274877906944])
 EmptyMask = Array[int]([0])
-OtherMask = Array[int]([35736275386368])
-ModuloYOffset = 1
+OtherMask = Array[int]([35734128033792])
 
-[sub_resource type="Resource" id="Resource_p22qm"]
+[sub_resource type="Resource" id="Resource_xy410"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(7, 4)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 2, 2, 3, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([53738631004160])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([70368744439808])
+
+[sub_resource type="Resource" id="Resource_3oabq"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(8, 4)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 3, 2, 2, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([106515189334016])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([17592186109952])
+
+[sub_resource type="Resource" id="Resource_3fl6d"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(10, 2)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 2, 2, 2, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([124107375116288])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([327680])
+
+[sub_resource type="Resource" id="Resource_eoo4t"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(10, 1)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 3, 2, 3, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([36146445221888])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([87960930222080])
+
+[sub_resource type="Resource" id="Resource_124mx"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(6, 4)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2, 2, 0, 0, 0, 0, 0, 2, 3, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([36009005940736])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([70506183393280])
+
+[sub_resource type="Resource" id="Resource_m34kt"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(9, 4)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 3, 0, 0, 0, 0, 3, 2, 0, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([35596689080320])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([18141941923840])
+
+[sub_resource type="Resource" id="Resource_4l1xc"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(10, 3)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 3, 0, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([962072805376])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([35184372416512])
+
+[sub_resource type="Resource" id="Resource_otdly"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(10, 0)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 3, 2, 3, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([36146444763136])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([87960930353152])
+
+[sub_resource type="Resource" id="Resource_mxmry"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(5, 3)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2, 3, 0, 0, 0, 0, 0, 3, 0, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([274877906944])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([35871566987264])
+ModuloXOffset = 1
+
+[sub_resource type="Resource" id="Resource_1vgak"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(6, 2)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2, 2, 0, 0, 0, 0, 0, 2, 2, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([106377750118400])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([137439215616])
+
+[sub_resource type="Resource" id="Resource_8meow"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(6, 1)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2, 2, 0, 0, 0, 0, 0, 2, 3, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([36009006202880])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([70506183131136])
+
+[sub_resource type="Resource" id="Resource_mpne1"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(9, 1)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 3, 0, 0, 0, 0, 3, 2, 0, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([35596689145856])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([18141941858304])
+
+[sub_resource type="Resource" id="Resource_ptakj"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(9, 2)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 3, 0, 0, 0, 0, 2, 2, 0, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([53188875124736])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([549755879424])
+
+[sub_resource type="Resource" id="Resource_84cns"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(7, 0)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 2, 2, 3, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([53738630807552])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([70368744308736])
+
+[sub_resource type="Resource" id="Resource_0btqu"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(8, 0)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 3, 2, 2, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([106515188940800])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([17592186175488])
+
+[sub_resource type="Resource" id="Resource_jaaa0"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(7, 3)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 3, 0, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([962072870912])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([35184372350976])
+
+[sub_resource type="Resource" id="Resource_yxdd8"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(8, 3)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 3, 0, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([962073067520])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([35184372154368])
+
+[sub_resource type="Resource" id="Resource_r700u"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(11, 2)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 3, 2, 2, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([106515189071872])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([17592186372096])
+
+[sub_resource type="Resource" id="Resource_y6wqy"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(12, 2)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 2, 2, 3, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([53738630938624])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([70368744505344])
+
+[sub_resource type="Resource" id="Resource_nqq3p"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(12, 3)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 3, 2, 3, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([36146444959744])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([87960930484224])
+
+[sub_resource type="Resource" id="Resource_ulm0a"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(11, 3)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 3, 2, 3, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([36146445156352])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([87960930287616])
+
+[sub_resource type="Resource" id="Resource_ljd1d"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(11, 0)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 3, 2, 2, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([106515189137408])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([17592186306560])
+
+[sub_resource type="Resource" id="Resource_mymti"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(11, 1)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 2, 2, 3, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([53738631200768])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([70368744243200])
+
+[sub_resource type="Resource" id="Resource_08gp4"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(10, 4)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 3, 2, 3, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([36146444894208])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([87960930549760])
+
+[sub_resource type="Resource" id="Resource_etubj"]
 script = ExtResource("1_bgs60")
 TargetTileSourceId = 1
-Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
 ArrayChunkCount = 1
-RequiredMask = Array[int]([2147483648])
+RequiredMask = Array[int]([2164260864])
 EmptyMask = Array[int]([0])
 OtherMask = Array[int]([274877906944])
-ModuloXOffset = 1
-ModuloYOffset = 1
 
 [sub_resource type="Resource" id="Resource_c45ji"]
 script = ExtResource("1_bgs60")
@@ -195,7 +516,6 @@ RequiredMask = Array[int]([16777216])
 EmptyMask = Array[int]([0])
 OtherMask = Array[int]([2147483648])
 ModuloX = 2
-ModuloYOffset = 1
 
 [sub_resource type="Resource" id="Resource_rsuny"]
 script = ExtResource("1_bgs60")
@@ -208,11 +528,20 @@ EmptyMask = Array[int]([0])
 OtherMask = Array[int]([2147483648])
 ModuloX = 2
 ModuloXOffset = 1
-ModuloYOffset = 1
+
+[sub_resource type="Resource" id="Resource_4a0mm"]
+script = ExtResource("1_bgs60")
+TargetTileCoords = Vector2i(1, 0)
+TargetTileSourceId = 1
+Neighbours = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+ArrayChunkCount = 1
+RequiredMask = Array[int]([0])
+EmptyMask = Array[int]([0])
+OtherMask = Array[int]([16777216])
 
 [resource]
 script = ExtResource("2_aeaxt")
 tileSet = ExtResource("3_aeaxt")
 SourceTileSourceId = 1
-Rules = Array[ExtResource("1_bgs60")]([SubResource("Resource_0ovf6"), SubResource("Resource_aeaxt"), SubResource("Resource_pcsex"), SubResource("Resource_1jkk0"), SubResource("Resource_pq68y"), SubResource("Resource_5ruc4"), SubResource("Resource_gf3un"), SubResource("Resource_rucn5"), SubResource("Resource_c3ce0"), SubResource("Resource_psuyj"), SubResource("Resource_phc7v"), SubResource("Resource_cr6el"), SubResource("Resource_er3eh"), SubResource("Resource_i0haa"), SubResource("Resource_x0fpp"), SubResource("Resource_p22qm"), SubResource("Resource_c45ji"), SubResource("Resource_rsuny")])
+Rules = Array[ExtResource("1_bgs60")]([SubResource("Resource_0ovf6"), SubResource("Resource_aeaxt"), SubResource("Resource_pcsex"), SubResource("Resource_1jkk0"), SubResource("Resource_pq68y"), SubResource("Resource_5ruc4"), SubResource("Resource_gf3un"), SubResource("Resource_rucn5"), SubResource("Resource_c3ce0"), SubResource("Resource_p22qm"), SubResource("Resource_psuyj"), SubResource("Resource_phc7v"), SubResource("Resource_cr6el"), SubResource("Resource_er3eh"), SubResource("Resource_i0haa"), SubResource("Resource_x0fpp"), SubResource("Resource_t27vs"), SubResource("Resource_22dkb"), SubResource("Resource_fj3e5"), SubResource("Resource_ln87y"), SubResource("Resource_1radg"), SubResource("Resource_q1our"), SubResource("Resource_rqr8v"), SubResource("Resource_un0rt"), SubResource("Resource_26vgd"), SubResource("Resource_xy410"), SubResource("Resource_3oabq"), SubResource("Resource_3fl6d"), SubResource("Resource_eoo4t"), SubResource("Resource_124mx"), SubResource("Resource_m34kt"), SubResource("Resource_4l1xc"), SubResource("Resource_otdly"), SubResource("Resource_mxmry"), SubResource("Resource_1vgak"), SubResource("Resource_8meow"), SubResource("Resource_mpne1"), SubResource("Resource_ptakj"), SubResource("Resource_84cns"), SubResource("Resource_0btqu"), SubResource("Resource_jaaa0"), SubResource("Resource_yxdd8"), SubResource("Resource_r700u"), SubResource("Resource_y6wqy"), SubResource("Resource_nqq3p"), SubResource("Resource_ulm0a"), SubResource("Resource_ljd1d"), SubResource("Resource_mymti"), SubResource("Resource_08gp4"), SubResource("Resource_etubj"), SubResource("Resource_c45ji"), SubResource("Resource_rsuny"), SubResource("Resource_4a0mm")])
 metadata/_custom_type_script = "uid://d183kokl5ih3f"

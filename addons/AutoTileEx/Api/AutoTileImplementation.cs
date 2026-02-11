@@ -82,11 +82,14 @@ public static class AutoTileImplementation
         }
         return true;
     }
-    
-    public static void PerformAutoTile(TileMapLayer layer, AutoTileRuleSet rules)
+
+
+    public static void PerformAutoTile(TileMapLayer layer, AutoTileRuleSet rules) => PerformAutoTile(layer, layer, rules);
+
+    public static void PerformAutoTile(TileMapLayer source, TileMapLayer dest, AutoTileRuleSet rules)
     {
         Dictionary<Vector2I, (int, Vector2I)> output = [];
-        var used = layer.GetUsedCells();
+        var used = source.GetUsedCells();
 
         foreach (var pos in used)
         {
@@ -94,7 +97,7 @@ public static class AutoTileImplementation
             ulong[] requiredMask = new ulong[3];
             ulong[] emptyMask = new ulong[3];
             ulong[] otherMask = new ulong[3];
-            BuildMasks(layer, pos, AutoTileRule.Radius, new TileInfo(rules.SourceTileCoords, rules.SourceTileSourceId), requiredMask, emptyMask, otherMask);
+            BuildMasks(source, pos, AutoTileRule.Radius, new TileInfo(rules.SourceTileCoords, rules.SourceTileSourceId), requiredMask, emptyMask, otherMask);
             foreach (var rule in rules.Rules)
             {
                 if (!MatchRule(pos, requiredMask, emptyMask, otherMask, rule))
@@ -108,6 +111,6 @@ public static class AutoTileImplementation
         }
 
         foreach (var (pos, (id, tile)) in output)
-            layer.SetCell(pos, id, tile);
+            dest.SetCell(pos, id, tile);
     }
 }

@@ -61,7 +61,7 @@ public class PlaceRoomTilesStep(GenerationState state, ProceduralGenerationSetti
         foreach (var rect in State.AllRooms.Select(room => new Rect2I((Vector2I)room.Rect.Position, (Vector2I)room.Rect.Size)))
         {
             // Fill with solid tiles before filling with empty tiles to create an outline of tiles around the room
-            FillTilemap(rect.Grow(1), State.Payload.AutoTileLayer, TilesSrcId, SolidTileCoord);
+            // FillTilemap(rect.Grow(1), State.Payload.AutoTileLayer, TilesSrcId, SolidTileCoord);
             FillTilemap(rect, State.Payload.AutoTileLayer, TilesSrcId, FloorTileCoord);
         }
     }
@@ -86,7 +86,18 @@ public class PlaceRoomTilesStep(GenerationState state, ProceduralGenerationSetti
         }
     }
 
-    private void PlaceDoorHoles()
+
+    /// <summary>
+    /// Places tiles around the corridor connections assuming a 2x2 door will be placed on the center of the entrance
+    /// </summary>
+    /// <remarks>
+    /// <para>This code assumes the top-down tileset style with no "uncollidable tiles". This means that the bottom part of the tileset 
+    /// is expected to be messed up with perspective, therefore "single tile walls" are not supported and every tile must be 
+    /// at least 3 tiles tall</para>
+    /// <para>For that to work, we are checking here if the connection is vertical, and if so we create 2 more tiles in the corridor direction
+    /// for the sake of the illusion</para>
+    /// </remarks>
+    private void FillDoorWalls()
     {
         foreach (var room in State.AllRooms)
         foreach (var (dir, nb) in room.Neighbors)
@@ -97,15 +108,28 @@ public class PlaceRoomTilesStep(GenerationState state, ProceduralGenerationSetti
             if (direction.X < 0 || direction.Y < 0) point += direction.Sign();
             // point += direction * .5f;
             var perpendicular = direction.Rotated(Mathf.Pi/2f).RoundToInt().Abs();
+            int halfCorridorWidth = Settings.CorridorTileWidth/2;
+            int fillingTilesCount = halfCorridorWidth - 1;
+            int verticalFillCount = direction.Abs().Y > direction.Abs().X ? 3 : 1;
+
+
+            for (int i = 0; i < fillingTilesCount; i++)
+            {
+                for (int j = 0; j < verticalFillCount; j++)
+                {
+                    
+                    State.Payload.AutoTileLayer.SetCell(
+                        point.RoundToInt() - perpendicular.Abs() * (halfCorridorWidth-(i+1)) + direction.Sign4Way().RoundToInt() * j, 
+                        TilesSrcId, 
+                        SolidTileCoord);
+                    
+                    State.Payload.AutoTileLayer.SetCell(
+                        point.RoundToInt() + perpendicular.Abs() * (halfCorridorWidth - i) + direction.Sign4Way().RoundToInt() * j, 
+                        TilesSrcId, 
+                        SolidTileCoord);
+                }
+            }
             
-            State.Payload.AutoTileLayer.SetCell(
-                point.RoundToInt(), 
-                TilesSrcId, 
-                FloorTileCoord);
-            State.Payload.AutoTileLayer.SetCell(
-                point.RoundToInt() + perpendicular, 
-                TilesSrcId, 
-                FloorTileCoord);
         }
     }
 
@@ -124,7 +148,7 @@ public class PlaceRoomTilesStep(GenerationState state, ProceduralGenerationSetti
         CreateRoomFloors();
 
                 
-        PlaceDoorHoles();
+        FillDoorWalls();
 
         FillCollisionTiles();
     }

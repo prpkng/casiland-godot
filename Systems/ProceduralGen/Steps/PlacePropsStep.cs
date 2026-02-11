@@ -25,6 +25,10 @@ public class PlacePropsStep(GenerationState state, ProceduralGenerationSettings 
             door.Position = (point + direction/2f) * _gridSize;
             door.Position += direction.Orthogonal().Abs() * _gridSize;
             door.Rotation = (-direction).Angle();
+
+            // Fix the door alignment when connecting down (because of tileset illusion)
+            if (dir == RoomNeighborDirection.Down)
+                door.Position += Vector2.Down * _gridSize * 2;
             
         }
     }

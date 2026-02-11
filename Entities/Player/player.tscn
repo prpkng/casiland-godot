@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://dvr8g5sbut4b7" path="res://Entities/Weapons/base_weapon.tscn" id="6_4wf4l"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lu8i8"]
-radius = 4.1231055
+radius = 2.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iplt1"]
 size = Vector2(17, 20)

@@ -80,6 +80,14 @@ public static class ProceduralGeometry
         return center + direction * t;
     }
     
+    /// <summary>
+    /// Checks whether two rects are overlapping on a single axis.
+    /// </summary>
+    /// <remarks>
+    /// The given axis is removed from both rects positions, then they are checked for 
+    /// intersection, returning the intersection rect.
+    /// (e.g. overlap on Y axis means only the X position of the rects will be counted when
+    /// checking for overlap)</remarks>
     public static Rect2 GetRectOverlapOnAxis(Rect2 from, Rect2 to, Vector2 axis)
     {
         var inv = Vector2.One - axis.Abs();

@@ -3,9 +3,12 @@
 [ext_resource type="Script" uid="uid://cle600a3ags80" path="res://Entities/Player/Scripts/Player.cs" id="1_mv1ah"]
 [ext_resource type="Script" uid="uid://ca0llfybyho2k" path="res://Common/Movement/TopDownMovement.cs" id="2_3uyv8"]
 [ext_resource type="PackedScene" uid="uid://b2rf3ddt3m8c3" path="res://Entities/Weapons/cane_gun.tscn" id="2_ap3xn"]
+[ext_resource type="Script" uid="uid://dec5jl4hlirlc" path="res://Common/Health/Health.cs" id="3_7a1se"]
 [ext_resource type="Texture2D" uid="uid://cvbkqhvm5s0as" path="res://Entities/Player/Sprites/player_sheet.png" id="3_lu8i8"]
 [ext_resource type="Script" uid="uid://dc1gb7yiq3j3h" path="res://Entities/Player/Scripts/PlayerAnimations.cs" id="3_tekja"]
 [ext_resource type="Script" uid="uid://d3cypfjfeykxm" path="res://Common/Interaction/Interactor.cs" id="4_ap3xn"]
+[ext_resource type="Script" uid="uid://hksmdyqpj4v3" path="res://Common/Health/2D/HurtBox2D.cs" id="4_lub02"]
+[ext_resource type="Script" uid="uid://b88u7nnb5mmxb" path="res://Common/Health/HealthModifier.cs" id="4_x1y6q"]
 [ext_resource type="Script" uid="uid://cqjjobj3xmcgi" path="res://Entities/Weapons/WeaponSystem/WeaponManager.cs" id="5_5c2io"]
 [ext_resource type="PackedScene" uid="uid://dvr8g5sbut4b7" path="res://Entities/Weapons/base_weapon.tscn" id="6_4wf4l"]
 
@@ -14,6 +17,16 @@ radius = 2.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iplt1"]
 size = Vector2(17, 20)
+
+[sub_resource type="Resource" id="Resource_iplt1"]
+script = ExtResource("4_x1y6q")
+Multiplier = 1.0
+Affect = 2
+
+[sub_resource type="Resource" id="Resource_ap3xn"]
+script = ExtResource("4_x1y6q")
+Multiplier = 1.0
+Affect = 1
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lub02"]
 size = Vector2(12, 14)
@@ -113,8 +126,6 @@ shape = SubResource("CircleShape2D_lu8i8")
 script = ExtResource("2_3uyv8")
 CharacterBody = NodePath("..")
 MovementSpeed = 180.0
-MovementAcceleration = null
-MovementDeceleration = null
 metadata/_custom_type_script = "uid://ca0llfybyho2k"
 
 [node name="Interactor" type="Area2D" parent="." unique_id=629197179]
@@ -129,14 +140,22 @@ position = Vector2(12.5, 0)
 shape = SubResource("RectangleShape2D_iplt1")
 debug_color = Color(0.95218855, 0.68952936, 0, 0.41960785)
 
-[node name="Health" type="Node" parent="." unique_id=1935918873]
+[node name="Health" type="Node" parent="." unique_id=1935918873 node_paths=PackedStringArray("Entity")]
+script = ExtResource("3_7a1se")
+Entity = NodePath("..")
+Modifiers = Dictionary[int, ExtResource("4_x1y6q")]({
+1: SubResource("Resource_iplt1"),
+2: SubResource("Resource_ap3xn")
+})
 metadata/_custom_type_script = "uid://dec5jl4hlirlc"
 
-[node name="HurtBox2D" type="Area2D" parent="." unique_id=2036918428]
+[node name="HurtBox2D" type="Area2D" parent="." unique_id=2036918428 node_paths=PackedStringArray("Health")]
 position = Vector2(0, -10)
 collision_layer = 2048
 collision_mask = 0
 monitoring = false
+script = ExtResource("4_lub02")
+Health = NodePath("../Health")
 metadata/_custom_type_script = "uid://hksmdyqpj4v3"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox2D" unique_id=241702560]

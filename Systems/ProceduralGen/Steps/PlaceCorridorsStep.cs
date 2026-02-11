@@ -117,7 +117,144 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
         
         return lowest < highest / Settings.MaxCornerSizeDifference;
     }
+
     
+    private bool TryCreateDirectCorridor(ProceduralRoom fromRoom, ProceduralRoom toRoom, Vector2 dir, 
+        Vector2 axis, out DirectCorridorShape directCorridor)
+    {
+        directCorridor = null;
+        var overlap = ProceduralGeometry.GetRectOverlapOnAxis(fromRoom.Rect, toRoom.Rect, axis);
+        float overlapLengthOnAxis = (overlap.Size * (Vector2.One - axis)).Abs().Sum();
+        float fromRoomSizeOnAxis = (fromRoom.Size * axis).Abs().Sum();
+        float toRoomSizeOnAxis = (toRoom.Size * axis).Abs().Sum();
+
+        if (overlapLengthOnAxis <= Settings.MinimumDirectCorridorOverlapLength &&
+            (overlapLengthOnAxis <= fromRoomSizeOnAxis / 2f || overlapLengthOnAxis <= toRoomSizeOnAxis / 2f))
+            return false;
+        
+        directCorridor = new DirectCorridorShape(axis, fromRoom, toRoom);
+        if (fromRoom.Neighbors[directCorridor.FromDirection].Count == 0)
+            return true;
+        
+        return false;
+    }
+
+    private bool TryCreateCornerCorridor(ProceduralRoom fromRoom, ProceduralRoom toRoom, Vector2 dir,
+        out CornerCorridorShape cornerCorridor)
+    {
+
+        var possibleDirections = new List<Vector2>
+            {
+                Vector2.Right * Mathf.Sign(dir.X),
+                Vector2.Down * Mathf.Sign(dir.Y)
+            };
+
+        cornerCorridor = new CornerCorridorShape(fromRoom, toRoom, possibleDirections[0]);
+
+        var axis = Vector2.Right;
+        var overlap = ProceduralGeometry.GetRectOverlapOnAxis(fromRoom.Rect, toRoom.Rect, axis);
+        float overlapLengthOnAxis = (overlap.Size * (Vector2.One - axis)).Abs().Sum();
+
+        if (toRoom.Center.Y > fromRoom.Center.Y)
+            cornerCorridor.EntranceCornerBias = 0f;
+        else
+            cornerCorridor.EntranceCornerBias = 1f;
+
+        if (fromRoom.Center.X > toRoom.Center.X)
+            cornerCorridor.ExitCornerBias = 1f;
+        else
+            cornerCorridor.ExitCornerBias = 0f;
+
+        if (overlapLengthOnAxis > Settings.MinimumDirectCorridorOverlapLength/2f)
+            cornerCorridor.EntranceCornerBias = 1-cornerCorridor.EntranceCornerBias;
+        else if (overlapLengthOnAxis > Settings.CorridorTileWidth)
+            cornerCorridor.EntranceCornerBias = 0.5f;
+
+        if (!CheckIfCornerTooSteep(fromRoom, toRoom, possibleDirections[0], possibleDirections[1]) &&
+            fromRoom.Neighbors[VecToDirDict[possibleDirections[0]]].Count == 0 &&
+            toRoom.Neighbors[VecToDirDict[-possibleDirections[1]]].Count == 0)
+            return true;
+
+        // Switch to vertical
+
+        
+        axis = Vector2.Down;
+        overlap = ProceduralGeometry.GetRectOverlapOnAxis(fromRoom.Rect, toRoom.Rect, axis);
+        overlapLengthOnAxis = (overlap.Size * (Vector2.One - axis)).Abs().Sum();
+
+
+
+        if (fromRoom.Center.X > toRoom.Center.X)
+            cornerCorridor.EntranceCornerBias = 0f;
+        else
+            cornerCorridor.EntranceCornerBias = 1f;
+
+        if (toRoom.Center.Y > fromRoom.Center.Y)
+            cornerCorridor.ExitCornerBias = 0f;
+        else
+            cornerCorridor.ExitCornerBias = 1f;
+
+            
+        if (overlapLengthOnAxis > Settings.MinimumDirectCorridorOverlapLength/2f)
+            cornerCorridor.EntranceCornerBias = 1-cornerCorridor.EntranceCornerBias;
+        else if (overlapLengthOnAxis > Settings.CorridorTileWidth)
+            cornerCorridor.EntranceCornerBias = 0.5f;
+
+        cornerCorridor.CornerDirection = possibleDirections[1];
+        if (!CheckIfCornerTooSteep(fromRoom, toRoom, possibleDirections[1], possibleDirections[0]) &&
+                 fromRoom.Neighbors[VecToDirDict[possibleDirections[1]]].Count == 0 &&
+                 toRoom.Neighbors[VecToDirDict[-possibleDirections[0]]].Count == 0)
+            return true;
+        return false;
+    }
+
+
+    private bool TryCreateStepCorridor(ProceduralRoom fromRoom, ProceduralRoom toRoom, Vector2 dir,
+        Vector2 axis, out StepCorridorShape stepCorridor)
+    {
+        bool horizontal = Mathf.Abs(dir.X) > Mathf.Abs(dir.Y);
+
+        var dirOnAxis = (dir * axis);
+        float stepBias = State.Rng.RandfRange(0.45f, 0.55f);
+
+        stepCorridor = new StepCorridorShape(fromRoom, toRoom, axis, stepBias);
+
+        if (fromRoom.Neighbors[VecToDirDict[dirOnAxis.Sign4Way()]].Count == 0)
+            return true;
+        
+        // Solve for multiple connections on the same side
+
+        var nb = fromRoom.Neighbors[VecToDirDict[dirOnAxis.Sign4Way()]].First();
+        var nbDest = nb.endpoint == 0 ? nb.shape.ToRoom : nb.shape.FromRoom;
+        float destPos = horizontal ? nbDest.Center.Y : nbDest.Center.X;
+        float toPos = horizontal ? toRoom.Center.Y : toRoom.Center.X;
+        int side = toPos > destPos ? 1 : 0;
+
+        float roomMin = horizontal ? fromRoom.Rect.Position.Y : fromRoom.Rect.Position.X;
+        float roomMax = horizontal ? fromRoom.Rect.End.Y : fromRoom.Rect.End.X;
+
+        ref var endpointPos = ref (nb.endpoint == 0 ? ref nb.shape.FromPos : ref nb.shape.ToPos);
+        float sizeOnAxis = horizontal ? fromRoom.Size.Y : fromRoom.Size.X;
+        int increment = Mathf.Clamp(
+            Mathf.RoundToInt((sizeOnAxis - Settings.CorridorTileWidth * 2) / 2f),
+            Settings.CorridorTileWidth,
+            (int)(sizeOnAxis / 2f + Settings.CorridorTileWidth / 1.75f)
+        );
+
+        if (horizontal)
+        {
+            endpointPos.Y = side == 1 ? roomMin + increment : roomMax - increment;
+            stepCorridor.FromPos.Y = side == 0 ? roomMin + increment : roomMax - increment;
+        }
+        else
+        {
+            endpointPos.X = side == 1 ? roomMin + increment : roomMax - increment;
+            stepCorridor.FromPos.X = side == 0 ? roomMin + increment : roomMax - increment;
+        }
+
+        return true;
+    }
+
     private async GDTask CreateCorridorBetween(ProceduralRoom fromRoom, ProceduralRoom toRoom)
     {
         fromRoom.CorridorLines ??= [];
@@ -128,108 +265,26 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
 
         var axis = horizontal ? Vector2.Right : Vector2.Down;
 
-        var overlap = ProceduralGeometry.GetRectOverlapOnAxis(fromRoom.Rect, toRoom.Rect, axis);
-        float overlapLengthOnAxis = (overlap.Size * (Vector2.One - axis)).Abs().Sum();
-        float fromRoomSizeOnAxis = (fromRoom.Size * axis).Abs().Sum();
-        float toRoomSizeOnAxis = (toRoom.Size * axis).Abs().Sum();
+        CorridorShape corridorShape;
+        if (TryCreateDirectCorridor(fromRoom, toRoom, dir, axis, out var directCorridor))
+            corridorShape = directCorridor;
+        else if (TryCreateCornerCorridor(fromRoom, toRoom, dir, out var cornerCorridor))
+            corridorShape = cornerCorridor;
 
-        var corridorShape = GenCorridorShape();
+        else if (TryCreateStepCorridor(fromRoom, toRoom, dir, axis, out var stepCorridor))
+            corridorShape = stepCorridor;
+        else
+        {
+            Log.Error("Failed to create corridor between room {From} -> {To}", fromRoom.Id, toRoom.Id);
+            return;
+        }
+
         fromRoom.Neighbors[corridorShape.FromDirection].Add((corridorShape, 0));
         toRoom.Neighbors[corridorShape.ToDirection].Add((corridorShape, 1));
+
         fromRoom.ConnectionDirections.Add(corridorShape.FromDirection);
         toRoom.ConnectionDirections.Add(corridorShape.ToDirection);
-        return;
 
-        CorridorShape GenCorridorShape()
-        {
-            if (overlapLengthOnAxis > Settings.MinimumDirectCorridorOverlapLength ||
-                (overlapLengthOnAxis > fromRoomSizeOnAxis / 2f && overlapLengthOnAxis > toRoomSizeOnAxis / 2f))
-            {
-                var shape = new DirectCorridorShape(axis, fromRoom, toRoom);
-                if (fromRoom.Neighbors[shape.FromDirection].Count == 0)
-                    return shape;
-            }
-            
-            var possibleDirections = new List<Vector2>
-            {
-                Vector2.Right * Mathf.Sign(dir.X),
-                Vector2.Down * Mathf.Sign(dir.Y)
-            };
-
-            var cornerCorridor = new CornerCorridorShape(fromRoom, toRoom, possibleDirections[0]);
-            
-            if (toRoom.Center.Y > fromRoom.Center.Y)
-                cornerCorridor.EntranceCornerBias = 0f;
-            else 
-                cornerCorridor.EntranceCornerBias = 1f;
-
-            if (fromRoom.Center.X > toRoom.Center.X)
-                cornerCorridor.ExitCornerBias = 1f;
-            else
-                cornerCorridor.ExitCornerBias = 0f;
-
-            if (!CheckIfCornerTooSteep(fromRoom, toRoom, possibleDirections[0], possibleDirections[1]) &&
-                fromRoom.Neighbors[VecToDirDict[possibleDirections[0]]].Count == 0 && 
-                toRoom.Neighbors[VecToDirDict[-possibleDirections[1]]].Count == 0)
-                return cornerCorridor;
-
-
-            if (fromRoom.Center.X > toRoom.Center.X)
-                cornerCorridor.EntranceCornerBias = 0f;
-            else
-                cornerCorridor.EntranceCornerBias = 1f;
-
-            if (toRoom.Center.Y > fromRoom.Center.Y)
-                cornerCorridor.ExitCornerBias = 1f;
-            else 
-                cornerCorridor.ExitCornerBias = 0f;
-
-            
-            cornerCorridor.CornerDirection = possibleDirections[1];
-            if (!CheckIfCornerTooSteep(fromRoom, toRoom, possibleDirections[1], possibleDirections[0]) &&
-                     fromRoom.Neighbors[VecToDirDict[possibleDirections[1]]].Count == 0 && 
-                     toRoom.Neighbors[VecToDirDict[-possibleDirections[0]]].Count == 0)
-                return cornerCorridor;
-
-
-            var dirOnAxis = (dir * axis);
-            float stepBias = State.Rng.RandfRange(0.45f, 0.55f);
-            
-            var corridor = new StepCorridorShape(fromRoom, toRoom, axis, stepBias);
-
-            if (fromRoom.Neighbors[VecToDirDict[dirOnAxis.Sign4Way()]].Count == 0)
-                return corridor;
-
-            var nb = fromRoom.Neighbors[VecToDirDict[dirOnAxis.Sign4Way()]].First();
-            var nbDest = nb.endpoint == 0 ? nb.shape.ToRoom : nb.shape.FromRoom;
-            float destPos = horizontal ? nbDest.Center.Y : nbDest.Center.X;
-            float toPos = horizontal ? toRoom.Center.Y : toRoom.Center.X;
-            int side = toPos > destPos ? 1 : 0;
-            
-            float roomMin = horizontal ? fromRoom.Rect.Position.Y : fromRoom.Rect.Position.X;
-            float roomMax = horizontal ? fromRoom.Rect.End.Y : fromRoom.Rect.End.X;
-
-            ref var endpointPos = ref (nb.endpoint == 0 ? ref nb.shape.FromPos : ref nb.shape.ToPos);
-            float sizeOnAxis = horizontal ? fromRoom.Size.Y : fromRoom.Size.X;
-            int increment = Mathf.Clamp(
-                Mathf.RoundToInt((sizeOnAxis - Settings.CorridorTileWidth * 2) / 2f),
-                Settings.CorridorTileWidth, 
-                (int)(sizeOnAxis/2f + Settings.CorridorTileWidth/1.75f)
-            );
-            
-            if (horizontal)
-            {
-                endpointPos.Y = side == 1 ? roomMin + increment : roomMax - increment;
-                corridor.FromPos.Y = side == 0 ? roomMin + increment : roomMax - increment;
-            }
-            else
-            {
-                endpointPos.X = side == 1 ? roomMin + increment : roomMax - increment;
-                corridor.FromPos.X = side == 0 ? roomMin + increment : roomMax - increment;
-            }
-
-            return corridor;
-        }
     }
     private async GDTask CreateCorridorLines()
     {

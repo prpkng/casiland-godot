@@ -75,7 +75,7 @@ public partial class RoomsDebugVisualizer : Node2D
 		
 	
         foreach (var  edge in state.CorridorLines?? []) {
-            DrawLine(edge.From * GridSize, edge.To * GridSize, MstLineColor);
+            DrawArrow(edge.From * GridSize, edge.To * GridSize, MstLineColor);
         }
 	
         foreach (var  edge in state.MinimumSpanningTree?? [])
@@ -84,7 +84,7 @@ public partial class RoomsDebugVisualizer : Node2D
             center *= GridSize;
             DrawText(center + Vector2.Up * 12f, $"Ec. Length: {edge.EuclideanLength}");
             DrawText(center + Vector2.Down * 12f, $"Ar. Length: {edge.ArithmeticLength}");
-            DrawLine(edge.From * GridSize, edge.To * GridSize, TriangleLineColor);
+            DrawArrow(edge.From * GridSize, edge.To * GridSize, TriangleLineColor);
         }
 		
         foreach (var  room in state.MainRooms ?? []) {

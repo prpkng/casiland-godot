@@ -15,29 +15,24 @@ mouse_filter = 2
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=888406052]
 layer = 10
 
-[node name="Memory Graph" parent="CanvasLayer" unique_id=52389972 instance=ExtResource("1_udhxh")]
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-offset_left = -479.0
-offset_top = -42.0
-offset_right = -356.0
-offset_bottom = -15.0
-grow_horizontal = 0
-grow_vertical = 0
+[node name="VFlowContainer" type="VBoxContainer" parent="CanvasLayer" unique_id=604137147]
+offset_left = 1.0
+offset_top = 229.0
+offset_right = 125.0
+offset_bottom = 284.33334
 scale = Vector2(0.75, 0.75)
+theme_override_constants/separation = 1
+alignment = 2
 
-[node name="FPS Graph" parent="CanvasLayer" unique_id=1269212048 instance=ExtResource("2_k8dbb")]
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-offset_left = -479.0
-offset_top = -21.000015
-offset_right = -356.0
-offset_bottom = 6.0
-grow_horizontal = 0
-grow_vertical = 0
-scale = Vector2(0.75, 0.75)
+[node name="Memory Graph" parent="CanvasLayer/VFlowContainer" unique_id=52389972 instance=ExtResource("1_udhxh")]
+visible = false
+custom_minimum_size = Vector2(123, 27.000015)
+layout_mode = 2
+
+[node name="FPS Graph" parent="CanvasLayer/VFlowContainer" unique_id=1269212048 instance=ExtResource("2_k8dbb")]
+visible = false
+custom_minimum_size = Vector2(123, 27.000015)
+layout_mode = 2
+sample_per_sec = 4
 sample_view_count = 128
 dynamically_resize = true
-sample_per_sec = 4

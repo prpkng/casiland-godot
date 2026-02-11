@@ -60,6 +60,8 @@ public class PlaceRoomTilesStep(GenerationState state, ProceduralGenerationSetti
     {
         foreach (var rect in State.AllRooms.Select(room => new Rect2I((Vector2I)room.Rect.Position, (Vector2I)room.Rect.Size)))
         {
+            // Fill with solid tiles before filling with empty tiles to create an outline of tiles around the room
+            FillTilemap(rect.Grow(1), State.Payload.AutoTileLayer, TilesSrcId, SolidTileCoord);
             FillTilemap(rect, State.Payload.AutoTileLayer, TilesSrcId, FloorTileCoord);
         }
     }
@@ -84,7 +86,7 @@ public class PlaceRoomTilesStep(GenerationState state, ProceduralGenerationSetti
         }
     }
 
-    private void PlaceDoorBorders()
+    private void PlaceDoorHoles()
     {
         foreach (var room in State.AllRooms)
         foreach (var (dir, nb) in room.Neighbors)
@@ -94,28 +96,16 @@ public class PlaceRoomTilesStep(GenerationState state, ProceduralGenerationSetti
             var point = endpoint == 0 ? corridor.FromPos : corridor.ToPos;
             if (direction.X < 0 || direction.Y < 0) point += direction.Sign();
             // point += direction * .5f;
-            var perpendicular = direction.Rotated(Mathf.Pi/2f).RoundToInt();
-            float corridorWidth = Settings.CorridorTileWidth/2f;
+            var perpendicular = direction.Rotated(Mathf.Pi/2f).RoundToInt().Abs();
             
             State.Payload.AutoTileLayer.SetCell(
-                point.RoundToInt() - perpendicular.Abs() * Mathf.FloorToInt(corridorWidth-1), 
+                point.RoundToInt(), 
                 TilesSrcId, 
-                SolidTileCoord);
-            
+                FloorTileCoord);
             State.Payload.AutoTileLayer.SetCell(
-                point.RoundToInt() + perpendicular.Abs() * Mathf.CeilToInt(corridorWidth), 
+                point.RoundToInt() + perpendicular, 
                 TilesSrcId, 
-                SolidTileCoord);
-            
-            State.Payload.AutoTileLayer.SetCell(
-                point.RoundToInt() - perpendicular.Abs() * Mathf.FloorToInt(corridorWidth-2), 
-                TilesSrcId, 
-                SolidTileCoord);
-            
-            State.Payload.AutoTileLayer.SetCell(
-                point.RoundToInt() + perpendicular.Abs() * Mathf.CeilToInt(corridorWidth-1), 
-                TilesSrcId, 
-                SolidTileCoord);
+                FloorTileCoord);
         }
     }
 
@@ -129,11 +119,12 @@ public class PlaceRoomTilesStep(GenerationState state, ProceduralGenerationSetti
     {
         PlaceBlankTiles();
 
+        CreateCorridorFloors();
+
         CreateRoomFloors();
 
-        CreateCorridorFloors();
                 
-        PlaceDoorBorders();
+        PlaceDoorHoles();
 
         FillCollisionTiles();
     }

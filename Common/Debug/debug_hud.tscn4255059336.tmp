@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://cq17a40r2o7bi"]
+
+[ext_resource type="PackedScene" uid="uid://dbhf0ofd24civ" path="res://Common/Debug/Meters/memory_graph.tscn" id="1_udhxh"]
+[ext_resource type="PackedScene" uid="uid://dd6muwpjvqts1" path="res://Common/Debug/Meters/fps_graph.tscn" id="2_k8dbb"]
+
+[node name="DebugHud" type="Control" unique_id=1163593477]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=888406052]
+layer = 10
+
+[node name="Memory Graph" parent="CanvasLayer" unique_id=52389972 instance=ExtResource("1_udhxh")]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+offset_left = -479.0
+offset_top = -56.0
+offset_right = -356.0
+offset_bottom = -29.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="FPS Graph" parent="CanvasLayer" unique_id=1269212048 instance=ExtResource("2_k8dbb")]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+offset_left = -479.0
+offset_top = -27.0
+offset_right = -356.0
+offset_bottom = 0.0
+grow_horizontal = 0
+grow_vertical = 0
+sample_view_count = 128
+dynamically_resize = true
+sample_per_sec = 4

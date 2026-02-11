@@ -19,6 +19,8 @@ config/icon="res://icon.svg"
 
 BetterTerrain="*uid://d06lw72qe37ik"
 CoroutineManager="*uid://144aykfua63p"
+DebugHud="uid://cq17a40r2o7bi"
+C="*uid://eor36v3v61o1"
 
 [debug]
 
@@ -30,7 +32,7 @@ window/size/viewport_width=480
 window/size/viewport_height=270
 window/size/window_width_override=1600
 window/size/window_height_override=900
-window/stretch/mode="viewport"
+window/stretch/mode="canvas_items"
 window/vsync/vsync_mode=0
 
 [dotnet]

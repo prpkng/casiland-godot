@@ -55,10 +55,20 @@ func _input(event: InputEvent) -> void:
 			position_smoothing_enabled = is_following
 "
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0m0f1"]
+
+[sub_resource type="GDScript" id="GDScript_5tkv4"]
+resource_name = "test_callback"
+script/source = "extends Node
+
+
+func _on_interactable_interacted(interactor: Area2D) -> void:
+	print(\"Interaction happened!!!\")
+"
+
 [sub_resource type="GDScript" id="GDScript_ykrsh"]
 script/source = "extends Label
-
-@onready var camera_2d: Camera2D = $\"../../Camera2D\"
+@export var camera_2d: Camera2D
 
 
 # Called when the node enters the scene tree for the first time.
@@ -81,35 +91,76 @@ func _on_toggled(toggled_on: bool) -> void:
 	rooms_debug_visualizer.visible = toggled_on
 "
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0m0f1"]
-
-[sub_resource type="GDScript" id="GDScript_5tkv4"]
-resource_name = "test_callback"
-script/source = "extends Node
-
-
-func _on_interactable_interacted(interactor: Area2D) -> void:
-	print(\"Interaction happened!!!\")
-"
-
 [node name="Test" type="Node2D" unique_id=81459051]
 physics_interpolation_mode = 2
 
 [node name="RoomGenerator" type="Node" parent="." unique_id=2095976244]
 script = ExtResource("1_ppyta")
 
-[node name="RoomsDebugVisualizer" type="Node2D" parent="." unique_id=89596583 node_paths=PackedStringArray("_generator")]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1893954925]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer" unique_id=374180404]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="CanvasLayer/SubViewportContainer" unique_id=1801998702]
+handle_input_locally = false
+canvas_item_default_texture_filter = 0
+size = Vector2i(480, 270)
+render_target_update_mode = 4
+
+[node name="RoomsDebugVisualizer" type="Node2D" parent="CanvasLayer/SubViewportContainer/SubViewport" unique_id=89596583 node_paths=PackedStringArray("_generator")]
 z_index = 100
 scale = Vector2(2, 2)
 script = ExtResource("2_ppyta")
-_generator = NodePath("../RoomGenerator")
+_generator = NodePath("../../../../RoomGenerator")
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=17372746 node_paths=PackedStringArray("player")]
+[node name="Camera2D" type="Camera2D" parent="CanvasLayer/SubViewportContainer/SubViewport" unique_id=17372746 node_paths=PackedStringArray("player")]
+offset = Vector2(0, -8)
 position_smoothing_enabled = true
 script = SubResource("GDScript_ppyta")
 player = NodePath("../Environmental Objects/Player")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1893954925]
+[node name="CollisionTilesLayer" type="TileMapLayer" parent="CanvasLayer/SubViewportContainer/SubViewport" unique_id=1156224380]
+modulate = Color(1, 1, 1, 0.39215687)
+texture_filter = 1
+tile_set = ExtResource("6_77dp3")
+
+[node name="Interactable" type="Area2D" parent="CanvasLayer/SubViewportContainer/SubViewport" unique_id=1604597610]
+position = Vector2(134, 90)
+collision_layer = 256
+collision_mask = 256
+script = ExtResource("12_5tkv4")
+metadata/_custom_type_script = "uid://c142d3ds7lke8"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/SubViewportContainer/SubViewport/Interactable" unique_id=322732445]
+shape = SubResource("RectangleShape2D_0m0f1")
+debug_color = Color(0.95218855, 0.68952936, 0, 0.41960785)
+
+[node name="Test logger" type="Node" parent="CanvasLayer/SubViewportContainer/SubViewport/Interactable" unique_id=2047213991]
+script = SubResource("GDScript_5tkv4")
+
+[node name="Environmental Objects" type="Node2D" parent="CanvasLayer/SubViewportContainer/SubViewport" unique_id=1823721867]
+y_sort_enabled = true
+
+[node name="Player" parent="CanvasLayer/SubViewportContainer/SubViewport/Environmental Objects" unique_id=1528480435 instance=ExtResource("10_00tp4")]
+physics_interpolation_mode = 1
+position = Vector2(54, 40)
+
+[node name="Dummy Enemy" parent="CanvasLayer/SubViewportContainer/SubViewport/Environmental Objects" unique_id=1902365087 instance=ExtResource("10_77dp3")]
+position = Vector2(100, 9)
+
+[node name="Props" type="Node2D" parent="CanvasLayer/SubViewportContainer/SubViewport/Environmental Objects" unique_id=1888682377]
+y_sort_enabled = true
+
+[node name="VisualAutoTileLayer" type="TileMapLayer" parent="CanvasLayer/SubViewportContainer/SubViewport/Environmental Objects" unique_id=1865007474]
+y_sort_enabled = true
+texture_filter = 1
+tile_map_data = PackedByteArray("AAD8/wYAAQAAAAAAAAD8/wcAAQAAAAEAAAD8/wMAAQAFAAAAAAD8/wQAAQAFAAEAAAD8/wUAAQAFAAIAAAD//wMAAQAFAAAAAAD//wQAAQAFAAEAAAD//wUAAQAFAAIAAAD//wYAAQAAAAAAAAD//wcAAQAAAAEAAAD9/wcAAQABAAAAAAD9/wYAAQABAAAAAAD9/wUAAQABAAAAAAD9/wQAAQABAAAAAAD+/wQAAQABAAAAAAD+/wUAAQABAAAAAAD+/wYAAQABAAAAAAD+/wcAAQABAAAAAAD7/wgAAQABAAAAAAD8/wgAAQABAAAAAAD9/wgAAQABAAAAAAD+/wgAAQABAAAAAAD//wgAAQABAAAAAAAAAAgAAQABAAAAAAD5/wIAAQABAAAAAAD6/wIAAQABAAAAAAD7/wIAAQABAAAAAAD8/wIAAQABAAAAAAD9/wIAAQABAAAAAAD+/wIAAQABAAAAAAD//wIAAQABAAAAAAAAAAIAAQABAAAAAAABAAIAAQABAAAAAAACAAIAAQABAAAAAAABAAMAAQABAAAAAAABAAQAAQABAAAAAAABAAUAAQABAAAAAAABAAYAAQABAAAAAAABAAcAAQABAAAAAAABAAgAAQABAAAAAAABAAkAAQABAAAAAAABAAoAAQABAAAAAAACAAMAAQABAAAAAAACAAQAAQABAAAAAAACAAUAAQABAAAAAAACAAYAAQABAAAAAAACAAcAAQABAAAAAAACAAgAAQABAAAAAAACAAkAAQABAAAAAAACAAoAAQABAAAAAAD5/wkAAQABAAAAAAD5/woAAQABAAAAAAD6/wkAAQABAAAAAAD6/woAAQABAAAAAAD7/wkAAQABAAAAAAD7/woAAQABAAAAAAD8/wkAAQABAAAAAAD8/woAAQABAAAAAAD9/wkAAQABAAAAAAD9/woAAQABAAAAAAD+/wkAAQABAAAAAAD+/woAAQABAAAAAAD//wkAAQABAAAAAAD//woAAQABAAAAAAAAAAkAAQABAAAAAAAAAAoAAQABAAAAAAD5/wMAAQABAAAAAAD5/wQAAQABAAAAAAD5/wUAAQABAAAAAAD5/wYAAQABAAAAAAD5/wcAAQABAAAAAAD5/wgAAQABAAAAAAD6/wMAAQABAAAAAAD6/wQAAQABAAAAAAD6/wUAAQABAAAAAAD6/wYAAQABAAAAAAD6/wcAAQABAAAAAAD6/wgAAQABAAAAAAD7/wMAAQABAAAAAAD7/wQAAQABAAAAAAD7/wUAAQABAAAAAAD7/wYAAQABAAAAAAD7/wcAAQABAAAAAAD9/wMAAQABAAAAAAD+/wMAAQABAAAAAAAAAAMAAQABAAAAAAAAAAQAAQABAAAAAAAAAAUAAQABAAAAAAAAAAYAAQABAAAAAAAAAAcAAQABAAAAAAA=")
+tile_set = ExtResource("5_ykrsh")
 
 [node name="LineEdit" type="LineEdit" parent="CanvasLayer" unique_id=79803838]
 offset_left = 372.0
@@ -129,17 +180,18 @@ text = "Generate"
 script = ExtResource("3_ykrsh")
 Generator = NodePath("../../RoomGenerator")
 Settings = ExtResource("4_g14j6")
-PropsGroup = NodePath("../../Environmental Objects/Props")
-AutoTileLayer = NodePath("../../Environmental Objects/VisualAutoTileLayer")
-CollisionsLayer = NodePath("../../CollisionTilesLayer")
+PropsGroup = NodePath("../SubViewportContainer/SubViewport/Environmental Objects/Props")
+AutoTileLayer = NodePath("../SubViewportContainer/SubViewport/Environmental Objects/VisualAutoTileLayer")
+CollisionsLayer = NodePath("../SubViewportContainer/SubViewport/CollisionTilesLayer")
 RuleSet = ExtResource("5_g14j6")
 SeedInput = NodePath("../LineEdit")
 
-[node name="Label" type="Label" parent="CanvasLayer" unique_id=2103677277]
+[node name="Label" type="Label" parent="CanvasLayer" unique_id=2103677277 node_paths=PackedStringArray("camera_2d")]
 offset_right = 154.0
 offset_bottom = 23.0
 text = "Zoom: "
 script = SubResource("GDScript_ykrsh")
+camera_2d = NodePath("../SubViewportContainer/SubViewport/Camera2D")
 
 [node name="CheckBox" type="CheckBox" parent="CanvasLayer" unique_id=37312457 node_paths=PackedStringArray("rooms_debug_visualizer")]
 anchors_preset = 1
@@ -153,46 +205,8 @@ pivot_offset = Vector2(124, 0)
 button_pressed = true
 text = "Debug Draw"
 script = SubResource("GDScript_00tp4")
-rooms_debug_visualizer = NodePath("../../RoomsDebugVisualizer")
+rooms_debug_visualizer = NodePath("../SubViewportContainer/SubViewport/RoomsDebugVisualizer")
 
-[node name="CollisionTilesLayer" type="TileMapLayer" parent="." unique_id=1156224380]
-modulate = Color(1, 1, 1, 0.39215687)
-texture_filter = 1
-tile_set = ExtResource("6_77dp3")
-
-[node name="Environmental Objects" type="Node2D" parent="." unique_id=1823721867]
-y_sort_enabled = true
-
-[node name="Player" parent="Environmental Objects" unique_id=1528480435 instance=ExtResource("10_00tp4")]
-physics_interpolation_mode = 1
-position = Vector2(-37, 8)
-
-[node name="Dummy Enemy" parent="Environmental Objects" unique_id=1902365087 instance=ExtResource("10_77dp3")]
-position = Vector2(100, 9)
-
-[node name="Props" type="Node2D" parent="Environmental Objects" unique_id=1888682377]
-y_sort_enabled = true
-
-[node name="VisualAutoTileLayer" type="TileMapLayer" parent="Environmental Objects" unique_id=1865007474]
-y_sort_enabled = true
-texture_filter = 1
-tile_map_data = PackedByteArray("AAD8/wYAAQAAAAAAAAD8/wcAAQAAAAEAAAD8/wMAAQAFAAAAAAD8/wQAAQAFAAEAAAD8/wUAAQAFAAIAAAD//wMAAQAFAAAAAAD//wQAAQAFAAEAAAD//wUAAQAFAAIAAAD//wYAAQAAAAAAAAD//wcAAQAAAAEAAAD9/wcAAQABAAAAAAD9/wYAAQABAAAAAAD9/wUAAQABAAAAAAD9/wQAAQABAAAAAAD+/wQAAQABAAAAAAD+/wUAAQABAAAAAAD+/wYAAQABAAAAAAD+/wcAAQABAAAAAAD7/wgAAQABAAAAAAD8/wgAAQABAAAAAAD9/wgAAQABAAAAAAD+/wgAAQABAAAAAAD//wgAAQABAAAAAAAAAAgAAQABAAAAAAD5/wIAAQABAAAAAAD6/wIAAQABAAAAAAD7/wIAAQABAAAAAAD8/wIAAQABAAAAAAD9/wIAAQABAAAAAAD+/wIAAQABAAAAAAD//wIAAQABAAAAAAAAAAIAAQABAAAAAAABAAIAAQABAAAAAAACAAIAAQABAAAAAAABAAMAAQABAAAAAAABAAQAAQABAAAAAAABAAUAAQABAAAAAAABAAYAAQABAAAAAAABAAcAAQABAAAAAAABAAgAAQABAAAAAAABAAkAAQABAAAAAAABAAoAAQABAAAAAAACAAMAAQABAAAAAAACAAQAAQABAAAAAAACAAUAAQABAAAAAAACAAYAAQABAAAAAAACAAcAAQABAAAAAAACAAgAAQABAAAAAAACAAkAAQABAAAAAAACAAoAAQABAAAAAAD5/wkAAQABAAAAAAD5/woAAQABAAAAAAD6/wkAAQABAAAAAAD6/woAAQABAAAAAAD7/wkAAQABAAAAAAD7/woAAQABAAAAAAD8/wkAAQABAAAAAAD8/woAAQABAAAAAAD9/wkAAQABAAAAAAD9/woAAQABAAAAAAD+/wkAAQABAAAAAAD+/woAAQABAAAAAAD//wkAAQABAAAAAAD//woAAQABAAAAAAAAAAkAAQABAAAAAAAAAAoAAQABAAAAAAD5/wMAAQABAAAAAAD5/wQAAQABAAAAAAD5/wUAAQABAAAAAAD5/wYAAQABAAAAAAD5/wcAAQABAAAAAAD5/wgAAQABAAAAAAD6/wMAAQABAAAAAAD6/wQAAQABAAAAAAD6/wUAAQABAAAAAAD6/wYAAQABAAAAAAD6/wcAAQABAAAAAAD6/wgAAQABAAAAAAD7/wMAAQABAAAAAAD7/wQAAQABAAAAAAD7/wUAAQABAAAAAAD7/wYAAQABAAAAAAD7/wcAAQABAAAAAAD9/wMAAQABAAAAAAD+/wMAAQABAAAAAAAAAAMAAQABAAAAAAAAAAQAAQABAAAAAAAAAAUAAQABAAAAAAAAAAYAAQABAAAAAAAAAAcAAQABAAAAAAA=")
-tile_set = ExtResource("5_ykrsh")
-
-[node name="Interactable" type="Area2D" parent="." unique_id=1604597610]
-position = Vector2(134, 90)
-collision_layer = 256
-collision_mask = 256
-script = ExtResource("12_5tkv4")
-metadata/_custom_type_script = "uid://c142d3ds7lke8"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactable" unique_id=322732445]
-shape = SubResource("RectangleShape2D_0m0f1")
-debug_color = Color(0.95218855, 0.68952936, 0, 0.41960785)
-
-[node name="Test logger" type="Node" parent="Interactable" unique_id=2047213991]
-script = SubResource("GDScript_5tkv4")
-
+[connection signal="Interacted" from="CanvasLayer/SubViewportContainer/SubViewport/Interactable" to="CanvasLayer/SubViewportContainer/SubViewport/Interactable/Test logger" method="_on_interactable_interacted"]
 [connection signal="pressed" from="CanvasLayer/Test Button" to="CanvasLayer/Test Button" method="_on_pressed"]
 [connection signal="toggled" from="CanvasLayer/CheckBox" to="CanvasLayer/CheckBox" method="_on_toggled"]
-[connection signal="Interacted" from="Interactable" to="Interactable/Test logger" method="_on_interactable_interacted"]

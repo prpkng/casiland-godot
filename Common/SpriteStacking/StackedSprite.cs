@@ -69,6 +69,7 @@ public partial class StackedSprite : Node2D
     }
 
     private double _counter = 0f;
+    private double LastRotation;
 
     public override void _Process(double delta)
     {
@@ -79,6 +80,9 @@ public partial class StackedSprite : Node2D
             return;
 
         _counter = 0;
+        
+        if (GlobalRotation == LastRotation) return;
+        LastRotation = GlobalRotation;
         
         if (StackTexture == null || HFrames <= 0 || VFrames <= 0) return;
 

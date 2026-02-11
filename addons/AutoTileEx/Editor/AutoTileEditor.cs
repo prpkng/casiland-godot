@@ -45,9 +45,10 @@ public partial class AutoTileEditor : Control
     
     public override void _Ready()
     {
+        _selectedNbType = NeighbourType.Required;
         _tilesetView = GetNode("HBox/ScrollContainer/TilesetView") as TilesetView;
-        _sourceTileBtn = GetNode<Button>("HBox/HSplitContainer/RulePanel/BG/VBox/TargetEditor/SourceTileBtn");
-        _targetTileBtn = GetNode<Button>("HBox/HSplitContainer/RulePanel/BG/VBox/TargetEditor/TargetTileBtn");
+        _sourceTileBtn = GetNode<Button>("HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/MarginContainer/AspectRatioContainer/TargetEditor/SourceTileBtn");
+        _targetTileBtn = GetNode<Button>("HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/MarginContainer/AspectRatioContainer/TargetEditor/TargetTileBtn");
 
         _nothingNeighbourIcon = GD.Load<Texture2D>("res://addons/AutoTileEx/Editor/Icons/ban.svg");
         _matchNeighbourIcon = GD.Load<Texture2D>("res://addons/AutoTileEx/Editor/Icons/circle-check.svg");
@@ -55,7 +56,7 @@ public partial class AutoTileEditor : Control
         _sourceTileBtn.Pressed += OnSourceTilePressed;
         _targetTileBtn.Pressed += OnTargetTilePressed;
 
-        _neighbourButtons = GetNode("HBox/HSplitContainer/RulePanel/BG/VBox/Control/GridContainer").GetChildren()
+        _neighbourButtons = GetNode("HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer").GetChildren()
             .Select(c => c as RightClickableButton).ToArray();
 
         for (int i = 0; i < _neighbourButtons.Length; i++)
@@ -67,10 +68,10 @@ public partial class AutoTileEditor : Control
 
         _toolbarSelectors =
         [
-            GetNode<Button>("HBox/HSplitContainer/RulePanel/BG/VBox/Toolbar/HBoxContainer/NothingSelector"),
-            GetNode<Button>("HBox/HSplitContainer/RulePanel/BG/VBox/Toolbar/HBoxContainer/IgnoreSelector"),
-            GetNode<Button>("HBox/HSplitContainer/RulePanel/BG/VBox/Toolbar/HBoxContainer/MatchSelector"),
-            GetNode<Button>("HBox/HSplitContainer/RulePanel/BG/VBox/Toolbar/HBoxContainer/AnySelector"),
+            GetNode<Button>("HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/ToolbarMargin/Toolbar/HBoxContainer/NothingMargin/NothingSelector"),
+            GetNode<Button>("HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/ToolbarMargin/Toolbar/HBoxContainer/IgnoreMargin/IgnoreSelector"),
+            GetNode<Button>("HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/ToolbarMargin/Toolbar/HBoxContainer/MatchMargin/MatchSelector"),
+            GetNode<Button>("HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/ToolbarMargin/Toolbar/HBoxContainer/AnyMargin/AnySelector"),
         ];
 
         for (int i = 0; i < _toolbarSelectors.Length; i++)

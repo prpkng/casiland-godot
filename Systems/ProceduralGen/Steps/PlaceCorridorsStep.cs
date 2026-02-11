@@ -157,10 +157,34 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
             };
 
             var cornerCorridor = new CornerCorridorShape(fromRoom, toRoom, possibleDirections[0]);
+            
+            if (toRoom.Center.Y > fromRoom.Center.Y)
+                cornerCorridor.EntranceCornerBias = 0f;
+            else 
+                cornerCorridor.EntranceCornerBias = 1f;
+
+            if (fromRoom.Center.X > toRoom.Center.X)
+                cornerCorridor.ExitCornerBias = 1f;
+            else
+                cornerCorridor.ExitCornerBias = 0f;
+
             if (!CheckIfCornerTooSteep(fromRoom, toRoom, possibleDirections[0], possibleDirections[1]) &&
                 fromRoom.Neighbors[VecToDirDict[possibleDirections[0]]].Count == 0 && 
                 toRoom.Neighbors[VecToDirDict[-possibleDirections[1]]].Count == 0)
                 return cornerCorridor;
+
+
+            if (fromRoom.Center.X > toRoom.Center.X)
+                cornerCorridor.EntranceCornerBias = 0f;
+            else
+                cornerCorridor.EntranceCornerBias = 1f;
+
+            if (toRoom.Center.Y > fromRoom.Center.Y)
+                cornerCorridor.ExitCornerBias = 1f;
+            else 
+                cornerCorridor.ExitCornerBias = 0f;
+
+            
             cornerCorridor.CornerDirection = possibleDirections[1];
             if (!CheckIfCornerTooSteep(fromRoom, toRoom, possibleDirections[1], possibleDirections[0]) &&
                      fromRoom.Neighbors[VecToDirDict[possibleDirections[1]]].Count == 0 && 

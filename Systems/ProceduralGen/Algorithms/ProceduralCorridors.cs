@@ -57,6 +57,26 @@ public class CornerCorridorShape : CorridorShape
             RecomputeOrigins();
         }
     }
+    public float _entranceCornerBias = 0.5f;
+    public float _exitCornerBias = 0.5f;
+    public float EntranceCornerBias 
+    {
+        get => _entranceCornerBias;
+        set
+        {
+            _entranceCornerBias = value;
+            RecomputeOrigins();
+        }
+    }
+    public float ExitCornerBias 
+    {
+        get => _exitCornerBias;
+        set
+        {
+            _exitCornerBias = value;
+            RecomputeOrigins();
+        }
+    }
     
     public CornerCorridorShape(ProceduralRoom from, ProceduralRoom to, Vector2 cornerDirection)
     {
@@ -72,11 +92,28 @@ public class CornerCorridorShape : CorridorShape
     {
         FromPos = FromRoom.Center;
         ToPos = ToRoom.Center;
+
+        
+        const int mininimumSpacing = 6; //TODO map this to be HALF of the corridor width
+
+        bool horizontal = CornerDirection.Abs().X > CornerDirection.Abs().Y;
+        float sizeOnAxis = horizontal ? FromRoom.Size.Y : FromRoom.Size.X;
+
+        var perpendicular = CornerDirection.Abs().Orthogonal();
+        FromPos = (FromPos - perpendicular * Mathf.Max(0, sizeOnAxis / 2f - mininimumSpacing))
+                    .Lerp(FromPos + perpendicular * Mathf.Max(0, sizeOnAxis / 2f - mininimumSpacing), EntranceCornerBias);
+        
+
+        sizeOnAxis = horizontal ? ToRoom.Size.X : ToRoom.Size.Y;
+        ToPos = (ToPos - CornerDirection.Abs() * Mathf.Max(0, sizeOnAxis / 2f - mininimumSpacing))
+                    .Lerp(ToPos + CornerDirection.Abs() * Mathf.Max(0, sizeOnAxis / 2f - mininimumSpacing), ExitCornerBias);
+
+
         var vector = ToPos - FromRoom.Center;
         var corner = FromPos + vector * CornerDirection.Abs();
-        
-        FromPos = FromRoom.Rect.CastTowardsPerimeter(FromPos.DirectionTo(corner));
-        ToPos = ToRoom.Rect.CastTowardsPerimeter(ToPos.DirectionTo(corner));
+
+        FromPos += CornerDirection * FromRoom.Size / 2f;
+        ToPos += ToPos.DirectionTo(corner) * ToRoom.Size / 2f;
     }
     
     public override LineSegment[] ComputeLines()
@@ -117,8 +154,6 @@ public class StepCorridorShape : CorridorShape
 
     private void RecomputeOrigins()
     {
-        FromPos = FromRoom.Center;
-        ToPos = ToRoom.Center;
         var dir = ToPos - FromPos;
 
         var corner1 = FromPos + dir * StepAxis * Bias;

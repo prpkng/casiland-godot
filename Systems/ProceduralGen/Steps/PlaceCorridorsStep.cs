@@ -34,6 +34,19 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
         var allRooms = State.AllRooms.Except([fromRoom, toRoom]).ToArray();
         return lines.Any(line => allRooms.Any(r => ProceduralGeometry.EdgeIntersectsRect(line, r.Rect.Grow(5))));
     }
+
+    private bool CheckLineCollision(LineSegment line, LineSegment[] others)
+    {
+        return others
+            .Any(other =>
+            {
+                float maxDistance = Settings.CorridorTileWidth+2;
+                return other.From.DistanceTo(line.From) < maxDistance ||
+                       other.From.DistanceTo(line.To) < maxDistance ||
+                       other.To.DistanceTo(line.From) < maxDistance ||
+                       other.To.DistanceTo(line.To) < maxDistance;
+            });
+    }
     
     private bool CheckIfCornerTooSteep(ProceduralRoom fromRoom, ProceduralRoom toRoom, Vector2 fromDir, Vector2 toDir)
     {
@@ -66,6 +79,16 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
         directCorridor = new DirectCorridorShape(axis, fromRoom, toRoom);
         if (fromRoom.Neighbors[directCorridor.FromDirection].Count == 0)
             return true;
+        
+        if (fromRoom.Neighbors[directCorridor.FromDirection].Count == 1)
+        {
+            var (otherCorridor, otherEndpoint) = fromRoom.Neighbors[directCorridor.FromDirection][0];
+            var line = directCorridor.ComputeLines().First();
+
+            if (!CheckLineCollision(line, otherCorridor.ComputeLines()))
+                return true;
+        }
+        
         
         return false;
     }

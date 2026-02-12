@@ -59,6 +59,9 @@ public class CornerCorridorShape : CorridorShape
     }
     public float _entranceCornerBias = 0.5f;
     public float _exitCornerBias = 0.5f;
+    /// <summary>
+    /// Left -> Right ||| Up -> Down
+    /// </summary>
     public float EntranceCornerBias 
     {
         get => _entranceCornerBias;
@@ -94,19 +97,19 @@ public class CornerCorridorShape : CorridorShape
         ToPos = ToRoom.Center;
 
         
-        const int mininimumSpacing = 6; //TODO map this to be HALF of the corridor width
+        const int minimumSpacing = 6; //TODO map this to be TWICE the corridor width
 
         bool horizontal = CornerDirection.Abs().X > CornerDirection.Abs().Y;
         float sizeOnAxis = horizontal ? FromRoom.Size.Y : FromRoom.Size.X;
 
-        var perpendicular = CornerDirection.Abs().Orthogonal();
-        FromPos = (FromPos - perpendicular * Mathf.Max(0, sizeOnAxis / 2f - mininimumSpacing))
-                    .Lerp(FromPos + perpendicular * Mathf.Max(0, sizeOnAxis / 2f - mininimumSpacing), EntranceCornerBias);
+        var perpendicular = CornerDirection.Orthogonal().Abs();
+        FromPos = (FromPos - perpendicular * Mathf.Max(0, sizeOnAxis / 2f - minimumSpacing))
+                    .Lerp(FromPos + perpendicular * Mathf.Max(0, sizeOnAxis / 2f - minimumSpacing), EntranceCornerBias);
         
 
         sizeOnAxis = horizontal ? ToRoom.Size.X : ToRoom.Size.Y;
-        ToPos = (ToPos - CornerDirection.Abs() * Mathf.Max(0, sizeOnAxis / 2f - mininimumSpacing))
-                    .Lerp(ToPos + CornerDirection.Abs() * Mathf.Max(0, sizeOnAxis / 2f - mininimumSpacing), ExitCornerBias);
+        ToPos = (ToPos - CornerDirection.Abs() * Mathf.Max(0, sizeOnAxis / 2f - minimumSpacing))
+                    .Lerp(ToPos + CornerDirection.Abs() * Mathf.Max(0, sizeOnAxis / 2f - minimumSpacing), ExitCornerBias);
 
 
         var vector = ToPos - FromRoom.Center;

@@ -16,9 +16,9 @@ public class GenerateBranchesStep(GenerationState state, ProceduralGenerationSet
         return rng.RandfRange(0, 100f) < percentage;
     }
 
-    private bool CheckRoomOverlap(ProceduralRoom room)
+    private bool CheckRoomOverlap(Rect2 roomRect)
     {
-        var rect = room.Rect.Grow(5);
+        var rect = roomRect.Grow(5);
         if (((ProceduralRoom[])[..State.MainRooms, ..State.InBetweenRooms])
                     .Any(other => other.Rect.Intersects(rect)))
             return true;
@@ -59,10 +59,28 @@ public class GenerateBranchesStep(GenerationState state, ProceduralGenerationSet
                 State.Rng.RandiRange(Settings.BranchedRoomMinDistance,
                     Settings.BranchedRoomMaxDistance));
             var pos = from.Center + dir * distance;
-            var room = new ProceduralRoom(pos - size/2f, size);
-            if (CheckRoomOverlap(room))
-                continue;
-            return room;
+            
+            // Calculate room displacement
+            var perpDir = dir.Orthogonal().Abs();
+            float fromWidthInDir = (from.Size * perpDir).Sum();
+            // Add this to ensure a direct corridor is created
+            // fromWidthInDir -= Settings.MinimumDirectCorridorOverlapLength * 2; 
+            fromWidthInDir -= Settings.MinimumDirectCorridorOverlapLength + 2; 
+            var displacementOptions = new[]
+            {
+                pos + perpDir * fromWidthInDir,
+                pos + perpDir * (fromWidthInDir / 2f),
+                pos - perpDir * (fromWidthInDir / 2f),
+                pos - perpDir * fromWidthInDir,
+            }.Shuffle(State.Rng).Append(pos).ToArray();
+            
+            foreach (var displacement in displacementOptions)
+            {
+                var room = new ProceduralRoom(displacement - size / 2f, size);
+                if (CheckRoomOverlap(room.Rect))
+                    continue;
+                return room;
+            }
         }
 
         return null;

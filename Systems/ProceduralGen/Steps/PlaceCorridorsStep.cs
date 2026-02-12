@@ -91,23 +91,23 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
         float overlapLengthOnY = (overlap.Size * (Vector2.One - axis)).Abs().Sum();
 
         if (toRoom.Center.Y > fromRoom.Center.Y)
-            cornerCorridor.EntranceCornerBias = 0f;
-        else
             cornerCorridor.EntranceCornerBias = 1f;
+        else
+            cornerCorridor.EntranceCornerBias = 0f;
 
         if (fromRoom.Center.X > toRoom.Center.X)
             cornerCorridor.ExitCornerBias = 1f;
         else
             cornerCorridor.ExitCornerBias = 0f;
 
-        if (overlapLengthOnX > Settings.CorridorTileWidth/2f && overlapLengthOnX < Settings.CorridorTileWidth)
+        if (overlapLengthOnX > 1 && overlapLengthOnX <= fromRoom.Size.Y / 2.5f)
             cornerCorridor.EntranceCornerBias = 0.5f;
-        else if (overlapLengthOnX > Settings.CorridorTileWidth)
+        else if (overlapLengthOnX > fromRoom.Size.Y / 2.5f)
             cornerCorridor.EntranceCornerBias = 1-cornerCorridor.EntranceCornerBias;
         
-        if (overlapLengthOnY > Settings.CorridorTileWidth/2f && overlapLengthOnY < Settings.CorridorTileWidth)
+        if (overlapLengthOnY > 1 && overlapLengthOnY <= toRoom.Size.X / 2.5f)
             cornerCorridor.ExitCornerBias = 0.5f;
-        else if (overlapLengthOnY > Settings.CorridorTileWidth)
+        else if (overlapLengthOnY > toRoom.Size.X / 2.5f)
             cornerCorridor.ExitCornerBias = 1-cornerCorridor.ExitCornerBias;
 
         if (!CheckCorridorCollision(fromRoom, toRoom, cornerCorridor) &&
@@ -128,19 +128,19 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
             cornerCorridor.EntranceCornerBias = 1f;
 
         if (toRoom.Center.Y > fromRoom.Center.Y)
-            cornerCorridor.ExitCornerBias = 0f;
-        else
             cornerCorridor.ExitCornerBias = 1f;
+        else
+            cornerCorridor.ExitCornerBias = 0f;
 
             
-        if (overlapLengthOnY > Settings.CorridorTileWidth/2f && overlapLengthOnY < Settings.CorridorTileWidth)
+        if (overlapLengthOnY > 1 && overlapLengthOnY <= fromRoom.Size.X / 2.5f)
             cornerCorridor.EntranceCornerBias = 0.5f;
-        else if (overlapLengthOnY > Settings.CorridorTileWidth)
+        else if (overlapLengthOnY > fromRoom.Size.X / 2.5f)
             cornerCorridor.EntranceCornerBias = 1-cornerCorridor.EntranceCornerBias;
         
-        if (overlapLengthOnX > Settings.CorridorTileWidth/2f && overlapLengthOnX < Settings.CorridorTileWidth)
+        if (overlapLengthOnX > 1 && overlapLengthOnX <= toRoom.Size.Y / 2.5f)
             cornerCorridor.ExitCornerBias = 0.5f;
-        else if (overlapLengthOnX > Settings.CorridorTileWidth)
+        else if (overlapLengthOnX > toRoom.Size.Y / 2.5f)
             cornerCorridor.ExitCornerBias = 1-cornerCorridor.ExitCornerBias;
 
         if (!CheckCorridorCollision(fromRoom, toRoom, cornerCorridor) &&

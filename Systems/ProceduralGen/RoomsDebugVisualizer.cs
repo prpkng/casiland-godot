@@ -38,9 +38,9 @@ public partial class RoomsDebugVisualizer : Node2D
 
     private const int GridSize = 8;
 
-    private void DrawText(Vector2 pos, string text) =>
+    private void DrawText(Vector2 pos, string text, int? fontSize = null) =>
         DrawString(_font, pos, text, HorizontalAlignment.Center, -1, 
-            _fontSize, Colors.White);
+            fontSize ?? _fontSize, Colors.White);
 
     private void DrawArrow(Vector2 from, Vector2 to, Color color, float width = 1f, float arrowSize = 10f)
     {
@@ -70,7 +70,6 @@ public partial class RoomsDebugVisualizer : Node2D
         foreach (var  room in state.InBetweenRooms ?? []) {
             DrawRect(new Rect2(room.Rect.Position * GridSize, room.Size * GridSize), CorridorRoomsColor, true);
             DrawRect(new Rect2(room.Rect.Position * GridSize, room.Size * GridSize), GenRoomsBorder, false, 1);
-            DrawText(room.Center * GridSize, $"ID: {room.Id}");
         }
 		
 	
@@ -86,7 +85,15 @@ public partial class RoomsDebugVisualizer : Node2D
             DrawText(center + Vector2.Down * 12f, $"Ar. Length: {edge.ArithmeticLength}");
             DrawArrow(edge.From * GridSize, edge.To * GridSize, TriangleLineColor);
         }
-		
+
+        foreach (var room in state.AllRooms ?? [])
+        {
+            DrawText(room.Center * GridSize + Vector2.Up*16, $"ID: {room.Id}", _fontSize/2);
+            DrawText(room.Center * GridSize + Vector2.Up*8, $"StartDepth: {room.StartDistance}", _fontSize/2);
+            DrawText(room.Center * GridSize + Vector2.Down*8, $"BossDepth: {room.BossDistance}", _fontSize/2);
+            DrawText(room.Center * GridSize + Vector2.Down*16, $"Bias: {room.ProgressBias}", _fontSize/2);
+        }
+
         foreach (var  room in state.MainRooms ?? []) {
 
             var (color, border) = room.RoomType switch
@@ -103,10 +110,6 @@ public partial class RoomsDebugVisualizer : Node2D
 
             DrawRect(new Rect2(room.Rect.Position * GridSize, room.Size * GridSize), color, true);
             DrawRect(new Rect2(room.Rect.Position * GridSize, room.Size * GridSize), border, false, 1);
-            DrawText(room.Center * GridSize, $"ID: {room.Id}");
-            DrawText(room.Center * GridSize + Vector2.Down*24, $"StartDepth: {room.StartDistance}");
-            DrawText(room.Center * GridSize + Vector2.Down*48, $"BossDepth: {room.BossDistance}");
-            DrawText(room.Center * GridSize + Vector2.Down*64, $"Bias: {room.ProgressBias}");
 
         }
 		

@@ -42,6 +42,7 @@ public partial class ProceduralRoomGenerator : Node
             new GenerateConnectionsStep(state, generationSettings),
             new GenerateBranchesStep(state, generationSettings),
             new PickStartEndRoomsStep(state, generationSettings),
+            new RecalculateDepthsStep(state, generationSettings),
             new PlaceCorridorsStep(state, generationSettings),
             new PlaceRoomTilesStep(state, generationSettings),
             // new PerformAutoTileStep(state, generationSettings),

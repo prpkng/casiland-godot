@@ -12,7 +12,7 @@ namespace Casiland.Systems.ProceduralGen.Steps;
 public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSettings settings)
     : GenerationStep(state, settings)
 {
-    public override string StateDescription => $"Placing {State.CorridorLines?.Count} corridor lines and {State.CorridorRooms?.Count} corridor rooms";
+    public override string StateDescription => $"Placing {State.CorridorLines?.Count} corridor lines and {State.InBetweenRooms?.Count} corridor rooms";
     
     private static readonly Dictionary<Vector2, RoomNeighborDirection> VecToDirDict = new()
     {
@@ -268,9 +268,6 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
     
     public override async GDTask Perform()
     {
-        State.AllRooms = [.. State.MainRooms, .. State.CorridorRooms];
-        State.AllRooms = State.AllRooms.OrderBy(room => room.ProgressBias).ToList();
-
         foreach (var room in State.AllRooms)
         {
             room.Rect.Position = room.Rect.Position.Round();

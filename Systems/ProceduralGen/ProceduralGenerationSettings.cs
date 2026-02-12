@@ -10,8 +10,11 @@ public partial class ProceduralGenerationSettings : Resource
     [Export] public int StartCellsRadius = 64;
 
     [ExportGroup("Initial Room Constraints")]
-    [Export] public int MinRoomCount = 5;
-    [Export] public int MaxRoomCount = 10;
+    [Export] public int StartMinRoomCount = 6;
+    [Export] public int StartMaxRoomCount = 12;
+    [Export] public int AbsoluteMaxRoomCount = 14;
+    [Export] public int MinLeafRoomsCount = 2;
+    [Export] public int MaxLeafRoomsCount = 4;
     [Export] public int MinRoomDistance = 90;
 
     [Export] public int MinBaseRoomSize = 22;
@@ -24,6 +27,23 @@ public partial class ProceduralGenerationSettings : Resource
 
     [Export] public int RoomWidthThreshold = 45;
     [Export] public int RoomHeightThreshold = 25;
+
+    [ExportGroup("Branching")] 
+    public float LeafBranchPercentage = 30f; 
+    public int LeafMaxBranchCount = 3;
+
+    public float DirectBranchPercentage = 20f;
+    public int DirectMaxBranchCount = 2;
+
+    public int BranchingIterationCount = 3;
+    public float BranchingIterationChanceMultiplier = 0.8f;
+
+    
+    public int BranchedRoomMinDistance = 6;
+    public int BranchedRoomMaxDistance = 10;
+    
+    
+    
     
     [ExportGroup("Misc Connection Parameters")]
     

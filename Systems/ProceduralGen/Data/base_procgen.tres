@@ -6,11 +6,12 @@
 
 [resource]
 script = ExtResource("1_yml8i")
-StartCellsRadius = 40
-MinRoomCount = 6
-MaxRoomCount = 12
+StartCellCount = 35
+StartCellsRadius = 20
+StartMaxRoomCount = 8
+AbsoluteMaxRoomCount = 20
 MinRoomDistance = 28
-MinBaseRoomSize = 16
+MinBaseRoomSize = 18
 MaxBaseRoomSize = 20
 BaseRoomAspect = 1.2
 MaxRoomAspectDeviation = 0.2

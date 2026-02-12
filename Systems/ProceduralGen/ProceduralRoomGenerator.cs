@@ -40,6 +40,7 @@ public partial class ProceduralRoomGenerator : Node
             new PlaceRoomsStep(state, generationSettings),
             new PickMainRoomsStep(state, generationSettings),
             new GenerateConnectionsStep(state, generationSettings),
+            new GenerateBranchesStep(state, generationSettings),
             new PickStartEndRoomsStep(state, generationSettings),
             new PlaceCorridorsStep(state, generationSettings),
             new PlaceRoomTilesStep(state, generationSettings),

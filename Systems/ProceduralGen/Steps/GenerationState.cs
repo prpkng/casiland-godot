@@ -27,7 +27,7 @@ public class GenerationState
     /// <summary>
     /// The minor rooms that connect the main rooms within corridors.
     /// </summary>
-    public List<ProceduralRoom> CorridorRooms = [];
+    public List<ProceduralRoom> InBetweenRooms = [];
 
     /// <summary>
     /// The complete list of all rooms (main + corridor).

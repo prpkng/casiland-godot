@@ -67,7 +67,7 @@ public partial class RoomsDebugVisualizer : Node2D
             DrawRect(new Rect2(room.Rect.Position * GridSize, room.Size * GridSize), GenRoomsBorder, false, 1);
         }	
 
-        foreach (var  room in state.CorridorRooms ?? []) {
+        foreach (var  room in state.InBetweenRooms ?? []) {
             DrawRect(new Rect2(room.Rect.Position * GridSize, room.Size * GridSize), CorridorRoomsColor, true);
             DrawRect(new Rect2(room.Rect.Position * GridSize, room.Size * GridSize), GenRoomsBorder, false, 1);
             DrawText(room.Center * GridSize, $"ID: {room.Id}");
@@ -91,10 +91,12 @@ public partial class RoomsDebugVisualizer : Node2D
 
             var (color, border) = room.RoomType switch
             {
-                RoomTypes.StartRoom => (Colors.Green, Colors.Lime),
-                RoomTypes.BossRoom => (Colors.IndianRed, Colors.OrangeRed),
+                RoomTypes.StartRoom => (new Color(Colors.Green, 0.4f), Colors.Lime),
+                RoomTypes.BossRoom => (new Color(Colors.Red, 0.45f), Colors.OrangeRed),
                 _ => (MainRoomsColor, MainRoomsBorder)
             };
+
+            if (room.IsLeafGeneratedRoom) color *= new Color(Colors.Magenta, 0.4f);
 
             // foreach (var conn in room.Connections)
             //     DrawLine(room.Center * GridSize, conn.Center * GridSize, MstLineColor);
@@ -116,7 +118,7 @@ public partial class RoomsDebugVisualizer : Node2D
 
         DrawText(new Vector2(10, 20), $"Seed: {state.Rng.Seed}");
 
-        List<ProceduralRoom> rooms = [..(state.MainRooms ?? []), ..(state.CorridorRooms ?? [])];
+        List<ProceduralRoom> rooms = [..(state.MainRooms ?? []), ..(state.InBetweenRooms ?? [])];
         // Draw arrows
         foreach (var room in rooms)
         foreach (var (dir, connections) in room.Neighbors)

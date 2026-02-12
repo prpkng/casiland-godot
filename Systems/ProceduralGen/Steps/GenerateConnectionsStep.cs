@@ -48,8 +48,7 @@ public class GenerateConnectionsStep(GenerationState state, ProceduralGeneration
         var mst = KruskalMST.ComputeMST(delaunayConnections);
         State.MinimumSpanningTree = mst;
     }
-
-
+    
     /* ============================
      * Fill Room Connections
      * ============================ */
@@ -115,7 +114,7 @@ public class GenerateConnectionsStep(GenerationState state, ProceduralGeneration
     private bool CheckForRoomOverlap(ProceduralRoom room)
     {
         var rect = room.Rect.Grow(5);
-        return ((ProceduralRoom[]) [..State.MainRooms, ..State.CorridorRooms])
+        return ((ProceduralRoom[]) [..State.MainRooms, ..State.InBetweenRooms])
             .Any(other => other.Rect.Intersects(rect));
     }
     
@@ -135,7 +134,7 @@ public class GenerateConnectionsStep(GenerationState state, ProceduralGeneration
     {
         foreach (var line in State.MinimumSpanningTree)
         {
-            float len = line.EuclideanLength;
+            float len = line.ArithmeticLength;
             int roomCount = Mathf.FloorToInt(len / Settings.InBetweenRoomsDenominator);
             if (roomCount < 1) continue;
             
@@ -160,7 +159,7 @@ public class GenerateConnectionsStep(GenerationState state, ProceduralGeneration
                 lastRoom.Connections.Add(room);
                 
                 room.CorridorLines = [];
-                State.CorridorRooms.Add(room);
+                State.InBetweenRooms.Add(room);
                 
                 lastRoom = room;
             }
@@ -179,5 +178,7 @@ public class GenerateConnectionsStep(GenerationState state, ProceduralGeneration
         UpdateMstLines();
 
         CreateInBetweenRooms();
+        
+        State.AllRooms = [.. State.MainRooms, .. State.InBetweenRooms];
     }
 }

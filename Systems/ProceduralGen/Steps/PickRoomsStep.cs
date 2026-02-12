@@ -41,11 +41,11 @@ public class PickMainRoomsStep(GenerationState state, ProceduralGenerationSettin
         const int maxIter = 50;
         int iterIndex = 0;
 
-        float mainRoomsCount = State.Rng.RandfRange(Settings.MinRoomCount, Settings.MaxRoomCount);
+        float mainRoomsCount = State.Rng.RandfRange(Settings.StartMinRoomCount, Settings.StartMaxRoomCount);
 
         while (_mainRooms.Count < mainRoomsCount && iterIndex < maxIter)
         {
-            foreach (var room in rooms.Where(room => _mainRooms.Count < Settings.MaxRoomCount &&
+            foreach (var room in rooms.Where(room => _mainRooms.Count < Settings.StartMaxRoomCount &&
                                                      CheckValidMainRoom(room, widthThresh, heightThresh)))
             {
                 room.Index = _mainRooms.Count;

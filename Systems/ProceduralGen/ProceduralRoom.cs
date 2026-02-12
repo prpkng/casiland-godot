@@ -58,6 +58,12 @@ public static class SimpleRoomIdGenerator
 
 public class ProceduralRoom(Vector2 pos, Vector2 size)
 {
+    #region TempArea
+    //TODO remove this
+    public bool IsLeafGeneratedRoom;
+
+    #endregion
+    
     public Rect2 Rect = new(pos, size);
 
     public readonly int Id = SimpleRoomIdGenerator.NextId();

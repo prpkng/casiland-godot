@@ -6,29 +6,34 @@ using Casiland.Entities.World.Dungeons.Doors;
 using Casiland.Systems.ProceduralGen.Algorithms;
 using Fractural.Tasks;
 using Godot;
+using Serilog;
 
 namespace Casiland.Systems.ProceduralGen.Steps;
 
-public class PickStartEndRoomsStep(GenerationState state, ProceduralGenerationSettings settings) : GenerationStep(state, settings)
+public class PickStartEndRoomsStep(GenerationState state, ProceduralGenerationSettings settings)
+    : GenerationStep(state, settings)
 {
-    
     public override string StateDescription => "picking room types";
 
     private Dictionary<ProceduralRoom, int> _mainDepths;
-    
+
     public void CalculateMainDepths()
     {
         _mainDepths = [];
-        
-        
-        var leafRooms = State.MainRooms.Where(r => r.Connections.Count == 1).ToList();
+
+        var passed = new HashSet<ProceduralRoom>();
+
+        var leafRooms = State.MainRooms
+            .Where(r => r.Connections.Count == 1).ToList();
 
         Queue<ProceduralRoom> rooms = [];
-        foreach (var room in leafRooms)  {
+        foreach (var room in leafRooms)
+        {
+            passed.Add(room);
             rooms.Enqueue(room);
             _mainDepths[room] = 1;
         }
-        var passed = new HashSet<ProceduralRoom>();
+
         while (rooms.Count > 0)
         {
             var room = rooms.Dequeue();
@@ -44,12 +49,20 @@ public class PickStartEndRoomsStep(GenerationState state, ProceduralGenerationSe
 
     public void PickStartRoom()
     {
-        var leafRooms = State.MainRooms
-            .Where(r => _mainDepths[r] > 3)
-            .ToList();
+        try
+        {
+            var leafRooms = State.MainRooms
+                .OrderByDescending(r => _mainDepths[r])
+                .Take(4)
+                .ToList();
+            var startRoom = leafRooms.PickRandom(State.Rng);
+            startRoom.RoomType = RoomTypes.StartRoom;
+        }
+        catch (KeyNotFoundException e)
+        {
+            Log.Error("{Err}", e.Message);
+        }
 
-        var startRoom = leafRooms.PickRandom(State.Rng);
-        startRoom.RoomType = RoomTypes.StartRoom;
     }
 
     public void PickBossRoom()
@@ -168,13 +181,19 @@ public class PickStartEndRoomsStep(GenerationState state, ProceduralGenerationSe
         for (int i = 0; i < State.MainRooms.Count; i++)
             State.MainRooms[i].Index = i;
     }
+
     public void SortMst()
     {
-        State.MinimumSpanningTree = [.. State.MinimumSpanningTree.OrderBy(line => {
-                var meanBias = (State.PointToRoom[line.From].ProgressBias + State.PointToRoom[line.To].ProgressBias) / 2f;
-                return meanBias;
-            }
-        )];
+        State.MinimumSpanningTree =
+        [
+            .. State.MinimumSpanningTree.OrderBy(line =>
+                {
+                    var meanBias = (State.PointToRoom[line.From].ProgressBias +
+                                    State.PointToRoom[line.To].ProgressBias) / 2f;
+                    return meanBias;
+                }
+            )
+        ];
     }
 
 
@@ -184,7 +203,7 @@ public class PickStartEndRoomsStep(GenerationState state, ProceduralGenerationSe
 
         PickStartRoom();
 
-        AddLoops();
+        // AddLoops();
 
         PopulateStartDepth();
 
@@ -197,6 +216,9 @@ public class PickStartEndRoomsStep(GenerationState state, ProceduralGenerationSe
 
         SortMainRoomsByBias();
 
-        SortMst();  
+        SortMst();
+
+        State.AllRooms = [.. State.MainRooms, .. State.InBetweenRooms];
+        State.AllRooms = State.AllRooms.OrderBy(room => room.ProgressBias).ToList();
     }
 }

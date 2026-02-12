@@ -12,7 +12,6 @@ namespace Casiland.Systems.ProceduralGen.Steps;
 public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSettings settings)
     : GenerationStep(state, settings)
 {
-
     public override string StateDescription => $"Placing {State.CorridorLines?.Count} corridor lines and {State.CorridorRooms?.Count} corridor rooms";
     
     private static readonly Dictionary<Vector2, RoomNeighborDirection> VecToDirDict = new()
@@ -27,82 +26,14 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
         { Vector2.Right, RoomNeighborDirection.Right }
     };
 
-    private ProceduralRoom CreateInBetweenRoom(Vector2 center)
-    {
-        float baseSize = Mathf.Lerp(Settings.MinBaseRoomSize, Settings.MaxBaseRoomSize, State.Rng.RandfRange(0f, 0.5f));
-        var size = ProceduralGeometry.AspectWiseRandomSize(
-            State.Rng,
-            Settings.BaseRoomAspect,
-            Settings.MaxRoomAspectDeviation,
-            baseSize,
-            Settings.MaxRoomSizeDeviation
-        );
-        return new ProceduralRoom(center - size / 2, size);
-    }
-
-    private bool CheckForRoomOverlap(ProceduralRoom room)
-    {
-        var rect = room.Rect.Grow(5);
-        return ((ProceduralRoom[]) [..State.MainRooms, ..State.CorridorRooms])
-            .Any(other => other.Rect.Intersects(rect));
-    }
-    
-    ProceduralRoom TryCreateRoom(Vector2 center, Vector2 offset)
-    {
-        var candidates = new[]
-        {
-            center + offset,
-            center - offset,
-            center
-        };
-
-        return candidates.Select(CreateInBetweenRoom).FirstOrDefault(room => !CheckForRoomOverlap(room));
-    }
-    
-    private void CreateInBetweenRooms()
-    {
-        foreach (var line in State.MinimumSpanningTree)
-        {
-            float len = line.EuclideanLength;
-            int roomCount = Mathf.FloorToInt(len / Settings.InBetweenRoomsDenominator);
-            if (roomCount < 1) continue;
-            
-            var fromRoom = State.PointToRoom[line.From];
-            var toRoom = State.PointToRoom[line.To];
-            
-            fromRoom.Connections.Remove(toRoom);
-            toRoom.Connections.Remove(fromRoom);
-            var lastRoom = fromRoom;
-            
-            for (int i = 0; i < roomCount; i++)
-            {
-                float factor = (i + 1f) / (roomCount + 1f);
-                var center = line.FromF.Lerp(line.ToF, factor);
-                const float maxSpacing = 16f;
-                var offset = line.Direction.Orthogonal() * State.Rng.RandfRange(-maxSpacing, maxSpacing);
-
-                var room = TryCreateRoom(center, offset);
-                if (room == null) continue;                
-                
-                room.ProgressBias = (fromRoom.ProgressBias + toRoom.ProgressBias) / 2;
-                room.StartDistance = (fromRoom.StartDistance + toRoom.StartDistance) / 2;
-                room.BossDistance = (fromRoom.BossDistance + toRoom.BossDistance) / 2;
-                
-                room.Connections.Add(lastRoom);
-                lastRoom.Connections.Add(room);
-                
-                room.CorridorLines = [];
-                State.CorridorRooms.Add(room);
-                
-                lastRoom = room;
-            }
-            lastRoom.AddConnection(toRoom);
-            toRoom.AddConnection(lastRoom);
-
-        }
-    }
-
     #region === CREATE CORRIDOR LINES SUBSTEP ===
+
+    private bool CheckCorridorCollision(ProceduralRoom fromRoom, ProceduralRoom toRoom, CorridorShape shape)
+    {
+        var lines = shape.ComputeLines();
+        var allRooms = State.AllRooms.Except([fromRoom, toRoom]).ToArray();
+        return lines.Any(line => allRooms.Any(r => ProceduralGeometry.EdgeIntersectsRect(line, r.Rect.Grow(5))));
+    }
     
     private bool CheckIfCornerTooSteep(ProceduralRoom fromRoom, ProceduralRoom toRoom, Vector2 fromDir, Vector2 toDir)
     {
@@ -142,7 +73,8 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
     private bool TryCreateCornerCorridor(ProceduralRoom fromRoom, ProceduralRoom toRoom, Vector2 dir,
         out CornerCorridorShape cornerCorridor)
     {
-
+        dir.X += Mathf.Epsilon;
+        dir.Y += Mathf.Epsilon;
         var possibleDirections = new List<Vector2>
             {
                 Vector2.Right * Mathf.Sign(dir.X),
@@ -153,7 +85,10 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
 
         var axis = Vector2.Right;
         var overlap = ProceduralGeometry.GetRectOverlapOnAxis(fromRoom.Rect, toRoom.Rect, axis);
-        float overlapLengthOnAxis = (overlap.Size * (Vector2.One - axis)).Abs().Sum();
+        float overlapLengthOnX = (overlap.Size * (Vector2.One - axis)).Abs().Sum();
+        axis = Vector2.Down;
+        overlap = ProceduralGeometry.GetRectOverlapOnAxis(fromRoom.Rect, toRoom.Rect, axis);
+        float overlapLengthOnY = (overlap.Size * (Vector2.One - axis)).Abs().Sum();
 
         if (toRoom.Center.Y > fromRoom.Center.Y)
             cornerCorridor.EntranceCornerBias = 0f;
@@ -165,22 +100,25 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
         else
             cornerCorridor.ExitCornerBias = 0f;
 
-        if (overlapLengthOnAxis > Settings.MinimumDirectCorridorOverlapLength/2f)
-            cornerCorridor.EntranceCornerBias = 1-cornerCorridor.EntranceCornerBias;
-        else if (overlapLengthOnAxis > Settings.CorridorTileWidth)
+        if (overlapLengthOnX > Settings.CorridorTileWidth/2f && overlapLengthOnX < Settings.CorridorTileWidth)
             cornerCorridor.EntranceCornerBias = 0.5f;
+        else if (overlapLengthOnX > Settings.CorridorTileWidth)
+            cornerCorridor.EntranceCornerBias = 1-cornerCorridor.EntranceCornerBias;
+        
+        if (overlapLengthOnY > Settings.CorridorTileWidth/2f && overlapLengthOnY < Settings.CorridorTileWidth)
+            cornerCorridor.ExitCornerBias = 0.5f;
+        else if (overlapLengthOnY > Settings.CorridorTileWidth)
+            cornerCorridor.ExitCornerBias = 1-cornerCorridor.ExitCornerBias;
 
-        if (!CheckIfCornerTooSteep(fromRoom, toRoom, possibleDirections[0], possibleDirections[1]) &&
+        if (!CheckCorridorCollision(fromRoom, toRoom, cornerCorridor) &&
+            !CheckIfCornerTooSteep(fromRoom, toRoom, possibleDirections[0], possibleDirections[1]) &&
             fromRoom.Neighbors[VecToDirDict[possibleDirections[0]]].Count == 0 &&
             toRoom.Neighbors[VecToDirDict[-possibleDirections[1]]].Count == 0)
             return true;
 
         // Switch to vertical
 
-        
-        axis = Vector2.Down;
-        overlap = ProceduralGeometry.GetRectOverlapOnAxis(fromRoom.Rect, toRoom.Rect, axis);
-        overlapLengthOnAxis = (overlap.Size * (Vector2.One - axis)).Abs().Sum();
+        cornerCorridor.CornerDirection = possibleDirections[1];
 
 
 
@@ -195,15 +133,20 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
             cornerCorridor.ExitCornerBias = 1f;
 
             
-        if (overlapLengthOnAxis > Settings.MinimumDirectCorridorOverlapLength/2f)
-            cornerCorridor.EntranceCornerBias = 1-cornerCorridor.EntranceCornerBias;
-        else if (overlapLengthOnAxis > Settings.CorridorTileWidth)
+        if (overlapLengthOnY > Settings.CorridorTileWidth/2f && overlapLengthOnY < Settings.CorridorTileWidth)
             cornerCorridor.EntranceCornerBias = 0.5f;
+        else if (overlapLengthOnY > Settings.CorridorTileWidth)
+            cornerCorridor.EntranceCornerBias = 1-cornerCorridor.EntranceCornerBias;
+        
+        if (overlapLengthOnX > Settings.CorridorTileWidth/2f && overlapLengthOnX < Settings.CorridorTileWidth)
+            cornerCorridor.ExitCornerBias = 0.5f;
+        else if (overlapLengthOnX > Settings.CorridorTileWidth)
+            cornerCorridor.ExitCornerBias = 1-cornerCorridor.ExitCornerBias;
 
-        cornerCorridor.CornerDirection = possibleDirections[1];
-        if (!CheckIfCornerTooSteep(fromRoom, toRoom, possibleDirections[1], possibleDirections[0]) &&
-                 fromRoom.Neighbors[VecToDirDict[possibleDirections[1]]].Count == 0 &&
-                 toRoom.Neighbors[VecToDirDict[-possibleDirections[0]]].Count == 0)
+        if (!CheckCorridorCollision(fromRoom, toRoom, cornerCorridor) &&
+            !CheckIfCornerTooSteep(fromRoom, toRoom, possibleDirections[1], possibleDirections[0]) &&
+            fromRoom.Neighbors[VecToDirDict[possibleDirections[1]]].Count == 0 &&
+            toRoom.Neighbors[VecToDirDict[-possibleDirections[0]]].Count == 0)
             return true;
         return false;
     }
@@ -325,10 +268,9 @@ public class PlaceCorridorsStep(GenerationState state, ProceduralGenerationSetti
     
     public override async GDTask Perform()
     {
-        CreateInBetweenRooms();
         State.AllRooms = [.. State.MainRooms, .. State.CorridorRooms];
         State.AllRooms = State.AllRooms.OrderBy(room => room.ProgressBias).ToList();
-        
+
         foreach (var room in State.AllRooms)
         {
             room.Rect.Position = room.Rect.Position.Round();

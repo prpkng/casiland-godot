@@ -97,141 +97,78 @@ public class GenerateConnectionsStep(GenerationState state, ProceduralGeneration
         }
     }
 
-    public void PickStartRoom()
-    {
-        var leafRooms = State.MainRooms
-            .Where(r => r.GetConnectionsCount() == 1)
-            .ToList();
+    
 
-        var startRoom = leafRooms.PickRandom(State.Rng);
-        startRoom.RoomType = RoomTypes.StartRoom;
+    private ProceduralRoom CreateInBetweenRoom(Vector2 center)
+    {
+        float baseSize = Mathf.Lerp(Settings.MinBaseRoomSize, Settings.MaxBaseRoomSize, State.Rng.RandfRange(0f, 0.5f));
+        var size = ProceduralGeometry.AspectWiseRandomSize(
+            State.Rng,
+            Settings.BaseRoomAspect,
+            Settings.MaxRoomAspectDeviation,
+            baseSize,
+            Settings.MaxRoomSizeDeviation
+        );
+        return new ProceduralRoom(center - size / 2, size);
     }
 
-    public void PickBossRoom()
+    private bool CheckForRoomOverlap(ProceduralRoom room)
     {
-        var leafRooms = State.MainRooms
-            .Where(r => r.GetConnectionsCount() == 1 && r.RoomType == RoomTypes.NormalRoom)
-            .ToList();
-
-        var bossRoom = leafRooms
-            .OrderByDescending(r => r.StartDistance)
-            .Take(2)
-            .PickRandom(State.Rng);
-        bossRoom.RoomType = RoomTypes.BossRoom;
+        var rect = room.Rect.Grow(5);
+        return ((ProceduralRoom[]) [..State.MainRooms, ..State.CorridorRooms])
+            .Any(other => other.Rect.Intersects(rect));
     }
-
-
-    /* ============================
-     * Add Loops
-     * ============================ */
-
-    public void AddLoops()
+    
+    ProceduralRoom TryCreateRoom(Vector2 center, Vector2 offset)
     {
-        var leafRooms = State.MainRooms
-            .Where(r => r.GetConnectionsCount() == 1 && r.RoomType == RoomTypes.NormalRoom)
-            .ToList();
-
-        if (leafRooms.Count == 0) return;
-
-
-        var potential = new List<ProceduralRoom>(State.MainRooms)
-            .Where(r => r.RoomType == RoomTypes.NormalRoom)
-            .ToList();
-
-        for (int i = 0; i < Settings.LoopCount; i++)
+        var candidates = new[]
         {
-            if (potential.Count < 2) break;
+            center + offset,
+            center - offset,
+            center
+        };
 
-            var room = potential.PickRandom();
-            potential.Remove(room);
-
-            bool valid = false;
-            ProceduralRoom other = null;
-
-            while (!valid && potential.Count > 0)
+        return candidates.Select(CreateInBetweenRoom).FirstOrDefault(room => !CheckForRoomOverlap(room));
+    }
+    
+    private void CreateInBetweenRooms()
+    {
+        foreach (var line in State.MinimumSpanningTree)
+        {
+            float len = line.EuclideanLength;
+            int roomCount = Mathf.FloorToInt(len / Settings.InBetweenRoomsDenominator);
+            if (roomCount < 1) continue;
+            
+            var fromRoom = State.PointToRoom[line.From];
+            var toRoom = State.PointToRoom[line.To];
+            
+            fromRoom.Connections.Remove(toRoom);
+            toRoom.Connections.Remove(fromRoom);
+            var lastRoom = fromRoom;
+            
+            for (int i = 0; i < roomCount; i++)
             {
-                other = potential.PickRandom();
-                potential.Remove(other);
+                float factor = (i + 1f) / (roomCount + 1f);
+                var center = line.FromF.Lerp(line.ToF, factor);
+                const float maxSpacing = 16f;
+                var offset = line.Direction.Orthogonal() * State.Rng.RandfRange(-maxSpacing, maxSpacing);
 
-                valid = !room.HasConnection(other) &&
-                        room.Center.DistanceTo(other.Center) <= Settings.MinRoomDistance;
+                var room = TryCreateRoom(center, offset);
+                if (room == null) continue;                
+                
+                room.Connections.Add(lastRoom);
+                lastRoom.Connections.Add(room);
+                
+                room.CorridorLines = [];
+                State.CorridorRooms.Add(room);
+                
+                lastRoom = room;
             }
+            lastRoom.AddConnection(toRoom);
+            toRoom.AddConnection(lastRoom);
 
-            if (!valid) break;
-
-            room.AddConnection(other);
-            other.AddConnection(room);
         }
     }
-
-    public void PopulateStartDepth()
-    {
-        var startRoom = State.MainRooms.First(r => r.RoomType == RoomTypes.StartRoom);
-        startRoom.StartDistance = 0;
-
-        Queue<ProceduralRoom> rooms = [];
-        rooms.Enqueue(startRoom);
-        var passed = new HashSet<ProceduralRoom>();
-        while (rooms.Count > 0)
-        {
-            var room = rooms.Dequeue();
-            passed.Add(room);
-            foreach (var conn in room.Connections)
-            {
-                if (passed.Contains(conn)) continue;
-                conn.StartDistance = room.StartDistance + 1;
-                rooms.Enqueue(conn);
-            }
-        }
-    }
-
-    public void PopulateBossDepth()
-    {
-        var bossRoom = State.MainRooms.First(r => r.RoomType == RoomTypes.BossRoom);
-        bossRoom.BossDistance = 0;
-
-        Queue<ProceduralRoom> rooms = [];
-        rooms.Enqueue(bossRoom);
-        var passed = new HashSet<ProceduralRoom>();
-        while (rooms.Count > 0)
-        {
-            var room = rooms.Dequeue();
-            passed.Add(room);
-            foreach (var conn in room.Connections)
-            {
-                if (passed.Contains(conn)) continue;
-                conn.BossDistance = room.BossDistance + 1;
-                rooms.Enqueue(conn);
-            }
-        }
-    }
-
-    public void PopulateRoomsBias()
-    {
-        var bossRoom = State.MainRooms.First(r => r.RoomType == RoomTypes.BossRoom);
-
-        foreach (var room in State.MainRooms)
-        {
-            var detourPenalty = room.StartDistance + room.BossDistance - bossRoom.StartDistance;
-            room.ProgressBias = room.StartDistance + 5 * detourPenalty;
-        }
-    }
-
-    public void SortMainRoomsByBias()
-    {
-        State.MainRooms = State.MainRooms.OrderBy(room => room.ProgressBias).ToList();
-        for (int i = 0; i < State.MainRooms.Count; i++)
-            State.MainRooms[i].Index = i;
-    }
-    public void SortMst()
-    {
-        State.MinimumSpanningTree = [.. State.MinimumSpanningTree.OrderBy(line => {
-                var meanBias = (State.PointToRoom[line.From].ProgressBias + State.PointToRoom[line.To].ProgressBias) / 2f;
-                return meanBias;
-            }
-        )];
-    }
-
 
     public override async GDTask Perform()
     {
@@ -241,21 +178,6 @@ public class GenerateConnectionsStep(GenerationState state, ProceduralGeneration
         
         UpdateMstLines();
 
-        PickStartRoom();
-
-        AddLoops();
-
-        PopulateStartDepth();
-
-        PickBossRoom();
-
-        PopulateBossDepth();
-
-        PopulateRoomsBias();
-
-
-        SortMainRoomsByBias();
-
-        SortMst();
+        CreateInBetweenRooms();
     }
 }

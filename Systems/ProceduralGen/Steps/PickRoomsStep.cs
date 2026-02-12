@@ -5,7 +5,7 @@ using Serilog;
 
 namespace Casiland.Systems.ProceduralGen.Steps;
 
-public class PickRoomsStep(GenerationState state, ProceduralGenerationSettings settings) : GenerationStep(state, settings)
+public class PickMainRoomsStep(GenerationState state, ProceduralGenerationSettings settings) : GenerationStep(state, settings)
 {
     private List<ProceduralRoom> _mainRooms = [];
     private List<ProceduralRoom> _otherRooms = [];

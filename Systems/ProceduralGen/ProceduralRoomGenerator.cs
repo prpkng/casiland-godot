@@ -38,12 +38,13 @@ public partial class ProceduralRoomGenerator : Node
         List<GenerationStep> generationSteps =
         [
             new PlaceRoomsStep(state, generationSettings),
-            new PickRoomsStep(state, generationSettings),
+            new PickMainRoomsStep(state, generationSettings),
             new GenerateConnectionsStep(state, generationSettings),
+            new PickStartEndRoomsStep(state, generationSettings),
             new PlaceCorridorsStep(state, generationSettings),
             new PlaceRoomTilesStep(state, generationSettings),
-            new PerformAutoTileStep(state, generationSettings),
-            new PlacePropsStep(state, generationSettings),
+            // new PerformAutoTileStep(state, generationSettings),
+            // new PlacePropsStep(state, generationSettings),
         ];
 
         Log.Information("Starting procedural generation with {StepCount} steps!", generationSteps.Count);

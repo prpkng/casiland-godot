@@ -64,8 +64,7 @@ public class GenerateBranchesStep(GenerationState state, ProceduralGenerationSet
             var perpDir = dir.Orthogonal().Abs();
             float fromWidthInDir = (from.Size * perpDir).Sum();
             // Add this to ensure a direct corridor is created
-            // fromWidthInDir -= Settings.MinimumDirectCorridorOverlapLength * 2; 
-            fromWidthInDir -= Settings.MinimumDirectCorridorOverlapLength + 2; 
+            fromWidthInDir -= Settings.MinimumDirectCorridorOverlapLength * 2; 
             var displacementOptions = new[]
             {
                 pos + perpDir * fromWidthInDir,

@@ -122,10 +122,12 @@ public class GenerateConnectionsStep(GenerationState state, ProceduralGeneration
     {
         var candidates = new[]
         {
+            center + offset*2,
             center + offset,
             center - offset,
+            center - offset*2,
             center
-        };
+        }.Shuffle(State.Rng).ToArray();
 
         return candidates.Select(CreateInBetweenRoom).FirstOrDefault(room => !CheckForRoomOverlap(room));
     }

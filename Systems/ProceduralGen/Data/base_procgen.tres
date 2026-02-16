@@ -3,6 +3,7 @@
 [ext_resource type="Resource" uid="uid://cfrfxh7vllrky" path="res://ruleset.tres" id="1_go4an"]
 [ext_resource type="Script" uid="uid://dq0qnphrb3s6t" path="res://Systems/ProceduralGen/ProceduralGenerationSettings.cs" id="1_yml8i"]
 [ext_resource type="PackedScene" uid="uid://b82vg5ne57fn2" path="res://Entities/World/Dungeons/Doors/Pool/pool_double_door.tscn" id="2_ndj01"]
+[ext_resource type="Resource" uid="uid://bru8717w2t8aj" path="res://Entities/World/Dungeons/RoomProps/Pool/carpet_room.tres" id="3_ndj01"]
 
 [resource]
 script = ExtResource("1_yml8i")
@@ -22,5 +23,6 @@ MaxCornerSizeDifference = 5.0
 InBetweenRoomsDenominator = 30
 CorridorMaxDistanceToCenter = 4
 DoorScene = ExtResource("2_ndj01")
+PropCollections = Array[Object]([ExtResource("3_ndj01")])
 AutoTileRuleSet = ExtResource("1_go4an")
 CorridorTileWidth = 4

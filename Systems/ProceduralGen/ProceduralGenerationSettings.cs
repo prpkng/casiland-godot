@@ -1,5 +1,7 @@
 ﻿using Casiland.AutoTileEx.Api.Data;
+using Casiland.Systems.RoomDesign.Rooms;
 using Godot;
+using Godot.Collections;
 
 namespace Casiland.Systems.ProceduralGen;
 
@@ -80,8 +82,9 @@ public partial class ProceduralGenerationSettings : Resource
     [Export] public int CorridorMaxDistanceToCenter = 6;
 
 
-    [ExportGroup("Corridor Props")]
+    [ExportGroup("Props")]
     [Export] public PackedScene DoorScene;
+    [Export] public Array<RoomPropCollection> PropCollections;
 
     
     [ExportGroup("Tile Settings")]

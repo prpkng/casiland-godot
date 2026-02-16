@@ -58,7 +58,7 @@ public static class SimpleRoomIdGenerator
 
 public class ProceduralRoom(Vector2 pos, Vector2 size)
 {
-
+    public Node2D RoomNode;
     public Rect2 Rect = new(pos, size);
 
     public readonly int Id = SimpleRoomIdGenerator.NextId();

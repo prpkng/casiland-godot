@@ -6,6 +6,8 @@
 size = Vector2(14, 24)
 
 [node name="LongTableV" type="StaticBody2D" unique_id=1903685706]
+collision_layer = 2
+collision_mask = 2
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=350518093]

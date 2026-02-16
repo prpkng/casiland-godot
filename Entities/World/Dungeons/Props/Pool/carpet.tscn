@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://c2j1qdkvd1cjs" path="res://addons/nine_patch_sprite_2d/nine_patch_sprite_2d.gd" id="1_pj88w"]
 
 [node name="Carpet" type="Node2D" unique_id=620797324]
+z_index = -1
 script = ExtResource("1_pj88w")
 texture = ExtResource("1_esls3")
 size = Vector2(64, 64)

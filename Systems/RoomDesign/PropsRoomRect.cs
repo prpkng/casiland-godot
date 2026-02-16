@@ -22,7 +22,7 @@ public partial class PropsRoomRect : ReferenceRect
 
     public override void _Process(double delta)
     {
-        if (Engine.IsEditorHint()) QueueRedraw();
+        QueueRedraw();
     }
 
 
@@ -37,9 +37,9 @@ public partial class PropsRoomRect : ReferenceRect
 
     public override void _Draw()
     {
-        var rect = GetGlobalRect();
+        var rect = GetRect();
         if (BackgroundSprite != null)
-            DrawTextureRect(BackgroundSprite, rect, true);
+            DrawTextureRect(BackgroundSprite, new Rect2(Vector2.Zero, Size), true);
 
         var top = rect.GetCenter() + rect.Size / 2f * Vector2.Up;
         DrawText(top, $"{Size / GridSize}", _fontSize/4);        

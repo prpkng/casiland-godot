@@ -36,7 +36,7 @@ public partial class RoomsDebugVisualizer : Node2D
         base._Process(delta);
     }
 
-    private const int GridSize = 8;
+    private const int GridSize = 16;
 
     private void DrawText(Vector2 pos, string text, int? fontSize = null) =>
         DrawString(_font, pos, text, HorizontalAlignment.Center, -1, 
@@ -81,8 +81,8 @@ public partial class RoomsDebugVisualizer : Node2D
         {
             var center = edge.FromF + edge.FromF.DirectionTo(edge.ToF) * edge.EuclideanLength / 2f;
             center *= GridSize;
-            DrawText(center + Vector2.Up * 12f, $"Ec. Length: {edge.EuclideanLength}");
-            DrawText(center + Vector2.Down * 12f, $"Ar. Length: {edge.ArithmeticLength}");
+            DrawText(center + Vector2.Up * 12f, $"Ec. Length: {edge.EuclideanLength}", _fontSize/2);
+            DrawText(center + Vector2.Down * 12f, $"Ar. Length: {edge.ArithmeticLength}", _fontSize/2);
             DrawArrow(edge.From * GridSize, edge.To * GridSize, TriangleLineColor);
         }
 
@@ -122,7 +122,7 @@ public partial class RoomsDebugVisualizer : Node2D
 
         DrawText(new Vector2(10, 20), $"Seed: {state.Rng.Seed}");
 
-        List<ProceduralRoom> rooms = [..(state.MainRooms ?? []), ..(state.InBetweenRooms ?? [])];
+        List<ProceduralRoom> rooms = [..state.MainRooms ?? [], ..state.InBetweenRooms ?? []];
         // Draw arrows
         foreach (var room in rooms)
         foreach (var (dir, connections) in room.Neighbors)
@@ -139,6 +139,12 @@ public partial class RoomsDebugVisualizer : Node2D
             DrawArrow(start * GridSize, end * GridSize, Colors.IndianRed, 2);
         }
 
+
+        foreach (var room in state.AllRooms)
+        {
+            if (room.RoomNode == null) continue;
+            DrawCircle(room.RoomNode.GlobalPosition, 4, Colors.Red, true);
+        } 
 
         // if (state.StartRoom != null) {
         //     DrawRect(state.StartRoom.Rect, new Color("#ff0000", 0.8f), true);

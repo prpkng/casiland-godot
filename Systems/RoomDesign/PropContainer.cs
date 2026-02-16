@@ -28,24 +28,38 @@ public partial class PropContainer : Control {
     [Export] public PropFillMode FillMode = PropFillMode.Centered;
 
     private PackedScene _propScene;
-    private Node _child;
+    public Node Prop;
 
     public override void _EnterTree()
     {
         if (!Engine.IsEditorHint())
-            PerformSizing(_child);
+            PerformSizing(Prop);
     }
 
     private void OnPropSceneChanged()
     {
         foreach (var c in GetChildren(true).Except(GetChildren())) c.Free();
 
-        _child = PropScene.Instantiate(PackedScene.GenEditState.Instance);
-	    AddChild(_child, false, InternalMode.Back);
+        Prop = PropScene.Instantiate(PackedScene.GenEditState.Instance);
+	    AddChild(Prop, false, InternalMode.Back);
 
     }
 
-    private void PerformSizing(Node node)
+    public Vector2 GetPropPosition(Node node)
+    {
+        var rect = GetGlobalRect();
+        
+        return FillMode switch
+        {
+            PropFillMode.Centered when node is Node2D => rect.GetCenter(),
+            PropFillMode.Fill when node is Node2D => rect.GetCenter(),
+            PropFillMode.Centered when node is Control => rect.GetCenter(),
+            PropFillMode.Fill when node is Control => rect.Position,
+            _ => throw new System.NotImplementedException(),
+        };
+    }
+
+    public void PerformSizing(Node node)
     {
         var rect = GetGlobalRect();
         
@@ -72,9 +86,9 @@ public partial class PropContainer : Control {
 
     public override void _Process(double delta)
     {
-        if (_child == null || !Engine.IsEditorHint()) return;
+        // if (Prop == null || !Engine.IsEditorHint()) return;
         
-        PerformSizing(_child);
+        PerformSizing(Prop);
     }
 
 }

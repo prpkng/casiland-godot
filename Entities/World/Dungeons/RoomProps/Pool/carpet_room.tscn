@@ -1,17 +1,18 @@
 [gd_scene format=3 uid="uid://ccll273sdgbve"]
 
-[ext_resource type="Script" uid="uid://cth26xqbbonus" path="res://Systems/RoomDesign/PropsRoomRect.cs" id="1_xmqn1"]
-[ext_resource type="Texture2D" uid="uid://lhrxpnujv2ru" path="res://Entities/World/floor.png" id="2_evslv"]
-[ext_resource type="Script" uid="uid://bviom3sxvji67" path="res://Systems/RoomDesign/PropContainer.cs" id="3_gduug"]
-[ext_resource type="PackedScene" uid="uid://c5ieex3r3vtj1" path="res://Entities/World/Dungeons/Props/Pool/carpet.tscn" id="4_evslv"]
-[ext_resource type="PackedScene" uid="uid://b6d0or3f5km1a" path="res://Entities/World/Dungeons/Props/Pool/long_couch_e.tscn" id="5_qkqoc"]
-[ext_resource type="PackedScene" uid="uid://b58qusemspmov" path="res://Entities/World/Dungeons/Props/Pool/long_couch_w.tscn" id="6_cuodo"]
-[ext_resource type="PackedScene" uid="uid://kq1tbmssgjwd" path="res://Entities/World/Dungeons/Props/Pool/long_couch_s.tscn" id="7_xmqn1"]
-[ext_resource type="PackedScene" uid="uid://ct20qie6y87xe" path="res://Entities/World/Dungeons/Props/Pool/long_couch_n.tscn" id="8_xsdoq"]
+[ext_resource type="Script" uid="uid://cth26xqbbonus" path="res://Systems/RoomDesign/PropsRoomRect.cs" id="1_iflki"]
+[ext_resource type="Texture2D" uid="uid://lhrxpnujv2ru" path="res://Entities/World/floor.png" id="2_aw0cf"]
+[ext_resource type="Script" uid="uid://bviom3sxvji67" path="res://Systems/RoomDesign/PropContainer.cs" id="3_qfnjo"]
+[ext_resource type="PackedScene" uid="uid://c5ieex3r3vtj1" path="res://Entities/World/Dungeons/Props/Pool/carpet.tscn" id="4_35x6a"]
+[ext_resource type="PackedScene" uid="uid://b6d0or3f5km1a" path="res://Entities/World/Dungeons/Props/Pool/long_couch_e.tscn" id="5_ufppp"]
+[ext_resource type="PackedScene" uid="uid://b58qusemspmov" path="res://Entities/World/Dungeons/Props/Pool/long_couch_w.tscn" id="6_hsif0"]
+[ext_resource type="PackedScene" uid="uid://kq1tbmssgjwd" path="res://Entities/World/Dungeons/Props/Pool/long_couch_s.tscn" id="7_ks6n1"]
+[ext_resource type="PackedScene" uid="uid://ct20qie6y87xe" path="res://Entities/World/Dungeons/Props/Pool/long_couch_n.tscn" id="8_y54gw"]
 
 [node name="Carpet Room" type="ReferenceRect" unique_id=2107636550]
 z_index = -10
 z_as_relative = false
+custom_minimum_size = Vector2(128, 128)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -19,8 +20,9 @@ offset_right = -160.0
 offset_bottom = -14.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_xmqn1")
-BackgroundSprite = ExtResource("2_evslv")
+editor_only = false
+script = ExtResource("1_iflki")
+BackgroundSprite = ExtResource("2_aw0cf")
 
 [node name="Carpet L" type="ReferenceRect" parent="." unique_id=1062171806]
 z_index = -1
@@ -34,8 +36,9 @@ offset_left = -88.0
 offset_top = 72.0
 offset_right = -40.0
 offset_bottom = -72.0
-script = ExtResource("3_gduug")
-PropScene = ExtResource("4_evslv")
+editor_only = false
+script = ExtResource("3_qfnjo")
+PropScene = ExtResource("4_35x6a")
 FillMode = 1
 metadata/_edit_use_anchors_ = true
 
@@ -53,8 +56,9 @@ offset_right = -32.0
 offset_bottom = 15.9679985
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("3_gduug")
-PropScene = ExtResource("5_qkqoc")
+editor_only = false
+script = ExtResource("3_qfnjo")
+PropScene = ExtResource("5_ufppp")
 
 [node name="Couch2" type="ReferenceRect" parent="Carpet L" unique_id=342845965]
 z_as_relative = false
@@ -70,8 +74,9 @@ offset_right = -32.0
 offset_bottom = 16.031998
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("3_gduug")
-PropScene = ExtResource("5_qkqoc")
+editor_only = false
+script = ExtResource("3_qfnjo")
+PropScene = ExtResource("5_ufppp")
 
 [node name="Couch3" type="ReferenceRect" parent="Carpet L" unique_id=1875849004]
 z_as_relative = false
@@ -87,8 +92,9 @@ offset_right = 48.0
 offset_bottom = 16.031998
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("3_gduug")
-PropScene = ExtResource("6_cuodo")
+editor_only = false
+script = ExtResource("3_qfnjo")
+PropScene = ExtResource("6_hsif0")
 
 [node name="Couch4" type="ReferenceRect" parent="Carpet L" unique_id=2136970472]
 z_as_relative = false
@@ -104,8 +110,9 @@ offset_right = 48.0
 offset_bottom = 15.9679985
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("3_gduug")
-PropScene = ExtResource("6_cuodo")
+editor_only = false
+script = ExtResource("3_qfnjo")
+PropScene = ExtResource("6_hsif0")
 
 [node name="Couch5" type="ReferenceRect" parent="Carpet L" unique_id=2100296247]
 z_as_relative = false
@@ -118,8 +125,9 @@ offset_top = -24.0
 offset_right = 16.0
 offset_bottom = -8.0
 grow_horizontal = 2
-script = ExtResource("3_gduug")
-PropScene = ExtResource("7_xmqn1")
+editor_only = false
+script = ExtResource("3_qfnjo")
+PropScene = ExtResource("7_ks6n1")
 
 [node name="Couch6" type="ReferenceRect" parent="Carpet L" unique_id=1638695940]
 z_as_relative = false
@@ -135,8 +143,9 @@ offset_right = 16.0
 offset_bottom = 24.0
 grow_horizontal = 2
 grow_vertical = 0
-script = ExtResource("3_gduug")
-PropScene = ExtResource("8_xsdoq")
+editor_only = false
+script = ExtResource("3_qfnjo")
+PropScene = ExtResource("8_y54gw")
 
 [node name="Carpet R" type="ReferenceRect" parent="." unique_id=860436646]
 z_index = -1
@@ -150,8 +159,9 @@ offset_left = 48.0
 offset_top = 72.0
 offset_right = 96.0
 offset_bottom = -72.0
-script = ExtResource("3_gduug")
-PropScene = ExtResource("4_evslv")
+editor_only = false
+script = ExtResource("3_qfnjo")
+PropScene = ExtResource("4_35x6a")
 FillMode = 1
 metadata/_edit_use_anchors_ = true
 
@@ -169,8 +179,9 @@ offset_right = -32.0
 offset_bottom = 15.9679985
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("3_gduug")
-PropScene = ExtResource("5_qkqoc")
+editor_only = false
+script = ExtResource("3_qfnjo")
+PropScene = ExtResource("5_ufppp")
 
 [node name="Couch2" type="ReferenceRect" parent="Carpet R" unique_id=2944772]
 z_as_relative = false
@@ -186,8 +197,9 @@ offset_right = -32.0
 offset_bottom = 16.031998
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("3_gduug")
-PropScene = ExtResource("5_qkqoc")
+editor_only = false
+script = ExtResource("3_qfnjo")
+PropScene = ExtResource("5_ufppp")
 
 [node name="Couch3" type="ReferenceRect" parent="Carpet R" unique_id=1810807563]
 z_as_relative = false
@@ -203,8 +215,9 @@ offset_right = 48.0
 offset_bottom = 16.031998
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("3_gduug")
-PropScene = ExtResource("6_cuodo")
+editor_only = false
+script = ExtResource("3_qfnjo")
+PropScene = ExtResource("6_hsif0")
 
 [node name="Couch4" type="ReferenceRect" parent="Carpet R" unique_id=1177000828]
 z_as_relative = false
@@ -220,8 +233,9 @@ offset_right = 48.0
 offset_bottom = 15.9679985
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("3_gduug")
-PropScene = ExtResource("6_cuodo")
+editor_only = false
+script = ExtResource("3_qfnjo")
+PropScene = ExtResource("6_hsif0")
 
 [node name="Couch5" type="ReferenceRect" parent="Carpet R" unique_id=1869595789]
 z_as_relative = false
@@ -234,8 +248,9 @@ offset_top = -24.0
 offset_right = 16.0
 offset_bottom = -8.0
 grow_horizontal = 2
-script = ExtResource("3_gduug")
-PropScene = ExtResource("7_xmqn1")
+editor_only = false
+script = ExtResource("3_qfnjo")
+PropScene = ExtResource("7_ks6n1")
 
 [node name="Couch6" type="ReferenceRect" parent="Carpet R" unique_id=1273098066]
 z_as_relative = false
@@ -251,5 +266,6 @@ offset_right = 16.0
 offset_bottom = 24.0
 grow_horizontal = 2
 grow_vertical = 0
-script = ExtResource("3_gduug")
-PropScene = ExtResource("8_xsdoq")
+editor_only = false
+script = ExtResource("3_qfnjo")
+PropScene = ExtResource("8_y54gw")

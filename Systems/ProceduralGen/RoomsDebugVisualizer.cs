@@ -92,6 +92,7 @@ public partial class RoomsDebugVisualizer : Node2D
             DrawText(room.Center * GridSize + Vector2.Up*8, $"StartDepth: {room.StartDistance}", _fontSize/2);
             DrawText(room.Center * GridSize + Vector2.Down*8, $"BossDepth: {room.BossDistance}", _fontSize/2);
             DrawText(room.Center * GridSize + Vector2.Down*16, $"Bias: {room.ProgressBias}", _fontSize/2);
+            DrawText(room.Center * GridSize + Vector2.Down*24, $"Size: {room.Size}", _fontSize/2);
         }
 
         foreach (var  room in state.MainRooms ?? []) {

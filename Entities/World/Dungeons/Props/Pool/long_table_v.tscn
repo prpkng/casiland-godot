@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://cb3a021f43701"]
+
+[ext_resource type="Texture2D" uid="uid://5du03p6rwa3o" path="res://Entities/World/pool_tileset.png" id="1_fk7us"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1rbrn"]
+size = Vector2(14, 24)
+
+[node name="LongTableV" type="StaticBody2D" unique_id=1903685706]
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=350518093]
+shape = SubResource("RectangleShape2D_1rbrn")
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1624409761]
+texture = ExtResource("1_fk7us")
+region_enabled = true
+region_rect = Rect2(48, 160, 16, 32)

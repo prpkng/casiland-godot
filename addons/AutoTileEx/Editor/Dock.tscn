@@ -1,19 +1,15 @@
 [gd_scene format=3 uid="uid://gdwaceouo60f"]
 
 [ext_resource type="Texture2D" uid="uid://b3bx72kla4tgb" path="res://Entities/World/temp_tileset.png" id="1_d1gkt"]
-[ext_resource type="Script" uid="uid://c8x3f6dn0hypf" path="res://addons/AutoTileEx/Editor/AutoTileEditor.cs" id="1_fxuku"]
 [ext_resource type="Texture2D" uid="uid://bpoyjf0u3te4c" path="res://addons/AutoTileEx/Editor/Line.svg" id="2_x2lwk"]
-[ext_resource type="Script" uid="uid://bcx30p0ulaas4" path="res://addons/AutoTileEx/Editor/TilesetView.cs" id="3_kq2a6"]
 [ext_resource type="Theme" uid="uid://c36swrm7axfkc" path="res://addons/AutoTileEx/Editor/neighbor_btns_theme.tres" id="4_0vkha"]
 [ext_resource type="Texture2D" uid="uid://dfhdr7sjv4mdd" path="res://addons/AutoTileEx/Editor/Icons/ban.svg" id="4_1f6q7"]
-[ext_resource type="TileSet" uid="uid://cub01tq8ncrlk" path="res://Entities/World/pool_tileset.tres" id="4_fxuku"]
-[ext_resource type="Script" uid="uid://dufme6y6xuulp" path="res://addons/AutoTileEx/Editor/RightClickableButton.cs" id="4_mtogm"]
 [ext_resource type="Script" uid="uid://djhqmh5y6he0r" path="res://addons/AutoTileEx/Editor/scroll_with_mouse.gd" id="4_umxbf"]
 [ext_resource type="Texture2D" uid="uid://wdvqeuxda0vw" path="res://addons/AutoTileEx/Editor/Icons/eraser.svg" id="6_a8rnt"]
 [ext_resource type="Texture2D" uid="uid://waslikrbd263" path="res://addons/AutoTileEx/Editor/Icons/circle-check.svg" id="7_kcv6v"]
 [ext_resource type="Texture2D" uid="uid://crdj36ivsfman" path="res://addons/AutoTileEx/Editor/Icons/circle-question-mark.svg" id="8_0vkha"]
 
-[sub_resource type="DPITexture" id="DPITexture_kcv6v"]
+[sub_resource type="DPITexture" id="DPITexture_0vkha"]
 _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#ff5d5d\" d=\"M2 1v8.586l1.293-1.293a1 1 0 0 1 1.414 0L7 10.587l2.293-2.293a1 1 0 0 1 1.414 0L13 10.586l1-1V6H9V1H2zm8 0v4h4zm-6 9.414-2 2V15h12v-2.586l-.293.293a1 1 0 0 1-1.414 0L10 10.414l-2.293 2.293a1 1 0 0 1-1.414 0L4 10.414z\"/></svg>
 "
 
@@ -43,7 +39,6 @@ offset_right = 666.0
 offset_bottom = 379.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_fxuku")
 metadata/_custom_type_script = "uid://c8x3f6dn0hypf"
 
 [node name="HBox" type="HSplitContainer" parent="." unique_id=249743056]
@@ -114,28 +109,28 @@ alignment = 1
 [node name="AddRule" type="Button" parent="HBox/HSplitContainer/RulesPanel/BG/HBoxContainer" unique_id=1014473817]
 custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
-icon = SubResource("DPITexture_kcv6v")
+icon = SubResource("DPITexture_0vkha")
 icon_alignment = 1
 expand_icon = true
 
 [node name="RemoveRule" type="Button" parent="HBox/HSplitContainer/RulesPanel/BG/HBoxContainer" unique_id=1675386485]
 custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
-icon = SubResource("DPITexture_kcv6v")
+icon = SubResource("DPITexture_0vkha")
 icon_alignment = 1
 expand_icon = true
 
 [node name="MoveUp" type="Button" parent="HBox/HSplitContainer/RulesPanel/BG/HBoxContainer" unique_id=1854835101]
 custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
-icon = SubResource("DPITexture_kcv6v")
+icon = SubResource("DPITexture_0vkha")
 icon_alignment = 1
 expand_icon = true
 
 [node name="MoveDown" type="Button" parent="HBox/HSplitContainer/RulesPanel/BG/HBoxContainer" unique_id=1562382859]
 custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
-icon = SubResource("DPITexture_kcv6v")
+icon = SubResource("DPITexture_0vkha")
 icon_alignment = 1
 expand_icon = true
 
@@ -255,7 +250,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button2" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=2035195720]
@@ -267,7 +261,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button3" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=2095377001]
@@ -279,7 +272,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button4" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=1284335090]
@@ -291,7 +283,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button5" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=246379084]
@@ -303,7 +294,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button6" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=700133767]
@@ -315,7 +305,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button7" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=715879613]
@@ -327,7 +316,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button8" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=546859048]
@@ -339,7 +327,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button9" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=1049045463]
@@ -351,7 +338,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button10" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=2071276440]
@@ -363,7 +349,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button11" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=1386712183]
@@ -375,7 +360,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button12" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=532201627]
@@ -387,7 +371,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button13" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=774210378]
@@ -399,7 +382,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button14" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=1644836594]
@@ -411,7 +393,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button15" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=865415099]
@@ -423,7 +404,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button16" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=1080518611]
@@ -435,7 +415,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button17" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=1656587060]
@@ -447,7 +426,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button18" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=962964172]
@@ -459,7 +437,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button19" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=493810646]
@@ -471,7 +448,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button20" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=505578371]
@@ -483,7 +459,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button21" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=923190155]
@@ -495,7 +470,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button22" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=1925067789]
@@ -507,7 +481,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button23" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=389005057]
@@ -519,7 +492,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button24" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=730757220]
@@ -531,7 +503,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button25" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=789369855]
@@ -543,7 +514,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button26" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=1992784837]
@@ -555,7 +525,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button27" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=788747789]
@@ -567,7 +536,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button28" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=341146944]
@@ -579,7 +547,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button29" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=544217473]
@@ -591,7 +558,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button30" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=1186732988]
@@ -603,7 +569,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button31" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=389672222]
@@ -615,7 +580,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button32" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=547361542]
@@ -627,7 +591,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button33" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=5207460]
@@ -639,7 +602,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button34" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=1074779055]
@@ -651,7 +613,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button35" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=1967687593]
@@ -663,7 +624,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button36" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=465711350]
@@ -675,7 +635,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button37" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=628738209]
@@ -687,7 +646,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button38" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=307953582]
@@ -699,7 +657,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button39" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=2072093487]
@@ -711,7 +668,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button40" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=1703446128]
@@ -723,7 +679,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button41" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=1489875457]
@@ -735,7 +690,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button42" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=1988257587]
@@ -747,7 +701,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button43" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=537745773]
@@ -759,7 +712,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button44" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=604620596]
@@ -771,7 +723,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button45" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=846994253]
@@ -783,7 +734,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button46" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=1281499206]
@@ -795,7 +745,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button47" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=1246258251]
@@ -807,7 +756,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button48" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=681578458]
@@ -819,7 +767,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="Button49" type="Button" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox/Control/PanelContainer/GridContainer" unique_id=894903871]
@@ -831,7 +778,6 @@ theme = ExtResource("4_0vkha")
 icon = ExtResource("7_kcv6v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("4_mtogm")
 metadata/_custom_type_script = "uid://dufme6y6xuulp"
 
 [node name="ToolbarMargin" type="MarginContainer" parent="HBox/HSplitContainer/RulePanel/BG/VBox/NbVbox" unique_id=812452020]
@@ -1015,6 +961,4 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 1
 mouse_filter = 1
-script = ExtResource("3_kq2a6")
-TileSet = ExtResource("4_fxuku")
 metadata/_custom_type_script = "uid://bcx30p0ulaas4"

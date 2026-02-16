@@ -1,0 +1,255 @@
+[gd_scene format=3 uid="uid://ccll273sdgbve"]
+
+[ext_resource type="Script" uid="uid://crod7gn41p188" path="res://Systems/RoomDesign/PropsRoom.cs" id="1_gduug"]
+[ext_resource type="Texture2D" uid="uid://lhrxpnujv2ru" path="res://Entities/World/floor.png" id="2_evslv"]
+[ext_resource type="Script" uid="uid://bviom3sxvji67" path="res://Systems/RoomDesign/PropContainer.cs" id="3_gduug"]
+[ext_resource type="PackedScene" uid="uid://c5ieex3r3vtj1" path="res://Entities/World/Dungeons/Props/Pool/carpet.tscn" id="4_evslv"]
+[ext_resource type="PackedScene" uid="uid://b6d0or3f5km1a" path="res://Entities/World/Dungeons/Props/Pool/long_couch_e.tscn" id="5_qkqoc"]
+[ext_resource type="PackedScene" uid="uid://b58qusemspmov" path="res://Entities/World/Dungeons/Props/Pool/long_couch_w.tscn" id="6_cuodo"]
+[ext_resource type="PackedScene" uid="uid://kq1tbmssgjwd" path="res://Entities/World/Dungeons/Props/Pool/long_couch_s.tscn" id="7_xmqn1"]
+[ext_resource type="PackedScene" uid="uid://ct20qie6y87xe" path="res://Entities/World/Dungeons/Props/Pool/long_couch_n.tscn" id="8_xsdoq"]
+
+[node name="Carpet Room" type="ReferenceRect" unique_id=2107636550]
+z_index = -10
+z_as_relative = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -160.0
+offset_bottom = -14.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_gduug")
+BackgroundSprite = ExtResource("2_evslv")
+
+[node name="Carpet L" type="ReferenceRect" parent="." unique_id=1062171806]
+z_index = -1
+z_as_relative = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -88.0
+offset_top = 72.0
+offset_right = -40.0
+offset_bottom = -72.0
+script = ExtResource("3_gduug")
+PropScene = ExtResource("4_evslv")
+FillMode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Couch" type="ReferenceRect" parent="Carpet L" unique_id=1577315224]
+z_as_relative = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.286
+anchor_right = 0.5
+anchor_bottom = 0.286
+offset_left = -48.0
+offset_top = -16.032001
+offset_right = -32.0
+offset_bottom = 15.9679985
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_gduug")
+PropScene = ExtResource("5_qkqoc")
+
+[node name="Couch2" type="ReferenceRect" parent="Carpet L" unique_id=342845965]
+z_as_relative = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.71400005
+anchor_right = 0.5
+anchor_bottom = 0.71400005
+offset_left = -48.0
+offset_top = -15.968002
+offset_right = -32.0
+offset_bottom = 16.031998
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_gduug")
+PropScene = ExtResource("5_qkqoc")
+
+[node name="Couch3" type="ReferenceRect" parent="Carpet L" unique_id=1875849004]
+z_as_relative = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.71400005
+anchor_right = 0.5
+anchor_bottom = 0.71400005
+offset_left = 32.0
+offset_top = -15.968002
+offset_right = 48.0
+offset_bottom = 16.031998
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_gduug")
+PropScene = ExtResource("6_cuodo")
+
+[node name="Couch4" type="ReferenceRect" parent="Carpet L" unique_id=2136970472]
+z_as_relative = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.286
+anchor_right = 0.5
+anchor_bottom = 0.286
+offset_left = 32.0
+offset_top = -16.032001
+offset_right = 48.0
+offset_bottom = 15.9679985
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_gduug")
+PropScene = ExtResource("6_cuodo")
+
+[node name="Couch5" type="ReferenceRect" parent="Carpet L" unique_id=2100296247]
+z_as_relative = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -16.0
+offset_top = -24.0
+offset_right = 16.0
+offset_bottom = -8.0
+grow_horizontal = 2
+script = ExtResource("3_gduug")
+PropScene = ExtResource("7_xmqn1")
+
+[node name="Couch6" type="ReferenceRect" parent="Carpet L" unique_id=1638695940]
+z_as_relative = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -16.0
+offset_top = 8.0
+offset_right = 16.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("3_gduug")
+PropScene = ExtResource("8_xsdoq")
+
+[node name="Carpet R" type="ReferenceRect" parent="." unique_id=860436646]
+z_index = -1
+z_as_relative = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 48.0
+offset_top = 72.0
+offset_right = 96.0
+offset_bottom = -72.0
+script = ExtResource("3_gduug")
+PropScene = ExtResource("4_evslv")
+FillMode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Couch" type="ReferenceRect" parent="Carpet R" unique_id=1702712220]
+z_as_relative = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.286
+anchor_right = 0.5
+anchor_bottom = 0.286
+offset_left = -48.0
+offset_top = -16.032001
+offset_right = -32.0
+offset_bottom = 15.9679985
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_gduug")
+PropScene = ExtResource("5_qkqoc")
+
+[node name="Couch2" type="ReferenceRect" parent="Carpet R" unique_id=2944772]
+z_as_relative = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.71400005
+anchor_right = 0.5
+anchor_bottom = 0.71400005
+offset_left = -48.0
+offset_top = -15.968002
+offset_right = -32.0
+offset_bottom = 16.031998
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_gduug")
+PropScene = ExtResource("5_qkqoc")
+
+[node name="Couch3" type="ReferenceRect" parent="Carpet R" unique_id=1810807563]
+z_as_relative = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.71400005
+anchor_right = 0.5
+anchor_bottom = 0.71400005
+offset_left = 32.0
+offset_top = -15.968002
+offset_right = 48.0
+offset_bottom = 16.031998
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_gduug")
+PropScene = ExtResource("6_cuodo")
+
+[node name="Couch4" type="ReferenceRect" parent="Carpet R" unique_id=1177000828]
+z_as_relative = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.286
+anchor_right = 0.5
+anchor_bottom = 0.286
+offset_left = 32.0
+offset_top = -16.032001
+offset_right = 48.0
+offset_bottom = 15.9679985
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_gduug")
+PropScene = ExtResource("6_cuodo")
+
+[node name="Couch5" type="ReferenceRect" parent="Carpet R" unique_id=1869595789]
+z_as_relative = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -16.0
+offset_top = -24.0
+offset_right = 16.0
+offset_bottom = -8.0
+grow_horizontal = 2
+script = ExtResource("3_gduug")
+PropScene = ExtResource("7_xmqn1")
+
+[node name="Couch6" type="ReferenceRect" parent="Carpet R" unique_id=1273098066]
+z_as_relative = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -16.0
+offset_top = 8.0
+offset_right = 16.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("3_gduug")
+PropScene = ExtResource("8_xsdoq")

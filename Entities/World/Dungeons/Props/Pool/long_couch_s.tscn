@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://kq1tbmssgjwd"]
+
+[ext_resource type="Texture2D" uid="uid://5du03p6rwa3o" path="res://Entities/World/pool_tileset.png" id="1_bvx64"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xr20p"]
+size = Vector2(28, 14)
+
+[node name="LongCouchS" type="StaticBody2D" unique_id=2055025061]
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1423321376]
+texture = ExtResource("1_bvx64")
+region_enabled = true
+region_rect = Rect2(80, 160, 32, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1577590779]
+shape = SubResource("RectangleShape2D_xr20p")

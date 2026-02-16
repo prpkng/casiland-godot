@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://dbxm17hv8rxv5"]
+
+[ext_resource type="Texture2D" uid="uid://5du03p6rwa3o" path="res://Entities/World/pool_tileset.png" id="1_5gqlj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1rbrn"]
+size = Vector2(16, 16)
+
+[node name="Bench" type="StaticBody2D" unique_id=590007794]
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=607736992]
+shape = SubResource("RectangleShape2D_1rbrn")
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1716774052]
+texture = ExtResource("1_5gqlj")
+region_enabled = true
+region_rect = Rect2(64, 160, 16, 16)

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ccll273sdgbve"]
 
-[ext_resource type="Script" uid="uid://crod7gn41p188" path="res://Systems/RoomDesign/PropsRoom.cs" id="1_gduug"]
+[ext_resource type="Script" uid="uid://cth26xqbbonus" path="res://Systems/RoomDesign/PropsRoomRect.cs" id="1_xmqn1"]
 [ext_resource type="Texture2D" uid="uid://lhrxpnujv2ru" path="res://Entities/World/floor.png" id="2_evslv"]
 [ext_resource type="Script" uid="uid://bviom3sxvji67" path="res://Systems/RoomDesign/PropContainer.cs" id="3_gduug"]
 [ext_resource type="PackedScene" uid="uid://c5ieex3r3vtj1" path="res://Entities/World/Dungeons/Props/Pool/carpet.tscn" id="4_evslv"]
@@ -19,7 +19,7 @@ offset_right = -160.0
 offset_bottom = -14.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_gduug")
+script = ExtResource("1_xmqn1")
 BackgroundSprite = ExtResource("2_evslv")
 
 [node name="Carpet L" type="ReferenceRect" parent="." unique_id=1062171806]

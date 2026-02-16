@@ -1,6 +1,6 @@
 namespace Casiland.Systems.RoomDesign;
 
-
+using System.Linq;
 using Godot;
 
 
@@ -30,40 +30,51 @@ public partial class PropContainer : Control {
     private PackedScene _propScene;
     private Node _child;
 
+    public override void _EnterTree()
+    {
+        if (!Engine.IsEditorHint())
+            PerformSizing(_child);
+    }
+
     private void OnPropSceneChanged()
     {
-        _child?.Free();
+        foreach (var c in GetChildren(true).Except(GetChildren())) c.Free();
 
         _child = PropScene.Instantiate(PackedScene.GenEditState.Instance);
 	    AddChild(_child, false, InternalMode.Back);
 
     }
 
-
-    public override void _Process(double delta)
+    private void PerformSizing(Node node)
     {
-        if (_child == null || !Engine.IsEditorHint()) return;
-        
         var rect = GetGlobalRect();
         
         switch (FillMode)
         {
-            case PropFillMode.Centered when _child is Node2D node2D:
+            case PropFillMode.Centered when node is Node2D node2D:
                 node2D.GlobalPosition = rect.GetCenter();
                 break;
-            case PropFillMode.Fill when _child is Node2D node2D:
+            case PropFillMode.Fill when node is Node2D node2D:
                 node2D.GlobalPosition = rect.GetCenter();
+                node2D.Set("size", rect.Size);
                 break;
 
-            case PropFillMode.Centered when _child is Control ctrl:
+            case PropFillMode.Centered when node is Control ctrl:
                 ctrl.GlobalPosition = rect.GetCenter();
                 break;
-            case PropFillMode.Fill when _child is Control ctrl:
+            case PropFillMode.Fill when node is Control ctrl:
                 ctrl.GlobalPosition = rect.Position;
                 ctrl.Size = rect.Size;
                 break;
 
         }
+    }
+
+    public override void _Process(double delta)
+    {
+        if (_child == null || !Engine.IsEditorHint()) return;
+        
+        PerformSizing(_child);
     }
 
 }

@@ -25,6 +25,11 @@ class ConsoleCommand:
 
 var control := Control.new()
 
+
+func setup_default_commands() -> void:
+	add_command('rl', func(): get_tree().reload_current_scene())
+	
+
 # If you want to customize the way the console looks, you can direcly modify
 # the properties of the rich text and line edit here:
 var rich_label := RichTextLabel.new()
@@ -108,6 +113,9 @@ func _enter_tree() -> void:
 	line_edit.text_changed.connect(on_line_edit_text_changed)
 	control.visible = false
 	process_mode = PROCESS_MODE_ALWAYS
+	
+	
+	setup_default_commands()
 
 
 func _exit_tree() -> void:

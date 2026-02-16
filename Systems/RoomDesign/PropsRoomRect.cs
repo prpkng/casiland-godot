@@ -4,7 +4,7 @@ using System;
 namespace Casiland.Systems.RoomDesign;
 
 [Tool]
-public partial class PropsRoom : ReferenceRect
+public partial class PropsRoomRect : ReferenceRect
 {
     [Export] public int GridSize = 16;
     [Export] public Texture2D BackgroundSprite;

@@ -1,9 +1,16 @@
 [gd_resource type="Resource" script_class="RoomPropCollection" format=3 uid="uid://bru8717w2t8aj"]
 
+[ext_resource type="Script" uid="uid://ciqa6veg5qqh3" path="res://Systems/RoomDesign/RoomPropConstraint.cs" id="1_adh83"]
 [ext_resource type="Script" uid="uid://bfdp6u6tjk3f0" path="res://Systems/RoomDesign/Rooms/RoomPropCollection.cs" id="1_mbl81"]
 [ext_resource type="PackedScene" uid="uid://ccll273sdgbve" path="res://Entities/World/Dungeons/RoomProps/Pool/carpet_room.tscn" id="1_t2w85"]
+[ext_resource type="Script" uid="uid://u1u3mequygy4" path="res://Systems/RoomDesign/Constraints/WidthConstraint.cs" id="2_v83px"]
+
+[sub_resource type="Resource" id="Resource_koq51"]
+script = ExtResource("2_v83px")
+metadata/_custom_type_script = "uid://u1u3mequygy4"
 
 [resource]
 script = ExtResource("1_mbl81")
+Constraints = Array[ExtResource("1_adh83")]([SubResource("Resource_koq51")])
 PropsScene = ExtResource("1_t2w85")
 metadata/_custom_type_script = "uid://bfdp6u6tjk3f0"

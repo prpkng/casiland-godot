@@ -46,7 +46,10 @@ public enum RoomTypes
     NormalRoom,
     CorridorRoom,
     StartRoom,
-    BossRoom
+    BossRoom,
+    ShopRoom,
+    CrashoutRoom,
+    TreasureRoom,
 }
 
 public static class SimpleRoomIdGenerator

@@ -7,6 +7,7 @@
 
 [sub_resource type="Resource" id="Resource_koq51"]
 script = ExtResource("2_v83px")
+MinWidth = 22
 metadata/_custom_type_script = "uid://u1u3mequygy4"
 
 [resource]

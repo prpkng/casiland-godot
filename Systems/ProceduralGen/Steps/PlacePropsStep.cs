@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Casiland.Common;
 using Casiland.Entities.World.Dungeons.Doors;
 using Casiland.Systems.Debug;
 using Casiland.Systems.ProceduralGen.Algorithms;
@@ -8,6 +9,7 @@ using Casiland.Systems.RoomDesign;
 using Casiland.Systems.RoomDesign.Rooms;
 using Fractural.Tasks;
 using Godot;
+using Serilog;
 
 namespace Casiland.Systems.ProceduralGen.Steps;
 
@@ -58,8 +60,14 @@ public class PlacePropsStep(GenerationState state, ProceduralGenerationSettings 
 
     private RoomPropCollection GetRoomPropCollection(ProceduralRoom room)
     {
-        //TODO implement constraints here!
-        return Settings.PropCollections.First();
+        var collections = Settings.PropCollections
+            .Where(col => col.Constraints.All(constraint => constraint.CheckRoomFollowsConstraint(room)))
+            .ToArray(); 
+        
+        if (collections.Length == 0) return null;
+
+        //TODO improve the heuristics of this RNG choice, maybe by weighting the collections based on how many constraints they satisfy or something like that
+        return collections.PickRandom(State.Rng);
     }
 
     private async GDTask PlacePropContainer(Control control, PropContainer propContainer, ProceduralRoom room)
@@ -86,9 +94,14 @@ public class PlacePropsStep(GenerationState state, ProceduralGenerationSettings 
     {
         foreach (var room in State.AllRooms)
         {
-            var props = GetRoomPropCollection(room);
+            var propCollection = GetRoomPropCollection(room);
+            if (propCollection == null)
+            {
+                Log.Error("No prop collection found for room {RoomId}, skipping prop placement for this room", room.Id);
+                continue;                
+            }
 
-            var control = props.PropsScene.Instantiate<Control>();
+            var control = propCollection.PropsScene.Instantiate<Control>();
             State.Payload.PropsGroup.AddChild(control);
 
             await GDTask.Yield();
